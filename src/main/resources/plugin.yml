@@ -1,0 +1,16 @@
+name: TLL2
+version: ${project.version}
+main: tlldos.tll2.TLL2
+api-version: 1.17
+prefix: THELASTLIFE
+authors: [ Mutant, Wicked ]
+description: caca123
+commands:
+  thelastlife:
+    description: Comandos para Usuarios Normales
+    permissions:
+      thelastlife.thelastlifeusers
+  tllstaff:
+    description: Comandos para Staff TLL
+    permissions:
+      thelastlife.thelastlifestaff
