@@ -113,7 +113,7 @@ public class Muerte extends ListenerAdapter implements Listener {
             players.playSound(players.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 10.0F, -1.0F);
             players.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 500, 0, true, false,true));
             players.sendTitle(ChatColor.GOLD + "" + ChatColor.MAGIC + "TheLastLife", ChatColor.DARK_GRAY + "" + ChatColor.MAGIC + "the end is near", 0, 80, 0);
-            world.setTime(0);
+            world.setTime(4000);
             players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8La Alma de &6&l" + p.getName() + " &8a desaparecido entre la oscuridad eterna del &8&lVacio!, &8&lsu energia se liberara para iniciar &6la &6&lBLAST STORM!"));
             players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Fatum tuum non potes effugere, &c&lsuperesse vel perit"));
             players.sendMessage(ChatColor.GRAY + "Coordenadas: X: " + p.getLocation().getBlockX() + ", Y: " + p.getLocation().getBlockY() + ", Z: " + p.getLocation().getBlockZ());
@@ -124,7 +124,7 @@ public class Muerte extends ListenerAdapter implements Listener {
                     players.sendTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "The End Begins...", ChatColor.DARK_GRAY + "" + ChatColor.MAGIC + "the end is near", 0, 80, 0);
                     players.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1, false, false, false));
                     players.playSound(players.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_DEATH, 10.0F, -1.0F);
-                    world.setTime(1000);
+                    world.setTime(5000);
                     cabezaEstructura(p, p.getLocation());
                 }
             }, 40);
@@ -134,7 +134,7 @@ public class Muerte extends ListenerAdapter implements Listener {
                     players.sendTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "The Light Fades...", ChatColor.DARK_GRAY + "" + ChatColor.MAGIC + "the end is near", 0, 80, 0);
                     players.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1, false, false, false));
                     players.playSound(players.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_AMBIENT, 10.0F, -1.0F);
-                    world.setTime(4000);
+                    world.setTime(6000);
 
                 }
             }, 80);
@@ -144,7 +144,7 @@ public class Muerte extends ListenerAdapter implements Listener {
                     players.sendTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "No One is Safe...", ChatColor.DARK_GRAY + "" + ChatColor.MAGIC + "the end is near", 0, 80, 0);
                     players.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1, false, false, false));
                     players.playSound(players.getLocation(), Sound.ENTITY_GUARDIAN_AMBIENT, 10.0F, -1.0F);
-                    world.setTime(6000);
+                    world.setTime(7000);
                 }
             }, 120);
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
@@ -162,7 +162,7 @@ public class Muerte extends ListenerAdapter implements Listener {
                     players.sendTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "Its Over", ChatColor.DARK_GRAY + "" + ChatColor.MAGIC + "the end is near", 0, 80, 0);
                     players.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1, false, false, false));
                     players.playSound(players.getLocation(), Sound.ENTITY_PHANTOM_DEATH, 10.0F, -1.0F);
-                    world.setTime(10000);
+                    world.setTime(9000);
                 }
             }, 200);
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
@@ -171,13 +171,13 @@ public class Muerte extends ListenerAdapter implements Listener {
                     players.sendTitle(ChatColor.translateAlternateColorCodes('&', "&4&kzzz &6&lTHE LAST LIFE &4&kzzz"), ChatColor.translateAlternateColorCodes('&', "&8El Fin del Jugador " + p.getName() + " &8Comienza!"), 0, 160, 20);
                     players.playSound(players.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 10.0F, -1.0F);
                     players.sendActionBar(ChatColor.GOLD + "" + ChatColor.BOLD + e.getDeathMessage());
-                    world.setTime(11000);
+                    world.setTime(10000);
                 }
             }, 240);
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    world.setTime(0);
+                    world.setTime(11000);
                 }
             }, 320);
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
@@ -218,13 +218,13 @@ public class Muerte extends ListenerAdapter implements Listener {
         eb.setFooter("TheLastLifeT2.jar", "https://media.discordapp.net/attachments/830482526237753395/874379476212019210/transparentexd.png?width=588&height=588");
         eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
         eb.setTitle("**El Fin del Jugador " + p.getName() + " comienza!**");
-        eb.setDescription("Inicia la Blast Storm! " + Dia() + " Hora(s)!");
+        eb.setDescription(":fire: **Inicia la Blast Storm con Duracion de " + Dia() + " Hora(s)!** :fire:");
         eb.addField(":skull:**Causa de Muerte: **", e.getDeathMessage(), true);
-        eb.addField(":beginner:**Dia: **" + Dia(), "", true);
+        eb.addField(":beginner:**Dia: **" + Dia(), "", false);
         eb.addField(":map:**Cordernadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-        eb.addField(":low_brightness:**Fecha: **" + Fecha, "", true);
-        eb.addField(":alarm_clock:**Hora: **" + Tiempo,"",true);
-        eb.setThumbnail("https://crafatar.com/avatars/ " + p.getUniqueId() + ".png");
+        eb.addField(":low_brightness:**Fecha: **" + Fecha, "", false);
+        eb.addField(":alarm_clock:**Hora: **" + Tiempo,"",false);
+        eb.setThumbnail("https://crafatar.com/renders/head/" + p.getUniqueId() + ".png");
         eb.setColor(new Color(252, 186, 3));
 
         channel.sendMessage(eb.build()).queue();
