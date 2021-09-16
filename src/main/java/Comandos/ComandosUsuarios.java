@@ -3,11 +3,15 @@ package Comandos;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
+import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class ComandosUsuarios implements CommandExecutor{
     @Override
@@ -15,6 +19,9 @@ public class ComandosUsuarios implements CommandExecutor{
         if (!(sender instanceof Player)) {
             sender.getServer().getConsoleSender().sendMessage("Eres barja o te haces");
         }
+
+        Server s = sender.getServer();
+
         if (args[0].equalsIgnoreCase("info")) {
 
             TextComponent creditos = new TextComponent();
@@ -35,12 +42,11 @@ public class ComandosUsuarios implements CommandExecutor{
         if(args[0].equalsIgnoreCase("creditos")){
             sender.sendMessage(ChatColor.DARK_GRAY + "------ CREDITOS ------");
             sender.sendMessage(ChatColor.AQUA + "iTsContrasMC: " + ChatColor.GRAY + "Creador de TLL");
-            sender.sendMessage(ChatColor.AQUA + "WickedDroid: " + ChatColor.GRAY + "Desarrollador del Plugin, Gran ayuda de Mutant");
+            sender.sendMessage(ChatColor.AQUA + "WickedDroid y Mr_StupidMutant: " + ChatColor.GRAY + "Desarrolladores del Plugin");
             sender.sendMessage(ChatColor.AQUA + "JohanBigCum: " + ChatColor.GRAY + "Hostear el Server!");
             sender.sendMessage(ChatColor.AQUA + "Carrot, Seven, GusGus y Tom_: " + ChatColor.GRAY + "Diseños, Modelos y Texturas ");
             sender.sendMessage(ChatColor.AQUA + "Mikel_Craft: " + ChatColor.GRAY + "Estructuras del server");
             sender.sendMessage(ChatColor.AQUA + "Apinga2 y Yisus " + ChatColor.GRAY + "Beta Testers de TLL T2");
-            sender.sendMessage(ChatColor.AQUA + "ElRichMC: " + ChatColor.GRAY + "Principal Creador de los Hardcores Custom de Minecraft (y gran Inspiracion)");
             sender.sendMessage(ChatColor.AQUA + "Antonio, Wither, Alex y Admi9 " + ChatColor.GRAY + "Ayuda Principal, y Moderacion");
             sender.sendMessage(ChatColor.DARK_GRAY + "----------------------");
         }
@@ -54,6 +60,19 @@ public class ComandosUsuarios implements CommandExecutor{
             sender.sendMessage(ChatColor.GOLD + "cambios: " + ChatColor.GRAY + "Muestra un link de imgur con todos los Cambios del Dia Indicado");
             sender.sendMessage(ChatColor.DARK_GRAY + "----------------------");
         }
+        if(args[0].equalsIgnoreCase("tps")){
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6THE LAST LIFE ➤ &cHay " + s.getTPS()[0] + " TPS Actuales"));
+        }
+        if(args[0].equalsIgnoreCase("dia")){
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6THE LAST LIFE ➤ &7Nos Encontramos en el Dia: &6" + Dia()));
+        }
         return false;
+    }
+    public static int Dia() {
+        LocalDate FechaActual = LocalDate.now();
+
+        LocalDate FechaInicio = LocalDate.parse("2021-09-15");
+
+        return (int) ChronoUnit.DAYS.between(FechaInicio, FechaActual);
     }
 }

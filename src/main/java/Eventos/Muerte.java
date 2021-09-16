@@ -50,7 +50,7 @@ public class Muerte extends ListenerAdapter implements Listener {
         long seconds = segundos % 60L;
         String time = String.format("%02d:%02d:%02d", hours, minutes, seconds);
 
-        tormenta = Bukkit.createBossBar(ChatColor.translateAlternateColorCodes('&', "&f♥    &6&lBlast Storm: " + time +  "    &f♥"), BarColor.YELLOW , BarStyle.SEGMENTED_6);
+        tormenta = Bukkit.createBossBar(ChatColor.translateAlternateColorCodes('&', "&f♥       &6&lBlast Storm: " + time +  "       &f♥"), BarColor.YELLOW , BarStyle.SEGMENTED_6);
         try {
             this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
             jda = JDABuilder.createDefault("ODM0MTI1Mjg3NDUyNzA0Nzc5.YH8VtQ.353ChgCa7fFCqi3rq-vIOWimrMg").build();
@@ -64,14 +64,45 @@ public class Muerte extends ListenerAdapter implements Listener {
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         Message msg = event.getMessage();
-        if (msg.getContentRaw().equals("tll!test")) {
-            MessageChannel channel = event.getChannel();
-            channel.sendMessage("Hola Mundo :D").queue();
-        }
         if (msg.getContentRaw().equals("tll!moai")) {
             MessageChannel channel = event.getChannel();
             channel.sendMessage(":moyai::moyai::moyai:").queue();
         }
+        if (msg.getContentRaw().equals("tll!jugadores")) {
+            EmbedBuilder eb = new EmbedBuilder();
+            eb.setFooter("TheLastLifeT2.jar", "https://media.discordapp.net/attachments/830482526237753395/874379476212019210/transparentexd.png?width=588&height=588");
+            eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
+            eb.setTitle("Jugadores Conectados:");
+            StringBuilder jugadores = new StringBuilder();
+            for (Player players : Bukkit.getOnlinePlayers()) {
+                if (jugadores.length() > 0) {
+                    jugadores.append('\n');
+                }
+                jugadores.append(players.getName());
+            }
+            eb.setDescription(jugadores.length() > 0 ? jugadores : "No hay Jugadores Conectados");
+            eb.setColor(new Color(252, 186, 3));
+            msg.getChannel().sendMessage(eb.build()).queue();
+        }
+        if (msg.getContentRaw().equals("tll!tormenta")) {
+            World world = Bukkit.getWorld("world");
+            long segundos = (long) (world.getWeatherDuration() / 20);
+            long hours = segundos / 3600L;
+            long minutes = segundos % 3600L / 60L;
+            long seconds = segundos % 60L;
+
+            String time = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+
+            EmbedBuilder eb = new EmbedBuilder();
+            eb.setFooter("TheLastLifeT2.jar", "https://media.discordapp.net/attachments/830482526237753395/874379476212019210/transparentexd.png?width=588&height=588");
+            eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
+            eb.setTitle("Duracion de BlastStorm");
+            eb.setDescription((segundos > 0) ? "La Duracion de la BlastStorm Actual es: " + time : "No Hay una Blast Storm Activa!");
+            eb.setThumbnail("https://media.discordapp.net/attachments/830482526237753395/888118123696373790/blaststorm_icon.png");
+            eb.setColor(new Color(252, 186, 3));
+            msg.getChannel().sendMessage(eb.build()).queue();
+        }
+
     }
 
     @EventHandler
@@ -82,8 +113,7 @@ public class Muerte extends ListenerAdapter implements Listener {
             players.playSound(players.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 10.0F, -1.0F);
             players.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 500, 0, true, false,true));
             players.sendTitle(ChatColor.GOLD + "" + ChatColor.MAGIC + "TheLastLife", ChatColor.DARK_GRAY + "" + ChatColor.MAGIC + "the end is near", 0, 80, 0);
-            cabezaEstructura(p, p.getLocation());
-            world.setTime(16000);
+            world.setTime(0);
             players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8La Alma de &6&l" + p.getName() + " &8a desaparecido entre la oscuridad eterna del &8&lVacio!, &8&lsu energia se liberara para iniciar &6la &6&lBLAST STORM!"));
             players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Fatum tuum non potes effugere, &c&lsuperesse vel perit"));
             players.sendMessage(ChatColor.GRAY + "Coordenadas: X: " + p.getLocation().getBlockX() + ", Y: " + p.getLocation().getBlockY() + ", Z: " + p.getLocation().getBlockZ());
@@ -94,7 +124,8 @@ public class Muerte extends ListenerAdapter implements Listener {
                     players.sendTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "The End Begins...", ChatColor.DARK_GRAY + "" + ChatColor.MAGIC + "the end is near", 0, 80, 0);
                     players.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1, false, false, false));
                     players.playSound(players.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_DEATH, 10.0F, -1.0F);
-                    world.setTime(13000);
+                    world.setTime(1000);
+                    cabezaEstructura(p, p.getLocation());
                 }
             }, 40);
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
@@ -103,7 +134,7 @@ public class Muerte extends ListenerAdapter implements Listener {
                     players.sendTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "The Light Fades...", ChatColor.DARK_GRAY + "" + ChatColor.MAGIC + "the end is near", 0, 80, 0);
                     players.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1, false, false, false));
                     players.playSound(players.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_AMBIENT, 10.0F, -1.0F);
-                    world.setTime(0);
+                    world.setTime(4000);
 
                 }
             }, 80);
@@ -113,7 +144,7 @@ public class Muerte extends ListenerAdapter implements Listener {
                     players.sendTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "No One is Safe...", ChatColor.DARK_GRAY + "" + ChatColor.MAGIC + "the end is near", 0, 80, 0);
                     players.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1, false, false, false));
                     players.playSound(players.getLocation(), Sound.ENTITY_GUARDIAN_AMBIENT, 10.0F, -1.0F);
-                    world.setTime(16000);
+                    world.setTime(6000);
                 }
             }, 120);
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
@@ -122,7 +153,7 @@ public class Muerte extends ListenerAdapter implements Listener {
                     players.sendTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "You can´t Escape", ChatColor.DARK_GRAY + "" + ChatColor.MAGIC + "the end is near", 0, 80, 0);
                     players.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1, false, false, false));
                     players.playSound(players.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 10.0F, -1.0F);
-                    world.setTime(13000);
+                    world.setTime(8000);
                 }
             }, 160);
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
@@ -131,16 +162,16 @@ public class Muerte extends ListenerAdapter implements Listener {
                     players.sendTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "Its Over", ChatColor.DARK_GRAY + "" + ChatColor.MAGIC + "the end is near", 0, 80, 0);
                     players.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1, false, false, false));
                     players.playSound(players.getLocation(), Sound.ENTITY_PHANTOM_DEATH, 10.0F, -1.0F);
-                    world.setTime(0);
+                    world.setTime(10000);
                 }
             }, 200);
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    players.sendTitle(ChatColor.translateAlternateColorCodes('&', "&4&kzzz &6&lTHE LAST LIFE &4&kzzz"), ChatColor.translateAlternateColorCodes('&', "&8El Fin del Jugador " + p.getName() + " &8Comienza!"), 0, 160, 0);
+                    players.sendTitle(ChatColor.translateAlternateColorCodes('&', "&4&kzzz &6&lTHE LAST LIFE &4&kzzz"), ChatColor.translateAlternateColorCodes('&', "&8El Fin del Jugador " + p.getName() + " &8Comienza!"), 0, 160, 20);
                     players.playSound(players.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 10.0F, -1.0F);
                     players.sendActionBar(ChatColor.GOLD + "" + ChatColor.BOLD + e.getDeathMessage());
-                    world.setTime(16000);
+                    world.setTime(11000);
                 }
             }, 240);
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
@@ -154,25 +185,25 @@ public class Muerte extends ListenerAdapter implements Listener {
                 public void run() {
                     players.playSound(players.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_CURSE, 20.0F, -1.0F);
                     players.playSound(players.getLocation(), Sound.ENTITY_SKELETON_HORSE_DEATH, 10.F, -1.0F);
-                    world.setTime(13000);
+                    world.setTime(12000);
                 }
             }, 340);
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    world.setTime(16000);
+                    world.setTime(13000);
                 }
             }, 360);
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    world.setTime(0);
+                    world.setTime(14000);
                 }
             }, 380);
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    world.setTime(13000);
+                    world.setTime(15000);
                 }
             }, 400);
         }
@@ -193,6 +224,7 @@ public class Muerte extends ListenerAdapter implements Listener {
         eb.addField(":map:**Cordernadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
         eb.addField(":low_brightness:**Fecha: **" + Fecha, "", true);
         eb.addField(":alarm_clock:**Hora: **" + Tiempo,"",true);
+        eb.setThumbnail("https://crafatar.com/avatars/ " + p.getUniqueId() + ".png");
         eb.setColor(new Color(252, 186, 3));
 
         channel.sendMessage(eb.build()).queue();
@@ -295,7 +327,7 @@ public class Muerte extends ListenerAdapter implements Listener {
     public static int Dia() {
         LocalDate FechaActual = LocalDate.now();
 
-        LocalDate FechaInicio = LocalDate.parse("2021-08-30");
+        LocalDate FechaInicio = LocalDate.parse("2021-09-15");
 
         return (int) ChronoUnit.DAYS.between(FechaInicio, FechaActual);
     }
@@ -306,6 +338,7 @@ public class Muerte extends ListenerAdapter implements Listener {
             for(Player players : Bukkit.getOnlinePlayers()) {
                 tormenta.setVisible(false);
                 tormenta.removePlayer(players);
+                world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true);
             }
         }
     }
@@ -322,13 +355,14 @@ public class Muerte extends ListenerAdapter implements Listener {
                         minutos = " hora(s)";
                     }
                     world.setTime(16000);
+                    world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
                     String Tormentajaja = Bukkit.getWorld("world").isThundering() ? "weather thunder " + ((Bukkit.getWorld("world").getWeatherDuration() / 20) + (Dia() * 3600)) : "weather thunder " + (Dia() * 3600);
                     Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Tormentajaja);
                     Iterator iteplayer = Bukkit.getServer().getOnlinePlayers().iterator();
                     while (iteplayer.hasNext()) {
                         Player p = (Player) iteplayer.next();
                         p.playSound(p.getLocation(), Sound.ENTITY_WITHER_SPAWN, 10.0F, (float) -1.0);
-                        p.sendTitle("♥" + ChatColor.GOLD + "" + ChatColor.BOLD +  "    ¡BLAST STORM!    " + ChatColor.WHITE +"♥", ChatColor.GOLD + "Comienza la BlastStorm con Duracion de " + Dia() + "" + minutos);
+                        p.sendTitle("♥" + ChatColor.GOLD + "" + ChatColor.BOLD +  "      ¡BLAST STORM!      " + ChatColor.WHITE +"♥", ChatColor.GOLD + "Comienza la BlastStorm con Duracion de " + Dia() + "" + minutos);
                         tormenta.setVisible(true);
                         tormenta.addPlayer(p);
                     }

@@ -54,7 +54,6 @@ public final class TLL2 extends JavaPlugin {
                 @Override
                 public void run() {
                     if (world.hasStorm()) {
-                        world.setTime(16000);
                         for(Player players : Bukkit.getOnlinePlayers()){
                             long segundos = (long) (world.getWeatherDuration() / 20);
                             long hours = segundos  / 3600L;
@@ -62,7 +61,7 @@ public final class TLL2 extends JavaPlugin {
                             long seconds = segundos % 60L;
                             String time = String.format("%02d:%02d:%02d", hours, minutes, seconds);
 
-                            Muerte.tormenta.setTitle(ChatColor.translateAlternateColorCodes('&', "&f♥    &6&lBlast Storm: " + time +  "    &f♥"));
+                            Muerte.tormenta.setTitle(ChatColor.translateAlternateColorCodes('&', "&f♥       &6&lBlast Storm: " + time +  "       &f♥"));
                         }
                     }
                 }
