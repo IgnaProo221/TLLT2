@@ -2,9 +2,11 @@ package tlldos.tll2;
 
 import Comandos.ComandosStaff;
 import Comandos.ComandosUsuarios;
+import Configuraciones.Config;
 import Eventos.AlEntrar;
 import Eventos.Muerte;
 import Eventos.alUsarTotem;
+import net.dv8tion.jda.api.entities.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -18,9 +20,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class TLL2 extends JavaPlugin {
     private World world;
     public static BossBar tormenta;
+    private Config configuration;
+
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
         getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "_______________________________________________________________________");
         getServer().getConsoleSender().sendMessage(ChatColor.GOLD +
                 "  _______ _      _        _______ ___  \n" +
@@ -32,6 +37,7 @@ public final class TLL2 extends JavaPlugin {
         getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "THE LAST LIFE T2 >>> " + ChatColor.YELLOW + "TheLastLifeT2Test.jar se cargo correctamente!");
         getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "_______________________________________________________________________");
         world = Bukkit.getWorld("world");
+        configuration = new Config(this);
         new Muerte(this);
         cargarEventos();
         tormentaTick();
