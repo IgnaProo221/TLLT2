@@ -2,18 +2,13 @@ package tlldos.tll2;
 
 import Comandos.ComandosStaff;
 import Comandos.ComandosUsuarios;
-import Configuraciones.Config;
 import Eventos.AlEntrar;
 import Eventos.Muerte;
 import Eventos.alUsarTotem;
-import net.dv8tion.jda.api.entities.Message;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
-import org.bukkit.entity.Boss;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
