@@ -18,7 +18,13 @@ public class Comer implements Listener {
     public void comerEv(PlayerItemConsumeEvent e){
         Player p = e.getPlayer();
         if(e.getItem() != null && e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(ChatColor.GRAY + "Fungal Clumps")){
-            p.setMaxHealth(24);
+            if (plugin.getConfig().getStringList("ConsumidodoFungalClumps").contains(p.getUniqueId().toString())) {
+                p.sendMessage(ChatColor.RED + "Ya has consumido este Item!");
+            }else{
+                p.setMaxHealth(24);
+                plugin.getConfig().getStringList("ConsumidodoFungalClumps").add(p.getUniqueId().toString());
+                plugin.saveConfig();
         }
     }
+}
 }
