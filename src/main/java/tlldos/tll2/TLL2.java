@@ -3,8 +3,10 @@ package tlldos.tll2;
 import Comandos.ComandosStaff;
 import Comandos.ComandosUsuarios;
 import Eventos.AlEntrar;
+import Eventos.Comer;
 import Eventos.Muerte;
 import Eventos.alUsarTotem;
+import Extras.EnderPearlEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -46,6 +48,8 @@ public final class TLL2 extends JavaPlugin {
     public void cargarEventos(){
         getServer().getPluginManager().registerEvents(new alUsarTotem(this), this);
         getServer().getPluginManager().registerEvents(new AlEntrar(this),this);
+        getServer().getPluginManager().registerEvents(new Comer(this), this);
+        getServer().getPluginManager().registerEvents(new EnderPearlEvent(this), this);
     }
     public void tormentaTick(){
         if(world.getWeatherDuration() != 0) {

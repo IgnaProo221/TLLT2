@@ -11,6 +11,7 @@ public class Items{
         ItemStack fc = new ItemStack(Material.DRIED_KELP);
         ItemMeta fcm = fc.getItemMeta();
         fcm.setDisplayName(ChatColor.GRAY + "Fungal Clumps");
+        fc.setItemMeta(fcm);
         return fc;
     }
 
@@ -18,6 +19,7 @@ public class Items{
         ItemStack cp = new ItemStack(Material.ENDER_PEARL);
         ItemMeta cpm = cp.getItemMeta();
         cpm.setDisplayName(ChatColor.GRAY + "" +ChatColor.BOLD + "Cataclysm Pearl");
+        cp.setItemMeta(cpm);
         return cp;
     }
 }
