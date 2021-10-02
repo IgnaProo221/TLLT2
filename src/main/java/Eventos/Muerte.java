@@ -50,7 +50,7 @@ public class Muerte extends ListenerAdapter implements Listener {
         long seconds = segundos % 60L;
         String time = String.format("%02d:%02d:%02d", hours, minutes, seconds);
 
-        tormenta = Bukkit.createBossBar(ChatColor.translateAlternateColorCodes('&', "&f♥       &6&lBlast Storm: " + time +  "       &f♥"), BarColor.YELLOW , BarStyle.SEGMENTED_6);
+        tormenta = Bukkit.createBossBar(ChatColor.translateAlternateColorCodes('&', "&f♥        &6&lBlast Storm: " + time +  "        &f♥"), BarColor.YELLOW , BarStyle.SEGMENTED_6);
         try {
             this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
             jda = JDABuilder.createDefault("ODM0MTI1Mjg3NDUyNzA0Nzc5.YH8VtQ.353ChgCa7fFCqi3rq-vIOWimrMg").build();
@@ -108,7 +108,9 @@ public class Muerte extends ListenerAdapter implements Listener {
     @EventHandler
     public void muerteEvento(PlayerDeathEvent e){
         Player p = e.getEntity();
+        Location location = p.getLocation().clone();
         World world = Bukkit.getWorld("world");
+        p.teleport(location);
         for (Player players : Bukkit.getOnlinePlayers()){
             players.playSound(players.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 10.0F, -1.0F);
             players.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 500, 0, true, false,true));
@@ -203,7 +205,7 @@ public class Muerte extends ListenerAdapter implements Listener {
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    world.setTime(15000);
+                    world.setTime(16000);
                 }
             }, 400);
         }
@@ -354,7 +356,7 @@ public class Muerte extends ListenerAdapter implements Listener {
                     if (Dia() < 1) {
                         minutos = " hora(s)";
                     }
-                    world.setTime(16000);
+                    world.setTime(18000);
                     world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
                     String Tormentajaja = Bukkit.getWorld("world").isThundering() ? "weather thunder " + ((Bukkit.getWorld("world").getWeatherDuration() / 20) + (Dia() * 3600)) : "weather thunder " + (Dia() * 3600);
                     Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Tormentajaja);

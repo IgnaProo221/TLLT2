@@ -1,11 +1,23 @@
 package Extras;
 
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.event.Listener;
-import tlldos.tll2.TLL2;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
-public class Items implements Listener{
-    private TLL2 plugin;
-    public Items(TLL2 plugin){
-        this.plugin = plugin;
+public class Items{
+    public static ItemStack FungaClu(){
+        ItemStack fc = new ItemStack(Material.DRIED_KELP);
+        ItemMeta fcm = fc.getItemMeta();
+        fcm.setDisplayName(ChatColor.GRAY + "Fungal Clumps");
+        return fc;
+    }
+
+    public static ItemStack CataclysPear(){
+        ItemStack cp = new ItemStack(Material.ENDER_PEARL);
+        ItemMeta cpm = cp.getItemMeta();
+        cpm.setDisplayName(ChatColor.GRAY + "" +ChatColor.BOLD + "Cataclysm Pearl");
+        return cp;
     }
 }
