@@ -22,11 +22,12 @@ public class EnderPearlEvent implements Listener{
     @EventHandler
     public void isUsedEnderPearl(PlayerInteractEvent e) {
         if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            if (e.getPlayer().getInventory().getItemInMainHand().getType().equals(Items.CataclysPear()) || e.getPlayer().getInventory().getItemInOffHand().getType().equals(Items.CataclysPear())) {
-                e.getPlayer().setCooldown(Material.ENDER_PEARL, 1);
-            } else {
-                e.getPlayer().setCooldown(Material.ENDER_PEARL, 100);
-                e.getPlayer().damage(1.0D);
+            if (e.getItem() != null && e.getItem().hasItemMeta() && e.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || e.getItem() != null && e.getItem().hasItemMeta() &&e.getPlayer().getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()) {
+                if (e.getItem() != null && e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 400 || e.getItem() != null && e.getPlayer().getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 400) {
+                    e.getPlayer().setCooldown(Material.ENDER_PEARL, 1);
+                } else {
+                    e.getPlayer().setCooldown(Material.ENDER_PEARL, 100);
+                }
             }
         }
     }

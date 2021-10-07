@@ -23,7 +23,6 @@ public class Comer implements Listener {
             }else{
                 p.setMaxHealth(24);
                 plugin.getConfig().getStringList("ConsumidodoFungalClumps").add(p.getUniqueId().toString());
-                plugin.saveConfig();
         }
     }
 }

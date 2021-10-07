@@ -19,6 +19,7 @@ public class Items{
         ItemStack cp = new ItemStack(Material.ENDER_PEARL);
         ItemMeta cpm = cp.getItemMeta();
         cpm.setDisplayName(ChatColor.GRAY + "" +ChatColor.BOLD + "Cataclysm Pearl");
+        cpm.setCustomModelData(400);
         cp.setItemMeta(cpm);
         return cp;
     }
