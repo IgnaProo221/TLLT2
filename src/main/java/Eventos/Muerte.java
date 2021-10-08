@@ -108,9 +108,7 @@ public class Muerte extends ListenerAdapter implements Listener {
     @EventHandler
     public void muerteEvento(PlayerDeathEvent e){
         Player p = e.getEntity();
-        Location location = p.getLocation().clone();
         World world = Bukkit.getWorld("world");
-        p.teleport(location);
         for (Player players : Bukkit.getOnlinePlayers()){
             players.playSound(players.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 10.0F, -1.0F);
             players.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 500, 0, true, false,true));

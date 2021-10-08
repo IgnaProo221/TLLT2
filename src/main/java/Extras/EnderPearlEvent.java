@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import tlldos.tll2.TLL2;
@@ -20,14 +21,11 @@ public class EnderPearlEvent implements Listener{
         this.plugin = plugin;
     }
     @EventHandler
-    public void isUsedEnderPearl(PlayerInteractEvent e) {
+    public void enderCooldown(PlayerInteractEvent e){
         if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            if (e.getItem() != null && e.getItem().hasItemMeta() && e.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || e.getItem() != null && e.getItem().hasItemMeta() &&e.getPlayer().getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()) {
-                if (e.getItem() != null && e.getPlayer().getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 400 || e.getItem() != null && e.getPlayer().getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 400) {
-                    e.getPlayer().setCooldown(Material.ENDER_PEARL, 1);
-                } else {
-                    e.getPlayer().setCooldown(Material.ENDER_PEARL, 100);
-                }
+            ItemStack item = e.getItem();
+            if(item != null && item.getType() == Material.ENDER_PEARL){
+                e.getPlayer().setCooldown(Material.ENDER_PEARL, 100);
             }
         }
     }
