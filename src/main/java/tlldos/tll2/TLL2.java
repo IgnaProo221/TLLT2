@@ -7,21 +7,25 @@ import Eventos.Comer;
 import Eventos.Muerte;
 import Eventos.alUsarTotem;
 import Extras.EnderPearlEvent;
+import Utilidades.Configuration;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 public final class TLL2 extends JavaPlugin {
     private World world;
     public static BossBar tormenta;
+    private Configuration config;
 
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
+
         getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "_______________________________________________________________________");
         getServer().getConsoleSender().sendMessage(ChatColor.GOLD +
                 "  _______ _      _        _______ ___  \n" +

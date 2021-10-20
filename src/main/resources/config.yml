@@ -1,6 +1,7 @@
 Activacion: "Test"
 #NO BORRAR ESTO O MODIFICAR EL FILE, PUEDE OCASIONAR ERRORES
 ConsumidodoFungalClumps:
+  - ""
 #nose como funcionara eso pero bueno tendria que salir asi
 #ConsumidoFungalClumps:
 #- UUID del Jugador

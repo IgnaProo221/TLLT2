@@ -8,6 +8,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import tlldos.tll2.TLL2;
 
+import java.io.IOException;
+import java.util.List;
+
 public class Comer implements Listener {
     private TLL2 plugin;
     public Comer(TLL2 plugin){
@@ -22,7 +25,11 @@ public class Comer implements Listener {
                 p.sendMessage(ChatColor.RED + "Ya has consumido este Item!");
             }else{
                 p.setMaxHealth(24);
-                plugin.getConfig().getStringList("ConsumidodoFungalClumps").add(p.getUniqueId().toString());
+                List<String> lista = plugin.getConfig().getStringList("ConsumidodoFungalClumps");
+                lista.add(p.getUniqueId().toString());
+
+                plugin.getConfig().set("ConsumidodoFungalClumps", lista);
+                plugin.saveConfig();
         }
     }
 }

@@ -1,6 +1,5 @@
 package Eventos;
 
-import jdk.vm.ci.meta.Local;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -20,7 +19,6 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.potion.PotionEffect;
@@ -28,7 +26,6 @@ import org.bukkit.potion.PotionEffectType;
 import tlldos.tll2.TLL2;
 
 import javax.security.auth.login.LoginException;
-import java.awt.*;
 import java.awt.Color;
 import java.time.LocalDate;
 import java.time.LocalTime;
