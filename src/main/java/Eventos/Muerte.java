@@ -42,8 +42,8 @@ public class Muerte extends ListenerAdapter implements Listener {
         this.plugin = plugin;
         world = Bukkit.getWorld("world");
         long segundos = (long) (world.getWeatherDuration() / 20);
-        long hours = segundos  / 3600L;
-        long minutes = segundos % 3600L / 60L;
+        long hours = segundos  / 1800L;
+        long minutes = segundos % 1800L / 60L;
         long seconds = segundos % 60L;
         String time = String.format("%02d:%02d:%02d", hours, minutes, seconds);
 
@@ -84,8 +84,8 @@ public class Muerte extends ListenerAdapter implements Listener {
         if (msg.getContentRaw().equals("tll!tormenta")) {
             World world = Bukkit.getWorld("world");
             long segundos = (long) (world.getWeatherDuration() / 20);
-            long hours = segundos / 3600L;
-            long minutes = segundos % 3600L / 60L;
+            long hours = segundos / 1800L;
+            long minutes = segundos % 1800L / 60L;
             long seconds = segundos % 60L;
 
             String time = String.format("%02d:%02d:%02d", hours, minutes, seconds);
@@ -353,7 +353,7 @@ public class Muerte extends ListenerAdapter implements Listener {
                     }
                     world.setTime(18000);
                     world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
-                    String Tormentajaja = Bukkit.getWorld("world").isThundering() ? "weather thunder " + ((Bukkit.getWorld("world").getWeatherDuration() / 20) + (Dia() * 3600)) : "weather thunder " + (Dia() * 3600);
+                    String Tormentajaja = Bukkit.getWorld("world").isThundering() ? "weather thunder " + ((Bukkit.getWorld("world").getWeatherDuration() / 20) + (Dia() * 1800)) : "weather thunder " + (Dia() * 1800);
                     Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Tormentajaja);
                     Iterator iteplayer = Bukkit.getServer().getOnlinePlayers().iterator();
                     while (iteplayer.hasNext()) {
