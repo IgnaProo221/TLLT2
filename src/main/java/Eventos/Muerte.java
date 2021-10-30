@@ -212,10 +212,17 @@ public class Muerte extends ListenerAdapter implements Listener {
 
         LocalTime Tiempo = LocalTime.now();
 
+        long segundos = (long) (world.getWeatherDuration() / 20);
+        long hours = segundos  / 3600L;
+        long minutes = segundos % 3600L / 60L;
+        long seconds = segundos % 60L;
+        String time = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+
+
         eb.setFooter("TheLastLifeT2.jar", "https://media.discordapp.net/attachments/830482526237753395/874379476212019210/transparentexd.png?width=588&height=588");
         eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
         eb.setTitle("**El Fin del Jugador " + p.getName() + " comienza!**");
-        eb.setDescription(":fire: **Inicia la Blast Storm con Duracion de " + Dia() + " Hora(s)!** :fire:");
+        eb.setDescription(String.format(":fire: **Inicia la Blast Storm con duración de %s** :fire:", time));
         eb.addField(":skull:**Causa de Muerte: **", e.getDeathMessage(), true);
         eb.addField(":beginner:**Dia: **" + Dia(), "", false);
         eb.addField(":map:**Cordernadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
@@ -224,8 +231,12 @@ public class Muerte extends ListenerAdapter implements Listener {
         eb.setThumbnail("https://crafatar.com/renders/head/" + p.getUniqueId() + ".png");
         eb.setColor(new Color(252, 186, 3));
 
-        channel.sendMessage(eb.build()).queue();
+        EmbedBuilder eb1 = new EmbedBuilder();
+        eb1.setDescription(String.format("Se han agregado 30 minutos más a la tormenta. Duración: %s", time));
+        eb1.setColor(new Color(252, 186, 3));
 
+        channel.sendMessage(eb.build()).queue();
+        channel.sendMessage(eb1.build()).queue();
     }
     public void cabezaEstructura(Player p, Location location) {
         location.clone().add(0, -1, 0).getBlock().setType(Material.DEEPSLATE_TILES);
