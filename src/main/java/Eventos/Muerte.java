@@ -232,7 +232,7 @@ public class Muerte extends ListenerAdapter implements Listener {
         eb.setColor(new Color(252, 186, 3));
 
         EmbedBuilder eb1 = new EmbedBuilder();
-        eb1.setDescription(String.format("Se han agregado 30 minutos más a la tormenta. Duración: %s", time));
+        eb1.setDescription(String.format("**Se añade 30 minutos al tiempo de Blast Storm**\n**Multiplicador por Día:** %d", Dia()));
         eb1.setColor(new Color(252, 186, 3));
 
         channel.sendMessage(eb.build()).queue();
