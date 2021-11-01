@@ -1,5 +1,6 @@
 package Comandos;
 
+import Eventos.Muerte;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -64,15 +65,8 @@ public class ComandosUsuarios implements CommandExecutor{
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6THE LAST LIFE ➤ &cHay " + s.getTPS()[0] + " TPS Actuales"));
         }
         if(args[0].equalsIgnoreCase("dia")){
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6THE LAST LIFE ➤ &7Nos Encontramos en el Dia: &6" + Dia()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6THE LAST LIFE ➤ &7Nos Encontramos en el Dia: &6" + Muerte.Dia()));
         }
         return false;
-    }
-    public static int Dia() {
-        LocalDate FechaActual = LocalDate.now();
-
-        LocalDate FechaInicio = LocalDate.parse("2021-09-15");
-
-        return (int) ChronoUnit.DAYS.between(FechaInicio, FechaActual);
     }
 }

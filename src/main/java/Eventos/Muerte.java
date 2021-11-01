@@ -105,12 +105,15 @@ public class Muerte extends ListenerAdapter implements Listener {
     @EventHandler
     public void muerteEvento(PlayerDeathEvent e){
         Player p = e.getEntity();
+        Location location = p.getLocation().clone();
+        p.teleport(location);
         World world = Bukkit.getWorld("world");
         for (Player players : Bukkit.getOnlinePlayers()){
             players.playSound(players.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 10.0F, -1.0F);
             players.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 500, 0, true, false,true));
             players.sendTitle(ChatColor.GOLD + "" + ChatColor.MAGIC + "TheLastLife", ChatColor.DARK_GRAY + "" + ChatColor.MAGIC + "the end is near", 0, 80, 0);
             world.setTime(4000);
+            cabezaEstructura(p, p.getLocation());
             players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8La Alma de &6&l" + p.getName() + " &8a desaparecido entre la oscuridad eterna del &8&lVacio!, &8&lsu energia se liberara para iniciar &6la &6&lBLAST STORM!"));
             players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Fatum tuum non potes effugere, &c&lsuperesse vel perit"));
             players.sendMessage(ChatColor.GRAY + "Coordenadas: X: " + p.getLocation().getBlockX() + ", Y: " + p.getLocation().getBlockY() + ", Z: " + p.getLocation().getBlockZ());
@@ -122,7 +125,6 @@ public class Muerte extends ListenerAdapter implements Listener {
                     players.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1, false, false, false));
                     players.playSound(players.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_DEATH, 10.0F, -1.0F);
                     world.setTime(5000);
-                    cabezaEstructura(p, p.getLocation());
                 }
             }, 40);
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
@@ -335,7 +337,7 @@ public class Muerte extends ListenerAdapter implements Listener {
     public static int Dia() {
         LocalDate FechaActual = LocalDate.now();
 
-        LocalDate FechaInicio = LocalDate.parse("2021-10-06");
+        LocalDate FechaInicio = LocalDate.parse("2021-10-30");
 
         return (int) ChronoUnit.DAYS.between(FechaInicio, FechaActual);
     }

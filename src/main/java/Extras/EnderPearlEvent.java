@@ -1,5 +1,6 @@
 package Extras;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,12 +21,18 @@ public class EnderPearlEvent implements Listener{
     public EnderPearlEvent(TLL2 plugin){
         this.plugin = plugin;
     }
+
     @EventHandler
-    public void enderCooldown(PlayerInteractEvent e){
+    public void onInteract(PlayerInteractEvent e){
         if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             ItemStack item = e.getItem();
-            if(item != null && item.getType() == Material.ENDER_PEARL){
-                e.getPlayer().setCooldown(Material.ENDER_PEARL, 100);
+            if(item != null && !item.hasItemMeta() && item.getType() == Material.ENDER_PEARL){
+                Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        e.getPlayer().setCooldown(Material.ENDER_PEARL, 100);
+                    }
+                },2L);
             }
         }
     }
