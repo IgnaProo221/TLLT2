@@ -6,6 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import tlldos.tll2.TLL2;
 
 import java.io.IOException;
@@ -32,5 +34,11 @@ public class Comer implements Listener {
                 plugin.saveConfig();
         }
     }
+        if(e.getItem() != null && e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(ChatColor.WHITE + "" + ChatColor.BOLD + "Cloudy Marshmallow")){
+            p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 200,2));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 400, 1));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 1));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1, 0));
+        }
 }
 }

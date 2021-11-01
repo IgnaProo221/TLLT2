@@ -6,6 +6,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Items{
     public static ItemStack FungaClu(){
         ItemStack fc = new ItemStack(Material.DRIED_KELP);
@@ -22,5 +25,29 @@ public class Items{
         cpm.setCustomModelData(400);
         cp.setItemMeta(cpm);
         return cp;
+    }
+    public static ItemStack CloudMarsh(){
+        List<String> cmlore = new ArrayList<String>();
+        cmlore.add(ChatColor.GRAY + "Sientete en las Nubes...");
+        cmlore.add(ChatColor.GOLD + "Otorga Levitacion, Slow Falling y Regeneracion");
+        ItemStack cm = new ItemStack(Material.GLOW_BERRIES);
+        ItemMeta cmm = cm.getItemMeta();
+        cmm.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Cloudy Marshmallow");
+        cmm.setCustomModelData(4001);
+        cm.setItemMeta(cmm);
+        return cm;
+    }
+    public static ItemStack ToteBeserk(){
+        List<String> tblore = new ArrayList<String>();
+        tblore.add(ChatColor.GRAY + "Otorga Fuerza X y Speed V por");
+        tblore.add(ChatColor.GRAY + "5 segundos!");
+        tblore.add(ChatColor.RED + "Pone un Cooldown de Totem de 10 segundos");
+        ItemStack tb = new ItemStack(Material.TOTEM_OF_UNDYING);
+        ItemMeta tbm = tb.getItemMeta();
+        tbm.setDisplayName(ChatColor.RED + "Totem Berserk");
+        tbm.setCustomModelData(4002);
+        tbm.setLore(tblore);
+        tb.setItemMeta(tbm);
+        return tb;
     }
 }

@@ -36,6 +36,10 @@ public class ComandosStaff implements CommandExecutor{
                     pa.getInventory().addItem(Items.CataclysPear());
                     pa.sendMessage(ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                 }
+                if (args[1].equalsIgnoreCase("BERSERKER_TOTEM")) {
+                    pa.getInventory().addItem(Items.ToteBeserk());
+                    pa.sendMessage(ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                }
             }
         }else{
             sender.sendMessage(ChatColor.RED + "No tienes Permisos para Ejecutar este comando");
