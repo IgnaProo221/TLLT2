@@ -50,4 +50,15 @@ public class Items{
         tb.setItemMeta(tbm);
         return tb;
     }
+    public static ItemStack BloodShard() {
+        List<String> bslore = new ArrayList<String>();
+        bslore.add(ChatColor.GRAY + "Un Precio Justo.");
+        ItemStack bs = new ItemStack(Material.IRON_NUGGET);
+        ItemMeta bsm = bs.getItemMeta();
+        bsm.setDisplayName(ChatColor.RED + "Blood Shard");
+        bsm.setCustomModelData(4003);
+        bsm.setLore(bslore);
+        bs.setItemMeta(bsm);
+        return bs;
+    }
 }

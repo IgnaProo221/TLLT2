@@ -2,11 +2,10 @@ package tlldos.tll2;
 
 import Comandos.ComandosStaff;
 import Comandos.ComandosUsuarios;
-import Eventos.AlEntrar;
-import Eventos.Comer;
-import Eventos.Muerte;
-import Eventos.alUsarTotem;
+import Eventos.*;
+import Extras.DanoSinEnieEvento;
 import Extras.EnderPearlEvent;
+import Extras.GhastExplosion;
 import Utilidades.Configuration;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,6 +14,7 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import team.unnamed.gui.core.GUIListeners;
 
 public final class TLL2 extends JavaPlugin {
     private World world;
@@ -25,7 +25,6 @@ public final class TLL2 extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
-
         getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "_______________________________________________________________________");
         getServer().getConsoleSender().sendMessage(ChatColor.GOLD +
                 "  _______ _      _        _______ ___  \n" +
@@ -50,10 +49,14 @@ public final class TLL2 extends JavaPlugin {
         getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "El Plugin se deshabilito correctamente!");
     }
     public void cargarEventos(){
+        getServer().getPluginManager().registerEvents(new GUIListeners(),this);
         getServer().getPluginManager().registerEvents(new alUsarTotem(this), this);
         getServer().getPluginManager().registerEvents(new AlEntrar(this),this);
         getServer().getPluginManager().registerEvents(new Comer(this), this);
         getServer().getPluginManager().registerEvents(new EnderPearlEvent(this), this);
+        getServer().getPluginManager().registerEvents(new Dormir(this),this);
+        getServer().getPluginManager().registerEvents(new GhastExplosion(this),this);
+        getServer().getPluginManager().registerEvents(new DanoSinEnieEvento(this),this);
     }
     public void tormentaTick(){
         if(world.getWeatherDuration() != 0) {

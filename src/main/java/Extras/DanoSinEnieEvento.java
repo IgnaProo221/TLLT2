@@ -1,6 +1,7 @@
 package Extras;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Ghast;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,13 +15,26 @@ public class DanoSinEnieEvento implements Listener{
     }
 
     @EventHandler
-    public void evitarDano(EntityDamageEvent e){
-        Ghast gh = (Ghast) e.getEntity();
-        if(gh.getCustomName() != null&&  gh.getCustomName().equalsIgnoreCase(ChatColor.GOLD + "Undying Ghast")){
-           if(e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) || e.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)){
-               e.setCancelled(true);
-           }
+    public void cancelledDamage(EntityDamageEvent e) {
+        Entity entity = e.getEntity();
 
+        if (entity instanceof Ghast) {
+
+            Ghast ghast = (Ghast)entity;
+            String customName = ghast.getCustomName();
+            String needName = ChatColor.GOLD + "Undying Ghast";
+
+            if (customName == null) {
+                return;
+            }
+
+            if (customName.equals(needName)) {
+
+                if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION || e.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) {
+
+                    e.setCancelled(true);
+                }
+            }
         }
     }
 }
