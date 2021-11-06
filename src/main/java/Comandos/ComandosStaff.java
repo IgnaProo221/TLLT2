@@ -15,6 +15,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
 
 public class ComandosStaff implements CommandExecutor{
+    String prefix = ChatColor.translateAlternateColorCodes('&',"&6&lThec&lLast&6&lLife &7➤ ");
     public static BossBar tormenta;
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -30,23 +31,23 @@ public class ComandosStaff implements CommandExecutor{
             if (args[0].equalsIgnoreCase("give")) {
                 if (args[1].equalsIgnoreCase("FUNGAL_CLUMPS")) {
                     pa.getInventory().addItem(Items.FungaClu());
-                    pa.sendMessage(ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                 }
                 if (args[1].equalsIgnoreCase("CATACLYSM_PEARL")) {
                     pa.getInventory().addItem(Items.CataclysPear());
-                    pa.sendMessage(ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                 }
                 if (args[1].equalsIgnoreCase("BERSERKER_TOTEM")) {
                     pa.getInventory().addItem(Items.ToteBeserk());
-                    pa.sendMessage(ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                 }
                 if (args[1].equalsIgnoreCase("CLOUDY_MARSH")) {
                     pa.getInventory().addItem(Items.CloudMarsh());
-                    pa.sendMessage(ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                 }
             }
         }else{
-            sender.sendMessage(ChatColor.RED + "No tienes Permisos para Ejecutar este comando");
+            sender.sendMessage(prefix + ChatColor.RED + "No tienes Permisos para Ejecutar este comando");
         }
         return false;
     }

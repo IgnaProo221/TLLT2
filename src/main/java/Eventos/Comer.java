@@ -18,15 +18,16 @@ public class Comer implements Listener {
     public Comer(TLL2 plugin){
         this.plugin = plugin;
     }
-
+    String prefix = ChatColor.translateAlternateColorCodes('&',"&6&lThec&lLast&6&lLife &7➤ ");
     @EventHandler
     public void comerEv(PlayerItemConsumeEvent e){
         Player p = e.getPlayer();
         if(e.getItem() != null && e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(ChatColor.GRAY + "Fungal Clumps")){
             if (plugin.getConfig().getStringList("ConsumidodoFungalClumps").contains(p.getUniqueId().toString())) {
-                p.sendMessage(ChatColor.RED + "Ya has consumido este Item!");
+                p.sendMessage(prefix + ChatColor.RED + "Ya has consumido este Item!");
             }else{
                 p.setMaxHealth(24);
+                p.sendMessage(prefix + ChatColor.translateAlternateColorCodes('&', "&cHas Consumido &5Fungal Clumps &7(Se Añadieron 2 Contenedores de Vida)"));
                 List<String> lista = plugin.getConfig().getStringList("ConsumidodoFungalClumps");
                 lista.add(p.getUniqueId().toString());
 

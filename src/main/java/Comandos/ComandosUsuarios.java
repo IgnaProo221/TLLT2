@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class ComandosUsuarios implements CommandExecutor{
+    String prefix = ChatColor.translateAlternateColorCodes('&',"&6&lThec&lLast&6&lLife &7➤ ");
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
@@ -58,14 +59,13 @@ public class ComandosUsuarios implements CommandExecutor{
             sender.sendMessage(ChatColor.GOLD + "mob <MOB>: " + ChatColor.GRAY + "Muestra algo de Info del Mob");
             sender.sendMessage(ChatColor.GOLD + "dia: " + ChatColor.GRAY + "Muestra el dia donde nos encontramos");
             sender.sendMessage(ChatColor.GOLD + "tps: " + ChatColor.GRAY + "Muestra los TPS del servidor");
-            sender.sendMessage(ChatColor.GOLD + "cambios: " + ChatColor.GRAY + "Muestra un link de imgur con todos los Cambios del Dia Indicado");
             sender.sendMessage(ChatColor.DARK_GRAY + "----------------------");
         }
         if(args[0].equalsIgnoreCase("tps")){
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6THE LAST LIFE ➤ &cHay " + s.getTPS()[0] + " TPS Actuales"));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',prefix +"&cHay " + s.getTPS()[0] + " TPS Actuales"));
         }
         if(args[0].equalsIgnoreCase("dia")){
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6THE LAST LIFE ➤ &7Nos Encontramos en el Dia: &6" + Muerte.Dia()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',prefix + "&7Nos Encontramos en el Dia: &6" + Muerte.Dia()));
         }
         return false;
     }
