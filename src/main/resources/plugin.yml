@@ -3,7 +3,7 @@ version: ${project.version}
 main: tlldos.tll2.TLL2
 api-version: 1.17
 prefix: THELASTLIFE
-authors: [ Mutant, Wicked ]
+authors: [ Mutant, Wicked, LepePos ]
 description: caca123
 commands:
   thelastlife:

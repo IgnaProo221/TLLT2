@@ -19,7 +19,7 @@ public class Dormir implements Listener{
     public Dormir(TLL2 plugin){
         this.plugin = plugin;
     }
-    String prefix = ChatColor.translateAlternateColorCodes('&',"&6&lThec&lLast&6&lLife &7➤ ");
+    String prefix = ChatColor.translateAlternateColorCodes('&',"&6&lThe&c&lLast&6&lLife &7➤ ");
     private Set<UUID> players = new HashSet<UUID>();
     @EventHandler
     public void onBed(PlayerBedEnterEvent e){
