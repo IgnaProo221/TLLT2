@@ -52,7 +52,7 @@ public class Items{
     }
     public static ItemStack BloodShard() {
         List<String> bslore = new ArrayList<String>();
-        bslore.add(ChatColor.GRAY + "Un Precio Justo.");
+        bslore.add(ChatColor.GRAY + "Un Sacrificio Justo.");
         ItemStack bs = new ItemStack(Material.IRON_NUGGET);
         ItemMeta bsm = bs.getItemMeta();
         bsm.setDisplayName(ChatColor.RED + "Blood Shard");
