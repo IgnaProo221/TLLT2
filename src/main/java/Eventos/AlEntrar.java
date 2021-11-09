@@ -15,21 +15,6 @@ public class AlEntrar implements Listener {
         this.plugin = plugin;
     }
     @EventHandler
-    public void barjaGay(PlayerJoinEvent e){
-        Player p = e.getPlayer();
-        if (p.getName().contains("Barjaxd")){
-            p.kickPlayer(ChatColor.RED + "CALLATE BARJA GAY XD");
-        }
-    }
-
-    @EventHandler
-    public void facuPuto(PlayerJoinEvent e){
-        Player p = e.getPlayer();
-        if (p.getName().contains("Fcun")){
-            p.kickPlayer(ChatColor.RED + "No.");
-        }
-    }
-    @EventHandler
     public void tormentaJoin(PlayerJoinEvent e){
         Muerte.tormenta.addPlayer(e.getPlayer());
     }
