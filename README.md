@@ -1,3 +1,5 @@
-# TLLT2-PAPU
-es el pepe
-ohla
+# THE LAST LIFE T2 REPOSITORY
+C Proyecto pro
+
+# :V
+
