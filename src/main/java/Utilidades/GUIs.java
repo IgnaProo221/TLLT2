@@ -64,6 +64,7 @@ public class GUIs implements Listener{
         ItemStack sinfo = new ItemStack(Material.RED_DYE);
         ItemMeta sinfom = sinfo.getItemMeta();
         sinfom.setDisplayName(ChatColor.RED + "Info Sacrificos");
+        sinfom.setLore(sinfolore);
         return sinfo;
     }
 }

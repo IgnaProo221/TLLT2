@@ -210,21 +210,16 @@ public class Muerte extends ListenerAdapter implements Listener {
         eb.setFooter("TheLastLifeT2.jar", "https://media.discordapp.net/attachments/830482526237753395/874379476212019210/transparentexd.png?width=588&height=588");
         eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
         eb.setTitle("**El Fin del Jugador " + p.getName() + " comienza!**");
-        eb.setDescription(String.format("**:fire: Se añade 30 minutos al tiempo de Blast Storm**\n**Multiplicador por Día:** %d", Dia()) + ":fire:");
-        eb.addField(":skull:**Causa de Muerte: **", e.getDeathMessage(), false);
-        eb.addField(":beginner:**Dia: **" + Dia(), "", false);
-        eb.addField(":map:**Cordernadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), false);
-        eb.addField(":low_brightness:**Fecha: **" + Fecha, "", false);
-        eb.addField(":alarm_clock:**Hora: **" + Tiempo,"",false);
+        eb.setDescription(String.format("**:fire: Se añade 30 minutos al tiempo de Blast Storm**\n**Multiplicador por Día:** %d", Dia()) + "** :fire:");
+        eb.addField(":skull:**Causa de Muerte: **", e.getDeathMessage(), true);
+        eb.addField(":beginner:**Dia: **" + Dia(), "", true);
+        eb.addField(":map:**Cordernadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
+        eb.addField(":low_brightness:**Fecha: **" + Fecha, "", true);
+        eb.addField(":alarm_clock:**Hora: **" + Tiempo,"",true);
         eb.setThumbnail("https://crafatar.com/renders/head/" + p.getUniqueId() + ".png");
         eb.setColor(new Color(252, 186, 3));
 
-        EmbedBuilder eb1 = new EmbedBuilder();
-        eb1.setDescription(String.format("**Se añade 30 minutos al tiempo de Blast Storm**\n**Multiplicador por Día:** %d", Dia()));
-        eb1.setColor(new Color(252, 186, 3));
-
         channel.sendMessage(eb.build()).queue();
-        channel.sendMessage(eb1.build()).queue();
     }
     public void cabezaEstructura(Player p, Location location) {
         location.clone().add(0, -1, 0).getBlock().setType(Material.DEEPSLATE_TILES);
