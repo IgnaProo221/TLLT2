@@ -42,12 +42,13 @@ public class DanoSinEnieEvento implements Listener{
 
     @EventHandler
     public void danoPro(EntityDamageEvent e){
+
         Entity entity = e.getEntity();
-        if(entity instanceof  Player){
-            Player p = (Player)entity;
+
+        if(entity instanceof Player player) {
             if(e.getCause() == EntityDamageEvent.DamageCause.DROWNING){
                 e.setCancelled(true);
-                setDamageSource(p, 1000.0D);
+                setDamageSource(player, 1000.0D);
             }
         }
     }
