@@ -27,6 +27,22 @@ public class alUsarTotem implements Listener {
     public void totemDado(EntityResurrectEvent e){
         if (e.getEntity().getType() == (EntityType.PLAYER)) {
             Player p = (Player)e.getEntity();
+            if(p.getInventory().getItemInMainHand().equals(Items.ToteBeserk()) || p.getInventory().getItemInOffHand().equals(Items.ToteBeserk())){
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
+                p.setCooldown(Material.TOTEM_OF_UNDYING, 200);
+                for(Player players : Bukkit.getOnlinePlayers()){
+                    players.sendMessage(ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")" );
+                    players.sendMessage(ChatColor.RED + "Los Totems de " + ChatColor.YELLOW + "" + ChatColor.BOLD + p.getName() + ChatColor.RED + " Entraron en Cooldown de 10 Segundos! ");
+                    Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 9));
+                            p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 4));
+                        }
+                    },10);
+                }
+                return;
+            }
             if(p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING || p.getInventory().getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING) {
                 int TotemCara = new Random().nextInt(12) + 1;
                 if (p.hasCooldown(Material.TOTEM_OF_UNDYING)){
@@ -34,22 +50,6 @@ public class alUsarTotem implements Listener {
                     for (Player players : Bukkit.getOnlinePlayers()){
                         players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8El Cooldown del Totem del Jugador &6&l" + p.getName() + "&8 se a Activado!"));
                     }
-                }
-                if(p.getInventory().getItemInMainHand().equals(Items.ToteBeserk()) || p.getInventory().getItemInOffHand().equals(Items.ToteBeserk())){
-                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
-                    p.setCooldown(Material.TOTEM_OF_UNDYING, 200);
-                    for(Player players : Bukkit.getOnlinePlayers()){
-                        players.sendMessage(ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")" );
-                        players.sendMessage(ChatColor.RED + "Los Totems de " + ChatColor.YELLOW + "" + ChatColor.BOLD + p.getName() + ChatColor.RED + " Entraron en Cooldown de 10 Segundos! ");
-                        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 9));
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 4));
-                            }
-                        },10);
-                    }
-                    return;
                 }
                 if(TotemCara == 1){
                     p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
