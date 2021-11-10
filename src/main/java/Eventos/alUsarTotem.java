@@ -163,15 +163,15 @@ public class alUsarTotem implements Listener {
                     }
                 }else if (TotemCara == 10){
                     p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
-                    Ghast gh = (Ghast) p.getWorld().spawn(p.getLocation().clone(), Ghast.class);
-                    gh.setCustomName(ChatColor.GOLD + "Undying Ghast");
-                    gh.setMaxHealth(50);
-                    gh.setHealth(50);
+                    TNTPrimed tntPrimed= (TNTPrimed) p.getWorld().spawn(p.getLocation().clone(), TNTPrimed.class);
+                    tntPrimed.setYield(10);
+                    tntPrimed.setFuseTicks(100);
+
 
                     for(Player players : Bukkit.getOnlinePlayers()){
                         players.sendMessage(ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")" );
                         players.sendMessage(ChatColor.RED + "El Totem a caido en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Numero 10!");
-                        players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Undying Ghast en su Posicion!");
+                        players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "TNT en su Posicion!");
                     }
                 }
                 else if (TotemCara == 11){

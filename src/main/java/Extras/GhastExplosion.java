@@ -17,10 +17,8 @@ public class GhastExplosion implements Listener{
     @EventHandler
     public void GhastExplosionPower(ProjectileLaunchEvent e) {
         if (e.getEntity().getShooter() instanceof Ghast && e.getEntity() instanceof Fireball) {
-            if (e.getEntity().getCustomName() != null && e.getEntity().getCustomName().contains(ChatColor.GOLD + "Undying Ghast")){
                 Fireball fireball = (Fireball) e.getEntity();
                 fireball.setYield(7);
             }
-        }
     }
 }

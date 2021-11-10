@@ -1,12 +1,10 @@
 package Extras;
 
+import Utilidades.Mobs;
 import net.minecraft.world.damagesource.DamageSource;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftEntity;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Ghast;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -27,22 +25,17 @@ public class DanoSinEnieEvento implements Listener{
     public void cancelledDamage(EntityDamageEvent e) {
         Entity entity = e.getEntity();
 
-        if (entity instanceof Ghast) {
 
-            Ghast ghast = (Ghast)entity;
-            String customName = ghast.getCustomName();
-            String needName = ChatColor.GOLD + "Undying Ghast";
-
-            if (customName == null) {
-                return;
+        if(entity instanceof Blaze){
+            if(e.getCause().equals(EntityDamageEvent.DamageCause.DROWNING)){
+                e.setCancelled(true);
             }
+        }
 
-            if (customName.equals(needName)) {
 
-                if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION || e.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION) {
-
-                    e.setCancelled(true);
-                }
+        if (entity instanceof Ghast) {
+            if(e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) || e.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)){
+                e.setCancelled(true);
             }
         }
     }
