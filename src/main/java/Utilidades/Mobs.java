@@ -17,7 +17,7 @@ public class Mobs implements Listener{
         this.plugin = plugin;
     }
 
-    public void zombiTest(Zombie self) {
+    public static void zombiTest(Zombie self) {
 
         self.setCustomName("Zombi Renegado");
         self.getEquipment().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
@@ -28,7 +28,7 @@ public class Mobs implements Listener{
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TESTZOMBIE"), PersistentDataType.STRING, "TESTZOMBIE");
     }
 
-    public void tntEnderPearl(TNTPrimed self) {
+    public static void tntEnderPearl(TNTPrimed self) {
         self.setYield(5);
         self.setFuseTicks(40);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TNTENDERPEARL"), PersistentDataType.STRING, "TNTENDERPEARL");
