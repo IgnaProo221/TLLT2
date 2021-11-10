@@ -20,6 +20,7 @@ public final class TLL2 extends JavaPlugin {
     private World world;
     public static BossBar tormenta;
     private Configuration config;
+    public static TLL2 plugin;
 
 
     @Override
@@ -77,5 +78,9 @@ public final class TLL2 extends JavaPlugin {
                 }
             },0,20L);
         }
+    }
+
+    public static TLL2 getPlugin() {
+        return plugin;
     }
 }
