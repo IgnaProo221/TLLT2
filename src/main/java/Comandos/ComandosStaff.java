@@ -2,6 +2,7 @@ package Comandos;
 
 import Eventos.Muerte;
 import Extras.Items;
+import Utilidades.GUIs;
 import org.bukkit.*;
 import org.bukkit.boss.BossBar;
 import org.bukkit.command.Command;
@@ -27,6 +28,9 @@ public class ComandosStaff implements CommandExecutor{
         if(sender.isOp()) {
             if (args[0].equalsIgnoreCase("alerta")) {
                 s.getConsoleSender().sendMessage("Alguien hizo el coso de Alerta @Mutant te llaman xdxdxd");
+            }
+            if (args[0].equalsIgnoreCase("sacrificiostest")) {
+                pa.openInventory(GUIs.getCa().build());
             }
             if (args[0].equalsIgnoreCase("give")) {
                 if (args[1].equalsIgnoreCase("FUNGAL_CLUMPS")) {
