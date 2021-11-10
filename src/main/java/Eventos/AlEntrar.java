@@ -1,6 +1,7 @@
 package Eventos;
 
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,7 +16,9 @@ public class AlEntrar implements Listener {
         this.plugin = plugin;
     }
     @EventHandler
-    public void tormentaJoin(PlayerJoinEvent e){
-        Muerte.tormenta.addPlayer(e.getPlayer());
+    public void tormentaJoin(PlayerJoinEvent e) {
+        if (Bukkit.getWorld("world").hasStorm()) {
+            Muerte.tormenta.addPlayer(e.getPlayer());
+        }
     }
 }

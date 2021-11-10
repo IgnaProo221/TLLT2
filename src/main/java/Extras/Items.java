@@ -2,12 +2,17 @@ package Extras;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static Utilidades.Format.format;
 
 public class Items{
     public static ItemStack FungaClu(){
@@ -60,5 +65,22 @@ public class Items{
         bsm.setLore(bslore);
         bs.setItemMeta(bsm);
         return bs;
+    }
+
+    public static ItemStack createFragmentoSangre(int size) {
+        ItemStack frag = new ItemStack(Material.RED_DYE, size);
+        ItemMeta meta = frag.getItemMeta();
+        Objects.requireNonNull(meta).setDisplayName(format("&cFragmento de Sangre"));
+        List<String> lore = new ArrayList<>();
+        lore.add(format("&7El &cFragmento de sangre &7se puede"));
+        lore.add(format("&7usar crafteando la &cDaga Ceremonial&7."));
+        lore.add("");
+        lore.add(format("&7Nivel: &eComún&7."));
+        meta.setLore(lore);
+        meta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta.setUnbreakable(true);
+        frag.setItemMeta(meta);
+        return frag;
     }
 }
