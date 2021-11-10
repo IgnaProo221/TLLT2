@@ -26,7 +26,7 @@ public class Items{
         cp.setItemMeta(cpm);
         return cp;
     }
-    public static ItemStack CloudMarsh(){
+    public static ItemStack CloudMarsh() {
         List<String> cmlore = new ArrayList<String>();
         cmlore.add(ChatColor.GRAY + "Sientete en las Nubes...");
         cmlore.add(ChatColor.GOLD + "Otorga Levitacion, Slow Falling y Regeneracion");
@@ -34,6 +34,7 @@ public class Items{
         ItemMeta cmm = cm.getItemMeta();
         cmm.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "Cloudy Marshmallow");
         cmm.setCustomModelData(4001);
+        cmm.setLore(cmlore);
         cm.setItemMeta(cmm);
         return cm;
     }

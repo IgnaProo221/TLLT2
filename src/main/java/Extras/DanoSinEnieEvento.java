@@ -16,11 +16,6 @@ public class DanoSinEnieEvento implements Listener{
         this.plugin = plugin;
     }
 
-    public void setDamageSource(Player p, double ammount) {
-        net.minecraft.world.entity.Entity en = ((CraftEntity)p).getHandle();
-        en.damageEntity(DamageSource.h, (float)ammount);
-    }
-
     @EventHandler
     public void cancelledDamage(EntityDamageEvent e) {
         Entity entity = e.getEntity();
@@ -48,7 +43,7 @@ public class DanoSinEnieEvento implements Listener{
         if(entity instanceof Player player) {
             if(e.getCause() == EntityDamageEvent.DamageCause.DROWNING){
                 e.setCancelled(true);
-                setDamageSource(player, 1000.0D);
+                player.damage(10000);
             }
         }
     }
