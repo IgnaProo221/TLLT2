@@ -33,10 +33,15 @@ public class alUsarTotem implements Listener {
                     e.setCancelled(true);
                     for (Player players : Bukkit.getOnlinePlayers()){
                         players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8El Cooldown del Totem del Jugador &6&l" + p.getName() + "&8 se a Activado!"));
+                        return;
                     }
                 }
 
                 if(p.getInventory().getItemInMainHand().equals(Items.ToteBeserk()) || p.getInventory().getItemInOffHand().equals(Items.ToteBeserk())){
+
+                    if(p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING && !p.getInventory().getItemInMainHand().equals(Items.ToteBeserk()))
+                        return;
+
                     p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
                     p.setCooldown(Material.TOTEM_OF_UNDYING, 200);
                     for(Player players : Bukkit.getOnlinePlayers()){
