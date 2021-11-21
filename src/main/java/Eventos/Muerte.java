@@ -318,7 +318,7 @@ public class Muerte extends ListenerAdapter implements Listener {
     public static int Dia() {
         LocalDate FechaActual = LocalDate.now();
 
-        LocalDate FechaInicio = LocalDate.parse("2021-10-30");
+        LocalDate FechaInicio = LocalDate.parse("2021-11-19");
 
         return (int) ChronoUnit.DAYS.between(FechaInicio, FechaActual);
     }

@@ -16,7 +16,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
 
 public class ComandosStaff implements CommandExecutor{
-    String prefix = ChatColor.translateAlternateColorCodes('&',"&6&lThec&lLast&6&lLife &7➤ ");
+    String prefix = ChatColor.translateAlternateColorCodes('&',"&6&lThe&c&lLast&6&lLife &7➤ ");
     public static BossBar tormenta;
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {

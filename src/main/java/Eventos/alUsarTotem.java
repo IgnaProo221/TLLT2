@@ -28,7 +28,7 @@ public class alUsarTotem implements Listener {
         if (e.getEntity().getType() == (EntityType.PLAYER)) {
             Player p = (Player)e.getEntity();
             if(p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING || p.getInventory().getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING) {
-                int TotemCara = new Random().nextInt(12) + 1;
+                int TotemCara = new Random().nextInt(6) + 1;
                 if (p.hasCooldown(Material.TOTEM_OF_UNDYING)){
                     e.setCancelled(true);
                     for (Player players : Bukkit.getOnlinePlayers()){
@@ -70,11 +70,11 @@ public class alUsarTotem implements Listener {
                     for(Player players : Bukkit.getOnlinePlayers()){
                         players.sendMessage(ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")" );
                         players.sendMessage(ChatColor.RED + "El Totem a caido en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Numero 2!");
-                        players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Veneno III por 10 segundos!");
+                        players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Speed II por 10 segundos!");
                         Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 400, 2));
+                                p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 1));
                             }
                         },10);
                     }
@@ -83,11 +83,12 @@ public class alUsarTotem implements Listener {
                     for(Player players : Bukkit.getOnlinePlayers()){
                         players.sendMessage(ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")" );
                         players.sendMessage(ChatColor.RED + "El Totem a caido en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Numero 3!");
-                        players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Slowness II por 20 segundos!");
+                        players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Fuerza y Haste II por 5 segundos!");
                         Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 400, 1));
+                                p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 1));
+                                p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 100, 1));
                             }
                         },10);
                     }
@@ -96,11 +97,13 @@ public class alUsarTotem implements Listener {
                     for(Player players : Bukkit.getOnlinePlayers()){
                         players.sendMessage(ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")" );
                         players.sendMessage(ChatColor.RED + "El Totem a caido en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Numero 4!");
-                        players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Wither V por 10 segundos!");
+                        players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Wither, Slowness y Veneno II por 10 segundos!");
                         Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 200, 4));
+                                p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 200, 1));
+                                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 1));
+                                p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 200, 1));
                             }
                         },10);
                     }
@@ -109,103 +112,26 @@ public class alUsarTotem implements Listener {
                     for(Player players : Bukkit.getOnlinePlayers()){
                         players.sendMessage(ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")" );
                         players.sendMessage(ChatColor.RED + "El Totem a caido en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Numero 5!");
-                        players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Mining Fatigue V por 30 segundos!");
+                        players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Usar otro Totem en tu Inventario!");
                         Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 600, 4));
+                                p.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 1, 4));
                             }
                         },10);
                     }
-                } else if (TotemCara == 6){
+                } else if (TotemCara == 6) {
                     p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
-                    for(Player players : Bukkit.getOnlinePlayers()){
-                        players.sendMessage(ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")" );
+                    for (Player players : Bukkit.getOnlinePlayers()) {
+                        players.sendMessage(ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
                         players.sendMessage(ChatColor.RED + "El Totem a caido en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Numero 6!");
-                        players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Blindness  por 30 segundos!");
+                        players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Creeper en tus Bloques!");
                         Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 600, 0));
+                                p.getLocation().getWorld().spawn(p.getLocation().clone(), Creeper.class);
                             }
-                        },10);
-                    }
-                } else if (TotemCara == 7){
-                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
-                    Creeper cr = (Creeper) p.getWorld().spawn(p.getLocation().clone(), Creeper.class);
-                    cr.setPowered(true);
-                    cr.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 2));
-                    for(Player players : Bukkit.getOnlinePlayers()){
-                        players.sendMessage(ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")" );
-                        players.sendMessage(ChatColor.RED + "El Totem a caido en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Numero 7!");
-                        players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Creeper Cargado en su Posicion");
-                    }
-                }else if (TotemCara == 8){
-                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
-                    for(Player players : Bukkit.getOnlinePlayers()){
-                        players.sendMessage(ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")" );
-                        players.sendMessage(ChatColor.RED + "El Totem a caido en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Numero 8!");
-                        players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Hambre III por 3 minutos y Instant Damage III");
-                        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 3600, 2));
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 1, 2));
-                            }
-                        },10);
-                    }
-                }else if (TotemCara == 9){
-                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
-                    for(Player players : Bukkit.getOnlinePlayers()){
-                        players.sendMessage(ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")" );
-                        players.sendMessage(ChatColor.RED + "El Totem a caido en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Numero 9!");
-                        players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Weakness I por 3 minutos y Instant Damage III");
-                        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 3600, 0));
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 1, 2));
-                            }
-                        },10);
-                    }
-                }else if (TotemCara == 10){
-                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
-                    TNTPrimed tntPrimed= (TNTPrimed) p.getWorld().spawn(p.getLocation().clone(), TNTPrimed.class);
-                    tntPrimed.setYield(10);
-                    tntPrimed.setFuseTicks(100);
-
-
-                    for(Player players : Bukkit.getOnlinePlayers()){
-                        players.sendMessage(ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")" );
-                        players.sendMessage(ChatColor.RED + "El Totem a caido en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Numero 10!");
-                        players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "TNT en su Posicion!");
-                    }
-                }
-                else if (TotemCara == 11){
-                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
-                    p.getWorld().spawnEntity(p.getLocation(), EntityType.VEX);
-                    p.getWorld().spawnEntity(p.getLocation(), EntityType.VEX);
-                    p.getWorld().spawnEntity(p.getLocation(), EntityType.VEX);
-                    p.getWorld().spawnEntity(p.getLocation(), EntityType.VEX);
-                    p.getWorld().spawnEntity(p.getLocation(), EntityType.VEX);
-                    p.getWorld().spawnEntity(p.getLocation(), EntityType.VEX);
-                    p.getWorld().spawnEntity(p.getLocation(), EntityType.VEX);
-                    p.getWorld().spawnEntity(p.getLocation(), EntityType.VEX);
-                    p.getWorld().spawnEntity(p.getLocation(), EntityType.VEX);
-                    p.getWorld().spawnEntity(p.getLocation(), EntityType.VEX);
-                    for(Player players : Bukkit.getOnlinePlayers()){
-                        players.sendMessage(ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")" );
-                        players.sendMessage(ChatColor.RED + "El Totem a caido en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Numero 11!");
-                        players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "10 Vexes en su Posicion");
-                    }
-                }
-                else if (TotemCara == 12){
-                    p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
-                    p.setCooldown(Material.TOTEM_OF_UNDYING, 100);
-                    for(Player players : Bukkit.getOnlinePlayers()){
-                        players.sendMessage(ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")" );
-                        players.sendMessage(ChatColor.RED + "El Totem a caido en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Numero 12!");
-                        players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.DARK_RED + "" + ChatColor.BOLD + "Cooldown de Totem por 5 segundos");
+                        }, 10);
                     }
                 }
             }
