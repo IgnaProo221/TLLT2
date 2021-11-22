@@ -2,6 +2,7 @@ package Comandos;
 
 import Eventos.Muerte;
 import Extras.Items;
+import Utilidades.Format;
 import Utilidades.GUIs;
 import org.bukkit.*;
 import org.bukkit.boss.BossBar;
@@ -30,7 +31,12 @@ public class ComandosStaff implements CommandExecutor{
                 s.getConsoleSender().sendMessage("Alguien hizo el coso de Alerta @Mutant te llaman xdxdxd");
             }
             if (args[0].equalsIgnoreCase("sacrificiostest")) {
-                pa.openInventory(GUIs.getCa().build());
+                try {
+                    pa.openInventory(GUIs.getCa().build());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    pa.sendMessage(Format.format(prefix + "&7¡Ha ocurrido un &c&lerror &7al mandar la GUI."));
+                }
             }
             if (args[0].equalsIgnoreCase("give")) {
                 if (args[1].equalsIgnoreCase("FUNGAL_CLUMPS")) {

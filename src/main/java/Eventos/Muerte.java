@@ -23,6 +23,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import tlldos.tll2.TLL2;
 
 import javax.security.auth.login.LoginException;
@@ -349,14 +350,8 @@ public class Muerte extends ListenerAdapter implements Listener {
                     world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
                     String Tormentajaja = Bukkit.getWorld("world").isThundering() ? "weather thunder " + ((Bukkit.getWorld("world").getWeatherDuration() / 20) + (Dia() * 1800)) : "weather thunder " + (Dia() * 1800);
                     Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Tormentajaja);
-                    Iterator iteplayer = Bukkit.getServer().getOnlinePlayers().iterator();
-                    while (iteplayer.hasNext()) {
-                        Player p = (Player) iteplayer.next();
-                        p.playSound(p.getLocation(), Sound.ENTITY_WITHER_SPAWN, 10.0F, (float) -1.0);
-                        p.sendTitle("♥" + ChatColor.GOLD + "" + ChatColor.BOLD +  "      ¡BLAST STORM!      " + ChatColor.WHITE +"♥", ChatColor.RED + "¡Que Comienze el FIN!" );
-                        tormenta.setVisible(true);
-                        tormenta.addPlayer(p);
-                    }
+                    StartBlastStormEvent start = new StartBlastStormEvent();
+                    Bukkit.getPluginManager().callEvent(start);
                 }
             }, 420L);
         }

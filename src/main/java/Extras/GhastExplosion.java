@@ -14,11 +14,12 @@ public class GhastExplosion implements Listener{
     public GhastExplosion(TLL2 plugin){
         this.plugin = plugin;
     }
+
     @EventHandler
     public void GhastExplosionPower(ProjectileLaunchEvent e) {
         if (e.getEntity().getShooter() instanceof Ghast && e.getEntity() instanceof Fireball) {
-                Fireball fireball = (Fireball) e.getEntity();
-                fireball.setYield(7);
-            }
+            Fireball fireball = (Fireball) e.getEntity();
+            fireball.setYield(7);
+        }
     }
 }

@@ -15,12 +15,11 @@ public class TormentaUtils implements Listener{
         this.plugin = plugin;
     }
 
-   ///NOSE COMO HACER ESTO @LEPEPOS AYUDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-    public static Player TormentaTier1(Player p){
-        p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 0, false, false, false));
-        p.playSound(p.getLocation().clone(), Sound.ENTITY_WITHER_SPAWN, 10.0F, -1.0F);
+    ///NOSE COMO HACER ESTO @LEPEPOS AYUDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    ///Hola
 
-        return p;
+    public static void startStorm(int tierLevel) {
+        
     }
 
 

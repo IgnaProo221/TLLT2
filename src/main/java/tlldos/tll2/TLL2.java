@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import team.unnamed.gui.core.GUIListeners;
 
 public final class TLL2 extends JavaPlugin {
-    private World world;
+    public World world;
     public static BossBar tormenta;
     private Configuration config;
     public static TLL2 plugin;

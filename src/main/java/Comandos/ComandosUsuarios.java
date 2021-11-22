@@ -44,7 +44,7 @@ public class ComandosUsuarios implements CommandExecutor{
         if(args[0].equalsIgnoreCase("creditos")){
             sender.sendMessage(ChatColor.DARK_GRAY + "------ CREDITOS ------");
             sender.sendMessage(ChatColor.AQUA + "iTsContrasMC: " + ChatColor.GRAY + "Creador de TLL");
-            sender.sendMessage(ChatColor.AQUA + "WickedDroid y Mr_StupidMutant: " + ChatColor.GRAY + "Desarrolladores del Plugin");
+            sender.sendMessage(ChatColor.AQUA + "WickedDroid, Mr_StupidMutant & LePepos: " + ChatColor.GRAY + "Desarrolladores del Plugin");
             sender.sendMessage(ChatColor.AQUA + "JohanBigCum: " + ChatColor.GRAY + "Hostear el Server!");
             sender.sendMessage(ChatColor.AQUA + "Carrot, Seven, GusGus y Tom_: " + ChatColor.GRAY + "Diseños, Modelos y Texturas ");
             sender.sendMessage(ChatColor.AQUA + "Mikel_Craft: " + ChatColor.GRAY + "Estructuras del server");
