@@ -120,11 +120,11 @@ public class alUsarTotem implements Listener {
                     }
                 } else if (TotemCara == 6) {
                     p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
+                    p.getLocation().getWorld().spawn(p.getLocation().clone(), Creeper.class);
                     for (Player players : Bukkit.getOnlinePlayers()) {
                         players.sendMessage(ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
                         players.sendMessage(ChatColor.RED + "El Totem a caido en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Numero 6!");
                         players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Creeper en tus Bloques!");
-                        Bukkit.getScheduler().runTaskLater(plugin, () -> p.getLocation().getWorld().spawn(p.getLocation().clone(), Creeper.class), 10);
                     }
                 }
             }
