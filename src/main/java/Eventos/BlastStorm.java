@@ -1,5 +1,6 @@
 package Eventos;
 
+import Utilidades.Format;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,6 +15,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 import static Eventos.Muerte.tormenta;
+import static Utilidades.Format.format;
 
 public class BlastStorm implements Listener {
 
@@ -27,24 +29,34 @@ public class BlastStorm implements Listener {
 
         e.addPotionTiers(onlinePlayers, tierLevel);
 
-        onlinePlayers.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1));
         onlinePlayers.playSound(onlinePlayers.getLocation(), Sound.ENTITY_WITHER_SPAWN, 10.0F, -1.0F);
         onlinePlayers.sendTitle("♥" + ChatColor.GOLD + "" + ChatColor.BOLD + "      ¡BLAST STORM!      " + ChatColor.WHITE + "♥", ChatColor.RED + "¡Que Comienze el FIN!");
 
         tormenta.setVisible(true);
         tormenta.addPlayer(onlinePlayers);
 
-        World world = TLL2.getPlugin().world;
+        World world = TLL2.getPlugin(TLL2.class).world;
 
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                onlinePlayers.playSound(onlinePlayers.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 10.0F, -1.0F);
-                onlinePlayers.sendTitle(e.getTitleStorm(tierLevel), e.getSubtitleStorm(tierLevel));
-            }
-        }.runTaskLater(TLL2.getPlugin(), 100L);
+        if (!world.hasStorm()) {
+
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    onlinePlayers.playSound(onlinePlayers.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 10.0F, -1.0F);
+                    onlinePlayers.sendTitle(e.getTitleStorm(tierLevel), e.getSubtitleStorm(tierLevel));
+                }
+            }.runTaskLater(TLL2.getPlugin(TLL2.class), 100L);
+        } else {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    onlinePlayers.sendMessage("&c¡La BlastStorm ya estaba activa!. &7por lo que solamente se han añadido los minutos.");
+                    onlinePlayers.playSound(onlinePlayers.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 10.0F, -1.0F);
+                }
+            }.runTaskLater(TLL2.getPlugin(TLL2.class), 100L);
+        }
     }
 
     @EventHandler

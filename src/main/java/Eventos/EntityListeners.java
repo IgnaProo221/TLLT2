@@ -1,19 +1,12 @@
 package Eventos;
 
-import Utilidades.Mobs;
 import Utilidades.TLLEntities;
-import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -57,19 +50,19 @@ public class EntityListeners implements Listener {
     public void entityDeath (EntityDeathEvent event) {
 
         Entity entity = event.getEntity();
-        Player killer = event.getEntity().getKiller();
+        Entity killer = event.getEntity().getKiller();
 
         Random random = new Random();
 
         int size = random.nextInt(2);
         ItemStack dropFrag = createFragmentoSangre(size);
 
-        if (entity instanceof Villager && killer instanceof Player) {
+        if (entity instanceof Villager && killer instanceof Player p) {
 
             event.getDrops().add(dropFrag);
 
-            addHash((Player) killer);
-            ((Player) killer).sendMessage(format("&7¡Has sacrificado a un &6&lAldeano&7, has recibido &6&l" + size + " &cFragmento(s) de Sangre&7!"));
+            addHash(p);
+            p.sendMessage(format("&7¡Has sacrificado a un &6&lAldeano&7, has recibido &6&l" + size + " &cFragmento(s) de Sangre&7!"));
         }
     }
 

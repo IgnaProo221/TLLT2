@@ -82,8 +82,5 @@ public final class TLL2 extends JavaPlugin {
         }
     }
 
-    public static TLL2 getPlugin() throws IllegalArgumentException {
-        return plugin;
-    }
 
 }

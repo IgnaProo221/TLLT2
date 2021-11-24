@@ -105,14 +105,12 @@ public class alUsarTotem implements Listener {
                             e.setCancelled(true);
                             totemMessage = ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " no tenia suficientes " + ChatColor.YELLOW + "Totems " + ChatColor.DARK_GRAY + "en su inventario (" + needTotems + "/" + size + ")!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")";
                         } else {
-                            new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
-                                    p.getInventory().removeItem(new ItemStack(Material.TOTEM_OF_UNDYING, 1));
-                                    p.playEffect(EntityEffect.TOTEM_RESURRECT);
-                                }
-                            }.runTaskLater(TLL2.getPlugin(), 20L);
+                            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                                p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
+                                p.getInventory().removeItem(new ItemStack(Material.TOTEM_OF_UNDYING, 1));
+                                p.playEffect(EntityEffect.TOTEM_RESURRECT);
+                            }, 10);
+
                             totemMessage = ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")";
                         }
                         for (Player players : Bukkit.getOnlinePlayers()) {

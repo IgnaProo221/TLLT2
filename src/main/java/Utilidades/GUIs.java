@@ -31,6 +31,12 @@ public class GUIs implements Listener{
 
 
 
+    public void exampleGUI() {
+        DataGUI gui = new DataGUI("Example", 2);
+        gui.addItemToGUI(1, new ItemStack(Material.DIAMOND_HELMET));
+        int[] airSlots = new int[]{2, 3, 4, 5, 6};
+        gui.addAirSlots(airSlots);
+    }
 
 
     public static GUIBuilder getCa() {
