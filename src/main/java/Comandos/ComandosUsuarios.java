@@ -52,7 +52,7 @@ public class ComandosUsuarios implements CommandExecutor{
             sender.sendMessage(ChatColor.AQUA + "Antonio, Wither, Alex y Admi9 " + ChatColor.GRAY + "Ayuda Principal, y Moderacion");
             sender.sendMessage(ChatColor.DARK_GRAY + "----------------------");
         }
-        if(args[0].equalsIgnoreCase("comandoslista")){
+        if(args[0].equalsIgnoreCase("comandoslista")) {
             sender.sendMessage(ChatColor.DARK_GRAY + "------ COMANDOS ------");
             sender.sendMessage(ChatColor.GOLD + "creditos: " + ChatColor.GRAY + "Muestra los creditos de TLL");
             sender.sendMessage(ChatColor.GOLD + "receta <ITEM>: " + ChatColor.GRAY + "Muestra la receta del item seleccionado");
