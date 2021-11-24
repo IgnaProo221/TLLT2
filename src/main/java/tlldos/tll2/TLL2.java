@@ -20,7 +20,7 @@ public final class TLL2 extends JavaPlugin {
     public World world;
     public static BossBar tormenta;
     private Configuration config;
-    public static TLL2 plugin;
+    private static TLL2 plugin;
 
 
     @Override
@@ -58,6 +58,7 @@ public final class TLL2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Dormir(this),this);
         getServer().getPluginManager().registerEvents(new GhastExplosion(this),this);
         getServer().getPluginManager().registerEvents(new DanoSinEnieEvento(this),this);
+        getServer().getPluginManager().registerEvents(new BlastStorm(),this);
     }
     public void tormentaTick(){
         if(world.getWeatherDuration() != 0) {
@@ -80,7 +81,8 @@ public final class TLL2 extends JavaPlugin {
         }
     }
 
-    public static TLL2 getPlugin() {
+    public static TLL2 getPlugin() throws IllegalArgumentException {
         return plugin;
     }
+
 }

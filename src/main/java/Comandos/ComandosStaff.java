@@ -4,6 +4,7 @@ import Eventos.Muerte;
 import Extras.Items;
 import Utilidades.Format;
 import Utilidades.GUIs;
+import Utilidades.Warn;
 import org.bukkit.*;
 import org.bukkit.boss.BossBar;
 import org.bukkit.command.Command;
@@ -35,6 +36,7 @@ public class ComandosStaff implements CommandExecutor{
                     pa.openInventory(GUIs.getCa().build());
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Warn.Mutant(e);
                     pa.sendMessage(Format.format(prefix + "&7¡Ha ocurrido un &c&lerror &7al mandar la GUI."));
                 }
             }

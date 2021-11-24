@@ -4,8 +4,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.Iterator;
 
 public class StartBlastStormEvent extends Event {
@@ -37,6 +40,15 @@ public class StartBlastStormEvent extends Event {
             return "&6&lBlast Storm";
         }
 
+    }
+
+    public void addPotionTiers(Player connecteds, int tier) throws NullPointerException {
+        if (tier == 1 && tier == 2) {
+            connecteds.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1));
+        } else {
+            connecteds.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1));
+            connecteds.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 100, 1));
+        }
     }
 
     public String getSubtitleStorm(int tierLevel) {

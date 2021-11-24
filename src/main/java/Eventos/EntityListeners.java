@@ -43,12 +43,10 @@ public class EntityListeners implements Listener {
 
         if (entity instanceof Villager && killer instanceof Player) {
 
-            Villager villager = (Villager) entity;
-
             event.getDrops().add(dropFrag);
 
             addHash((Player) killer);
-            ((Player) killer).sendMessage(format("&7¡Has sacrificado a un &6&lAldeano&7, has recibido &6&l" + size + "&7 de &cFragmento(s) de Sangre&7!"));
+            ((Player) killer).sendMessage(format("&7¡Has sacrificado a un &6&lAldeano&7, has recibido &6&l" + size + " &cFragmento(s) de Sangre&7!"));
         }
     }
 
