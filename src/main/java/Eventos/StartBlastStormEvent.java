@@ -26,9 +26,7 @@ public class StartBlastStormEvent extends Event {
     public String getTitleStorm(int tierLevel) {
 
         if (tierLevel == 1) {
-
             return "&6&lBlast Storm &6Tier &8I";
-
         } else if (tierLevel == 2) {
 
             return "&6&lBlast Storm &6Tier &7II";
@@ -54,6 +52,7 @@ public class StartBlastStormEvent extends Event {
     public String getSubtitleStorm(int tierLevel) {
 
         if (tierLevel == 1) {
+
 
             return "&8¿Podran Sobrevivir?";
 

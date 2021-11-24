@@ -61,7 +61,21 @@ public class Items{
         bslore.add(ChatColor.GRAY + "Un Sacrificio Justo.");
         ItemStack bs = new ItemStack(Material.IRON_NUGGET);
         ItemMeta bsm = bs.getItemMeta();
-        bsm.setDisplayName(ChatColor.RED + "Blood Shard");
+        bsm.setDisplayName(ChatColor.RED + "Blood Stone");
+        bsm.setCustomModelData(4003);
+        bsm.setLore(bslore);
+        bs.setItemMeta(bsm);
+        return bs;
+    }
+
+    public static ItemStack CrystalApple() {
+        List<String> bslore = new ArrayList<String>();
+        bslore.add(ChatColor.GRAY + "Regeneracion III y Resistencia");
+        bslore.add(ChatColor.GRAY + "Pero tu habilidad de Minar y Golpear");
+        bslore.add(ChatColor.GRAY + "estan Debilitadas");
+        ItemStack bs = new ItemStack(Material.IRON_NUGGET);
+        ItemMeta bsm = bs.getItemMeta();
+        bsm.setDisplayName(ChatColor.GRAY + "Crystal Apple");
         bsm.setCustomModelData(4003);
         bsm.setLore(bslore);
         bs.setItemMeta(bsm);

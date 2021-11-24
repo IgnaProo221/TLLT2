@@ -1,16 +1,21 @@
 package Eventos;
 
+import Utilidades.Mobs;
+import Utilidades.TLLEntities;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.*;
 
@@ -29,6 +34,24 @@ public class EntityListeners implements Listener {
         }
         hash.put(p, 1);
     }
+
+    @EventHandler
+    public void damageEntity (EntityDamageByEntityEvent event) {
+
+        Entity entity = event.getEntity();
+        Entity damager = event.getDamager();
+
+        if (TLLEntities.isTLLEntity(damager) && "ZOMBI_CONGELADO".equals(TLLEntities.getTLLEntity(damager))) {
+
+            if (entity instanceof Player p) {
+
+                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 1));
+
+            }
+        }
+    }
+
+
 
     @EventHandler
     public void entityDeath (EntityDeathEvent event) {
