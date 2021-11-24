@@ -11,6 +11,7 @@ import tlldos.tll2.TLL2;
 
 public class GhastExplosion implements Listener{
     private TLL2 plugin;
+
     public GhastExplosion(TLL2 plugin){
         this.plugin = plugin;
     }

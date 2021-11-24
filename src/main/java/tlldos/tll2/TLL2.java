@@ -49,6 +49,7 @@ public final class TLL2 extends JavaPlugin {
     public void onDisable() {
         getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "El Plugin se deshabilito correctamente!");
     }
+
     public void cargarEventos(){
         getServer().getPluginManager().registerEvents(new GUIListeners(),this);
         getServer().getPluginManager().registerEvents(new alUsarTotem(this), this);
