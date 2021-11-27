@@ -112,7 +112,7 @@ public class alUsarTotem implements Listener {
                                     p.getInventory().removeItem(new ItemStack(Material.TOTEM_OF_UNDYING, 1));
                                     p.playEffect(EntityEffect.TOTEM_RESURRECT);
                                 }
-                            }.runTaskLater(TLL2.getPlugin(), 20L);
+                            }.runTaskLater(TLL2.getPlugin(TLL2.class), 20L);
                             totemMessage = ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")";
                         }
                         for (Player players : Bukkit.getOnlinePlayers()) {

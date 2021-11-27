@@ -34,7 +34,7 @@ public class BlastStorm implements Listener {
         tormenta.setVisible(true);
         tormenta.addPlayer(onlinePlayers);
 
-        World world = TLL2.getPlugin().world;
+        World world = TLL2.getPlugin(TLL2.class).world;
 
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
 
@@ -44,7 +44,7 @@ public class BlastStorm implements Listener {
                 onlinePlayers.playSound(onlinePlayers.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 10.0F, -1.0F);
                 onlinePlayers.sendTitle(e.getTitleStorm(tierLevel), e.getSubtitleStorm(tierLevel));
             }
-        }.runTaskLater(TLL2.getPlugin(), 100L);
+        }.runTaskLater(TLL2.getPlugin(TLL2.class), 100L);
     }
 
     @EventHandler
