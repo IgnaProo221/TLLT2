@@ -26,13 +26,13 @@ public class StartBlastStormEvent extends Event {
     public String getTitleStorm(int tierLevel) {
 
         if (tierLevel == 1) {
-            return "&6&lBlast Storm &6Tier &8I";
+            return "&&f♥        6&lBlast Storm &6Tier &8I        &f♥";
         } else if (tierLevel == 2) {
 
-            return "&6&lBlast Storm &6Tier &7II";
+            return "&f♥        &6&lBlast Storm &6Tier &7II        &f♥";
         } else if (tierLevel == 3) {
 
-            return "&6&lBLAST STORM &6TIER &c&lIII";
+            return "&f♥        &6&lBLAST STORM &6TIER &c&lIII        &f♥";
 
         } else {
             return "&6&lBlast Storm";
