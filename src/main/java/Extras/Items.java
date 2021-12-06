@@ -104,8 +104,6 @@ public class Items{
         List<String> lore = new ArrayList<>();
         lore.add(format("&7El &cFragmento de sangre &7se puede"));
         lore.add(format("&7usar crafteando la &cDaga Ceremonial&7."));
-        lore.add("");
-        lore.add(format("&7Nivel: &eComún&7."));
         meta.setLore(lore);
         meta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -113,4 +111,20 @@ public class Items{
         frag.setItemMeta(meta);
         return frag;
     }
+    public static ItemStack cuchillCeremonia(){
+        ItemStack ceremknife = new ItemStack((Material.IRON_SWORD));
+        ItemMeta ceremknifem = ceremknife.getItemMeta();
+        Objects.requireNonNull(ceremknifem).setDisplayName(format("&cCuchillo Ceremonial"));
+        List<String> lore = new ArrayList<>();
+        lore.add(format("&7Un cuchillo con decoraciones peculiares."));
+        lore.add(format("&7En su filo esta inscrito en Latín 'Dejalo Caer"));
+        lore.add(format("&7y lo Recibiran'"));
+        ceremknifem.setUnbreakable(true);
+        ceremknifem.setLore(lore);
+        ceremknife.setItemMeta(ceremknifem);
+        return ceremknife;
+    }
+
+
+
 }

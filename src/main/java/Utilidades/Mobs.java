@@ -4,10 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Skeleton;
-import org.bukkit.entity.TNTPrimed;
-import org.bukkit.entity.Zombie;
+import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -56,10 +53,23 @@ public class Mobs implements Listener{
         meta.addEnchant(Enchantment.ARROW_DAMAGE, 5, true);
         arco1.setItemMeta(meta);
 
+        //Aqui deberia ir la flecha con Slowness que el esqueleto se supone que deberia disparar
+
+
+
         self.setCustomName(ChatColor.AQUA + "Snow Skeleton");
         self.setMaxHealth(30);
         self.setHealth(30);
+        self.getEquipment().setItemInMainHand(arco1);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ESQUELETO_NIEVE"), PersistentDataType.STRING, "ESQUELETO_NIEVE");
+    }
+
+    public static void aranaNieve(Spider self){
+
+        self.setCustomName(ChatColor.AQUA + "Snow Spider");
+        self.setMaxHealth(35);
+        self.setHealth(35);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SNOW_SPIDER"), PersistentDataType.STRING, "SNOW_SPIDER");
     }
 
 

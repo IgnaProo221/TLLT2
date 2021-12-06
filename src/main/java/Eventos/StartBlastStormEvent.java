@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.Iterator;
+import static Utilidades.Format.format;
 
 public class StartBlastStormEvent extends Event {
     private static final HandlerList HANDLERS_LIST = new HandlerList();
@@ -26,13 +27,13 @@ public class StartBlastStormEvent extends Event {
     public String getTitleStorm(int tierLevel) {
 
         if (tierLevel == 1) {
-            return "&&f♥        &6Tier &8I        &f♥";
+            return format("&f♥        &6&lBlast Storm &6Tier &7I        &f♥");
         } else if (tierLevel == 2) {
 
-            return "&f♥        &6Tier &7II        &f♥";
+            return format("&f♥        &6&lBlast Storm &6Tier &7II        &f♥");
         } else if (tierLevel == 3) {
 
-            return "&f♥        &6TIER &c&lIII        &f♥";
+            return format("&f♥        &6&lBLAST STORM &6TIER &c&lIII        &f♥");
 
         } else {
             return "&6&lBlast Storm";
@@ -54,14 +55,14 @@ public class StartBlastStormEvent extends Event {
         if (tierLevel == 1) {
 
 
-            return "&8¿Podran Sobrevivir?";
+            return format("&8¿Podran Sobrevivir?");
 
         } else if (tierLevel == 2) {
 
-            return "&8¡Que Comienze el Fin!";
+            return format("&8¡Que Comienze el Fin!");
         } else if (tierLevel == 3) {
 
-            return "&8Sobrevive y prueba el &7SUFRIMIENTO";
+            return format("&8Sobrevive y prueba el &7SUFRIMIENTO");
 
         } else {
             return "&8¿?";

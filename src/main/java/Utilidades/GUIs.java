@@ -17,6 +17,7 @@ import team.unnamed.gui.core.GUIListeners;
 import team.unnamed.gui.core.gui.type.GUIBuilder;
 import tlldos.tll2.TLL2;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class GUIs implements Listener{
 
     public static GUIBuilder getCa() {
         GUIBuilder ca = GUIBuilder.builder("Sacrifios",3);
+
         ca.addItem(ItemClickable.builder(0).setItemStack(new ItemStack(GUIsItems.glpa())).setAction(event -> true).build());
         ca.addItem(ItemClickable.builder(1).setItemStack(new ItemStack(GUIsItems.glpa())).setAction(event -> true).build());
         ca.addItem(ItemClickable.builder(2).setItemStack(new ItemStack(GUIsItems.glpa())).setAction(event -> true).build());
