@@ -7,6 +7,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -32,11 +33,13 @@ public class GUIs implements Listener{
 
 
 
-    public void exampleGUI() {
-        DataGUI gui = new DataGUI("Example", 2);
+    public void exampleGUI(Player p) {
+        DataGUI gui = new DataGUI("Example", 6);
         gui.addItemToGUI(1, new ItemStack(Material.DIAMOND_HELMET));
         int[] airSlots = new int[]{2, 3, 4, 5, 6};
         gui.addAirSlots(airSlots);
+        Inventory g = gui.gui;
+        p.openInventory(g);
     }
 
 

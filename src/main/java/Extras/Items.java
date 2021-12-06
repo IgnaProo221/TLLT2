@@ -82,6 +82,21 @@ public class Items{
         return bs;
     }
 
+    public static ItemStack createDaga() {
+        ItemStack dag = new ItemStack(Material.IRON_SWORD);
+        ItemMeta m = dag.getItemMeta();
+        m.setDisplayName(format("&7Daga Ceremonial"));
+        List<String> lore = new ArrayList<>();
+        lore.add(format("&7Has &eClick Derecho &7para iniciar el sacrificio."));
+        lore.add(format("&7Utiliza &8/thelastlife sacrificio &7para ver"));
+        lore.add(format("&7mas información."));
+        lore.add("");
+        lore.add(format("&7Nivel: &bRaro&7."));
+        m.setLore(lore);
+        dag.setItemMeta(m);
+        return dag;
+    }
+
     public static ItemStack createFragmentoSangre(int size) {
         ItemStack frag = new ItemStack(Material.RED_DYE, size);
         ItemMeta meta = frag.getItemMeta();

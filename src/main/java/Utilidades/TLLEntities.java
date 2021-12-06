@@ -24,17 +24,17 @@ public class TLLEntities {
     }
 
     public static void setTLLEntity(Entity entity, String name) {
-        entity.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(), "TLL_ENTITY"), PersistentDataType.STRING, name);
+        entity.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TLL_ENTITY"), PersistentDataType.STRING, name);
     }
 
     public static boolean isTLLEntity(Entity entity) {
-        return entity.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(), "TLL_ENTITY"), PersistentDataType.STRING);
+        return entity.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TLL_ENTITY"), PersistentDataType.STRING);
     }
 
     public static String getTLLEntity (Entity entity) {
-        Plugin plugin = TLL2.getPlugin();
-        if (entity.getPersistentDataContainer().has(new NamespacedKey(plugin, "ABYSS_ENTITY"),PersistentDataType.STRING)){
-            return entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "ABYSS_ENTITY"), PersistentDataType.STRING);
+        Plugin plugin = TLL2.getPlugin(TLL2.class);
+        if (entity.getPersistentDataContainer().has(new NamespacedKey(plugin, "TLL_ENTITY"),PersistentDataType.STRING)){
+            return entity.getPersistentDataContainer().get(new NamespacedKey(plugin, "TLL_ENTITY"), PersistentDataType.STRING);
         } else {
             return null;
         }

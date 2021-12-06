@@ -1,5 +1,6 @@
 package Eventos;
 
+import Utilidades.Format;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,13 +39,13 @@ public class BlastStorm implements Listener {
 
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
 
-        new BukkitRunnable() {
+        Bukkit.getScheduler().runTaskLater(TLL2.getPlugin(TLL2.class), new Runnable() {
             @Override
             public void run() {
                 onlinePlayers.playSound(onlinePlayers.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 10.0F, -1.0F);
-                onlinePlayers.sendTitle(e.getTitleStorm(tierLevel), e.getSubtitleStorm(tierLevel));
+                onlinePlayers.sendTitle(Format.format(e.getTitleStorm(tierLevel)), Format.format(e.getSubtitleStorm(tierLevel)));
             }
-        }.runTaskLater(TLL2.getPlugin(TLL2.class), 100L);
+        }, 100L);
     }
 
     @EventHandler
