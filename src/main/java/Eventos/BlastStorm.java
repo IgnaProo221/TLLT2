@@ -27,10 +27,6 @@ public class BlastStorm implements Listener {
 
         e.addPotionTiers(onlinePlayers, tierLevel);
 
-        onlinePlayers.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1));
-        onlinePlayers.playSound(onlinePlayers.getLocation(), Sound.ENTITY_WITHER_SPAWN, 10.0F, -1.0F);
-        onlinePlayers.sendTitle("♥" + ChatColor.GOLD + "" + ChatColor.BOLD + "      ¡BLAST STORM!      " + ChatColor.WHITE + "♥", ChatColor.RED + "¡Que Comienze el FIN!");
-
         tormenta.setVisible(true);
         tormenta.addPlayer(onlinePlayers);
 
