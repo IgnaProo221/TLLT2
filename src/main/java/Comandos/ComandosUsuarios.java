@@ -1,6 +1,7 @@
 package Comandos;
 
 import Eventos.Muerte;
+import Utilidades.Contador;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -59,6 +60,7 @@ public class ComandosUsuarios implements CommandExecutor{
             sender.sendMessage(ChatColor.GOLD + "mob <MOB>: " + ChatColor.GRAY + "Muestra algo de Info del Mob");
             sender.sendMessage(ChatColor.GOLD + "dia: " + ChatColor.GRAY + "Muestra el dia donde nos encontramos");
             sender.sendMessage(ChatColor.GOLD + "tps: " + ChatColor.GRAY + "Muestra los TPS del servidor");
+            sender.sendMessage(ChatColor.GOLD + "sacrificios: " + ChatColor.GRAY + "Muestra la Cantidad de Sacrificios que has Hecho");
             sender.sendMessage(ChatColor.DARK_GRAY + "----------------------");
         }
         if(args[0].equalsIgnoreCase("tps")){
@@ -66,6 +68,9 @@ public class ComandosUsuarios implements CommandExecutor{
         }
         if(args[0].equalsIgnoreCase("dia")){
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',prefix + "&7Nos Encontramos en el Dia: &6" + Muerte.Dia()));
+        }
+        if(args[0].equalsIgnoreCase("sacrificios")){
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',prefix + "&7Nos Encontramos en el Dia: &6" + Contador.ContadorS.contador));
         }
         return false;
     }

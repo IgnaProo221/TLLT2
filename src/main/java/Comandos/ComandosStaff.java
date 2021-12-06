@@ -19,6 +19,8 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Iterator;
 
+import static Utilidades.Format.format;
+
 public class ComandosStaff implements CommandExecutor{
     String prefix = ChatColor.translateAlternateColorCodes('&',"&6&lThe&c&lLast&6&lLife &7➤ ");
     public static BossBar tormenta;
@@ -31,6 +33,22 @@ public class ComandosStaff implements CommandExecutor{
         Player pa = (Player) sender;
         if(sender.isOp()) {
             switch (args[0]) {
+
+                ///aqui no tengo idea de que hacer, intente verme un tutorial acerca de eso pero me rendi :P
+                case "sacrificios":
+                    if (args[1].equalsIgnoreCase("addSacrifice")) {
+                        pa.sendMessage("debug");
+                    }
+                    if (args[1].equalsIgnoreCase("removeSacrifice")) {
+                        pa.sendMessage("debug");
+                    }
+                    if (args[1].equalsIgnoreCase("clearSacrifice")) {
+                        pa.sendMessage("debug");
+                    }
+                    if (args[1].equalsIgnoreCase("resetSacrifice")) {
+                        pa.sendMessage("debug");
+                    }
+                    break;
                 case "alerta":
                     s.getConsoleSender().sendMessage("Alguien hizo el coso de Alerta @Mutant te llaman xdxdxd");
                     break;
@@ -71,7 +89,8 @@ public class ComandosStaff implements CommandExecutor{
                         pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                 default:
-                    pa.sendMessage("&7No has indicado ningun subcomando.");
+                    pa.sendMessage(format("&7No has indicado ningun subcomando."));
+                    pa.sendMessage(format("&7Si no sabes los comandos ejecuta el comando /tllstaff commandlist."));
                     break;
             }
         } else {

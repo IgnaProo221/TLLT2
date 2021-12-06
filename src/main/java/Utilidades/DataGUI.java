@@ -24,6 +24,7 @@ public class DataGUI {
     public void addAirSlots(int[] slots) {
         // Dou
        // this.gui.setItem(slots, new ItemStack(Material.GRAY_STAINED_GLASS_PANE));
+
     }
 
 }

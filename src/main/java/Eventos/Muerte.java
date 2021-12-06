@@ -129,7 +129,7 @@ public class Muerte extends ListenerAdapter implements Listener {
                 world.setTime(5000);
             }, 40);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "No One is Safe", ChatColor.DARK_GRAY + "" + ChatColor.MAGIC + "the end is near", 0, 80, 0);
+                players.sendTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "Your Death approaches", ChatColor.DARK_GRAY + "" + ChatColor.MAGIC + "the end is near", 0, 80, 0);
                 players.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1, false, false, false));
                 players.playSound(players.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_AMBIENT, 10.0F, -1.0F);
                 world.setTime(6000);
@@ -176,7 +176,7 @@ public class Muerte extends ListenerAdapter implements Listener {
         eb.setFooter("TheLastLifeT2.jar", "https://media.discordapp.net/attachments/830482526237753395/874379476212019210/transparentexd.png?width=588&height=588");
         eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
         eb.setTitle("**El Fin del Jugador " + p.getName() + " comienza!**");
-        eb.setDescription(String.format("**:fire: Se añade 30 minutos al tiempo de Blast Storm**\n**Multiplicador por Día:** %d", Dia()) + "** :fire:");
+        eb.setDescription(String.format("**:fire: Se añade 30 minutos al tiempo de Blast Storm**\n**Multiplicador por Día: %d", Dia()) + "** :fire:");
         eb.addField(":skull:**Causa de Muerte: **", e.getDeathMessage(), true);
         eb.addField(":beginner:**Dia: **" + Dia(), "", true);
         eb.addField(":map:**Cordernadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
@@ -284,7 +284,7 @@ public class Muerte extends ListenerAdapter implements Listener {
     public static int Dia() {
         LocalDate FechaActual = LocalDate.now();
 
-        LocalDate FechaInicio = LocalDate.parse("2021-11-19");
+        LocalDate FechaInicio = LocalDate.parse("2021-12-05");
 
         return (int) ChronoUnit.DAYS.between(FechaInicio, FechaActual);
     }
