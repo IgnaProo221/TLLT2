@@ -1,9 +1,7 @@
 package Extras;
 
 import Utilidades.Mobs;
-import net.minecraft.world.damagesource.DamageSource;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
