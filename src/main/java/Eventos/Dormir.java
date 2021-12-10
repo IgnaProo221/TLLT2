@@ -16,11 +16,15 @@ import java.util.UUID;
 
 public class Dormir implements Listener{
     private TLL2 plugin;
+
     public Dormir(TLL2 plugin){
         this.plugin = plugin;
     }
+
     String prefix = ChatColor.translateAlternateColorCodes('&',"&6&lThe&c&lLast&6&lLife &7➤ ");
     private Set<UUID> players = new HashSet<UUID>();
+
+
     @EventHandler
     public void onBed(PlayerBedEnterEvent e){
         World world = Bukkit.getWorld("world");

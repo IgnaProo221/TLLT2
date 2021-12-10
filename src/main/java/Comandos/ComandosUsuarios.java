@@ -1,6 +1,7 @@
 package Comandos;
 
 import Eventos.Muerte;
+import Utilidades.Contador;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -15,7 +16,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class ComandosUsuarios implements CommandExecutor{
-    String prefix = ChatColor.translateAlternateColorCodes('&',"&6&lThec&lLast&6&lLife &7➤ ");
+    String prefix = ChatColor.translateAlternateColorCodes('&',"&6&lThe&c&lLast&6&lLife &7➤ ");
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
@@ -44,7 +45,7 @@ public class ComandosUsuarios implements CommandExecutor{
         if(args[0].equalsIgnoreCase("creditos")){
             sender.sendMessage(ChatColor.DARK_GRAY + "------ CREDITOS ------");
             sender.sendMessage(ChatColor.AQUA + "iTsContrasMC: " + ChatColor.GRAY + "Creador de TLL");
-            sender.sendMessage(ChatColor.AQUA + "WickedDroid y Mr_StupidMutant: " + ChatColor.GRAY + "Desarrolladores del Plugin");
+            sender.sendMessage(ChatColor.AQUA + "WickedDroid, Mr_StupidMutant & LePepos: " + ChatColor.GRAY + "Desarrolladores del Plugin");
             sender.sendMessage(ChatColor.AQUA + "JohanBigCum: " + ChatColor.GRAY + "Hostear el Server!");
             sender.sendMessage(ChatColor.AQUA + "Carrot, Seven, GusGus y Tom_: " + ChatColor.GRAY + "Diseños, Modelos y Texturas ");
             sender.sendMessage(ChatColor.AQUA + "Mikel_Craft: " + ChatColor.GRAY + "Estructuras del server");
@@ -52,13 +53,14 @@ public class ComandosUsuarios implements CommandExecutor{
             sender.sendMessage(ChatColor.AQUA + "Antonio, Wither, Alex y Admi9 " + ChatColor.GRAY + "Ayuda Principal, y Moderacion");
             sender.sendMessage(ChatColor.DARK_GRAY + "----------------------");
         }
-        if(args[0].equalsIgnoreCase("comandoslista")){
+        if(args[0].equalsIgnoreCase("comandoslista")) {
             sender.sendMessage(ChatColor.DARK_GRAY + "------ COMANDOS ------");
             sender.sendMessage(ChatColor.GOLD + "creditos: " + ChatColor.GRAY + "Muestra los creditos de TLL");
             sender.sendMessage(ChatColor.GOLD + "receta <ITEM>: " + ChatColor.GRAY + "Muestra la receta del item seleccionado");
             sender.sendMessage(ChatColor.GOLD + "mob <MOB>: " + ChatColor.GRAY + "Muestra algo de Info del Mob");
             sender.sendMessage(ChatColor.GOLD + "dia: " + ChatColor.GRAY + "Muestra el dia donde nos encontramos");
             sender.sendMessage(ChatColor.GOLD + "tps: " + ChatColor.GRAY + "Muestra los TPS del servidor");
+            sender.sendMessage(ChatColor.GOLD + "sacrificios: " + ChatColor.GRAY + "Muestra la Cantidad de Sacrificios que has Hecho");
             sender.sendMessage(ChatColor.DARK_GRAY + "----------------------");
         }
         if(args[0].equalsIgnoreCase("tps")){
@@ -66,6 +68,9 @@ public class ComandosUsuarios implements CommandExecutor{
         }
         if(args[0].equalsIgnoreCase("dia")){
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',prefix + "&7Nos Encontramos en el Dia: &6" + Muerte.Dia()));
+        }
+        if(args[0].equalsIgnoreCase("sacrificios")){
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',prefix + "&7Nos Encontramos en el Dia: &6" + Contador.ContadorS.contador));
         }
         return false;
     }

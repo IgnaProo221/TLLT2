@@ -15,10 +15,12 @@ import java.util.List;
 
 public class Comer implements Listener {
     private TLL2 plugin;
+    String prefix = ChatColor.translateAlternateColorCodes('&',"&6&lThe&c&lLast&6&lLife &7➤ ");
+
     public Comer(TLL2 plugin){
         this.plugin = plugin;
     }
-    String prefix = ChatColor.translateAlternateColorCodes('&',"&6&lThec&lLast&6&lLife &7➤ ");
+
     @EventHandler
     public void comerEv(PlayerItemConsumeEvent e){
         Player p = e.getPlayer();

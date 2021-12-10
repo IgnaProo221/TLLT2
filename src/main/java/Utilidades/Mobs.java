@@ -1,11 +1,13 @@
 package Utilidades;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.entity.TNTPrimed;
-import org.bukkit.entity.Zombie;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -33,5 +35,45 @@ public class Mobs implements Listener{
         self.setFuseTicks(40);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TNTENDERPEARL"), PersistentDataType.STRING, "TNTENDERPEARL");
     }
+
+
+    ///Mobs de Nieve
+
+    public static  void zombiCongelado(Zombie self){
+        self.setCustomName(ChatColor.AQUA + "Zombi Congelado");
+        self.setMaxHealth(30);
+        self.setHealth(30);
+        ///aqui deberia ir el atributo de subir daño SI SUPIERA COMO HACERLO
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ZOMBI_CONGELADO"), PersistentDataType.STRING, "ZOMBI_CONGELADO");
+    }
+
+    public static void esqueletoNieve(Skeleton self){
+        ItemStack arco1 = new ItemStack(Material.BOW);
+        ItemMeta meta = arco1.getItemMeta();
+        meta.addEnchant(Enchantment.ARROW_DAMAGE, 5, true);
+        arco1.setItemMeta(meta);
+
+        //Aqui deberia ir la flecha con Slowness que el esqueleto se supone que deberia disparar
+
+
+
+        self.setCustomName(ChatColor.AQUA + "Snow Skeleton");
+        self.setMaxHealth(30);
+        self.setHealth(30);
+        self.getEquipment().setItemInMainHand(arco1);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ESQUELETO_NIEVE"), PersistentDataType.STRING, "ESQUELETO_NIEVE");
+    }
+
+    public static void aranaNieve(Spider self){
+
+        self.setCustomName(ChatColor.AQUA + "Snow Spider");
+        self.setMaxHealth(35);
+        self.setHealth(35);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SNOW_SPIDER"), PersistentDataType.STRING, "SNOW_SPIDER");
+    }
+
+
+
+
 
 }

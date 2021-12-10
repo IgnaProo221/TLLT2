@@ -61,11 +61,40 @@ public class Items{
         bslore.add(ChatColor.GRAY + "Un Sacrificio Justo.");
         ItemStack bs = new ItemStack(Material.IRON_NUGGET);
         ItemMeta bsm = bs.getItemMeta();
-        bsm.setDisplayName(ChatColor.RED + "Blood Shard");
+        bsm.setDisplayName(ChatColor.RED + "Blood Stone");
         bsm.setCustomModelData(4003);
         bsm.setLore(bslore);
         bs.setItemMeta(bsm);
         return bs;
+    }
+
+    public static ItemStack CrystalApple() {
+        List<String> bslore = new ArrayList<String>();
+        bslore.add(ChatColor.GRAY + "Regeneracion III y Resistencia");
+        bslore.add(ChatColor.GRAY + "Pero tu habilidad de Minar y Golpear");
+        bslore.add(ChatColor.GRAY + "estan Debilitadas");
+        ItemStack bs = new ItemStack(Material.IRON_NUGGET);
+        ItemMeta bsm = bs.getItemMeta();
+        bsm.setDisplayName(ChatColor.GRAY + "Crystal Apple");
+        bsm.setCustomModelData(4003);
+        bsm.setLore(bslore);
+        bs.setItemMeta(bsm);
+        return bs;
+    }
+
+    public static ItemStack createDaga() {
+        ItemStack dag = new ItemStack(Material.IRON_SWORD);
+        ItemMeta m = dag.getItemMeta();
+        m.setDisplayName(format("&7Daga Ceremonial"));
+        List<String> lore = new ArrayList<>();
+        lore.add(format("&7Has &eClick Derecho &7para iniciar el sacrificio."));
+        lore.add(format("&7Utiliza &8/thelastlife sacrificio &7para ver"));
+        lore.add(format("&7mas información."));
+        lore.add("");
+        lore.add(format("&7Nivel: &bRaro&7."));
+        m.setLore(lore);
+        dag.setItemMeta(m);
+        return dag;
     }
 
     public static ItemStack createFragmentoSangre(int size) {
@@ -75,8 +104,6 @@ public class Items{
         List<String> lore = new ArrayList<>();
         lore.add(format("&7El &cFragmento de sangre &7se puede"));
         lore.add(format("&7usar crafteando la &cDaga Ceremonial&7."));
-        lore.add("");
-        lore.add(format("&7Nivel: &eComún&7."));
         meta.setLore(lore);
         meta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -84,4 +111,20 @@ public class Items{
         frag.setItemMeta(meta);
         return frag;
     }
+    public static ItemStack cuchillCeremonia(){
+        ItemStack ceremknife = new ItemStack((Material.IRON_SWORD));
+        ItemMeta ceremknifem = ceremknife.getItemMeta();
+        Objects.requireNonNull(ceremknifem).setDisplayName(format("&cCuchillo Ceremonial"));
+        List<String> lore = new ArrayList<>();
+        lore.add(format("&7Un cuchillo con decoraciones peculiares."));
+        lore.add(format("&7En su filo esta inscrito en Latín 'Dejalo Caer"));
+        lore.add(format("&7y lo Recibiran'"));
+        ceremknifem.setUnbreakable(true);
+        ceremknifem.setLore(lore);
+        ceremknife.setItemMeta(ceremknifem);
+        return ceremknife;
+    }
+
+
+
 }

@@ -16,38 +16,39 @@ import tlldos.tll2.TLL2;
 
 import java.util.Random;
 
-public class EnderPearlEvent implements Listener{
+public class EnderPearlEvent implements Listener {
     private TLL2 plugin;
-    public EnderPearlEvent(TLL2 plugin){
+
+    public EnderPearlEvent(TLL2 plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
-    public void onInteract(PlayerInteractEvent e){
+    public void onInteract(PlayerInteractEvent e) {
         if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
             ItemStack item = e.getItem();
-            if(item != null && !item.hasItemMeta() && item.getType() == Material.ENDER_PEARL){
+            if (item != null && !item.hasItemMeta() && item.getType() == Material.ENDER_PEARL) {
                 Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                     @Override
                     public void run() {
                         e.getPlayer().setCooldown(Material.ENDER_PEARL, 100);
                     }
-                },2L);
+                }, 2L);
             }
         }
     }
 
     @EventHandler
-    public void enderCayo(PlayerTeleportEvent e){
-            Player p = (Player)e.getPlayer();
-            Random random = new Random();
-            int enderfail = random.nextInt(100);
-            if (e.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL) {
-                if (enderfail < 10){
-                    e.setCancelled(true);
-                    p.sendMessage(ChatColor.RED + "La Enderpearl que Tiraste no te Teletransporto Correctamente!");
-                }
-                }
+    public void enderCayo(PlayerTeleportEvent e) {
+        Player p = (Player) e.getPlayer();
+        Random random = new Random();
+        int enderfail = random.nextInt(100);
+        if (e.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL) {
+            if (enderfail < 10) {
+                e.setCancelled(true);
+                p.sendMessage(ChatColor.RED + "La Enderpearl que Tiraste no te Teletransporto Correctamente!");
             }
+        }
+    }
 
 }

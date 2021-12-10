@@ -6,14 +6,17 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import team.unnamed.gui.abstraction.item.ItemClickable;
+import team.unnamed.gui.core.GUIListeners;
 import team.unnamed.gui.core.gui.type.GUIBuilder;
 import tlldos.tll2.TLL2;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +33,19 @@ public class GUIs implements Listener{
 
 
 
+    public void exampleGUI(Player p) {
+        DataGUI gui = new DataGUI("Example", 6);
+        gui.addItemToGUI(1, new ItemStack(Material.DIAMOND_HELMET));
+        int[] airSlots = new int[]{2, 3, 4, 5, 6};
+        gui.addAirSlots(airSlots);
+        Inventory g = gui.gui;
+        p.openInventory(g);
+    }
 
 
     public static GUIBuilder getCa() {
         GUIBuilder ca = GUIBuilder.builder("Sacrifios",3);
+
         ca.addItem(ItemClickable.builder(0).setItemStack(new ItemStack(GUIsItems.glpa())).setAction(event -> true).build());
         ca.addItem(ItemClickable.builder(1).setItemStack(new ItemStack(GUIsItems.glpa())).setAction(event -> true).build());
         ca.addItem(ItemClickable.builder(2).setItemStack(new ItemStack(GUIsItems.glpa())).setAction(event -> true).build());
