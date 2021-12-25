@@ -76,6 +76,10 @@ public class ComandosStaff implements CommandExecutor{
                         pa.getInventory().addItem(Items.FungaClu());
                         pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
+                    if (args[1].equalsIgnoreCase("WEIRD_DAGGER")) {
+                        pa.getInventory().addItem(Items.createDaga());
+                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }
                     if (args[1].equalsIgnoreCase("CATACLYSM_PEARL")) {
                         pa.getInventory().addItem(Items.CataclysPear());
                         pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
@@ -86,6 +90,14 @@ public class ComandosStaff implements CommandExecutor{
                     }
                     if (args[1].equalsIgnoreCase("CLOUDY_MARSH")) {
                         pa.getInventory().addItem(Items.CloudMarsh());
+                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }
+                    if (args[1].equalsIgnoreCase("BLOOD_STONE")) {
+                        pa.getInventory().addItem(Items.BloodShard());
+                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }
+                    if (args[1].equalsIgnoreCase("BLOOD_SHARD")) {
+                        pa.getInventory().addItem(Items.createFragmentoSangre(1));
                         pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                 default:

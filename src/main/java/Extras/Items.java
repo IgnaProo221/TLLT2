@@ -90,8 +90,6 @@ public class Items{
         lore.add(format("&7Has &eClick Derecho &7para iniciar el sacrificio."));
         lore.add(format("&7Utiliza &8/thelastlife sacrificio &7para ver"));
         lore.add(format("&7mas información."));
-        lore.add("");
-        lore.add(format("&7Nivel: &bRaro&7."));
         m.setLore(lore);
         dag.setItemMeta(m);
         return dag;
@@ -111,19 +109,7 @@ public class Items{
         frag.setItemMeta(meta);
         return frag;
     }
-    public static ItemStack cuchillCeremonia(){
-        ItemStack ceremknife = new ItemStack((Material.IRON_SWORD));
-        ItemMeta ceremknifem = ceremknife.getItemMeta();
-        Objects.requireNonNull(ceremknifem).setDisplayName(format("&cCuchillo Ceremonial"));
-        List<String> lore = new ArrayList<>();
-        lore.add(format("&7Un cuchillo con decoraciones peculiares."));
-        lore.add(format("&7En su filo esta inscrito en Latín 'Dejalo Caer"));
-        lore.add(format("&7y lo Recibiran'"));
-        ceremknifem.setUnbreakable(true);
-        ceremknifem.setLore(lore);
-        ceremknife.setItemMeta(ceremknifem);
-        return ceremknife;
-    }
+
 
 
 
