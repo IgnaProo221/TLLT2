@@ -34,6 +34,7 @@ public class BlastStorm implements Listener {
         World world = TLL2.getPlugin(TLL2.class).world;
 
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+        world.setTime(18000);
 
         Bukkit.getScheduler().runTaskLater(TLL2.getPlugin(TLL2.class), new Runnable() {
             @Override
@@ -41,7 +42,7 @@ public class BlastStorm implements Listener {
                 onlinePlayers.playSound(onlinePlayers.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 10.0F, -1.0F);
                 onlinePlayers.sendTitle(Format.format(e.getTitleStorm(tierLevel)), Format.format(e.getSubtitleStorm(tierLevel)));
             }
-        }, 100L);
+        }, 1L);
     }
 
     @EventHandler
