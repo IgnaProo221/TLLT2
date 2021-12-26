@@ -6,9 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.weather.WeatherChangeEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
 import tlldos.tll2.TLL2;
 
 import java.util.Iterator;
@@ -48,8 +45,19 @@ public class BlastStorm implements Listener {
     @EventHandler
     public void setBlastStorm(WeatherChangeEvent e) {
         if (e.toWeatherState()) {
-            StartBlastStormEvent start = new StartBlastStormEvent();
-            Bukkit.getPluginManager().callEvent(start);
+            Random random = new Random();
+            int chance = 2 * Muerte.Dia() - 1;
+
+            int a = 90;
+            int b = Muerte.Dia() + 45;
+
+            if (chance > a) {
+                a = a + chance - b;
+            }
+            if (random.nextInt(a) < chance) {
+                StartBlastStormEvent start = new StartBlastStormEvent();
+                Bukkit.getPluginManager().callEvent(start);
+            }
         }
     }
 

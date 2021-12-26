@@ -15,6 +15,8 @@ public class AlEntrar implements Listener {
     public AlEntrar (TLL2 plugin){
         this.plugin = plugin;
     }
+
+
     @EventHandler
     public void tormentaJoin(PlayerJoinEvent e) {
         if (Bukkit.getWorld("world").hasStorm()) {

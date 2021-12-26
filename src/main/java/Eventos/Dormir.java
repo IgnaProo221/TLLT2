@@ -33,7 +33,7 @@ public class Dormir implements Listener{
             p.sendMessage( prefix + "¡No puedes Dormir de Dia o en Tormenta!");
             e.setCancelled(true);
             return;
-        }else{
+        } else {
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
