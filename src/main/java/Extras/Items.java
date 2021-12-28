@@ -1,11 +1,17 @@
 package Extras;
 
+import Utilidades.Mobs;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.CreatureSpawner;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.Mob;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
@@ -110,7 +116,22 @@ public class Items{
         return frag;
     }
 
+    public static ItemStack termometroItem(){
+     ItemStack term = new ItemStack(Material.AMETHYST_SHARD);
+     ItemMeta termmeta = term.getItemMeta();
+     termmeta.setCustomModelData(4004);
+     termmeta.setDisplayName(format("&6&lTermómetro"));
+     termmeta.setUnbreakable(true);
+     term.setItemMeta(termmeta);
+     return  term;
+    }
 
-
-
+    public static ItemStack spawnerTest(){
+        ItemStack spaw = new ItemStack(Material.SPAWNER);
+        BlockStateMeta metacac = (BlockStateMeta) spaw.getItemMeta();
+        CreatureSpawner cspawn = (CreatureSpawner) metacac.getBlockState();
+        cspawn.setSpawnedType(EntityType.BEE);
+        metacac.setBlockState(cspawn);
+        return  spaw;
+    }
 }

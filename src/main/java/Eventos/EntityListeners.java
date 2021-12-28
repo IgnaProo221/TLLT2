@@ -82,6 +82,9 @@ public class EntityListeners implements Listener {
 
     @EventHandler
     public void onshotEntity(ProjectileLaunchEvent e){
+
+        Entity elpilla = (Entity) e.getEntity().getShooter();
+
         ItemStack flecha1 = new ItemStack(Material.TIPPED_ARROW);
         PotionMeta flecha1efect = (PotionMeta) flecha1.getItemMeta();
         flecha1efect.setBasePotionData(new PotionData(PotionType.SLOWNESS));
@@ -91,15 +94,10 @@ public class EntityListeners implements Listener {
         flecha1.setItemMeta(flecha1efect);
 
 
-        if(e.getEntity().getShooter() instanceof Pillager){
-            Pillager p = (Pillager) e.getEntity();
-            if(p.getCustomName().equalsIgnoreCase(format("&cMad Scientist"))){
-                p.getEquipment().setItemInOffHand(flecha1);
-            }
-
+        if(elpilla.getCustomName().equalsIgnoreCase(format("&cMad Scientist"))){
+            Pillager pillaill = (Pillager)e.getEntity();
+            pillaill.getEquipment().setItemInOffHand(flecha1);
         }
-
-
   }
 
     @EventHandler
