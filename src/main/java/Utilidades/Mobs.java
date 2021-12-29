@@ -106,8 +106,17 @@ public class Mobs implements Listener{
         ///pongan que el golem este enojado porfavor
     }
 
+    public static void labSilver(Silverfish self){
+        self.setCustomName(format("&4Lab Silverfish"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(10.0);
+        self.setHealth(10);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(5.0);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "LAB_SILVERFISH"), PersistentDataType.STRING, "LAB_SILVERFISH");
+    }
+
+
     public static void madScientist(Pillager self){
-        ItemStack flecha1 = new ItemStack(Material.TIPPED_ARROW);
+        ItemStack flecha1 = new ItemStack(Material.TIPPED_ARROW, 64);
         PotionMeta flecha1efect = (PotionMeta) flecha1.getItemMeta();
         flecha1efect.setBasePotionData(new PotionData(PotionType.SLOWNESS));
         flecha1efect.addCustomEffect(new PotionEffect(PotionEffectType.SLOW, 400, 1), true);
@@ -119,6 +128,7 @@ public class Mobs implements Listener{
         ItemMeta ballesta1m = ballesta1.getItemMeta();
         ballesta1m.setUnbreakable(true);
         ballesta1m.addEnchant(Enchantment.QUICK_CHARGE, 2, true);
+        ballesta1m.addEnchant(Enchantment.PIERCING, 1, true);
         ballesta1.setItemMeta(ballesta1m);
 
         self.setCustomName(format("&cMad Scientist"));

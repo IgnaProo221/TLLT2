@@ -58,47 +58,18 @@ public class EntityListeners implements Listener {
 
             }
         }
+        if (TLLEntities.isTLLEntity(damager) && "LAB_SILVERFISH".equals(TLLEntities.getTLLEntity(damager))) {
+
+            if (entity instanceof Player p) {
+
+                p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 1200, 0));
+
+            }
+        }
 
 
     }
-
-
-    ///
-    ///
-    ///
-    /// SON LAS 12:00 PM, ESTOY CANSADO QUE LA MIERDA
-    /// NO TENGO LA MENOR IDEA DE COMO HACER ESTO, PERO NECESITO QUE EL PILLAGER DISPARE Y SE EQUIPE LA FLECHA
-    /// PARA QUE LA DISPARE INFINITAMENTE
-    /// LEPEPOS SI ESTAS LEYENDO ESTO PERDON PERO NO ENTENDI NI CULO DE LO QUE ME EXPLICASTE :,V
-    /// BTW NECESITO UNA MANERA DE COMO SPAWNEAR LOS MOBS DE Mobs.class PARA TESTEARLOS GRACIAS
-    ///
-    ///
-    ///
-
-
-
-
-
-
-    @EventHandler
-    public void onshotEntity(ProjectileLaunchEvent e){
-
-        Entity elpilla = (Entity) e.getEntity().getShooter();
-
-        ItemStack flecha1 = new ItemStack(Material.TIPPED_ARROW);
-        PotionMeta flecha1efect = (PotionMeta) flecha1.getItemMeta();
-        flecha1efect.setBasePotionData(new PotionData(PotionType.SLOWNESS));
-        flecha1efect.addCustomEffect(new PotionEffect(PotionEffectType.SLOW, 400, 1), true);
-        flecha1efect.addCustomEffect(new PotionEffect(PotionEffectType.POISON, 400, 1), true);
-        flecha1efect.addCustomEffect(new PotionEffect(PotionEffectType.CONFUSION, 400, 1), true);
-        flecha1.setItemMeta(flecha1efect);
-
-
-        if(elpilla.getCustomName().equalsIgnoreCase(format("&cMad Scientist"))){
-            Pillager pillaill = (Pillager)e.getEntity();
-            pillaill.getEquipment().setItemInOffHand(flecha1);
-        }
-  }
+    
 
     @EventHandler
     public void entityDeath (EntityDeathEvent event) {

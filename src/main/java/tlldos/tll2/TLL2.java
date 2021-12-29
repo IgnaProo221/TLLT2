@@ -74,6 +74,7 @@ public final class TLL2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DanoSinEnieEvento(this),this);
         getServer().getPluginManager().registerEvents(new BlastStorm(),this);
         getServer().getPluginManager().registerEvents(new PlayerEvents(), this);
+        getServer().getPluginManager().registerEvents(new SpawnListeners(this),this);
     }
     public void tormentaTick(){
         if(world.getWeatherDuration() != 0) {

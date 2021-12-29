@@ -21,6 +21,7 @@ public class TLLEntities {
         customCreature.put("MECHA_ZOMBIE", EntityType.ZOMBIE);
         customCreature.put("EXO_GOLEM", EntityType.IRON_GOLEM);
         customCreature.put("MAD_SCIENTIST", EntityType.PILLAGER);
+        customCreature.put("LAB_SILVERFISH", EntityType.SILVERFISH);
     }
 
     public static boolean hasCustomCreature (EntityType type, String name) {

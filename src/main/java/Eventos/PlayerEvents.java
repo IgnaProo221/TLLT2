@@ -32,8 +32,12 @@ public class PlayerEvents implements Listener {
         if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_AIR){
             if(p.getInventory().getItemInMainHand().equals(Items.termometroItem())){
                 try{
-                    EventosItems.temperatura(p);
-                    p.setCooldown(Material.AMETHYST_SHARD, 60);
+                    if(p.hasCooldown(Material.AMETHYST_SHARD)){
+                        event.setCancelled(true);
+                    }else{
+                        EventosItems.temperatura(p);
+                        p.setCooldown(Material.AMETHYST_SHARD,60);
+                    }
                 }catch (Exception e){
                     e.printStackTrace();
                     Warn.Mutant(e);

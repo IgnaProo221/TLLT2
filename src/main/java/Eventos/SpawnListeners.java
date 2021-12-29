@@ -24,25 +24,22 @@ public class SpawnListeners implements Listener{
         var en = e.getEntity();
         var pos = e.getLocation();
         if(en instanceof Zombie){
-            if(random.nextInt(100) == 10){
-                e.setCancelled(true);
-                var zombie = (Zombie)en;
+            e.setCancelled(true);
+            var zombie = en.getLocation().getWorld().spawn(en.getLocation(), Zombie.class);
                 Mobs.mechaZombie(zombie);
-            }
+
         }
         if(en instanceof Skeleton){
-            if(random.nextInt(100) == 10){
-                e.setCancelled(true);
-                var pillager = (Pillager)en;
+            e.setCancelled(true);
+            var pillager = en.getLocation().getWorld().spawn(en.getLocation(), Pillager.class);
                 Mobs.madScientist(pillager);
-            }
+
         }
         if(en instanceof Spider){
-            if(random.nextInt(100) == 10){
-                e.setCancelled(true);
-                var iron = (IronGolem)en;
-                Mobs.exoGolem(iron);
-            }
+             e.setCancelled(true);
+            var silver = en.getLocation().getWorld().spawn(en.getLocation(), Silverfish.class);
+                Mobs.labSilver(silver);
+
         }
     }
 
