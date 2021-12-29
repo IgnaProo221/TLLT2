@@ -34,9 +34,9 @@ public class ComandosStaff implements CommandExecutor{
         }
         Server s = sender.getServer();
         Player pa = (Player) sender;
+
         if(sender.isOp()) {
             switch (args[0]) {
-
                 ///aqui no tengo idea de que hacer, intente verme un tutorial acerca de eso pero me rendi :P
                 case "sacrificios":
                     if (args[1].equalsIgnoreCase("addSacrifice")) {
@@ -76,7 +76,7 @@ public class ComandosStaff implements CommandExecutor{
                     break;
                 case "sacrificiostest":
                     try {
-                        pa.openInventory(GUIs.getCa().build());
+                        Bukkit.getLogger().info("xd");
                     } catch (Exception e) {
                         e.printStackTrace();
                         Warn.Mutant(e);
@@ -84,6 +84,10 @@ public class ComandosStaff implements CommandExecutor{
                     }
                     break;
                 case "give":
+                    if(args[1] == null){
+                        pa.sendMessage(prefix + ChatColor.YELLOW + "Debes colocar el item que te quieres givear.");
+                        return false;
+                    }
                     if (args[1].equalsIgnoreCase("FUNGAL_CLUMPS")) {
                         pa.getInventory().addItem(Items.FungaClu());
                         pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
