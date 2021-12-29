@@ -62,6 +62,7 @@ public class ComandosStaff implements CommandExecutor{
                     }else{
                         pa.sendMessage(format("&cNO ESTA EL DIA 6 GAY XD"));
                     }
+                    break;
 
                 case "debug":
                     if (args[1].equalsIgnoreCase("blastStormTest")) {

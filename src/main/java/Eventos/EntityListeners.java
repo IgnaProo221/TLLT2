@@ -77,14 +77,19 @@ public class EntityListeners implements Listener {
 
     @EventHandler
     public void onShotthit(ProjectileHitEvent event){
-        var e = event.getEntity();
-        var shooter = (Entity) event.getEntity().getShooter();
-        var damaged = (Entity) event.getHitEntity();
+        var hitblock = event.getHitBlock();
+        var entity = event.getHitEntity();
+        var shooter = event.getEntity().getShooter();
 
         if (shooter instanceof Skeleton){
             var skeleton = (Entity)shooter;
             if(skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "IGNITED_SKELETON"), PersistentDataType.STRING)){
-                damaged.getLocation().createExplosion(5);
+                if (hitblock != null) {
+                    hitblock.getLocation().createExplosion(3, true, false);
+                } else if (entity != null) {
+                    entity.getLocation().createExplosion(3, true, false);
+                }
+
             }
         }
     }
