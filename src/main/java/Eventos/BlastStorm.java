@@ -22,14 +22,13 @@ public class BlastStorm implements Listener {
     @EventHandler
     public void onBlastStormStart(StartBlastStormEvent e) {
         int tierLevel = new Random().nextInt(3);
-        Iterator<? extends Player> var2 = Bukkit.getOnlinePlayers().iterator();
 
-        Player onlinePlayers = var2.next();
+        for(Player player : Bukkit.getOnlinePlayers()){
+            e.addPotionTiers(player, tierLevel);
+            tormenta.setVisible(true);
+            tormenta.addPlayer(player);
+        }
 
-        e.addPotionTiers(onlinePlayers, tierLevel);
-
-        tormenta.setVisible(true);
-        tormenta.addPlayer(onlinePlayers);
 
         World world = TLL2.getPlugin(TLL2.class).world;
 
@@ -38,8 +37,10 @@ public class BlastStorm implements Listener {
         Bukkit.getScheduler().runTaskLater(TLL2.getPlugin(TLL2.class), new Runnable() {
             @Override
             public void run() {
-                onlinePlayers.playSound(onlinePlayers.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 10.0F, -1.0F);
-                onlinePlayers.sendTitle(Format.format(e.getTitleStorm(tierLevel)), Format.format(e.getSubtitleStorm(tierLevel)));
+                for(Player player : Bukkit.getOnlinePlayers()) {
+                    player.playSound(player.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 10.0F, -1.0F);
+                    player.sendTitle(Format.format(e.getTitleStorm(tierLevel)), Format.format(e.getSubtitleStorm(tierLevel)));
+                }
             }
         }, 100L);
     }

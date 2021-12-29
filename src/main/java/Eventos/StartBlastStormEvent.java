@@ -41,12 +41,12 @@ public class StartBlastStormEvent extends Event {
 
     }
 
-    public void addPotionTiers(Player connecteds, int tier) throws NullPointerException {
+    public void addPotionTiers(Player connected, int tier) throws NullPointerException {
         if (tier == 1 && tier == 2) {
-            connecteds.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1));
+            connected.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1));
         } else {
-            connecteds.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1));
-            connecteds.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 100, 1));
+            connected.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 1));
+            connected.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 100, 1));
         }
     }
 
