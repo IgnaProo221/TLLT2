@@ -6,6 +6,7 @@ import Eventos.*;
 import Extras.DanoSinEnieEvento;
 import Extras.EnderPearlEvent;
 import Extras.GhastExplosion;
+import Extras.SpawnerListeners;
 import Utilidades.Configuration;
 import Utilidades.GUIs;
 import org.bukkit.Bukkit;
@@ -75,6 +76,8 @@ public final class TLL2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BlastStorm(),this);
         getServer().getPluginManager().registerEvents(new PlayerEvents(), this);
         getServer().getPluginManager().registerEvents(new SpawnListeners(this),this);
+        getServer().getPluginManager().registerEvents(new SpawnerListeners(this), this);
+        getServer().getPluginManager().registerEvents(new EntityListeners(), this);
     }
     public void tormentaTick(){
         if(world.getWeatherDuration() != 0) {
