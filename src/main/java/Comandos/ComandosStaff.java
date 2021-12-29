@@ -57,7 +57,7 @@ public class ComandosStaff implements CommandExecutor{
                     break;
 
                 case "testdias":
-                    if(plugin.getConfig().getStringList("dia6").contains("true")) {
+                    if(plugin.getConfig().getBoolean("dia6")) {
                         pa.sendMessage(format("&cSI ESTA EL DIA 6 GAY XD"));
                     }else{
                         pa.sendMessage(format("&cNO ESTA EL DIA 6 GAY XD"));

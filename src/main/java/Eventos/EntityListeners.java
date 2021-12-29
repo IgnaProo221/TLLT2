@@ -85,11 +85,24 @@ public class EntityListeners implements Listener {
             var skeleton = (Entity)shooter;
             if(skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "IGNITED_SKELETON"), PersistentDataType.STRING)){
                 if (hitblock != null) {
-                    hitblock.getLocation().createExplosion(3, true, false);
+                    hitblock.getLocation().createExplosion(2, true, false);
                 } else if (entity != null) {
-                    entity.getLocation().createExplosion(3, true, false);
+                    entity.getLocation().createExplosion(2, true, false);
                 }
 
+            }
+        }
+    }
+
+
+    @EventHandler
+    public void onDeathxd(EntityDeathEvent event){
+        var e = event.getEntity();
+        if(e instanceof Spider){
+            var spider = (Spider)e;
+            if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "PLAGUE_SPIDER"), PersistentDataType.STRING)){
+                var nube = e.getLocation().getWorld().spawn(e.getLocation(), AreaEffectCloud.class);
+                Mobs.plagueEntity(nube);
             }
         }
     }

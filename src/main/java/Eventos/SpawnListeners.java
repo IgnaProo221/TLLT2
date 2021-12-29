@@ -62,9 +62,16 @@ public class SpawnListeners implements Listener{
                skeleton.getEquipment().setItemInMainHand(ai);
                skeleton.getEquipment().setHelmet(new ItemStack(Material.GLASS));
                skeleton.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "IGNITED_SKELETON"), PersistentDataType.STRING, "IGNITED_SKELETON");
-
            }
 
+           if(en instanceof Spider){
+               var spider = (Spider)en;
+               spider.setCustomName(format("&4Plague Spider"));
+               spider.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
+               spider.setHealth(30);
+               spider.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
+               spider.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "PLAGUE_SPIDER"), PersistentDataType.STRING, "PLAGUE_SPIDER");
+           }
 
     }
 

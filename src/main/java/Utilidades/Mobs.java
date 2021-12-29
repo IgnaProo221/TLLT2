@@ -1,6 +1,7 @@
 package Utilidades;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
@@ -113,6 +114,15 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(5.0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "LAB_SILVERFISH"), PersistentDataType.STRING, "LAB_SILVERFISH");
     }
+
+    public static void plagueEntity(AreaEffectCloud self){
+        self.setColor(Color.GREEN);
+        self.setBasePotionData(new PotionData(PotionType.POISON));
+        self.addCustomEffect(new PotionEffect(PotionEffectType.WITHER, 200, 3), true);
+        self.addCustomEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200, 3), true);
+        self.addCustomEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 200, 3), true);
+    }
+
 
 
     public static void madScientist(Pillager self){
