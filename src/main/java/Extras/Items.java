@@ -20,8 +20,8 @@ import java.util.Objects;
 
 import static Utilidades.Format.format;
 
-public class Items{
-    public static ItemStack FungaClu(){
+public class Items {
+    public static ItemStack FungaClu() {
         ItemStack fc = new ItemStack(Material.DRIED_KELP);
         ItemMeta fcm = fc.getItemMeta();
         fcm.setDisplayName(ChatColor.GRAY + "Fungal Clumps");
@@ -29,14 +29,15 @@ public class Items{
         return fc;
     }
 
-    public static ItemStack CataclysPear(){
+    public static ItemStack CataclysPear() {
         ItemStack cp = new ItemStack(Material.ENDER_PEARL);
         ItemMeta cpm = cp.getItemMeta();
-        cpm.setDisplayName(ChatColor.GRAY + "" +ChatColor.BOLD + "Cataclysm Pearl");
+        cpm.setDisplayName(ChatColor.GRAY + "" + ChatColor.BOLD + "Cataclysm Pearl");
         cpm.setCustomModelData(400);
         cp.setItemMeta(cpm);
         return cp;
     }
+
     public static ItemStack CloudMarsh() {
         List<String> cmlore = new ArrayList<String>();
         cmlore.add(ChatColor.GRAY + "Sientete en las Nubes...");
@@ -49,7 +50,8 @@ public class Items{
         cm.setItemMeta(cmm);
         return cm;
     }
-    public static ItemStack ToteBeserk(){
+
+    public static ItemStack ToteBeserk() {
         List<String> tblore = new ArrayList<String>();
         tblore.add(ChatColor.GRAY + "Otorga Fuerza X y Speed V por");
         tblore.add(ChatColor.GRAY + "5 segundos!");
@@ -62,6 +64,7 @@ public class Items{
         tb.setItemMeta(tbm);
         return tb;
     }
+
     public static ItemStack BloodShard() {
         List<String> bslore = new ArrayList<String>();
         bslore.add(ChatColor.GRAY + "Un Sacrificio Justo.");
@@ -116,22 +119,14 @@ public class Items{
         return frag;
     }
 
-    public static ItemStack termometroItem(){
-     ItemStack term = new ItemStack(Material.AMETHYST_SHARD);
-     ItemMeta termmeta = term.getItemMeta();
-     termmeta.setCustomModelData(4004);
-     termmeta.setDisplayName(format("&6&lTermómetro"));
-     termmeta.setUnbreakable(true);
-     term.setItemMeta(termmeta);
-     return  term;
+    public static ItemStack termometroItem() {
+        ItemStack term = new ItemStack(Material.AMETHYST_SHARD);
+        ItemMeta termmeta = term.getItemMeta();
+        termmeta.setCustomModelData(4004);
+        termmeta.setDisplayName(format("&6&lTermómetro"));
+        termmeta.setUnbreakable(true);
+        term.setItemMeta(termmeta);
+        return term;
     }
 
-    public static ItemStack spawnerTest(){
-        ItemStack spaw = new ItemStack(Material.SPAWNER);
-        BlockStateMeta metacac = (BlockStateMeta) spaw.getItemMeta();
-        CreatureSpawner cspawn = (CreatureSpawner) metacac.getBlockState();
-        cspawn.setSpawnedType(EntityType.BEE);
-        metacac.setBlockState(cspawn);
-        return  spaw;
-    }
 }

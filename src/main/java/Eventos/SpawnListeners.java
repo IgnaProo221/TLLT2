@@ -23,7 +23,7 @@ public class SpawnListeners implements Listener{
         Random random = new Random();
         var en = e.getEntity();
         var pos = e.getLocation();
-        if(en instanceof Zombie){
+        if(en instanceof Chicken){
             e.setCancelled(true);
             var zombie = en.getLocation().getWorld().spawn(en.getLocation(), Zombie.class);
                 Mobs.mechaZombie(zombie);
