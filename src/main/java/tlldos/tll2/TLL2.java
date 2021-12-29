@@ -20,6 +20,7 @@ import team.unnamed.gui.core.GUIListeners;
 
 public final class TLL2 extends JavaPlugin {
     public World world;
+
     public static BossBar tormenta;
     private Configuration config;
     private static TLL2 plugin;
@@ -41,6 +42,7 @@ public final class TLL2 extends JavaPlugin {
             getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "_______________________________________________________________________");
             world = Bukkit.getWorld("world");
             new Muerte(this);
+
             cargarEventos();
             tormentaTick();
             getCommand("thelastlife").setExecutor(new ComandosUsuarios());

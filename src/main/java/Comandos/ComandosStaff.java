@@ -14,6 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import tlldos.tll2.TLL2;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -22,6 +23,8 @@ import java.util.Iterator;
 import static Utilidades.Format.format;
 
 public class ComandosStaff implements CommandExecutor{
+    TLL2 plugin;
+
     String prefix = ChatColor.translateAlternateColorCodes('&',"&6&lThe&c&lLast&6&lLife &7➤ ");
     public static BossBar tormenta;
     @Override
@@ -52,6 +55,14 @@ public class ComandosStaff implements CommandExecutor{
                 case "alerta":
                     s.getConsoleSender().sendMessage("Alguien hizo el coso de Alerta @Mutant te llaman xdxdxd");
                     break;
+
+                case "testdias":
+                    if(plugin.getConfig().getStringList("dia6").contains("true")) {
+                        pa.sendMessage(format("&cSI ESTA EL DIA 6 GAY XD"));
+                    }else{
+                        pa.sendMessage(format("&cNO ESTA EL DIA 6 GAY XD"));
+                    }
+
                 case "debug":
                     if (args[1].equalsIgnoreCase("blastStormTest")) {
                         StartBlastStormEvent start = new StartBlastStormEvent();

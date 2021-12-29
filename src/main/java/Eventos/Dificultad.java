@@ -1,13 +1,20 @@
 package Eventos;
 
 
+import tlldos.tll2.TLL2;
+
+import java.util.HashMap;
 
 public class Dificultad{
-    boolean dia6 = false;
-    boolean dia12 = false;
-    boolean dia18 = false;
-    boolean dia24 = false;
-    boolean dia30 = false;
-    boolean dia36 = false;
+    TLL2 instance;
+    HashMap<String, Boolean> dificultadDia = new HashMap<>();
 
+    public Dificultad(TLL2 instance){
+        dificultadDia.put("dia6", true);
+        dificultadDia.put("dia12", false);
+        dificultadDia.put("dia18", false);
+        dificultadDia.put("dia24", false);
+        dificultadDia.put("dia30", false);
+        dificultadDia.put("dia36", false);
+    }
 }

@@ -2,10 +2,12 @@ package Extras;
 
 import Utilidades.Mobs;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.persistence.PersistentDataType;
 import tlldos.tll2.TLL2;
 
 public class DanoSinEnieEvento implements Listener{
@@ -22,6 +24,14 @@ public class DanoSinEnieEvento implements Listener{
         if(entity instanceof Blaze){
             if(e.getCause().equals(EntityDamageEvent.DamageCause.DROWNING)){
                 e.setCancelled(true);
+            }
+        }
+
+        if(entity instanceof Skeleton){
+            if(e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) || e.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)){
+                if(entity.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "IGNITED_SKELETON"), PersistentDataType.STRING)){
+                 e.setCancelled(true);
+                }
             }
         }
 
