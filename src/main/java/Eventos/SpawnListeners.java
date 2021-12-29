@@ -73,6 +73,33 @@ public class SpawnListeners implements Listener{
                spider.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "PLAGUE_SPIDER"), PersistentDataType.STRING, "PLAGUE_SPIDER");
            }
 
+        if(en instanceof Pillager){
+            var pillager = (Pillager)en;
+
+            ItemStack ac = new ItemStack(Material.CROSSBOW);
+            ItemMeta meta = ac.getItemMeta();
+            meta.addEnchant(Enchantment.MULTISHOT, 1, true);
+            meta.addEnchant(Enchantment.QUICK_CHARGE, 3, true);
+            ac.setItemMeta(meta);
+
+            pillager.setCustomName(format("&cPillager Generico Explosivo lol"));
+            pillager.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
+            pillager.setHealth(40);
+            pillager.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "OVERRATED_PILLAGER"), PersistentDataType.STRING, "OVERRATED_PILLAGER");
+        }
+
+        if(en instanceof Vindicator){
+            var vindi = (Vindicator)en;
+            ItemStack asx = new ItemStack(Material.NETHERITE_AXE);
+            ItemMeta meta = asx.getItemMeta();
+            meta.addEnchant(Enchantment.DAMAGE_ALL, 5, true);
+            asx.setItemMeta(meta);
+
+            vindi.setCustomName(format("&6Butcher"));
+            vindi.getEquipment().setItemInMainHand(asx);
+            vindi.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(45.0);
+            vindi.setHealth(45);
+        }
     }
 
 }

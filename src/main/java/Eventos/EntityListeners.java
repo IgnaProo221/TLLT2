@@ -89,7 +89,16 @@ public class EntityListeners implements Listener {
                 } else if (entity != null) {
                     entity.getLocation().createExplosion(2, true, false);
                 }
-
+            }
+        }
+        if(shooter instanceof Pillager){
+            var pillager = (Entity)shooter;
+            if(pillager.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "OVERRATED_PILLAGER"), PersistentDataType.STRING)){
+                if (hitblock != null) {
+                    hitblock.getLocation().createExplosion(2, false, true);
+                } else if (entity != null) {
+                    entity.getLocation().createExplosion(2, false, true);
+                }
             }
         }
     }
