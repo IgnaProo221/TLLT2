@@ -99,20 +99,31 @@ public class alUsarTotem implements Listener {
                     } else if (TotemCara == 5) {
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
                         int needTotems = 2;
-                        int size = p.getInventory().all(Material.TOTEM_OF_UNDYING).size();
+                        int main = 0;
+                        int off = 0;
+                        if (p.getInventory().getItemInMainHand().getType().equals(Material.TOTEM_OF_UNDYING)) {
+                            main = 1;
+                        }
+                        if (p.getInventory().getItemInOffHand().getType().equals(Material.TOTEM_OF_UNDYING)) {
+                            off = 1;
+                        }
+                        int result = main + off;
+                        int size = p.getInventory().all(Material.TOTEM_OF_UNDYING).size() + result;
                         String totemMessage;
                         if (needTotems > size) {
                             e.setCancelled(true);
                             totemMessage = ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " no tenia suficientes " + ChatColor.YELLOW + "Totems " + ChatColor.DARK_GRAY + "en su inventario (" + needTotems + "/" + size + ")!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")";
                         } else {
+
                             new BukkitRunnable() {
                                 @Override
                                 public void run() {
                                     p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
-                                    p.getInventory().removeItem(new ItemStack(Material.TOTEM_OF_UNDYING, 1));
                                     p.playEffect(EntityEffect.TOTEM_RESURRECT);
                                 }
                             }.runTaskLater(TLL2.getPlugin(TLL2.class), 20L);
+
+                            p.getInventory().removeItem(new ItemStack(Material.TOTEM_OF_UNDYING, 1));
                             totemMessage = ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")";
                         }
                         for (Player players : Bukkit.getOnlinePlayers()) {

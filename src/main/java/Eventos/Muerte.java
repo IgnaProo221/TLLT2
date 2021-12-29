@@ -111,11 +111,9 @@ public class Muerte extends ListenerAdapter implements Listener {
         World world = Bukkit.getWorld("world");
         for (Player players : Bukkit.getOnlinePlayers()){
             players.playSound(players.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 10.0F, -1.0F);
-            players.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 500, 0, true, false,true));
             players.sendTitle(ChatColor.GOLD + "" + ChatColor.MAGIC + "TheLastLife", ChatColor.DARK_GRAY + "" + ChatColor.MAGIC + "the end is near", 0, 80, 0);
 
             assert world != null;
-            world.setTime(4000);
 
             cabezaEstructura(p, p.getLocation());
             players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8La Alma de &6&l" + p.getName() + " &8a desaparecido entre la oscuridad eterna del &8&lVacio!, &8&lsu energia se liberara para iniciar &6la &6&lBLAST STORM!"));
@@ -126,43 +124,39 @@ public class Muerte extends ListenerAdapter implements Listener {
                 players.sendTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "As The End Begins", ChatColor.DARK_GRAY + "" + ChatColor.MAGIC + "the end is near", 0, 80, 0);
                 players.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1, false, false, false));
                 players.playSound(players.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_DEATH, 10.0F, -1.0F);
-                world.setTime(5000);
+
             }, 40);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 players.sendTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "Your Death approaches", ChatColor.DARK_GRAY + "" + ChatColor.MAGIC + "the end is near", 0, 80, 0);
                 players.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1, false, false, false));
                 players.playSound(players.getLocation(), Sound.ENTITY_ELDER_GUARDIAN_AMBIENT, 10.0F, -1.0F);
-                world.setTime(6000);
+
 
             }, 80);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 players.sendTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "The Light Eventually Dies", ChatColor.DARK_GRAY + "" + ChatColor.MAGIC + "the end is near", 0, 80, 0);
                 players.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1, false, false, false));
                 players.playSound(players.getLocation(), Sound.ENTITY_GUARDIAN_AMBIENT, 10.0F, -1.0F);
-                world.setTime(7000);
+
             }, 120);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 players.sendTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "And The Next one...", ChatColor.DARK_GRAY + "" + ChatColor.MAGIC + "the end is near", 0, 80, 0);
                 players.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1, false, false, false));
                 players.playSound(players.getLocation(), Sound.ENTITY_WITHER_AMBIENT, 10.0F, -1.0F);
-                world.setTime(8000);
+
             }, 160);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 players.sendTitle(ChatColor.GOLD + "" + ChatColor.BOLD + "IS YOU!", ChatColor.DARK_GRAY + "" + ChatColor.MAGIC + "the end is near", 0, 80, 0);
                 players.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 80, 1, false, false, false));
                 players.playSound(players.getLocation(), Sound.ENTITY_PHANTOM_DEATH, 10.0F, -1.0F);
-                world.setTime(9000);
+
             }, 200);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 players.sendTitle(ChatColor.translateAlternateColorCodes('&', "&4&kzzz &6&lTHE LAST LIFE &4&kzzz"), ChatColor.translateAlternateColorCodes('&', "&8El Fin del Jugador " + p.getName() + " &8Comienza!"), 0, 160, 60);
                 players.playSound(players.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 10.0F, -1.0F);
                 players.sendActionBar(ChatColor.GOLD + "" + ChatColor.BOLD + e.getDeathMessage());
-                world.setTime(10000);
+
             }, 240);
-            Bukkit.getScheduler().runTaskLater(plugin, () -> world.setTime(11000), 320);
-            Bukkit.getScheduler().runTaskLater(plugin, () -> world.setTime(13000), 360);
-            Bukkit.getScheduler().runTaskLater(plugin, () -> world.setTime(14000), 380);
-            Bukkit.getScheduler().runTaskLater(plugin, () -> world.setTime(16000), 400);
         }
 
         EmbedBuilder eb = new EmbedBuilder();

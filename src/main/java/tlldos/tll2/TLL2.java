@@ -6,6 +6,7 @@ import Eventos.*;
 import Extras.DanoSinEnieEvento;
 import Extras.EnderPearlEvent;
 import Extras.GhastExplosion;
+import Extras.SpawnerListeners;
 import Utilidades.Configuration;
 import Utilidades.GUIs;
 import org.bukkit.Bukkit;
@@ -19,6 +20,7 @@ import team.unnamed.gui.core.GUIListeners;
 
 public final class TLL2 extends JavaPlugin {
     public World world;
+
     public static BossBar tormenta;
     private Configuration config;
     private static TLL2 plugin;
@@ -40,6 +42,7 @@ public final class TLL2 extends JavaPlugin {
             getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "_______________________________________________________________________");
             world = Bukkit.getWorld("world");
             new Muerte(this);
+
             cargarEventos();
             tormentaTick();
             getCommand("thelastlife").setExecutor(new ComandosUsuarios());
@@ -74,6 +77,9 @@ public final class TLL2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DanoSinEnieEvento(this),this);
         getServer().getPluginManager().registerEvents(new BlastStorm(),this);
         getServer().getPluginManager().registerEvents(new PlayerEvents(), this);
+        getServer().getPluginManager().registerEvents(new SpawnListeners(this),this);
+        getServer().getPluginManager().registerEvents(new SpawnerListeners(this), this);
+        getServer().getPluginManager().registerEvents(new EntityListeners(), this);
     }
     public void tormentaTick(){
         if(world.getWeatherDuration() != 0) {

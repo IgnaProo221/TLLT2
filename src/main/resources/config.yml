@@ -6,3 +6,14 @@ ConsumidodoFungalClumps:
 #ConsumidoFungalClumps:
 #- UUID del Jugador
 #Si hay un jugador que tiene problemas con el item pueden buscar la UUID por NameMC https://es.namemc.com y se saca la del jugador que tiene problemas
+
+
+#CAMBIOS DE DIFICULTAD
+#PORFAVOR NO ALTERAR NADA
+#vvvvvvvvvvv
+dia6: true
+dia12: false
+dia18: false
+dia24: false
+dia30: false
+dia36: false

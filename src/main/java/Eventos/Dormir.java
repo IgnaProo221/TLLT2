@@ -30,10 +30,10 @@ public class Dormir implements Listener{
         World world = Bukkit.getWorld("world");
         Player p = e.getPlayer();
         if(world.isDayTime() || world.isThundering()){
-            p.sendMessage( prefix + " &c¡No puedes Dormir de Dia o en Tormenta!");
+            p.sendMessage( prefix + "¡No puedes Dormir de Dia o en Tormenta!");
             e.setCancelled(true);
             return;
-        }else{
+        } else {
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {

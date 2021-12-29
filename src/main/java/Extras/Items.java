@@ -1,11 +1,17 @@
 package Extras;
 
+import Utilidades.Mobs;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.CreatureSpawner;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.Mob;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
@@ -14,8 +20,8 @@ import java.util.Objects;
 
 import static Utilidades.Format.format;
 
-public class Items{
-    public static ItemStack FungaClu(){
+public class Items {
+    public static ItemStack FungaClu() {
         ItemStack fc = new ItemStack(Material.DRIED_KELP);
         ItemMeta fcm = fc.getItemMeta();
         fcm.setDisplayName(ChatColor.GRAY + "Fungal Clumps");
@@ -23,14 +29,15 @@ public class Items{
         return fc;
     }
 
-    public static ItemStack CataclysPear(){
+    public static ItemStack CataclysPear() {
         ItemStack cp = new ItemStack(Material.ENDER_PEARL);
         ItemMeta cpm = cp.getItemMeta();
-        cpm.setDisplayName(ChatColor.GRAY + "" +ChatColor.BOLD + "Cataclysm Pearl");
+        cpm.setDisplayName(ChatColor.GRAY + "" + ChatColor.BOLD + "Cataclysm Pearl");
         cpm.setCustomModelData(400);
         cp.setItemMeta(cpm);
         return cp;
     }
+
     public static ItemStack CloudMarsh() {
         List<String> cmlore = new ArrayList<String>();
         cmlore.add(ChatColor.GRAY + "Sientete en las Nubes...");
@@ -43,7 +50,8 @@ public class Items{
         cm.setItemMeta(cmm);
         return cm;
     }
-    public static ItemStack ToteBeserk(){
+
+    public static ItemStack ToteBeserk() {
         List<String> tblore = new ArrayList<String>();
         tblore.add(ChatColor.GRAY + "Otorga Fuerza X y Speed V por");
         tblore.add(ChatColor.GRAY + "5 segundos!");
@@ -56,6 +64,7 @@ public class Items{
         tb.setItemMeta(tbm);
         return tb;
     }
+
     public static ItemStack BloodShard() {
         List<String> bslore = new ArrayList<String>();
         bslore.add(ChatColor.GRAY + "Un Sacrificio Justo.");
@@ -90,8 +99,6 @@ public class Items{
         lore.add(format("&7Has &eClick Derecho &7para iniciar el sacrificio."));
         lore.add(format("&7Utiliza &8/thelastlife sacrificio &7para ver"));
         lore.add(format("&7mas información."));
-        lore.add("");
-        lore.add(format("&7Nivel: &bRaro&7."));
         m.setLore(lore);
         dag.setItemMeta(m);
         return dag;
@@ -111,20 +118,15 @@ public class Items{
         frag.setItemMeta(meta);
         return frag;
     }
-    public static ItemStack cuchillCeremonia(){
-        ItemStack ceremknife = new ItemStack((Material.IRON_SWORD));
-        ItemMeta ceremknifem = ceremknife.getItemMeta();
-        Objects.requireNonNull(ceremknifem).setDisplayName(format("&cCuchillo Ceremonial"));
-        List<String> lore = new ArrayList<>();
-        lore.add(format("&7Un cuchillo con decoraciones peculiares."));
-        lore.add(format("&7En su filo esta inscrito en Latín 'Dejalo Caer"));
-        lore.add(format("&7y lo Recibiran'"));
-        ceremknifem.setUnbreakable(true);
-        ceremknifem.setLore(lore);
-        ceremknife.setItemMeta(ceremknifem);
-        return ceremknife;
+
+    public static ItemStack termometroItem() {
+        ItemStack term = new ItemStack(Material.AMETHYST_SHARD);
+        ItemMeta termmeta = term.getItemMeta();
+        termmeta.setCustomModelData(4004);
+        termmeta.setDisplayName(format("&6&lTermómetro"));
+        termmeta.setUnbreakable(true);
+        term.setItemMeta(termmeta);
+        return term;
     }
-
-
 
 }

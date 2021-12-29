@@ -1,17 +1,26 @@
 package Utilidades;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
+import org.checkerframework.checker.units.qual.A;
 import tlldos.tll2.TLL2;
+
+
+import static Utilidades.Format.format;
 
 public class Mobs implements Listener{
     TLL2 plugin;
@@ -41,9 +50,8 @@ public class Mobs implements Listener{
 
     public static  void zombiCongelado(Zombie self){
         self.setCustomName(ChatColor.AQUA + "Zombi Congelado");
-        self.setMaxHealth(30);
-        self.setHealth(30);
-        ///aqui deberia ir el atributo de subir daño SI SUPIERA COMO HACERLO
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(6.0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ZOMBI_CONGELADO"), PersistentDataType.STRING, "ZOMBI_CONGELADO");
     }
 
@@ -67,13 +75,83 @@ public class Mobs implements Listener{
     public static void aranaNieve(Spider self){
 
         self.setCustomName(ChatColor.AQUA + "Snow Spider");
-        self.setMaxHealth(35);
-        self.setHealth(35);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(7.0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SNOW_SPIDER"), PersistentDataType.STRING, "SNOW_SPIDER");
     }
 
 
 
+
+
+
+
+
+
+
+    ///mobs del laboratorio
+    public static void mechaZombie(Zombie self){
+        self.setCustomName(format("&6Mecha Undead"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
+        self.setHealth(30);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
+        self.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK).setBaseValue(1.0);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "MECHA_ZOMBIE"), PersistentDataType.STRING, "MECHA_ZOMBIE");
+    }
+
+    public static void exoGolem(IronGolem self){
+        self.setCustomName(format("&6Exo Golem"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50.0);
+        self.setHealth(50);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXO_GOLEM"), PersistentDataType.STRING, "EXO_GOLEM");
+        ///pongan que el golem este enojado porfavor
+    }
+
+    public static void labSilver(Silverfish self){
+        self.setCustomName(format("&4Lab Silverfish"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(10.0);
+        self.setHealth(10);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(5.0);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "LAB_SILVERFISH"), PersistentDataType.STRING, "LAB_SILVERFISH");
+    }
+
+    public static void plagueEntity(AreaEffectCloud self){
+        self.setColor(Color.GREEN);
+        self.setBasePotionData(new PotionData(PotionType.POISON));
+        self.addCustomEffect(new PotionEffect(PotionEffectType.WITHER, 200, 3), true);
+        self.addCustomEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200, 3), true);
+        self.addCustomEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 200, 3), true);
+    }
+
+
+
+    public static void madScientist(Pillager self){
+        ItemStack flecha1 = new ItemStack(Material.TIPPED_ARROW, 64);
+        PotionMeta flecha1efect = (PotionMeta) flecha1.getItemMeta();
+        flecha1efect.setBasePotionData(new PotionData(PotionType.SLOWNESS));
+        flecha1efect.addCustomEffect(new PotionEffect(PotionEffectType.SLOW, 400, 1), true);
+        flecha1efect.addCustomEffect(new PotionEffect(PotionEffectType.POISON, 400, 1), true);
+        flecha1efect.addCustomEffect(new PotionEffect(PotionEffectType.CONFUSION, 400, 1), true);
+        flecha1.setItemMeta(flecha1efect);
+
+        ItemStack ballesta1 = new ItemStack(Material.CROSSBOW);
+        ItemMeta ballesta1m = ballesta1.getItemMeta();
+        ballesta1m.setUnbreakable(true);
+        ballesta1m.addEnchant(Enchantment.QUICK_CHARGE, 2, true);
+        ballesta1m.addEnchant(Enchantment.PIERCING, 1, true);
+        ballesta1.setItemMeta(ballesta1m);
+
+        self.setCustomName(format("&cMad Scientist"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
+        self.setHealth(30);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
+        self.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK).setBaseValue(1.0);
+        self.getEquipment().setItemInMainHand(ballesta1);
+        self.getEquipment().setItemInOffHand(flecha1);
+
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "MAD_SCIENTIST"), PersistentDataType.STRING, "MAD_SCIENTIST");
+
+    }
 
 
 }

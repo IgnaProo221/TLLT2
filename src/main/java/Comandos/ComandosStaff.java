@@ -14,6 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import tlldos.tll2.TLL2;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -22,6 +23,8 @@ import java.util.Iterator;
 import static Utilidades.Format.format;
 
 public class ComandosStaff implements CommandExecutor{
+    TLL2 plugin;
+
     String prefix = ChatColor.translateAlternateColorCodes('&',"&6&lThe&c&lLast&6&lLife &7➤ ");
     public static BossBar tormenta;
     @Override
@@ -52,6 +55,15 @@ public class ComandosStaff implements CommandExecutor{
                 case "alerta":
                     s.getConsoleSender().sendMessage("Alguien hizo el coso de Alerta @Mutant te llaman xdxdxd");
                     break;
+
+                case "testdias":
+                    if(plugin.getConfig().getBoolean("dia6")) {
+                        pa.sendMessage(format("&cSI ESTA EL DIA 6 GAY XD"));
+                    }else{
+                        pa.sendMessage(format("&cNO ESTA EL DIA 6 GAY XD"));
+                    }
+                    break;
+
                 case "debug":
                     if (args[1].equalsIgnoreCase("blastStormTest")) {
                         StartBlastStormEvent start = new StartBlastStormEvent();
@@ -80,6 +92,10 @@ public class ComandosStaff implements CommandExecutor{
                         pa.getInventory().addItem(Items.FungaClu());
                         pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
+                    if (args[1].equalsIgnoreCase("WEIRD_DAGGER")) {
+                        pa.getInventory().addItem(Items.createDaga());
+                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }
                     if (args[1].equalsIgnoreCase("CATACLYSM_PEARL")) {
                         pa.getInventory().addItem(Items.CataclysPear());
                         pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
@@ -90,6 +106,18 @@ public class ComandosStaff implements CommandExecutor{
                     }
                     if (args[1].equalsIgnoreCase("CLOUDY_MARSH")) {
                         pa.getInventory().addItem(Items.CloudMarsh());
+                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }
+                    if (args[1].equalsIgnoreCase("BLOOD_STONE")) {
+                        pa.getInventory().addItem(Items.BloodShard());
+                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }
+                    if (args[1].equalsIgnoreCase("BLOOD_SHARD")) {
+                        pa.getInventory().addItem(Items.createFragmentoSangre(1));
+                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }
+                    if (args[1].equalsIgnoreCase("TEMPERATURE_METER")) {
+                        pa.getInventory().addItem(Items.termometroItem());
                         pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                 default:

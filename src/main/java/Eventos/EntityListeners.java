@@ -1,14 +1,25 @@
 package Eventos;
 
+import Utilidades.Mobs;
 import Utilidades.TLLEntities;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
+
+import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
+import tlldos.tll2.TLL2;
 
 import java.util.*;
 
@@ -42,9 +53,60 @@ public class EntityListeners implements Listener {
 
             }
         }
+
+        if (TLLEntities.isTLLEntity(damager) && "MECHA_ZOMBIE".equals(TLLEntities.getTLLEntity(damager))) {
+
+            if (entity instanceof Player p) {
+
+                p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 400, 0));
+
+            }
+        }
+        if (TLLEntities.isTLLEntity(damager) && "LAB_SILVERFISH".equals(TLLEntities.getTLLEntity(damager))) {
+
+            if (entity instanceof Player p) {
+
+                p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 1200, 0));
+
+            }
+        }
     }
 
 
+
+
+    @EventHandler
+    public void onShotthit(ProjectileHitEvent event){
+        var hitblock = event.getHitBlock();
+        var entity = event.getHitEntity();
+        var shooter = event.getEntity().getShooter();
+
+        if (shooter instanceof Skeleton){
+            var skeleton = (Entity)shooter;
+            if(skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "IGNITED_SKELETON"), PersistentDataType.STRING)){
+                if (hitblock != null) {
+                    hitblock.getLocation().createExplosion(2, true, false);
+                } else if (entity != null) {
+                    entity.getLocation().createExplosion(2, true, false);
+                }
+
+            }
+        }
+    }
+
+
+    @EventHandler
+    public void onDeathxd(EntityDeathEvent event){
+        var e = event.getEntity();
+        if(e instanceof Spider){
+            var spider = (Spider)e;
+            if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "PLAGUE_SPIDER"), PersistentDataType.STRING)){
+                var nube = e.getLocation().getWorld().spawn(e.getLocation(), AreaEffectCloud.class);
+                Mobs.plagueEntity(nube);
+            }
+        }
+    }
+    
 
     @EventHandler
     public void entityDeath (EntityDeathEvent event) {
