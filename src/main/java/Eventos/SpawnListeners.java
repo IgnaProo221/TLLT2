@@ -25,7 +25,7 @@ public class SpawnListeners implements Listener{
     public SpawnListeners (TLL2 plugin){
         this.plugin = plugin;
     }
-
+    int vexTipos = new Random().nextInt(4 ) + 1;
 
     @EventHandler
     public void spawnMob(CreatureSpawnEvent e) {
@@ -99,6 +99,28 @@ public class SpawnListeners implements Listener{
             vindi.getEquipment().setItemInMainHand(asx);
             vindi.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(45.0);
             vindi.setHealth(45);
+        }
+
+
+        if(en instanceof Vex){
+            var vex = (Vex)en;
+            if(vexTipos == 1){
+                e.setCancelled(true);
+                var vex1 = en.getLocation().getWorld().spawn(en.getLocation(), Vex.class);
+                Mobs.vexExplosive(vex1);
+            } else if(vexTipos == 2){
+                e.setCancelled(true);
+                var vex2 = en.getLocation().getWorld().spawn(en.getLocation(), Vex.class);
+                Mobs.vexExecution(vex2);
+            }else if(vexTipos == 3){
+                e.setCancelled(true);
+                var vex3 = en.getLocation().getWorld().spawn(en.getLocation(), Vex.class);
+                Mobs.vexScientist(vex3);
+            }else if(vexTipos == 4){
+                e.setCancelled(true);
+                var vex4 = en.getLocation().getWorld().spawn(en.getLocation(), Vex.class);
+                Mobs.vexMecha(vex4);
+            }
         }
     }
 

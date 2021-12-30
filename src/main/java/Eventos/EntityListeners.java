@@ -45,31 +45,41 @@ public class EntityListeners implements Listener {
         Entity entity = event.getEntity();
         Entity damager = event.getDamager();
 
-        if (TLLEntities.isTLLEntity(damager) && "ZOMBI_CONGELADO".equals(TLLEntities.getTLLEntity(damager))) {
-
-            if (entity instanceof Player p) {
-
-                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 1));
-
+        if(entity instanceof Player p){
+            if(damager instanceof Vex){
+                var vex = (Vex)damager;
+                if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_EXPLOSIVE"), PersistentDataType.STRING)){
+                    p.getLocation().getWorld().createExplosion(p.getLocation(), 5, false, true);
+                }
+                if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_SCIENTIST"), PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 800, 0, true, false, true));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 800, 0, true, false, true));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 800, 0, true, false, true));
+                }
+                if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_MECHA"), PersistentDataType.STRING)){
+                    p.getLocation().getWorld().strikeLightning(p.getLocation());
+                    p.getLocation().getWorld().strikeLightning(p.getLocation());
+                    p.getLocation().getWorld().strikeLightning(p.getLocation());
+                    p.getLocation().getWorld().strikeLightning(p.getLocation());
+                    p.getLocation().getWorld().strikeLightning(p.getLocation());
+                }
             }
         }
 
-        if (TLLEntities.isTLLEntity(damager) && "MECHA_ZOMBIE".equals(TLLEntities.getTLLEntity(damager))) {
-
-            if (entity instanceof Player p) {
-
-                p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 400, 0));
+        if(damager instanceof Vex){
+            var vex = (Vex)damager;
+            var player = (Player)entity;
+            if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_EXPLOSIVE"), PersistentDataType.STRING)){
+                entity.getLocation().getWorld().createExplosion(entity.getLocation(), 5, false, true);
+            }
+            if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_SCIENTIST"), PersistentDataType.STRING)){
 
             }
-        }
-        if (TLLEntities.isTLLEntity(damager) && "LAB_SILVERFISH".equals(TLLEntities.getTLLEntity(damager))) {
-
-            if (entity instanceof Player p) {
-
-                p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 1200, 0));
-
+            if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_MECHA"), PersistentDataType.STRING)){
+                entity.getLocation().getWorld().createExplosion(entity.getLocation(), 5, false, true);
             }
         }
+
     }
 
 
@@ -115,7 +125,7 @@ public class EntityListeners implements Listener {
             }
         }
     }
-    
+
 
     @EventHandler
     public void entityDeath (EntityDeathEvent event) {

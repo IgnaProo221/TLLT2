@@ -154,4 +154,46 @@ public class Mobs implements Listener{
     }
 
 
+    ///vexes que se me ocurrieron
+    public static void vexExplosive(Vex self){
+        self.setCustomName(format("&cExplosive Vex"));
+        self.getEquipment().setItemInMainHand(new ItemStack(Material.TNT));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_EXPLOSIVE"), PersistentDataType.STRING, "VEX_EXPLOSIVE");
+    }
+
+    public static void vexScientist(Vex self){
+
+        ItemStack caca = new ItemStack(Material.BLAZE_ROD);
+        ItemMeta meta = caca.getItemMeta();
+        meta.addEnchant(Enchantment.DAMAGE_ALL,5,true);
+        caca.setItemMeta(meta);
+
+        self.setCustomName(format("&cScientist Vex"));
+        self.getEquipment().setItemInMainHand(caca);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_SCIENTIST"), PersistentDataType.STRING, "VEX_SCIENTIST");
+    }
+
+    public static void vexMecha(Vex self){
+
+        ItemStack caca = new ItemStack(Material.DIAMOND_HOE);
+        ItemMeta meta = caca.getItemMeta();
+        meta.addEnchant(Enchantment.DAMAGE_ALL,10,true);
+        caca.setItemMeta(meta);
+
+        self.setCustomName(format("&cMecha Vex"));
+        self.getEquipment().setItemInMainHand(caca);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_MECHA"), PersistentDataType.STRING, "VEX_MECHA");
+    }
+
+    public static void vexExecution(Vex self){
+
+        ItemStack caca = new ItemStack(Material.NETHERITE_SWORD);
+        ItemMeta meta = caca.getItemMeta();
+        meta.addEnchant(Enchantment.DAMAGE_ALL,15,true);
+        caca.setItemMeta(meta);
+
+        self.setCustomName(format("&cExecutioner Vex"));
+        self.getEquipment().setItemInMainHand(caca);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_EXECUTION"), PersistentDataType.STRING, "VEX_EXECUTION");
+    }
 }
