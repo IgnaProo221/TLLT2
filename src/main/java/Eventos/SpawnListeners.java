@@ -84,6 +84,7 @@ public class SpawnListeners implements Listener{
             pillager.setCustomName(format("&cPillager Generico Explosivo lol"));
             pillager.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
             pillager.setHealth(40);
+            pillager.getEquipment().setItemInMainHand(ac);
             pillager.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "OVERRATED_PILLAGER"), PersistentDataType.STRING, "OVERRATED_PILLAGER");
         }
 
@@ -98,6 +99,14 @@ public class SpawnListeners implements Listener{
             vindi.getEquipment().setItemInMainHand(asx);
             vindi.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(45.0);
             vindi.setHealth(45);
+        }
+
+        if(en instanceof Ravager){
+            var ravager = (Ravager)en;
+            ravager.setCustomName(format("&6Destroyer"));
+            ravager.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(12.0);
+            ravager.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(80.0);
+            ravager.setHealth(80);
         }
 
         if (en instanceof Vex self) {
