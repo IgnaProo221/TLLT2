@@ -45,7 +45,7 @@ public class EntityListeners implements Listener {
         Entity entity = event.getEntity();
         Entity damager = event.getDamager();
 
-        if(entity instanceof Player p){
+        if(entity instanceof Player p) {
             if(damager instanceof Vex){
                 var vex = (Vex)damager;
                 if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_EXPLOSIVE"), PersistentDataType.STRING)){
@@ -57,10 +57,6 @@ public class EntityListeners implements Listener {
                     p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 800, 0, true, false, true));
                 }
                 if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_MECHA"), PersistentDataType.STRING)){
-                    p.getLocation().getWorld().strikeLightning(p.getLocation());
-                    p.getLocation().getWorld().strikeLightning(p.getLocation());
-                    p.getLocation().getWorld().strikeLightning(p.getLocation());
-                    p.getLocation().getWorld().strikeLightning(p.getLocation());
                     p.getLocation().getWorld().strikeLightning(p.getLocation());
                 }
             }
