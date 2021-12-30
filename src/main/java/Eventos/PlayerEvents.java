@@ -19,10 +19,6 @@ public class PlayerEvents implements Listener {
     public void onInteract(PlayerInteractEvent event) {
         Player p = (Player)event.getPlayer();
 
-        if (p.hasCooldown(Material.AMETHYST_SHARD)) {
-            event.setCancelled(true);
-        }
-
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (p.getInventory().getItemInMainHand().equals(Items.createDaga())) {
                 Sacrificios.start(p);
@@ -31,14 +27,14 @@ public class PlayerEvents implements Listener {
 
         if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_AIR){
             if(p.getInventory().getItemInMainHand().equals(Items.termometroItem())){
-                try{
-                    if(p.hasCooldown(Material.AMETHYST_SHARD)){
+                try {
+                    if (p.hasCooldown(Material.AMETHYST_SHARD)) {
                         event.setCancelled(true);
-                    }else{
+                    } else {
                         EventosItems.temperatura(p);
                         p.setCooldown(Material.AMETHYST_SHARD,60);
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     Warn.Mutant(e);
                 }

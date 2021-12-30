@@ -25,7 +25,6 @@ public class SpawnListeners implements Listener{
     public SpawnListeners (TLL2 plugin){
         this.plugin = plugin;
     }
-    int vexTipos = new Random().nextInt(4 ) + 1;
 
     @EventHandler
     public void spawnMob(CreatureSpawnEvent e) {
@@ -101,26 +100,25 @@ public class SpawnListeners implements Listener{
             vindi.setHealth(45);
         }
 
+        if (en instanceof Vex self) {
 
-        if(en instanceof Vex){
-            var vex = (Vex)en;
-            if(vexTipos == 1){
-                e.setCancelled(true);
-                var vex1 = en.getLocation().getWorld().spawn(en.getLocation(), Vex.class);
-                Mobs.vexExplosive(vex1);
-            } else if(vexTipos == 2){
-                e.setCancelled(true);
-                var vex2 = en.getLocation().getWorld().spawn(en.getLocation(), Vex.class);
-                Mobs.vexExecution(vex2);
-            }else if(vexTipos == 3){
-                e.setCancelled(true);
-                var vex3 = en.getLocation().getWorld().spawn(en.getLocation(), Vex.class);
-                Mobs.vexScientist(vex3);
-            }else if(vexTipos == 4){
-                e.setCancelled(true);
-                var vex4 = en.getLocation().getWorld().spawn(en.getLocation(), Vex.class);
-                Mobs.vexMecha(vex4);
-            }
+            this.spawnVexClass(self);
+
+        }
+    }
+
+    public void spawnVexClass(Vex entity) {
+
+        int type = new Random().nextInt(4);
+
+        if (type == 1) {
+            Mobs.vexExplosive(entity);
+        } else if (type == 2) {
+            Mobs.vexExecution(entity);
+        } else if (type == 3) {
+            Mobs.vexScientist(entity);
+        } else {
+            Mobs.vexMecha(entity);
         }
     }
 

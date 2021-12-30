@@ -28,6 +28,14 @@ public class TLLEntities {
         return TLLEntities.customCreature.containsKey(name) && TLLEntities.customCreature.containsValue(type);
     }
 
+    public static void setCustomCreature(HashMap<String, EntityType> customCreature) {
+        TLLEntities.customCreature = customCreature;
+    }
+
+    public static HashMap<String, EntityType> getCustomCreature() {
+        return customCreature;
+    }
+
     public static void setTLLEntity(Entity entity, String name) {
         entity.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TLL_ENTITY"), PersistentDataType.STRING, name);
     }
