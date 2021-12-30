@@ -1,10 +1,17 @@
 package Utilidades;
 
+import net.minecraft.world.entity.EntityInsentient;
+import net.minecraft.world.entity.ai.goal.PathfinderGoalMeleeAttack;
+import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
+import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackableTarget;
+import net.minecraft.world.entity.animal.EntityIronGolem;
+import net.minecraft.world.entity.player.EntityHuman;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.craftbukkit.v1_18_R1.entity.CraftIronGolem;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
@@ -19,6 +26,8 @@ import org.bukkit.potion.PotionType;
 import org.checkerframework.checker.units.qual.A;
 import tlldos.tll2.TLL2;
 
+
+import java.lang.reflect.Field;
 
 import static Utilidades.Format.format;
 
@@ -105,6 +114,28 @@ public class Mobs implements Listener{
         self.setHealth(50);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXO_GOLEM"), PersistentDataType.STRING, "EXO_GOLEM");
         ///pongan que el golem este enojado porfavor
+
+        CraftIronGolem craft = ((CraftIronGolem) self);
+        EntityIronGolem entityGolem = craft.getHandle();
+
+        try {
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("goalSelector");
+            gf.setAccessible(true);
+
+            Field tf = cl.getDeclaredField("targetSelector");
+            tf.setAccessible(true);
+
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityGolem);
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityGolem);
+
+            goal.a(0, new PathfinderGoalMeleeAttack(entityGolem, 1.0D, true));
+            target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityGolem, EntityHuman.class, 10, true, false, null));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Warn.Mutant(e);
+        }
     }
 
     public static void labSilver(Silverfish self){
