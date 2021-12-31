@@ -7,10 +7,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 
@@ -62,23 +59,19 @@ public class EntityListeners implements Listener {
             }
         }
 
-        if(damager instanceof Vex){
-            var vex = (Vex)damager;
-            var player = (Player)entity;
-            if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_EXPLOSIVE"), PersistentDataType.STRING)){
-                entity.getLocation().getWorld().createExplosion(entity.getLocation(), 5, false, true);
-            }
-            if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_SCIENTIST"), PersistentDataType.STRING)){
-
-            }
-            if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_MECHA"), PersistentDataType.STRING)){
-                entity.getLocation().getWorld().createExplosion(entity.getLocation(), 5, false, true);
-            }
-        }
-
     }
 
-
+    @EventHandler
+    public void onShootbow(EntityShootBowEvent event){
+        var entity = event.getEntity();
+        if(entity instanceof WitherSkeleton){
+            var witherskeleton = (Entity)entity;
+            if(witherskeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "POWERED_SKELETON"), PersistentDataType.STRING)) {
+                var skull = event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0, 1, 0), EntityType.WITHER_SKULL);
+                event.setProjectile(skull);
+            }
+        }
+    }
 
 
     @EventHandler
@@ -91,9 +84,16 @@ public class EntityListeners implements Listener {
             var skeleton = (Entity)shooter;
             if(skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "IGNITED_SKELETON"), PersistentDataType.STRING)){
                 if (hitblock != null) {
-                    hitblock.getLocation().createExplosion(2, true, false);
+                    hitblock.getLocation().createExplosion(2, false, true);
                 } else if (entity != null) {
-                    entity.getLocation().createExplosion(2, true, false);
+                    entity.getLocation().createExplosion(2, false, true);
+                }
+            }
+            if(skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "COPPER_SKELETON"), PersistentDataType.STRING)){
+                if (hitblock != null) {
+                    hitblock.getLocation().getWorld().strikeLightning(hitblock.getLocation());
+                } else if (entity != null) {
+                    entity.getLocation().getWorld().strikeLightning(entity.getLocation());
                 }
             }
         }

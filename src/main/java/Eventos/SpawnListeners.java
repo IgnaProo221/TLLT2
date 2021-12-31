@@ -131,4 +131,21 @@ public class SpawnListeners implements Listener{
         }
     }
 
+    public void spawnSkeletonClass(Skeleton entity, WitherSkeleton entity2){
+        int type = new Random().nextInt(5);
+
+        if(type == 1){
+            Mobs.ignitedSkeleton(entity);
+        }else if(type == 2){
+            Mobs.blizzardSkeleton(entity);
+        }else if(type == 3){
+            Mobs.copperSkeleton(entity);
+        }else if(type == 4){
+            Mobs.bullseyeSkeleton(entity2);
+        }else{
+            Mobs.poweredSkeleton(entity2);
+        }
+
+    }
+
 }

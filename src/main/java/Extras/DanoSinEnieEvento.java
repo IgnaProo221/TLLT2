@@ -35,6 +35,14 @@ public class DanoSinEnieEvento implements Listener{
             }
         }
 
+        if(entity instanceof Pillager){
+            if(e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) || e.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)){
+                if(entity.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "OVERRATED_PILLAGER"), PersistentDataType.STRING)){
+                    e.setCancelled(true);
+                }
+            }
+        }
+
 
         if (entity instanceof Ghast) {
             if(e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) || e.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)){

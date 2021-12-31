@@ -104,7 +104,7 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
         self.setHealth(30);
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
-        self.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK).setBaseValue(1.0);
+        self.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK).setBaseValue(5.0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "MECHA_ZOMBIE"), PersistentDataType.STRING, "MECHA_ZOMBIE");
     }
 
@@ -226,5 +226,74 @@ public class Mobs implements Listener{
         self.setCustomName(format("&cExecutioner Vex"));
         self.getEquipment().setItemInMainHand(caca);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_EXECUTION"), PersistentDataType.STRING, "VEX_EXECUTION");
+    }
+
+
+
+    ///esqueletos randoms
+    public static void ignitedSkeleton(Skeleton self){
+        ItemStack ai = new ItemStack(Material.BOW);
+        ItemMeta meta = ai.getItemMeta();
+        meta.addEnchant(Enchantment.ARROW_DAMAGE, 20,true);
+        ai.setItemMeta(meta);
+        self.setCustomName(format("&6Ignited &cSkeleton"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
+        self.setHealth(30);
+        self.getEquipment().setItemInMainHand(ai);
+        self.getEquipment().setHelmet(new ItemStack(Material.GLASS));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "IGNITED_SKELETON"), PersistentDataType.STRING, "IGNITED_SKELETON");
+    }
+
+    public static void blizzardSkeleton(Skeleton self){
+        ItemStack ai = new ItemStack(Material.BOW);
+        ItemMeta meta = ai.getItemMeta();
+        meta.addEnchant(Enchantment.ARROW_DAMAGE, 30,true);
+        meta.addEnchant(Enchantment.ARROW_KNOCKBACK, 20,true);
+        ai.setItemMeta(meta);
+        self.setCustomName(format("&bBlizzard &cSkeleton"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
+        self.setHealth(30);
+        self.getEquipment().setItemInMainHand(ai);
+        self.getEquipment().setHelmet(new ItemStack(Material.PACKED_ICE));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIZZARD_SKELETON"), PersistentDataType.STRING, "BLIZZARD_SKELETON");
+    }
+
+    public static void copperSkeleton(Skeleton self){
+        ItemStack ai = new ItemStack(Material.BOW);
+        ItemMeta meta = ai.getItemMeta();
+        meta.addEnchant(Enchantment.ARROW_DAMAGE, 20,true);
+        meta.addEnchant(Enchantment.ARROW_FIRE, 20,true);
+        ai.setItemMeta(meta);
+        self.setCustomName(format("&eCopper &cSkeleton"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
+        self.setHealth(30);
+        self.getEquipment().setItemInMainHand(ai);
+        self.getEquipment().setHelmet(new ItemStack(Material.LIGHTNING_ROD));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "COPPER_SKELETON"), PersistentDataType.STRING, "COPPER_SKELETON");
+    }
+
+    public static void bullseyeSkeleton(WitherSkeleton self){
+        ItemStack ai = new ItemStack(Material.BOW);
+        ItemMeta meta = ai.getItemMeta();
+        meta.addEnchant(Enchantment.ARROW_DAMAGE, 99,true);
+        ai.setItemMeta(meta);
+        self.setCustomName(format("&4Bullseye &cSkeleton"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50.0);
+        self.setHealth(50);
+        self.getEquipment().setItemInMainHand(ai);
+        self.getEquipment().setHelmet(new ItemStack(Material.OBSERVER));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BULLSEYE_SKELETON"), PersistentDataType.STRING, "BULLSEYE_SKELETON");
+    }
+    public static void poweredSkeleton(WitherSkeleton self){
+        ItemStack ai = new ItemStack(Material.BOW);
+        ItemMeta meta = ai.getItemMeta();
+        meta.addEnchant(Enchantment.ARROW_DAMAGE, 20,true);
+        ai.setItemMeta(meta);
+        self.setCustomName(format("&5Powered &cSkeleton"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50.0);
+        self.setHealth(50);
+        self.getEquipment().setItemInMainHand(ai);
+        self.getEquipment().setHelmet(new ItemStack(Material.TINTED_GLASS));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "POWERED_SKELETON"), PersistentDataType.STRING, "POWERED_SKELETON");
     }
 }
