@@ -120,10 +120,10 @@ public class Mobs implements Listener{
 
         try {
             Class<? extends EntityInsentient> cl = EntityInsentient.class;
-            Field gf = cl.getDeclaredField("goalSelector");
+            Field gf = cl.getDeclaredField("bR");
             gf.setAccessible(true);
 
-            Field tf = cl.getDeclaredField("targetSelector");
+            Field tf = cl.getDeclaredField("bS");
             tf.setAccessible(true);
 
             PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityGolem);
@@ -132,6 +132,8 @@ public class Mobs implements Listener{
             goal.a(0, new PathfinderGoalMeleeAttack(entityGolem, 1.0D, true));
             target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityGolem, EntityHuman.class, 10, true, false, null));
 
+            gf.setAccessible(false);
+            tf.setAccessible(false);
         } catch (Exception e) {
             e.printStackTrace();
             Warn.Mutant(e);
