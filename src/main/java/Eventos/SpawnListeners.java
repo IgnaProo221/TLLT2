@@ -1,6 +1,7 @@
 package Eventos;
 
 import Utilidades.Mobs;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
@@ -48,19 +49,8 @@ public class SpawnListeners implements Listener{
                creeper.setHealth(20);
            }
 
-           if(en instanceof Skeleton){
-               var skeleton = (Skeleton)en;
-               ItemStack ai = new ItemStack(Material.BOW);
-               ItemMeta meta = ai.getItemMeta();
-               meta.addEnchant(Enchantment.ARROW_DAMAGE, 20,true);
-               ai.setItemMeta(meta);
-
-               skeleton.setCustomName(format("&6Ignited &cSkeleton"));
-               skeleton.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
-               skeleton.setHealth(30);
-               skeleton.getEquipment().setItemInMainHand(ai);
-               skeleton.getEquipment().setHelmet(new ItemStack(Material.GLASS));
-               skeleton.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "IGNITED_SKELETON"), PersistentDataType.STRING, "IGNITED_SKELETON");
+           if(en instanceof Skeleton self){
+               this.spawnSkeletonClass(self);
            }
 
            if(en instanceof Spider){
@@ -109,10 +99,23 @@ public class SpawnListeners implements Listener{
             ravager.setHealth(80);
         }
 
+        if(en instanceof Blaze){
+            var blaze = (Blaze)en;
+            blaze.setCustomName(format("&cHellfire"));
+            blaze.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
+            blaze.setHealth(40);
+            blaze.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE"), PersistentDataType.STRING, "HELLFIRE");
+        }
+
         if (en instanceof Vex self) {
 
             this.spawnVexClass(self);
 
+        }
+        if(en instanceof Husk){
+            Location l = en.getLocation().clone();
+            e.setCancelled(true);
+            l.getWorld().spawn(l, Blaze.class);
         }
     }
 
@@ -131,19 +134,18 @@ public class SpawnListeners implements Listener{
         }
     }
 
-    public void spawnSkeletonClass(Skeleton entity, WitherSkeleton entity2){
+    public void spawnSkeletonClass(Skeleton skeleton){
         int type = new Random().nextInt(5);
-
         if(type == 1){
-            Mobs.ignitedSkeleton(entity);
+            Mobs.ignitedSkeleton(skeleton);
         }else if(type == 2){
-            Mobs.blizzardSkeleton(entity);
+            Mobs.blizzardSkeleton(skeleton);
         }else if(type == 3){
-            Mobs.copperSkeleton(entity);
+            Mobs.copperSkeleton(skeleton);
         }else if(type == 4){
-            Mobs.bullseyeSkeleton(entity2);
+            Mobs.bullseyeSkeleton(skeleton);
         }else{
-            Mobs.poweredSkeleton(entity2);
+            Mobs.poweredSkeleton(skeleton);
         }
 
     }

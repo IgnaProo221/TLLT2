@@ -53,13 +53,25 @@ public class DanoSinEnieEvento implements Listener{
 
     @EventHandler
     public void danoPro(EntityDamageEvent e){
-
         Entity entity = e.getEntity();
-
-        if(entity instanceof Player player) {
+        if(entity instanceof Player) {
             if(e.getCause() == EntityDamageEvent.DamageCause.DROWNING){
-                e.setCancelled(true);
-                player.damage(10000);
+                e.setDamage(100000);
+            }
+            if(e.getCause() == EntityDamageEvent.DamageCause.VOID){
+                e.setDamage(100000);
+            }
+            if(e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK){
+                e.setDamage(e.getDamage() * 2);
+            }
+            if(e.getCause() == EntityDamageEvent.DamageCause.FIRE){
+                e.setDamage(e.getDamage() * 4);
+            }
+            if(e.getCause() == EntityDamageEvent.DamageCause.FREEZE){
+                e.setDamage(e.getDamage() * 4);
+            }
+            if(e.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION){
+                e.setDamage(e.getDamage() * 4);
             }
         }
     }

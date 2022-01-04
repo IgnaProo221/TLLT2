@@ -274,7 +274,7 @@ public class Mobs implements Listener{
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "COPPER_SKELETON"), PersistentDataType.STRING, "COPPER_SKELETON");
     }
 
-    public static void bullseyeSkeleton(WitherSkeleton self){
+    public static void bullseyeSkeleton(Skeleton self){
         ItemStack ai = new ItemStack(Material.BOW);
         ItemMeta meta = ai.getItemMeta();
         meta.addEnchant(Enchantment.ARROW_DAMAGE, 99,true);
@@ -286,7 +286,7 @@ public class Mobs implements Listener{
         self.getEquipment().setHelmet(new ItemStack(Material.OBSERVER));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BULLSEYE_SKELETON"), PersistentDataType.STRING, "BULLSEYE_SKELETON");
     }
-    public static void poweredSkeleton(WitherSkeleton self){
+    public static void poweredSkeleton(Skeleton self){
         ItemStack ai = new ItemStack(Material.BOW);
         ItemMeta meta = ai.getItemMeta();
         meta.addEnchant(Enchantment.ARROW_DAMAGE, 20,true);

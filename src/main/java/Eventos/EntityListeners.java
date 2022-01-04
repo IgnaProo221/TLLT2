@@ -64,9 +64,9 @@ public class EntityListeners implements Listener {
     @EventHandler
     public void onShootbow(EntityShootBowEvent event){
         var entity = event.getEntity();
-        if(entity instanceof WitherSkeleton){
-            var witherskeleton = (Entity)entity;
-            if(witherskeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "POWERED_SKELETON"), PersistentDataType.STRING)) {
+        if(entity instanceof Skeleton){
+            var skeleton = (Entity)entity;
+            if(skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "POWERED_SKELETON"), PersistentDataType.STRING)) {
                 var skull = event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0, 1, 0), EntityType.WITHER_SKULL);
                 event.setProjectile(skull);
             }
@@ -107,6 +107,18 @@ public class EntityListeners implements Listener {
                 }
             }
         }
+        if(shooter instanceof Blaze){
+            var blaze = (Entity)shooter;
+            if(blaze.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE"), PersistentDataType.STRING)){
+                if (hitblock != null) {
+                    hitblock.getLocation().createExplosion(3, false, true);
+                } else if (entity != null) {
+                    entity.getLocation().createExplosion(3, false, true);
+                    entity.setFireTicks(2400);
+                }
+            }
+        }
+
     }
 
 
