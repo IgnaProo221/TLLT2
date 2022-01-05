@@ -129,4 +129,16 @@ public class Items {
         return term;
     }
 
+    public static ItemStack totemRestorer() {
+        ItemStack totres = new ItemStack(Material.PRISMARINE_CRYSTALS);
+        ItemMeta totresmeta = totres.getItemMeta();
+        totresmeta.setCustomModelData(4005);
+        totresmeta.setDisplayName(format("&6&lTotem Restorer"));
+        totresmeta.addEnchant(Enchantment.LUCK, 1, true);
+        totresmeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        totresmeta.setUnbreakable(true);
+        totres.setItemMeta(totresmeta);
+        return totres;
+    }
+
 }

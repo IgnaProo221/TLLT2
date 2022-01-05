@@ -18,7 +18,7 @@ public class BlastStorm implements Listener {
 
     @EventHandler
     public void onBlastStormStart(StartBlastStormEvent e) {
-        int tierLevel = new Random().nextInt(3);
+        int tierLevel = new Random().nextInt(3) + 1;
 
         for(Player player : Bukkit.getOnlinePlayers()){
             e.addPotionTiers(player, tierLevel);

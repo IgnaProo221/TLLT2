@@ -24,19 +24,12 @@ public class EnderPearlEvent implements Listener {
     }
 
     @EventHandler
-    public void onInteract(PlayerInteractEvent e) {
-        if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            ItemStack item = e.getItem();
-            if (item != null && !item.hasItemMeta() && item.getType() == Material.ENDER_PEARL) {
-                Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        e.getPlayer().setCooldown(Material.ENDER_PEARL, 100);
-                    }
-                }, 2L);
-            }
+    public void onInteract(PlayerTeleportEvent e){
+        if(e.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL){
+            e.getPlayer().setCooldown(Material.ENDER_PEARL, 200);
         }
     }
+
 
     @EventHandler
     public void enderCayo(PlayerTeleportEvent e) {

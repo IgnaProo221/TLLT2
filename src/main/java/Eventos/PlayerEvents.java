@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class PlayerEvents implements Listener {
 
@@ -25,7 +26,7 @@ public class PlayerEvents implements Listener {
             }
         }
 
-        if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_AIR){
+        if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
             if(p.getInventory().getItemInMainHand().equals(Items.termometroItem())){
                 try {
                     if (p.hasCooldown(Material.AMETHYST_SHARD)) {
@@ -33,6 +34,20 @@ public class PlayerEvents implements Listener {
                     } else {
                         EventosItems.temperatura(p);
                         p.setCooldown(Material.AMETHYST_SHARD,60);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Warn.Mutant(e);
+                }
+            }
+            if(p.getInventory().getItemInMainHand().equals(Items.totemRestorer())){
+                try {
+                    if (p.hasCooldown(Material.PRISMARINE_CRYSTALS)) {
+                        event.setCancelled(true);
+                    } else {
+                        EventosItems.totemrestorerEvent(p);
+                        p.setCooldown(Material.PRISMARINE_CRYSTALS,1200);
+                        p.getInventory().removeItem(new ItemStack(Material.PRISMARINE_CRYSTALS, 1));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

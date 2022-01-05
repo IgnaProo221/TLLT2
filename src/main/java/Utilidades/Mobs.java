@@ -5,6 +5,7 @@ import net.minecraft.world.entity.ai.goal.PathfinderGoalMeleeAttack;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
 import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackableTarget;
 import net.minecraft.world.entity.animal.EntityIronGolem;
+import net.minecraft.world.entity.monster.EntityPigZombie;
 import net.minecraft.world.entity.player.EntityHuman;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -12,9 +13,11 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftIronGolem;
+import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPigZombie;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -48,10 +51,9 @@ public class Mobs implements Listener{
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TESTZOMBIE"), PersistentDataType.STRING, "TESTZOMBIE");
     }
 
-    public static void tntEnderPearl(TNTPrimed self) {
+    public static void tntZomb(TNTPrimed self) {
         self.setYield(5);
-        self.setFuseTicks(40);
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TNTENDERPEARL"), PersistentDataType.STRING, "TNTENDERPEARL");
+        self.setFuseTicks(60);
     }
 
 
@@ -88,6 +90,43 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(7.0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SNOW_SPIDER"), PersistentDataType.STRING, "SNOW_SPIDER");
     }
+
+
+
+    public static void ghastDesert(Ghast self) {
+
+        self.setCustomName(format("&e&lDesert Ghast"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50.0);
+        self.setHealth(50);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DESERT_GHAST"), PersistentDataType.STRING, "DESERT_GHAST");
+    }
+
+
+
+
+
+    public static void piglinBrutedim(PiglinBrute self){
+
+        ItemStack ax = new ItemStack(Material.NETHERITE_AXE);
+        ItemMeta meta = ax.getItemMeta();
+        meta.addEnchant(Enchantment.DAMAGE_ALL,10, true);
+        meta.setUnbreakable(true);
+        ax.setItemMeta(meta);
+
+        self.setCustomName(format("&6Dimensional Brute"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50.0);
+        self.setHealth(50);
+
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
+        self.getEquipment().setItemInMainHand(ax);
+        self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+        self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DIMENSIONAL_BRUTE"), PersistentDataType.STRING, "DIMENSIONAL_BRUTE");
+
+    }
+
+
+
 
 
 
@@ -181,6 +220,8 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK).setBaseValue(1.0);
         self.getEquipment().setItemInMainHand(ballesta1);
         self.getEquipment().setItemInOffHand(flecha1);
+        self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+        self.getEquipment().setDropChance(EquipmentSlot.OFF_HAND, 0);
 
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "MAD_SCIENTIST"), PersistentDataType.STRING, "MAD_SCIENTIST");
 
@@ -192,6 +233,8 @@ public class Mobs implements Listener{
         self.setCustomName(format("&cExplosive Vex"));
         self.getEquipment().setItemInMainHand(new ItemStack(Material.TNT));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_EXPLOSIVE"), PersistentDataType.STRING, "VEX_EXPLOSIVE");
+        self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+        self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
     }
 
     public static void vexScientist(Vex self){
@@ -204,6 +247,8 @@ public class Mobs implements Listener{
         self.setCustomName(format("&cScientist Vex"));
         self.getEquipment().setItemInMainHand(caca);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_SCIENTIST"), PersistentDataType.STRING, "VEX_SCIENTIST");
+        self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+        self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
     }
 
     public static void vexMecha(Vex self){
@@ -216,6 +261,8 @@ public class Mobs implements Listener{
         self.setCustomName(format("&cMecha Vex"));
         self.getEquipment().setItemInMainHand(caca);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_MECHA"), PersistentDataType.STRING, "VEX_MECHA");
+        self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+        self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
     }
 
     public static void vexExecution(Vex self){
@@ -228,6 +275,8 @@ public class Mobs implements Listener{
         self.setCustomName(format("&cExecutioner Vex"));
         self.getEquipment().setItemInMainHand(caca);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_EXECUTION"), PersistentDataType.STRING, "VEX_EXECUTION");
+        self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+        self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
     }
 
 
@@ -243,6 +292,8 @@ public class Mobs implements Listener{
         self.setHealth(30);
         self.getEquipment().setItemInMainHand(ai);
         self.getEquipment().setHelmet(new ItemStack(Material.GLASS));
+        self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+        self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "IGNITED_SKELETON"), PersistentDataType.STRING, "IGNITED_SKELETON");
     }
 
@@ -257,6 +308,8 @@ public class Mobs implements Listener{
         self.setHealth(30);
         self.getEquipment().setItemInMainHand(ai);
         self.getEquipment().setHelmet(new ItemStack(Material.PACKED_ICE));
+        self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+        self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIZZARD_SKELETON"), PersistentDataType.STRING, "BLIZZARD_SKELETON");
     }
 
@@ -271,10 +324,12 @@ public class Mobs implements Listener{
         self.setHealth(30);
         self.getEquipment().setItemInMainHand(ai);
         self.getEquipment().setHelmet(new ItemStack(Material.LIGHTNING_ROD));
+        self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+        self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "COPPER_SKELETON"), PersistentDataType.STRING, "COPPER_SKELETON");
     }
 
-    public static void bullseyeSkeleton(Skeleton self){
+    public static void bullseyeSkeleton(Skeleton  self){
         ItemStack ai = new ItemStack(Material.BOW);
         ItemMeta meta = ai.getItemMeta();
         meta.addEnchant(Enchantment.ARROW_DAMAGE, 99,true);
@@ -284,6 +339,8 @@ public class Mobs implements Listener{
         self.setHealth(50);
         self.getEquipment().setItemInMainHand(ai);
         self.getEquipment().setHelmet(new ItemStack(Material.OBSERVER));
+        self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+        self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BULLSEYE_SKELETON"), PersistentDataType.STRING, "BULLSEYE_SKELETON");
     }
     public static void poweredSkeleton(Skeleton self){
@@ -296,6 +353,8 @@ public class Mobs implements Listener{
         self.setHealth(50);
         self.getEquipment().setItemInMainHand(ai);
         self.getEquipment().setHelmet(new ItemStack(Material.TINTED_GLASS));
+        self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+        self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "POWERED_SKELETON"), PersistentDataType.STRING, "POWERED_SKELETON");
     }
 }

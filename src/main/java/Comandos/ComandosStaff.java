@@ -120,6 +120,10 @@ public class ComandosStaff implements CommandExecutor{
                         pa.getInventory().addItem(Items.termometroItem());
                         pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
+                    if (args[1].equalsIgnoreCase("TOTEM_RESTORER")) {
+                        pa.getInventory().addItem(Items.totemRestorer());
+                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }
                 default:
                     pa.sendMessage(format("&7No has indicado ningun subcomando."));
                     pa.sendMessage(format("&7Si no sabes los comandos ejecuta el comando /tllstaff commandlist."));

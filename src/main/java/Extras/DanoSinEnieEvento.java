@@ -49,6 +49,12 @@ public class DanoSinEnieEvento implements Listener{
                 e.setCancelled(true);
             }
         }
+
+        if (entity instanceof Bat) {
+            if(e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) || e.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)){
+                e.setCancelled(true);
+            }
+        }
     }
 
     @EventHandler
@@ -62,16 +68,19 @@ public class DanoSinEnieEvento implements Listener{
                 e.setDamage(100000);
             }
             if(e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK){
-                e.setDamage(e.getDamage() * 2);
+                e.setDamage(e.getDamage() * 4);
             }
             if(e.getCause() == EntityDamageEvent.DamageCause.FIRE){
-                e.setDamage(e.getDamage() * 4);
+                e.setDamage(e.getDamage() * 7);
             }
             if(e.getCause() == EntityDamageEvent.DamageCause.FREEZE){
-                e.setDamage(e.getDamage() * 4);
+                e.setDamage(e.getDamage() * 10);
             }
             if(e.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION){
-                e.setDamage(e.getDamage() * 4);
+                e.setDamage(e.getDamage() * 10);
+            }
+            if(e.getCause() == EntityDamageEvent.DamageCause.LAVA){
+                e.setDamage(e.getDamage() * 10);
             }
         }
     }

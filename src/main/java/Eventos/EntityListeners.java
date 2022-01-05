@@ -37,23 +37,23 @@ public class EntityListeners implements Listener {
     }
 
     @EventHandler
-    public void damageEntity (EntityDamageByEntityEvent event) {
+    public void damageEntity(EntityDamageByEntityEvent event) {
 
         Entity entity = event.getEntity();
         Entity damager = event.getDamager();
 
-        if(entity instanceof Player p) {
-            if(damager instanceof Vex){
-                var vex = (Vex)damager;
-                if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_EXPLOSIVE"), PersistentDataType.STRING)){
+        if (entity instanceof Player p) {
+            if (damager instanceof Vex) {
+                var vex = (Vex) damager;
+                if (vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_EXPLOSIVE"), PersistentDataType.STRING)) {
                     p.getLocation().getWorld().createExplosion(p.getLocation(), 5, false, true);
                 }
-                if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_SCIENTIST"), PersistentDataType.STRING)){
+                if (vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_SCIENTIST"), PersistentDataType.STRING)) {
                     p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 800, 0, true, false, true));
                     p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 800, 0, true, false, true));
                     p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 800, 0, true, false, true));
                 }
-                if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_MECHA"), PersistentDataType.STRING)){
+                if (vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_MECHA"), PersistentDataType.STRING)) {
                     p.getLocation().getWorld().strikeLightning(p.getLocation());
                 }
             }
@@ -62,11 +62,11 @@ public class EntityListeners implements Listener {
     }
 
     @EventHandler
-    public void onShootbow(EntityShootBowEvent event){
+    public void onShootbow(EntityShootBowEvent event) {
         var entity = event.getEntity();
-        if(entity instanceof Skeleton){
-            var skeleton = (Entity)entity;
-            if(skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "POWERED_SKELETON"), PersistentDataType.STRING)) {
+        if (entity instanceof Skeleton) {
+            var skeleton = (Entity) entity;
+            if (skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "POWERED_SKELETON"), PersistentDataType.STRING)) {
                 var skull = event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0, 1, 0), EntityType.WITHER_SKULL);
                 event.setProjectile(skull);
             }
@@ -75,21 +75,24 @@ public class EntityListeners implements Listener {
 
 
     @EventHandler
-    public void onShotthit(ProjectileHitEvent event){
+    public void onShotthit(ProjectileHitEvent event) {
         var hitblock = event.getHitBlock();
         var entity = event.getHitEntity();
         var shooter = event.getEntity().getShooter();
+        var projectile = event.getEntity();
 
-        if (shooter instanceof Skeleton){
-            var skeleton = (Entity)shooter;
-            if(skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "IGNITED_SKELETON"), PersistentDataType.STRING)){
+        if (shooter instanceof Skeleton) {
+            var skeleton = (Entity) shooter;
+            if (skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "IGNITED_SKELETON"), PersistentDataType.STRING)) {
                 if (hitblock != null) {
                     hitblock.getLocation().createExplosion(2, false, true);
+                    projectile.remove();
                 } else if (entity != null) {
                     entity.getLocation().createExplosion(2, false, true);
+                    projectile.remove();
                 }
             }
-            if(skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "COPPER_SKELETON"), PersistentDataType.STRING)){
+            if (skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "COPPER_SKELETON"), PersistentDataType.STRING)) {
                 if (hitblock != null) {
                     hitblock.getLocation().getWorld().strikeLightning(hitblock.getLocation());
                 } else if (entity != null) {
@@ -97,19 +100,21 @@ public class EntityListeners implements Listener {
                 }
             }
         }
-        if(shooter instanceof Pillager){
-            var pillager = (Entity)shooter;
-            if(pillager.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "OVERRATED_PILLAGER"), PersistentDataType.STRING)){
+        if (shooter instanceof Pillager) {
+            var pillager = (Entity) shooter;
+            if (pillager.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "OVERRATED_PILLAGER"), PersistentDataType.STRING)) {
                 if (hitblock != null) {
                     hitblock.getLocation().createExplosion(2, false, true);
+                    projectile.remove();
                 } else if (entity != null) {
                     entity.getLocation().createExplosion(2, false, true);
+                    projectile.remove();
                 }
             }
         }
-        if(shooter instanceof Blaze){
-            var blaze = (Entity)shooter;
-            if(blaze.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE"), PersistentDataType.STRING)){
+        if (shooter instanceof Blaze) {
+            var blaze = (Entity) shooter;
+            if (blaze.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE"), PersistentDataType.STRING)) {
                 if (hitblock != null) {
                     hitblock.getLocation().createExplosion(3, false, true);
                 } else if (entity != null) {
@@ -123,20 +128,33 @@ public class EntityListeners implements Listener {
 
 
     @EventHandler
-    public void onDeathxd(EntityDeathEvent event){
+    public void onDeathxd(EntityDeathEvent event) {
         var e = event.getEntity();
-        if(e instanceof Spider){
-            var spider = (Spider)e;
-            if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "PLAGUE_SPIDER"), PersistentDataType.STRING)){
+        if (e instanceof Spider) {
+            var spider = (Spider) e;
+            if (spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "PLAGUE_SPIDER"), PersistentDataType.STRING)) {
                 var nube = e.getLocation().getWorld().spawn(e.getLocation(), AreaEffectCloud.class);
                 Mobs.plagueEntity(nube);
+            }
+        }
+        if(e instanceof Zombie){
+            var zombie = (Zombie) e;
+            if(zombie.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TNT_MONSTER"), PersistentDataType.STRING)){
+                var tnt = e.getLocation().getWorld().spawn(e.getLocation(), TNTPrimed.class);
+                Mobs.tntZomb(tnt);
+            }
+        }
+        if(e instanceof Bat){
+            var bat = (Bat)e;
+            if(bat.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXPLOSIVE_BAT"), PersistentDataType.STRING)){
+                bat.getLocation().createExplosion(8, false, true);
             }
         }
     }
 
 
     @EventHandler
-    public void entityDeath (EntityDeathEvent event) {
+    public void entityDeath(EntityDeathEvent event) {
 
         Entity entity = event.getEntity();
         Entity killer = event.getEntity().getKiller();
@@ -155,4 +173,10 @@ public class EntityListeners implements Listener {
         }
     }
 
+    @EventHandler
+    public void noZombPig(EntityTransformEvent e) {
+        if (e.getTransformReason() == EntityTransformEvent.TransformReason.PIGLIN_ZOMBIFIED) {
+            e.setCancelled(true);
+        }
+    }
 }

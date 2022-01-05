@@ -1,6 +1,7 @@
 package Eventos;
 
 import Extras.Items;
+import Utilidades.TotemsBar;
 import Utilidades.Warn;
 import org.bukkit.*;
 import org.bukkit.entity.*;
@@ -118,7 +119,7 @@ public class alUsarTotem implements Listener {
                             new BukkitRunnable() {
                                 @Override
                                 public void run() {
-                                    p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
+                                    p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 0.0F);
                                     p.playEffect(EntityEffect.TOTEM_RESURRECT);
                                 }
                             }.runTaskLater(TLL2.getPlugin(TLL2.class), 20L);
