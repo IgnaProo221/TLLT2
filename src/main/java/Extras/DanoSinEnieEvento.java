@@ -67,6 +67,9 @@ public class DanoSinEnieEvento implements Listener{
             if(e.getCause() == EntityDamageEvent.DamageCause.VOID){
                 e.setDamage(100000);
             }
+            if(e.getCause() == EntityDamageEvent.DamageCause.CONTACT){
+                e.setDamage(100000);
+            }
             if(e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK){
                 e.setDamage(e.getDamage() * 4);
             }
@@ -80,6 +83,9 @@ public class DanoSinEnieEvento implements Listener{
                 e.setDamage(e.getDamage() * 10);
             }
             if(e.getCause() == EntityDamageEvent.DamageCause.LAVA){
+                e.setDamage(e.getDamage() * 10);
+            }
+            if(e.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR){
                 e.setDamage(e.getDamage() * 10);
             }
         }

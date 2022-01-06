@@ -57,6 +57,18 @@ public class EntityListeners implements Listener {
                     p.getLocation().getWorld().strikeLightning(p.getLocation());
                 }
             }
+            if(damager instanceof WitherSkeleton){
+                var witherskeleton = (WitherSkeleton)damager;
+                if(witherskeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SHATTER_GUARDIAN"), PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 2400, 3,true, true, true));
+                }
+            }
+            if(damager instanceof Slime){
+                var slime = (Slime)damager;
+                if(slime.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "FREEZING_SLIME"), PersistentDataType.STRING)){
+                    p.setFreezeTicks(1200);
+                }
+            }
         }
 
     }
@@ -67,7 +79,9 @@ public class EntityListeners implements Listener {
         if (entity instanceof Skeleton) {
             var skeleton = (Entity) entity;
             if (skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "POWERED_SKELETON"), PersistentDataType.STRING)) {
-                var skull = event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0, 1, 0), EntityType.WITHER_SKULL);
+                var skull = (WitherSkull)event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0, 1, 0), EntityType.WITHER_SKULL);
+                skull.setCharged(true);
+                skull.setYield(10);
                 event.setProjectile(skull);
             }
         }

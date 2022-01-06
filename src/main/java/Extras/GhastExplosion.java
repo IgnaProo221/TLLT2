@@ -6,6 +6,7 @@ import org.bukkit.block.data.type.Fire;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Ghast;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.WitherSkull;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
@@ -19,17 +20,20 @@ public class GhastExplosion implements Listener{
         this.plugin = plugin;
     }
 
+
     @EventHandler
-    public void GhastExplosionPower(ProjectileLaunchEvent e) {
-        var shooter = e.getEntity().getShooter();
-        var projectile = e.getEntity();
-        if(shooter instanceof Ghast) {
-            var ghast = (Ghast) e.getEntity();
-            if (ghast.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DESERT_GHAST"), PersistentDataType.STRING)) {
-                if (projectile instanceof Fireball) {
-                    var fireball = (Fireball) e.getEntity();
-                    fireball.setYield(5);
-                }
+    public void caca(ProjectileLaunchEvent e) {
+        if (e.getEntity().getShooter() instanceof Ghast && e.getEntity() instanceof Fireball) {
+            Fireball fireball = (Fireball) e.getEntity();
+            fireball.setYield(5);
+        }
+    }
+    @EventHandler
+    public void Test(ProjectileLaunchEvent e) {
+        if (e.getEntity().getShooter() instanceof Ghast && e.getEntity() instanceof Fireball) {
+            if (((Ghast) e.getEntity().getShooter()).getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DESERT_GHAST"), PersistentDataType.STRING)) {
+                Fireball fireball = (Fireball) e.getEntity();
+                fireball.setYield(10);
             }
         }
     }

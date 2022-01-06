@@ -13,12 +13,15 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
+import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPigZombie;
+import net.minecraft.server.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
@@ -43,12 +46,11 @@ public class SpawnListeners implements Listener{
 
     @EventHandler
     public void spawnMob(CreatureSpawnEvent e) {
-        Random random = new Random();
         var en = e.getEntity();
         var pos = e.getLocation();
            if (en instanceof Zombie) {
                var zombie = (Zombie) en;
-               if(spawnmob == 30){
+               if(spawnmob <= 30){
                    zombie.setCustomName(format("TNT Monster"));
                    zombie.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(7.0);
                    zombie.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
@@ -163,6 +165,7 @@ public class SpawnListeners implements Listener{
             CraftPigZombie craft = ((CraftPigZombie) zombipig);
             EntityPigZombie zombiPig = craft.getHandle();
 
+
             try {
                 Class<? extends EntityInsentient> cl = EntityInsentient.class;
                 Field gf = cl.getDeclaredField("bR");
@@ -189,7 +192,64 @@ public class SpawnListeners implements Listener{
             bat.setCustomName(format("&cExplosive Bat"));
             bat.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXPLOSIVE_BAT"), PersistentDataType.STRING, "EXPLOSIVE_BAT");
         }
+        if(en instanceof WitherSkeleton){
+            var witherskeleton =(WitherSkeleton)en;
 
+            ItemStack caca = new ItemStack(Material.NETHERITE_SWORD);
+            ItemMeta meta = caca.getItemMeta();
+            meta.addEnchant(Enchantment.DAMAGE_ALL, 20,true);
+            meta.setUnbreakable(true);
+            caca.setItemMeta(meta);
+
+            witherskeleton.setCustomName(format("&cShattered Guardian"));
+            witherskeleton.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(45.0);
+            witherskeleton.setHealth(45);
+            witherskeleton.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
+            witherskeleton.getEquipment().setHelmet(new ItemStack(Material.NETHERITE_HELMET));
+            witherskeleton.getEquipment().setChestplate(new ItemStack(Material.NETHERITE_CHESTPLATE));
+            witherskeleton.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
+            witherskeleton.getEquipment().setBoots(new ItemStack(Material.NETHERITE_BOOTS));
+            witherskeleton.getEquipment().setItemInMainHand(caca);
+            witherskeleton.getEquipment().setDropChance(EquipmentSlot.HEAD,0);
+            witherskeleton.getEquipment().setDropChance(EquipmentSlot.CHEST,0);
+            witherskeleton.getEquipment().setDropChance(EquipmentSlot.LEGS,0);
+            witherskeleton.getEquipment().setDropChance(EquipmentSlot.FEET,0);
+            witherskeleton.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+            witherskeleton.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SHATTER_GUARDIAN"), PersistentDataType.STRING, "SHATTER_GUARDIAN");
+        }
+        if(en instanceof Chicken){
+            e.setCancelled(true);
+            en.getLocation().getWorld().spawn(en.getLocation(), Vindicator.class);
+
+        }
+        if(en instanceof Slime){
+            var slime = (Slime)en;
+            if(e.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.SLIME_SPLIT)){
+                slime.setCustomName(format("Freezing Slime"));
+                slime.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
+                slime.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "FREEZING_SLIME"), PersistentDataType.STRING, "FREEZING_SLIME");
+            }else{
+                slime.setCustomName(format("Freezing Slime"));
+                slime.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
+                slime.setHealth(60);
+                slime.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(12);
+                slime.setSize(12);
+                slime.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "FREEZING_SLIME"), PersistentDataType.STRING, "FREEZING_SLIME");
+            }
+        }
+
+       if(en instanceof Guardian){
+           var guardian = (Guardian)en;
+           guardian.setCustomName(format("&6Caca"));
+           guardian.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
+           guardian.setHealth(40);
+           guardian.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 1, false, false, false));
+       }
+
+        if(en instanceof Cod){
+            e.setCancelled(true);
+            en.getLocation().getWorld().spawn(en.getLocation(), Guardian.class);
+        }
     }
 
     public void spawnVexClass(Vex entity) {
