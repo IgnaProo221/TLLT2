@@ -48,21 +48,8 @@ public class SpawnListeners implements Listener{
     public void spawnMob(CreatureSpawnEvent e) {
         var en = e.getEntity();
         var pos = e.getLocation();
-           if (en instanceof Zombie) {
-               var zombie = (Zombie) en;
-               if(spawnmob <= 30){
-                   zombie.setCustomName(format("TNT Monster"));
-                   zombie.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(7.0);
-                   zombie.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
-                   zombie.setHealth(30);
-                   zombie.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TNT_MONSTER"), PersistentDataType.STRING, "TNT_MONSTER");
-               }else{
-                   zombie.setCustomName(format("&6Zombi Tier I"));
-                   zombie.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(7.0);
-                   zombie.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
-                   zombie.setHealth(30);
-                   zombie.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 0, false, false, false));
-               }
+           if (en instanceof Zombie self) {
+               spawnTierZombies(self);
            }
 
            if (en instanceof Creeper) {
@@ -77,13 +64,8 @@ public class SpawnListeners implements Listener{
                this.spawnSkeletonClass(self);
            }
 
-           if(en instanceof Spider){
-               var spider = (Spider)en;
-               spider.setCustomName(format("&4Plague Spider"));
-               spider.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
-               spider.setHealth(30);
-               spider.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
-               spider.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "PLAGUE_SPIDER"), PersistentDataType.STRING, "PLAGUE_SPIDER");
+           if(en instanceof Spider self){
+               this.spawnSpiderVariant(self);
            }
 
         if(en instanceof Pillager){
@@ -281,6 +263,33 @@ public class SpawnListeners implements Listener{
             Mobs.poweredSkeleton(skeleton);
         }
 
+    }
+
+    public void spawnSpiderVariant(Spider spider){
+        int type = new Random().nextInt(4);
+        if(type == 1){
+            Mobs.plagueSpider(spider);
+        }else if(type == 2){
+            Mobs.solarScorpion(spider);
+        }else if(type == 3){
+            Mobs.interdimensionalVisitor(spider);
+        }else{
+            Mobs.agileTarantule(spider);
+
+        }
+    }
+
+    public void spawnTierZombies(Zombie zombie){
+        int type = new Random().nextInt(4);
+        if(type == 1){
+            Mobs.tntMonster(zombie);
+        }else if(type == 2){
+            Mobs.variante1Tier(zombie);
+        }else if(type == 3){
+            Mobs.variante2Tier(zombie);
+        }else{
+            Mobs.variante3Tier(zombie);
+        }
     }
 
 }

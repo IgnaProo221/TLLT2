@@ -20,20 +20,17 @@ public class GhastExplosion implements Listener{
         this.plugin = plugin;
     }
 
-
     @EventHandler
-    public void caca(ProjectileLaunchEvent e) {
-        if (e.getEntity().getShooter() instanceof Ghast && e.getEntity() instanceof Fireball) {
+    public void putaMierda(ProjectileLaunchEvent e) {
+        if(e.getEntity().getShooter() instanceof Ghast){
+            Ghast ghast = (Ghast)e.getEntity().getShooter();
             Fireball fireball = (Fireball) e.getEntity();
-            fireball.setYield(5);
-        }
-    }
-    @EventHandler
-    public void Test(ProjectileLaunchEvent e) {
-        if (e.getEntity().getShooter() instanceof Ghast && e.getEntity() instanceof Fireball) {
-            if (((Ghast) e.getEntity().getShooter()).getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DESERT_GHAST"), PersistentDataType.STRING)) {
-                Fireball fireball = (Fireball) e.getEntity();
-                fireball.setYield(10);
+            if(ghast.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DESERT_GHAST"), PersistentDataType.STRING)){
+                if(e.getEntity() instanceof Fireball){
+                    fireball.setYield(7);
+                }
+            }else{
+                fireball.setYield(5);
             }
         }
     }

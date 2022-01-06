@@ -132,6 +132,35 @@ public class Mobs implements Listener{
 
 
 
+    //arañas
+    public static void plagueSpider(Spider self){
+        self.setCustomName(format("&1Plague Spider"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
+        self.setHealth(40);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(16.0);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "PLAGUE_SPIDER"), PersistentDataType.STRING, "PLAGUE_SPIDER");
+    }
+    public static void solarScorpion(Spider self){
+        self.setCustomName(format("&6Solar Scorpion"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
+        self.setHealth(40);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(14.0);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SOLAR_SCORPION"), PersistentDataType.STRING, "SOLAR_SCORPION");
+    }
+    public static void agileTarantule(Spider self){
+        self.setCustomName(format("&6Tarantula Rompevientos"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
+        self.setHealth(40);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(14.0);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "AGILE_SPIDER"), PersistentDataType.STRING, "AGILE_SPIDER");
+    }
+    public static void interdimensionalVisitor(Spider self){
+        self.setCustomName(format("&6Visitante Interdimensional"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
+        self.setHealth(40);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(14.0);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "INTER_SPIDER"), PersistentDataType.STRING, "INTER_SPIDER");
+    }
 
 
 
@@ -357,4 +386,50 @@ public class Mobs implements Listener{
         self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "POWERED_SKELETON"), PersistentDataType.STRING, "POWERED_SKELETON");
     }
+
+
+
+
+    ///cacaplayo
+
+
+    public static void variante1Tier(Zombie self){
+        self.setCustomName(format("&6Zombi Tier I"));
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(7.0);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
+        self.setHealth(30);
+        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 0, false, false, false));
+    }
+    public static void variante2Tier(Zombie self){
+        self.setCustomName(format("&6Zombi Tier II"));
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(11.0);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
+        self.setHealth(30);
+        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 1, false, false, false));
+
+    }
+    public static void variante3Tier(Zombie self){
+        self.setCustomName(format("&6Zombi Tier III"));
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(7.0);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(49.0);
+        self.setHealth(30);
+        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 1, false, false, false));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TIER_3"), PersistentDataType.STRING, "TIER_3");
+
+    }
+    public static void tntMonster(Zombie self){
+        self.setCustomName(format("&6TNT Monster"));
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(7.0);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
+        self.setHealth(30);
+        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 0, false, false, false));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TNT_MONSTER"), PersistentDataType.STRING, "TNT_MONSTER");
+    }
+
+
+
+
+
+
+
 }

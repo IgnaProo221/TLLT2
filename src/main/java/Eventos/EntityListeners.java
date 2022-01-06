@@ -36,6 +36,17 @@ public class EntityListeners implements Listener {
         hash.put(p, 1);
     }
 
+
+    public void interEffects(Player p){
+        int effect = new Random().nextInt(3);
+        if(effect == 1){
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 1200, 4, true, true, true));
+        }else if(effect == 2){
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 400, 1, true, true, true));
+        }else{
+            p.setFireTicks(1200);
+        }
+    }
     @EventHandler
     public void damageEntity(EntityDamageByEntityEvent event) {
 
@@ -63,10 +74,25 @@ public class EntityListeners implements Listener {
                     p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 2400, 3,true, true, true));
                 }
             }
+            if(damager instanceof Spider){
+                var spider = (Spider)damager;
+                if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "AGILE_SPIDER"), PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 1200, 2,true, true, true));
+                }
+                if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "INTER_SPIDER"), PersistentDataType.STRING)){
+                    interEffects(p);
+                }
+            }
             if(damager instanceof Slime){
                 var slime = (Slime)damager;
                 if(slime.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "FREEZING_SLIME"), PersistentDataType.STRING)){
                     p.setFreezeTicks(1200);
+                }
+            }
+            if(damager instanceof Zombie){
+                var zombie = (Zombie)damager;
+                if(zombie.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TIER_3"), PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 400, 2, true, true, true));
                 }
             }
         }
@@ -80,7 +106,6 @@ public class EntityListeners implements Listener {
             var skeleton = (Entity) entity;
             if (skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "POWERED_SKELETON"), PersistentDataType.STRING)) {
                 var skull = (WitherSkull)event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0, 1, 0), EntityType.WITHER_SKULL);
-                skull.setCharged(true);
                 skull.setYield(10);
                 event.setProjectile(skull);
             }

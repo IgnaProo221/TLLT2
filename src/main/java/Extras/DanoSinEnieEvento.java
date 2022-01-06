@@ -61,6 +61,15 @@ public class DanoSinEnieEvento implements Listener{
     public void danoPro(EntityDamageEvent e){
         Entity entity = e.getEntity();
         if(entity instanceof Player) {
+            if(e.getEntity().getLastDamageCause().getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)){
+                var spider = e.getEntity().getLastDamageCause().getEntity();
+                if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SOLAR_SCORPION"), PersistentDataType.STRING)){
+                    if(e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK){
+                        e.setDamage(e.getDamage() * 8);
+                    }
+                }
+            }
+
             if(e.getCause() == EntityDamageEvent.DamageCause.DROWNING){
                 e.setDamage(100000);
             }
@@ -71,10 +80,10 @@ public class DanoSinEnieEvento implements Listener{
                 e.setDamage(100000);
             }
             if(e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK){
-                e.setDamage(e.getDamage() * 4);
+                e.setDamage(e.getDamage() * 3);
             }
             if(e.getCause() == EntityDamageEvent.DamageCause.FIRE){
-                e.setDamage(e.getDamage() * 7);
+                e.setDamage(e.getDamage() * 6);
             }
             if(e.getCause() == EntityDamageEvent.DamageCause.FREEZE){
                 e.setDamage(e.getDamage() * 10);
