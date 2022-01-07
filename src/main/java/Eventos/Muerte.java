@@ -42,6 +42,7 @@ public class Muerte extends ListenerAdapter implements Listener {
     public Muerte(TLL2 plugin){
         this.plugin = plugin;
         world = Bukkit.getWorld("world");
+        assert world != null;
         long segundos = (world.getWeatherDuration() / 20);
         long hours = segundos  / 1800L;
         long minutes = segundos % 1800L / 60L;
@@ -84,7 +85,10 @@ public class Muerte extends ListenerAdapter implements Listener {
         }
         if (msg.getContentRaw().equals("tll!tormenta")) {
             World world = Bukkit.getWorld("world");
-            long segundos = (long) (world.getWeatherDuration() / 20);
+            long segundos = 0;
+            if (world != null) {
+                segundos = world.getWeatherDuration() / 20;
+            }
             long hours = segundos / 1800L;
             long minutes = segundos % 1800L / 60L;
             long seconds = segundos % 60L;
@@ -179,7 +183,9 @@ public class Muerte extends ListenerAdapter implements Listener {
         eb.setThumbnail("https://crafatar.com/renders/head/" + p.getUniqueId() + ".png");
         eb.setColor(new Color(252, 186, 3));
 
-        channel.sendMessage(eb.build()).queue();
+        if (channel != null) {
+            channel.sendMessage(eb.build()).queue();
+        }
     }
     public void cabezaEstructura(Player p, Location location) {
         location.clone().add(0, -1, 0).getBlock().setType(Material.DEEPSLATE_TILES);
