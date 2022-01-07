@@ -2,6 +2,7 @@ package Comandos;
 
 import Eventos.Muerte;
 import Utilidades.Contador;
+import Utilidades.TotemsBar;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -42,6 +43,10 @@ public class ComandosUsuarios implements CommandExecutor{
             sender.sendMessage(ChatColor.YELLOW + "Discord: https://discord.gg/PnDUcABq9m");
             sender.sendMessage(ChatColor.GOLD + "----- Version del Plugin: v1.1 -----");
         }
+        if (args[0].equalsIgnoreCase("totems")) {
+            sender.sendMessage(ChatColor.GOLD + "----- " + TotemsBar.totempercentage + " -----");
+        }
+
         if(args[0].equalsIgnoreCase("creditos")){
             sender.sendMessage(ChatColor.DARK_GRAY + "------ CREDITOS ------");
             sender.sendMessage(ChatColor.AQUA + "iTsContrasMC: " + ChatColor.GRAY + "Creador de TLL");

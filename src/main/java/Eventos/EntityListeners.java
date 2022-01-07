@@ -37,16 +37,17 @@ public class EntityListeners implements Listener {
     }
 
 
-    public void interEffects(Player p){
+    public void interEffects(Player p) {
         int effect = new Random().nextInt(3);
-        if(effect == 1){
+        if (effect == 1) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 1200, 4, true, true, true));
-        }else if(effect == 2){
+        } else if (effect == 2) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 400, 1, true, true, true));
-        }else{
+        } else {
             p.setFireTicks(1200);
         }
     }
+
     @EventHandler
     public void damageEntity(EntityDamageByEntityEvent event) {
 
@@ -104,6 +105,8 @@ public class EntityListeners implements Listener {
 
     @EventHandler
     public void onShootbow(EntityShootBowEvent event) {
+
+        int caca = new Random().nextInt(2);
         var entity = event.getEntity();
         if (entity instanceof Skeleton) {
             var skeleton = (Entity) entity;
@@ -111,6 +114,19 @@ public class EntityListeners implements Listener {
                 var skull = (WitherSkull)event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0, 1, 0), EntityType.WITHER_SKULL);
                 skull.setYield(10);
                 event.setProjectile(skull);
+            }
+        }
+        if(entity instanceof WitherSkeleton){
+            var witherskeleton = (Entity)entity;
+            if(witherskeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_WITHER"), PersistentDataType.STRING)){
+                var skull = (WitherSkull)event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0,1,0), EntityType.WITHER_SKULL);
+                var fireball = (Fireball)event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0,1,0), EntityType.FIREBALL);
+                if(caca == 1){
+                    event.setProjectile(skull);
+                }else{
+                    fireball.setYield(4);
+                    event.setProjectile(fireball);
+                }
             }
         }
     }
@@ -123,6 +139,16 @@ public class EntityListeners implements Listener {
         var shooter = event.getEntity().getShooter();
         var projectile = event.getEntity();
 
+        if(projectile instanceof WitherSkull){
+            if (hitblock != null) {
+                hitblock.getLocation().createExplosion(2, false, true);
+                projectile.remove();
+            } else if (entity != null) {
+                entity.getLocation().createExplosion(2, false, true);
+                projectile.remove();
+            }
+        }
+
         if (shooter instanceof Skeleton) {
             var skeleton = (Entity) shooter;
             if (skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "IGNITED_SKELETON"), PersistentDataType.STRING)) {
@@ -134,6 +160,19 @@ public class EntityListeners implements Listener {
                     projectile.remove();
                 }
             }
+
+            if (skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_SKELETON"), PersistentDataType.STRING)) {
+                if (hitblock != null) {
+                    hitblock.getLocation().createExplosion(3, false, true);
+                    hitblock.getLocation().getWorld().strikeLightning(hitblock.getLocation());
+                    projectile.remove();
+                } else if (entity != null) {
+                    entity.getLocation().createExplosion(3,false, true);
+                    entity.getLocation().getWorld().strikeLightning(entity.getLocation());
+                    projectile.remove();
+                }
+            }
+
             if (skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "COPPER_SKELETON"), PersistentDataType.STRING)) {
                 if (hitblock != null) {
                     hitblock.getLocation().getWorld().strikeLightning(hitblock.getLocation());
@@ -165,7 +204,18 @@ public class EntityListeners implements Listener {
                 }
             }
         }
+    }
 
+    @EventHandler
+    public void explotarRadi(EntityExplodeEvent e){
+        var entity = (Entity)e.getEntity();
+        if(entity instanceof Creeper){
+            var creeper = (Creeper)entity;
+            if(creeper.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE_CREEPER"), PersistentDataType.STRING)){
+                Creeper nearby = (Creeper)entity.getWorld().getNearbyPlayers(entity.getLocation(),10.0D,10.0D,10.0D);
+                nearby.setFireTicks(1200);
+            }
+        }
     }
 
 

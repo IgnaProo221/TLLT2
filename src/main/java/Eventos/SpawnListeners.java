@@ -8,6 +8,8 @@ import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
 import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackableTarget;
 import net.minecraft.world.entity.monster.EntityPigZombie;
 import net.minecraft.world.entity.player.EntityHuman;
+import net.minecraft.world.level.chunk.IChunkAccess;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -32,12 +34,13 @@ import tlldos.tll2.TLL2;
 import static Utilidades.Format.format;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Random;
 
-public class SpawnListeners implements Listener{
+public class SpawnListeners implements Listener {
     private TLL2 plugin;
 
-    public SpawnListeners (TLL2 plugin){
+    public SpawnListeners(TLL2 plugin) {
         this.plugin = plugin;
     }
 
@@ -48,28 +51,43 @@ public class SpawnListeners implements Listener{
     public void spawnMob(CreatureSpawnEvent e) {
         var en = e.getEntity();
         var pos = e.getLocation();
-           if (en instanceof Zombie self) {
-               spawnTierZombies(self );
-           }
 
-           if (en instanceof Creeper) {
-               var creeper = (Creeper) en;
-               creeper.setCustomName(format("&cCharged Creeper"));
-               creeper.setPowered(true);
-               creeper.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20.0);
-               creeper.setHealth(20);
-           }
 
-           if(en instanceof Skeleton self){
-               this.spawnSkeletonClass(self);
-           }
+        if (en instanceof Zombie self) {
+            if(spawnmob < 80) {
+                Mobs.blightedZombi(self);
+            }else{
+                spawnTierZombies(self);
+            }
+        }
 
-           if(en instanceof Spider self){
-               this.spawnSpiderVariant(self);
-           }
+        if (en instanceof Creeper self) {
+            if(spawnmob < 80) {
+                Mobs.blightedCreeper(self);
 
-        if(en instanceof Pillager){
-            var pillager = (Pillager)en;
+            }else {
+                var creeper = (Creeper) en;
+                creeper.setCustomName(format("&cCharged Creeper"));
+                creeper.setPowered(true);
+                creeper.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20.0);
+                creeper.setHealth(20);
+            }
+        }
+
+        if (en instanceof Skeleton self) {
+            if(spawnmob < 80){
+                Mobs.blightedSkeleton(self);
+            }else{
+                this.spawnSkeletonClass(self);
+            }
+        }
+
+        if (en instanceof Spider self) {
+            this.spawnSpiderVariant(self);
+        }
+
+        if (en instanceof Pillager) {
+            var pillager = (Pillager) en;
 
             ItemStack ac = new ItemStack(Material.CROSSBOW);
             ItemMeta meta = ac.getItemMeta();
@@ -84,8 +102,8 @@ public class SpawnListeners implements Listener{
             pillager.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "OVERRATED_PILLAGER"), PersistentDataType.STRING, "OVERRATED_PILLAGER");
         }
 
-        if(en instanceof Vindicator){
-            var vindi = (Vindicator)en;
+        if (en instanceof Vindicator) {
+            var vindi = (Vindicator) en;
             ItemStack asx = new ItemStack(Material.NETHERITE_AXE);
             ItemMeta meta = asx.getItemMeta();
             meta.addEnchant(Enchantment.DAMAGE_ALL, 5, true);
@@ -97,16 +115,16 @@ public class SpawnListeners implements Listener{
             vindi.setHealth(45);
         }
 
-        if(en instanceof Ravager){
-            var ravager = (Ravager)en;
+        if (en instanceof Ravager) {
+            var ravager = (Ravager) en;
             ravager.setCustomName(format("&6Destroyer"));
             ravager.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(12.0);
             ravager.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(80.0);
             ravager.setHealth(80);
         }
 
-        if(en instanceof Blaze){
-            var blaze = (Blaze)en;
+        if (en instanceof Blaze) {
+            var blaze = (Blaze) en;
             blaze.setCustomName(format("&cHellfire"));
             blaze.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
             blaze.setHealth(40);
@@ -118,28 +136,56 @@ public class SpawnListeners implements Listener{
             this.spawnVexClass(self);
 
         }
-        if(en instanceof Husk){
+        if (en instanceof Husk) {
             Location l = en.getLocation().clone();
             e.setCancelled(true);
             l.getWorld().spawn(l, Blaze.class);
         }
 
-        if(en instanceof Rabbit){
-            var rabbit = (Rabbit)en;
-            if(rabbit.getLocation().getBlock().getBiome().equals(Biome.DESERT)){
+        if (en instanceof Rabbit) {
+            var rabbit = (Rabbit) en;
+            if (rabbit.getLocation().getBlock().getBiome().equals(Biome.DESERT)) {
+
+                Chunk chunk = en.getLocation().getChunk();
+
+                ArrayList<Entity> mobList = new ArrayList<>();
+
+                for(Entity ent : chunk.getEntities()){
+                    if(ent.getType() == en.getType()){
+                        mobList.add(ent);
+                    }
+                }
+                if(mobList.size() > 2){
+                    en.remove();
+                }
+
                 e.setCancelled(true);
-                var ghast = en.getLocation().getWorld().spawn(en.getLocation(),Ghast.class);
+                var ghast = en.getLocation().getWorld().spawn(en.getLocation(), Ghast.class);
                 Mobs.ghastDesert(ghast);
             }
         }
 
-        if(en instanceof Pig){
+        if (en instanceof Pig) {
+
+            Chunk chunk = en.getLocation().getChunk();
+
+            ArrayList<Entity> mobList = new ArrayList<>();
+
+            for(Entity ent : chunk.getEntities()){
+                if(ent.getType() == en.getType()){
+                    mobList.add(ent);
+                }
+            }
+            if(mobList.size() > 2){
+                en.remove();
+            }
+
             e.setCancelled(true);
             var pigbrute = en.getLocation().getWorld().spawn(en.getLocation(), PiglinBrute.class);
             Mobs.piglinBrutedim(pigbrute);
         }
-        if(en instanceof PigZombie){
-            var zombipig = (PigZombie)en;
+        if (en instanceof PigZombie) {
+            var zombipig = (PigZombie) en;
             zombipig.setCustomName(format("&cEnraged Pigman"));
             zombipig.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
 
@@ -168,49 +214,71 @@ public class SpawnListeners implements Listener{
                 ex.printStackTrace();
                 Warn.Mutant(ex);
             }
+
+            if(spawnmob < 80){
+                var creeper = en.getLocation().getWorld().spawn(en.getLocation(), Creeper.class);
+                Mobs.hellfireCreeper(creeper);
+            }
         }
-        if(en instanceof Bat){
-            var bat = (Bat)en;
+        if (en instanceof Bat) {
+            var bat = (Bat) en;
             bat.setCustomName(format("&cExplosive Bat"));
             bat.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXPLOSIVE_BAT"), PersistentDataType.STRING, "EXPLOSIVE_BAT");
         }
-        if(en instanceof WitherSkeleton){
-            var witherskeleton =(WitherSkeleton)en;
+        if (en instanceof WitherSkeleton self) {
+            if (spawnmob < 80) {
+                Mobs.blightedWitherSkeleton(self);
+            }else{
+                var witherskeleton = (WitherSkeleton) en;
 
-            ItemStack caca = new ItemStack(Material.NETHERITE_SWORD);
-            ItemMeta meta = caca.getItemMeta();
-            meta.addEnchant(Enchantment.DAMAGE_ALL, 20,true);
-            meta.setUnbreakable(true);
-            caca.setItemMeta(meta);
+                ItemStack caca = new ItemStack(Material.NETHERITE_SWORD);
+                ItemMeta meta = caca.getItemMeta();
+                meta.addEnchant(Enchantment.DAMAGE_ALL, 20, true);
+                meta.setUnbreakable(true);
+                caca.setItemMeta(meta);
 
-            witherskeleton.setCustomName(format("&cShattered Guardian"));
-            witherskeleton.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(45.0);
-            witherskeleton.setHealth(45);
-            witherskeleton.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
-            witherskeleton.getEquipment().setHelmet(new ItemStack(Material.NETHERITE_HELMET));
-            witherskeleton.getEquipment().setChestplate(new ItemStack(Material.NETHERITE_CHESTPLATE));
-            witherskeleton.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
-            witherskeleton.getEquipment().setBoots(new ItemStack(Material.NETHERITE_BOOTS));
-            witherskeleton.getEquipment().setItemInMainHand(caca);
-            witherskeleton.getEquipment().setDropChance(EquipmentSlot.HEAD,0);
-            witherskeleton.getEquipment().setDropChance(EquipmentSlot.CHEST,0);
-            witherskeleton.getEquipment().setDropChance(EquipmentSlot.LEGS,0);
-            witherskeleton.getEquipment().setDropChance(EquipmentSlot.FEET,0);
-            witherskeleton.getEquipment().setDropChance(EquipmentSlot.HAND,0);
-            witherskeleton.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SHATTER_GUARDIAN"), PersistentDataType.STRING, "SHATTER_GUARDIAN");
+                witherskeleton.setCustomName(format("&cShattered Guardian"));
+                witherskeleton.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(45.0);
+                witherskeleton.setHealth(45);
+                witherskeleton.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
+                witherskeleton.getEquipment().setHelmet(new ItemStack(Material.NETHERITE_HELMET));
+                witherskeleton.getEquipment().setChestplate(new ItemStack(Material.NETHERITE_CHESTPLATE));
+                witherskeleton.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
+                witherskeleton.getEquipment().setBoots(new ItemStack(Material.NETHERITE_BOOTS));
+                witherskeleton.getEquipment().setItemInMainHand(caca);
+                witherskeleton.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
+                witherskeleton.getEquipment().setDropChance(EquipmentSlot.CHEST, 0);
+                witherskeleton.getEquipment().setDropChance(EquipmentSlot.LEGS, 0);
+                witherskeleton.getEquipment().setDropChance(EquipmentSlot.FEET, 0);
+                witherskeleton.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+                witherskeleton.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SHATTER_GUARDIAN"), PersistentDataType.STRING, "SHATTER_GUARDIAN");
+            }
         }
-        if(en instanceof Chicken){
+        if (en instanceof Chicken ){
+            Chunk chunk = en.getLocation().getChunk();
+
+            ArrayList<Entity> mobList = new ArrayList<>();
+
+            for(Entity ent : chunk.getEntities()){
+                if(ent.getType() == en.getType()){
+                    mobList.add(ent);
+                }
+            }
+            if(mobList.size() > 2){
+                en.remove();
+            }
+
             e.setCancelled(true);
             en.getLocation().getWorld().spawn(en.getLocation(), Vindicator.class);
 
         }
-        if(en instanceof Slime){
-            var slime = (Slime)en;
-            if(e.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.SLIME_SPLIT)){
+        if (en instanceof Slime) {
+            var slime = (Slime) en;
+            if (e.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.SLIME_SPLIT)) {
                 slime.setCustomName(format("Freezing Slime"));
                 slime.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
                 slime.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "FREEZING_SLIME"), PersistentDataType.STRING, "FREEZING_SLIME");
-            }else{
+            } else {
                 slime.setCustomName(format("Freezing Slime"));
                 slime.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
                 slime.setHealth(60);
@@ -220,15 +288,29 @@ public class SpawnListeners implements Listener{
             }
         }
 
-       if(en instanceof Guardian){
-           var guardian = (Guardian)en;
-           guardian.setCustomName(format("&6Caca"));
-           guardian.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
-           guardian.setHealth(40);
-           guardian.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 1, false, false, false));
-       }
+        if (en instanceof Guardian) {
+            var guardian = (Guardian) en;
+            guardian.setCustomName(format("&6Caca"));
+            guardian.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
+            guardian.setHealth(40);
+            guardian.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 1, false, false, false));
+        }
 
-        if(en instanceof Cod){
+        if (en instanceof Cod) {
+
+            Chunk chunk = en.getLocation().getChunk();
+
+            ArrayList<Entity> mobList = new ArrayList<>();
+
+            for(Entity ent : chunk.getEntities()){
+                if(ent.getType() == en.getType()){
+                    mobList.add(ent);
+                }
+            }
+            if(mobList.size() > 2){
+                en.remove();
+            }
+
             e.setCancelled(true);
             en.getLocation().getWorld().spawn(en.getLocation(), Guardian.class);
         }
@@ -249,45 +331,45 @@ public class SpawnListeners implements Listener{
         }
     }
 
-    public void spawnSkeletonClass(Skeleton skeleton){
+    public void spawnSkeletonClass(Skeleton skeleton) {
         int type = new Random().nextInt(5);
-        if(type == 1){
+        if (type == 1) {
             Mobs.ignitedSkeleton(skeleton);
-        }else if(type == 2){
+        } else if (type == 2) {
             Mobs.blizzardSkeleton(skeleton);
-        }else if(type == 3){
+        } else if (type == 3) {
             Mobs.copperSkeleton(skeleton);
-        }else if(type == 4){
+        } else if (type == 4) {
             Mobs.bullseyeSkeleton(skeleton);
-        }else{
+        } else {
             Mobs.poweredSkeleton(skeleton);
         }
 
     }
 
-    public void spawnSpiderVariant(Spider spider){
+    public void spawnSpiderVariant(Spider spider) {
         int type = new Random().nextInt(4);
-        if(type == 1){
+        if (type == 1) {
             Mobs.plagueSpider(spider);
-        }else if(type == 2){
+        } else if (type == 2) {
             Mobs.solarScorpion(spider);
-        }else if(type == 3){
+        } else if (type == 3) {
             Mobs.interdimensionalVisitor(spider);
-        }else{
+        } else {
             Mobs.agileTarantule(spider);
 
         }
     }
 
-    public void spawnTierZombies(Zombie zombie){
+    public void spawnTierZombies(Zombie zombie) {
         int type = new Random().nextInt(4);
-        if(type == 1){
+        if (type == 1) {
             Mobs.tntMonster(zombie);
-        }else if(type == 2){
+        } else if (type == 2) {
             Mobs.variante1Tier(zombie);
-        }else if(type == 3){
+        } else if (type == 3) {
             Mobs.variante2Tier(zombie);
-        }else{
+        } else {
             Mobs.variante3Tier(zombie);
         }
     }

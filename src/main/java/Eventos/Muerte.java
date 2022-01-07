@@ -33,6 +33,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 import java.util.UUID;
 
+import static Utilidades.Format.format;
+import static Utilidades.Format.prefix;
+
 public class Muerte extends ListenerAdapter implements Listener {
     private final World world;
     public static BossBar tormenta;
@@ -77,7 +80,7 @@ public class Muerte extends ListenerAdapter implements Listener {
                 if (jugadores.length() > 0) {
                     jugadores.append('\n');
                 }
-                jugadores.append(players.getName());
+                jugadores.append(players.getName() +"  :heart: : "+players.getHealth());
             }
             eb.setDescription(jugadores.length() > 0 ? jugadores : "No hay Jugadores Conectados");
             eb.setColor(new Color(252, 186, 3));
@@ -156,7 +159,7 @@ public class Muerte extends ListenerAdapter implements Listener {
 
             }, 200);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(ChatColor.translateAlternateColorCodes('&', "&4&kzzz &6&lTHE LAST LIFE &4&kzzz"), ChatColor.translateAlternateColorCodes('&', "&8El Fin del Jugador " + p.getName() + " &8Comienza!"), 0, 160, 20);
+                players.sendTitle(ChatColor.translateAlternateColorCodes('&', "&4&kzzz &6&lTHE LAST LIFE &4&kzzz"), ChatColor.translateAlternateColorCodes('&', "&8El Jugador " + p.getName() + " &8Ca Muerto!"), 0, 160, 20);
                 players.playSound(players.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 10.0F, -1.0F);
                 players.sendActionBar(ChatColor.GOLD + "" + ChatColor.BOLD + e.getDeathMessage());
 
@@ -296,6 +299,8 @@ public class Muerte extends ListenerAdapter implements Listener {
                 tormenta.setVisible(false);
                 tormenta.removePlayer(players);
                 world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true);
+                players.sendMessage(prefix(), format("&6&lLos cielos se despejaron... por ahora."));
+                players.playSound(players.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 10.0F, 0.5F);
             }
         }
     }
