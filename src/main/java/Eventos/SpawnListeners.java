@@ -49,7 +49,7 @@ public class SpawnListeners implements Listener{
         var en = e.getEntity();
         var pos = e.getLocation();
            if (en instanceof Zombie self) {
-               spawnTierZombies(self);
+               spawnTierZombies(self );
            }
 
            if (en instanceof Creeper) {

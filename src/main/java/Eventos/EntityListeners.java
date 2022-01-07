@@ -77,10 +77,13 @@ public class EntityListeners implements Listener {
             if(damager instanceof Spider){
                 var spider = (Spider)damager;
                 if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "AGILE_SPIDER"), PersistentDataType.STRING)){
-                    p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 1200, 2,true, true, true));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 600, 2,true, true, true));
                 }
                 if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "INTER_SPIDER"), PersistentDataType.STRING)){
                     interEffects(p);
+                }
+                if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SOLAR_SCORPION"), PersistentDataType.STRING)){
+                    p.setFireTicks(400);
                 }
             }
             if(damager instanceof Slime){

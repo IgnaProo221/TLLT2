@@ -1,11 +1,13 @@
 package Extras;
 
 import Utilidades.Mobs;
+import net.minecraft.world.damagesource.DamageSource;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.persistence.PersistentDataType;
 import tlldos.tll2.TLL2;
@@ -57,17 +59,45 @@ public class DanoSinEnieEvento implements Listener{
         }
     }
 
+
+
+
+    @EventHandler
+    public void danoProdos(EntityDamageByEntityEvent e){
+            Entity entity = e.getEntity();
+        if(e.getCause() == null){
+            return;
+        }
+        if(e.getEntity().getLastDamageCause() == null){
+            return;
+        }
+
+            if(entity instanceof Player player){
+                if(player.getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK){
+                    if(e.getDamager() instanceof Spider spider){
+                        if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SOLAR_SCORPION"), PersistentDataType.STRING)){
+                            if(e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK){
+                                e.setDamage(e.getDamage() * 8);
+                            }
+                        }
+                    }
+                }
+            }
+    }
+
+
+
+
+
     @EventHandler
     public void danoPro(EntityDamageEvent e){
         Entity entity = e.getEntity();
-        if(entity instanceof Player) {
-            if(e.getEntity().getLastDamageCause().getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)){
-                var spider = e.getEntity().getLastDamageCause().getEntity();
-                if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SOLAR_SCORPION"), PersistentDataType.STRING)){
-                    if(e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK){
-                        e.setDamage(e.getDamage() * 8);
-                    }
-                }
+        if(entity instanceof Player ){
+            if(e.getCause() == null){
+                return;
+            }
+            if(e.getEntity().getLastDamageCause() == null){
+                return;
             }
 
             if(e.getCause() == EntityDamageEvent.DamageCause.DROWNING){
@@ -79,8 +109,8 @@ public class DanoSinEnieEvento implements Listener{
             if(e.getCause() == EntityDamageEvent.DamageCause.CONTACT){
                 e.setDamage(100000);
             }
-            if(e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK){
-                e.setDamage(e.getDamage() * 3);
+            if(e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {
+                e.setDamage(e.getDamage() * 5);
             }
             if(e.getCause() == EntityDamageEvent.DamageCause.FIRE){
                 e.setDamage(e.getDamage() * 6);
