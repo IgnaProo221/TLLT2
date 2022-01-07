@@ -163,9 +163,9 @@ public class alUsarTotem implements Listener {
                         }
                     } else if (TotemCara == 6) {
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
-
-                        p.getLocation().getWorld().spawn(p.getLocation().clone(), Creeper.class);
-
+                        p.removePotionEffect(PotionEffectType.ABSORPTION);
+                        p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+                        p.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
                         for (Player players : Bukkit.getOnlinePlayers()) {
                             players.sendMessage(ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
                             players.sendMessage(ChatColor.RED + "El Totem a caido en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Numero 6!");
