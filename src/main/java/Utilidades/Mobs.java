@@ -5,6 +5,7 @@ import net.minecraft.world.entity.ai.goal.PathfinderGoalMeleeAttack;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
 import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackableTarget;
 import net.minecraft.world.entity.animal.EntityIronGolem;
+import net.minecraft.world.entity.monster.EntityEnderman;
 import net.minecraft.world.entity.monster.EntityPigZombie;
 import net.minecraft.world.entity.player.EntityHuman;
 import org.bukkit.ChatColor;
@@ -12,6 +13,7 @@ import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.craftbukkit.v1_18_R1.entity.CraftEnderman;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftIronGolem;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPigZombie;
 import org.bukkit.enchantments.Enchantment;
@@ -183,6 +185,7 @@ public class Mobs implements Listener{
         bow1.setItemMeta(meta);
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
         self.setHealth(50);
+        self.getEquipment().setItemInMainHand(bow1);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_WITHER"), PersistentDataType.STRING, "BLIGHTED_WITHER");
     }
 
@@ -195,23 +198,78 @@ public class Mobs implements Listener{
     }
 
     public static void blightedSpider(Spider self){
-
+        self.setCustomName(format("&6&lBlighted Spider"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
+        self.setHealth(50);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(15);
+        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 1, false, false, false));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_SPIDER"), PersistentDataType.STRING, "BLIGHTED_SPIDER");
     }
 
     public static void blightedEndermam(Enderman self){
+        self.setCustomName(format("&5&lBlighted Enderman"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(75);
+        self.setHealth(75);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(15);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_ENDERMAN"), PersistentDataType.STRING, "BLIGHTED_ENDERMAN");
+        CraftEnderman craft = ((CraftEnderman) self);
+        EntityEnderman entityEnderman = craft.getHandle();
+
+        try {
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("bR");
+            gf.setAccessible(true);
+
+            Field tf = cl.getDeclaredField("bS");
+            tf.setAccessible(true);
+
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityEnderman);
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityEnderman);
+
+            goal.a(0, new PathfinderGoalMeleeAttack(entityEnderman, 1.0D, true));
+            target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityEnderman, EntityHuman.class, 10, true, false, null));
+
+            gf.setAccessible(false);
+            tf.setAccessible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Warn.Mutant(e);
+        }
 
     }
 
     public static void blightedPiglin(PiglinBrute self){
-
+        ItemStack es = new ItemStack(Material.NETHERITE_AXE);
+        ItemMeta meta = es.getItemMeta();
+        meta.addEnchant(Enchantment.DAMAGE_ALL, 30,true);
+        meta.setUnbreakable(true);
+        es.setItemMeta(meta);
+        self.setCustomName(format("&c&lBlighted Piglin Brute"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(65);
+        self.setHealth(65);
+        self.getEquipment().setItemInMainHand(es);
+        self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
     }
 
     public static void blightedPhantom(Phantom self){
-
+        self.setCustomName(format("&6&lBlighted Phantom"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(55);
+        self.setHealth(55);
+        self.setSize(4);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_PHANTOM"), PersistentDataType.STRING, "BLIGHTED_PHANTOM");
     }
 
     public static void blightedGhast(Ghast self){
-
+        self.setCustomName(format("&4&lBlighted Ghast"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(55);
+        self.setHealth(55);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_GHAST"), PersistentDataType.STRING, "BLIGHTED_GHAST");
+    }
+    public static void blightedWitch(Witch self){
+        self.setCustomName(format("&6&lBlighted Witch"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(45);
+        self.setHealth(45);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_WITCH"), PersistentDataType.STRING, "BLIGHTED_WITCH");
     }
 
 

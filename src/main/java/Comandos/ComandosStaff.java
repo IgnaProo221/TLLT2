@@ -5,6 +5,7 @@ import Eventos.StartBlastStormEvent;
 import Extras.Items;
 import Utilidades.Format;
 import Utilidades.GUIs;
+import Utilidades.TotemsBar;
 import Utilidades.Warn;
 import org.bukkit.*;
 import org.bukkit.boss.BossBar;
@@ -61,6 +62,16 @@ public class ComandosStaff implements CommandExecutor{
                         pa.sendMessage(format("&cSI ESTA EL DIA 6 GAY XD"));
                     }else{
                         pa.sendMessage(format("&cNO ESTA EL DIA 6 GAY XD"));
+                    }
+                    break;
+
+                case "totemsclear":
+                    try {
+                        TotemsBar.resetAll();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Warn.Mutant(e);
+                        pa.sendMessage(Format.format(prefix + "&7¡Ha ocurrido un &c&lerror &7al mandar la GUI."));
                     }
                     break;
 
@@ -122,6 +133,10 @@ public class ComandosStaff implements CommandExecutor{
                     }
                     if (args[1].equalsIgnoreCase("TOTEM_RESTORER")) {
                         pa.getInventory().addItem(Items.totemRestorer());
+                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }
+                    if (args[1].equalsIgnoreCase("FALLEN_SWORD")) {
+                        pa.getInventory().addItem(Items.fallenSword());
                         pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                 default:

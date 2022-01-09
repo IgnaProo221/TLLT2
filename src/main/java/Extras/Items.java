@@ -141,4 +141,24 @@ public class Items {
         return totres;
     }
 
+    public static ItemStack fallenSword() {
+        ItemStack falsw = new ItemStack(Material.NETHERITE_SWORD);
+        ItemMeta falswmeta = falsw.getItemMeta();
+        falswmeta.setUnbreakable(true);
+        falswmeta.setCustomModelData(4006);
+        falswmeta.setDisplayName(format("&c&lFallen Rage"));
+        falswmeta.addEnchant(Enchantment.SWEEPING_EDGE, 3, true);
+        List<String> lore = new ArrayList<>();
+        lore.add(format("&6&lHABILIDAD: &eSubzero Edge"));
+        lore.add(format("&7Otorga el Efecto de Congelacion a los"));
+        lore.add(format("&7mobs afectados por su filo."));
+        lore.add("");
+        lore.add("");
+        lore.add(format("&c&lEs Recomendable no usar Fire Aspect en esta Espada"));
+        falswmeta.setLore(lore);
+        falsw.setItemMeta(falswmeta);
+
+        return falsw;
+    }
+
 }

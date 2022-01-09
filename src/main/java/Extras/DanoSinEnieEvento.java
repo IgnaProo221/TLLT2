@@ -109,8 +109,14 @@ public class DanoSinEnieEvento implements Listener{
             if(e.getCause() == EntityDamageEvent.DamageCause.CONTACT){
                 e.setDamage(100000);
             }
+            if(e.getCause() == EntityDamageEvent.DamageCause.STARVATION){
+                e.setDamage(100000);
+            }
             if(e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {
                 e.setDamage(e.getDamage() * 5);
+            }
+            if(e.getCause() == EntityDamageEvent.DamageCause.FALL) {
+                e.setDamage(e.getDamage() * 4);
             }
             if(e.getCause() == EntityDamageEvent.DamageCause.FIRE){
                 e.setDamage(e.getDamage() * 6);

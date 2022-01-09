@@ -27,10 +27,12 @@ public class GhastExplosion implements Listener{
             Fireball fireball = (Fireball) e.getEntity();
             if(ghast.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DESERT_GHAST"), PersistentDataType.STRING)){
                 if(e.getEntity() instanceof Fireball){
-                    fireball.setYield(7);
+                    fireball.setYield(5);
                 }
+            }else if(ghast.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_GHAST"), PersistentDataType.STRING)){
+                fireball.setYield(7);
             }else{
-                fireball.setYield(5);
+                fireball.setYield(3);
             }
         }
     }

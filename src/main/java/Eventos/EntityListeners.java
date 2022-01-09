@@ -1,7 +1,9 @@
 package Eventos;
 
+import Extras.Items;
 import Utilidades.Mobs;
 import Utilidades.TLLEntities;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.*;
@@ -18,10 +20,12 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 import tlldos.tll2.TLL2;
 
+import javax.swing.text.StyleContext;
 import java.util.*;
 
 import static Extras.Items.createFragmentoSangre;
 import static Utilidades.Format.format;
+import static Utilidades.Format.prefix;
 
 public class EntityListeners implements Listener {
     public static HashMap<Player, Integer> hash = new HashMap<>();
@@ -48,11 +52,37 @@ public class EntityListeners implements Listener {
         }
     }
 
+    public void blightedZombieffects(Player p) {
+        int effect = new Random().nextInt(5);
+        if(effect == 1){
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 400, 9, true, true, true));
+        }else if(effect == 2){
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 400, 9, true, true, true));
+        }else if(effect == 3){
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 400, 9, true, true, true));
+        }else if(effect == 4){
+            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 400, 9, true, true, true));
+        }else{
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 400, 9, true, true, true));
+        }
+    }
+
     @EventHandler
     public void damageEntity(EntityDamageByEntityEvent event) {
 
-        Entity entity = event.getEntity();
-        Entity damager = event.getDamager();
+        var entity = event.getEntity();
+        var damager = event.getDamager();
+        if(damager instanceof Player pa){
+            if(pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
+                if(pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4006){
+                if(entity.getFireTicks() != 0){
+                    damager.sendMessage(prefix(), format("&cNo puedes congelar a un mob que esta prendido fuego!"));
+                }else {
+                    entity.setFreezeTicks(200);
+                }
+                }
+            }
+        }
 
         if (entity instanceof Player p) {
             if (damager instanceof Vex) {
@@ -86,6 +116,9 @@ public class EntityListeners implements Listener {
                 if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SOLAR_SCORPION"), PersistentDataType.STRING)){
                     p.setFireTicks(400);
                 }
+                if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_SPIDER"), PersistentDataType.STRING)){
+                    p.getLocation().getWorld().setType(p.getLocation(), Material.COBWEB);
+                }
             }
             if(damager instanceof Slime){
                 var slime = (Slime)damager;
@@ -98,6 +131,23 @@ public class EntityListeners implements Listener {
                 if(zombie.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TIER_3"), PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 400, 2, true, true, true));
                 }
+                if(zombie.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_ZOMBIE"), PersistentDataType.STRING)){
+                    blightedZombieffects(p);
+                }
+            }
+            if(damager instanceof Enderman){
+                var enderman = (Enderman)damager;
+                if(enderman.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_ENDERMAN"), PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 400, 0, true, true, true));
+                }
+            }
+            if(damager instanceof Phantom){
+                var phantom = (Phantom)damager;
+                if(phantom.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_PHANTOM"), PersistentDataType.STRING)){
+                    p.setFreezeTicks(1200);
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 1200, 4,true, true, true));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 1200, 4, true, true, true));
+                    }
             }
         }
 
@@ -142,10 +192,8 @@ public class EntityListeners implements Listener {
         if(projectile instanceof WitherSkull){
             if (hitblock != null) {
                 hitblock.getLocation().createExplosion(2, false, true);
-                projectile.remove();
             } else if (entity != null) {
                 entity.getLocation().createExplosion(2, false, true);
-                projectile.remove();
             }
         }
 
@@ -212,7 +260,7 @@ public class EntityListeners implements Listener {
         if(entity instanceof Creeper){
             var creeper = (Creeper)entity;
             if(creeper.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE_CREEPER"), PersistentDataType.STRING)){
-                Creeper nearby = (Creeper)entity.getWorld().getNearbyPlayers(entity.getLocation(),10.0D,10.0D,10.0D);
+                Player nearby = (Player)entity.getNearbyEntities(10.0D,10.0D,10.0D).stream().filter((player) -> {return player instanceof Player;});
                 nearby.setFireTicks(1200);
             }
         }
@@ -269,6 +317,33 @@ public class EntityListeners implements Listener {
     public void noZombPig(EntityTransformEvent e) {
         if (e.getTransformReason() == EntityTransformEvent.TransformReason.PIGLIN_ZOMBIFIED) {
             e.setCancelled(true);
+            for(Player player : Bukkit.getOnlinePlayers()){
+                player.sendMessage(format("CACA"));
+            }
         }
+    }
+
+    @EventHandler
+    public void witchThrow(ProjectileHitEvent e){
+         var entity = e.getEntity();
+         var shooter = e.getEntity().getShooter();
+         if(shooter instanceof Witch) {
+             var witch = (Witch) shooter;
+             if (witch.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_WITCH"), PersistentDataType.STRING)) {
+                 if (entity instanceof ThrownPotion) {
+                     var throwpotion = (ThrownPotion) entity;
+
+                     ItemStack s = new ItemStack(Material.SPLASH_POTION);
+                     PotionMeta meta = (PotionMeta) s.getItemMeta();
+                     meta.addCustomEffect(new PotionEffect(PotionEffectType.WITHER, 500, 4), true);
+                     meta.addCustomEffect(new PotionEffect(PotionEffectType.SLOW, 500, 1), true);
+                     meta.addCustomEffect(new PotionEffect(PotionEffectType.BLINDNESS, 500, 1), true);
+                     meta.addCustomEffect(new PotionEffect(PotionEffectType.HARM, 1, 1), true);
+                     s.setItemMeta(meta);
+
+                     throwpotion.setItem(s);
+                 }
+             }
+         }
     }
 }

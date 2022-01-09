@@ -22,6 +22,7 @@ public class BlastStorm implements Listener {
 
         for(Player player : Bukkit.getOnlinePlayers()){
             e.addPotionTiers(player, tierLevel);
+            e.tierTime(tierLevel);
             tormenta.setVisible(true);
             tormenta.addPlayer(player);
         }
@@ -58,6 +59,8 @@ public class BlastStorm implements Listener {
             if (random.nextInt(a) < chance) {
                 StartBlastStormEvent start = new StartBlastStormEvent();
                 Bukkit.getPluginManager().callEvent(start);
+            }else{
+                e.setCancelled(true);
             }
         }
     }

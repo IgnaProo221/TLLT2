@@ -34,6 +34,7 @@ import tlldos.tll2.TLL2;
 import static Utilidades.Format.format;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -54,32 +55,16 @@ public class SpawnListeners implements Listener {
 
 
         if (en instanceof Zombie self) {
-            if(spawnmob < 80) {
-                Mobs.blightedZombi(self);
-            }else{
-                spawnTierZombies(self);
-            }
+            spawnTierZombies(self);
         }
 
         if (en instanceof Creeper self) {
-            if(spawnmob < 80) {
-                Mobs.blightedCreeper(self);
-
-            }else {
-                var creeper = (Creeper) en;
-                creeper.setCustomName(format("&cCharged Creeper"));
-                creeper.setPowered(true);
-                creeper.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20.0);
-                creeper.setHealth(20);
-            }
+            spawnCreeperBlight(self);
         }
 
         if (en instanceof Skeleton self) {
-            if(spawnmob < 80){
-                Mobs.blightedSkeleton(self);
-            }else{
-                this.spawnSkeletonClass(self);
-            }
+            this.spawnSkeletonClass(self);
+
         }
 
         if (en instanceof Spider self) {
@@ -91,7 +76,6 @@ public class SpawnListeners implements Listener {
 
             ItemStack ac = new ItemStack(Material.CROSSBOW);
             ItemMeta meta = ac.getItemMeta();
-            meta.addEnchant(Enchantment.MULTISHOT, 1, true);
             meta.addEnchant(Enchantment.QUICK_CHARGE, 3, true);
             ac.setItemMeta(meta);
 
@@ -153,15 +137,15 @@ public class SpawnListeners implements Listener {
                 for(Entity ent : chunk.getEntities()){
                     if(ent.getType() == en.getType()){
                         mobList.add(ent);
+                        e.setCancelled(true);
+                        var ghast = en.getLocation().getWorld().spawn(en.getLocation(), Ghast.class);
+                        Mobs.ghastDesert(ghast);
                     }
                 }
                 if(mobList.size() > 2){
                     en.remove();
                 }
 
-                e.setCancelled(true);
-                var ghast = en.getLocation().getWorld().spawn(en.getLocation(), Ghast.class);
-                Mobs.ghastDesert(ghast);
             }
         }
 
@@ -179,10 +163,10 @@ public class SpawnListeners implements Listener {
             if(mobList.size() > 2){
                 en.remove();
             }
-
             e.setCancelled(true);
             var pigbrute = en.getLocation().getWorld().spawn(en.getLocation(), PiglinBrute.class);
             Mobs.piglinBrutedim(pigbrute);
+
         }
         if (en instanceof PigZombie) {
             var zombipig = (PigZombie) en;
@@ -226,35 +210,13 @@ public class SpawnListeners implements Listener {
             bat.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXPLOSIVE_BAT"), PersistentDataType.STRING, "EXPLOSIVE_BAT");
         }
         if (en instanceof WitherSkeleton self) {
-            if (spawnmob < 80) {
-                Mobs.blightedWitherSkeleton(self);
-            }else{
-                var witherskeleton = (WitherSkeleton) en;
+            spawnWitherSkeleton(self);
 
-                ItemStack caca = new ItemStack(Material.NETHERITE_SWORD);
-                ItemMeta meta = caca.getItemMeta();
-                meta.addEnchant(Enchantment.DAMAGE_ALL, 20, true);
-                meta.setUnbreakable(true);
-                caca.setItemMeta(meta);
-
-                witherskeleton.setCustomName(format("&cShattered Guardian"));
-                witherskeleton.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(45.0);
-                witherskeleton.setHealth(45);
-                witherskeleton.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
-                witherskeleton.getEquipment().setHelmet(new ItemStack(Material.NETHERITE_HELMET));
-                witherskeleton.getEquipment().setChestplate(new ItemStack(Material.NETHERITE_CHESTPLATE));
-                witherskeleton.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
-                witherskeleton.getEquipment().setBoots(new ItemStack(Material.NETHERITE_BOOTS));
-                witherskeleton.getEquipment().setItemInMainHand(caca);
-                witherskeleton.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
-                witherskeleton.getEquipment().setDropChance(EquipmentSlot.CHEST, 0);
-                witherskeleton.getEquipment().setDropChance(EquipmentSlot.LEGS, 0);
-                witherskeleton.getEquipment().setDropChance(EquipmentSlot.FEET, 0);
-                witherskeleton.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
-                witherskeleton.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SHATTER_GUARDIAN"), PersistentDataType.STRING, "SHATTER_GUARDIAN");
-            }
         }
         if (en instanceof Chicken ){
+            e.setCancelled(true);
+            en.getLocation().getWorld().spawn(en.getLocation(), Vindicator.class);
+
             Chunk chunk = en.getLocation().getChunk();
 
             ArrayList<Entity> mobList = new ArrayList<>();
@@ -267,9 +229,6 @@ public class SpawnListeners implements Listener {
             if(mobList.size() > 2){
                 en.remove();
             }
-
-            e.setCancelled(true);
-            en.getLocation().getWorld().spawn(en.getLocation(), Vindicator.class);
 
         }
         if (en instanceof Slime) {
@@ -296,7 +255,23 @@ public class SpawnListeners implements Listener {
             guardian.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 1, false, false, false));
         }
 
-        if (en instanceof Cod) {
+        if(en instanceof PiglinBrute self){
+            spawnBrute(self);
+        }
+        if(en instanceof Witch self){
+            spawnWitch(self);
+        }
+        if(en instanceof Ghast self){
+            spawnGhast(self);
+        }
+        if(en instanceof Phantom self){
+            spawnPhantom(self);
+        }
+        if(en instanceof Enderman self){
+            spawnEnderman(self);
+        }
+
+        /*if (en instanceof Cod) {
 
             Chunk chunk = en.getLocation().getChunk();
 
@@ -307,13 +282,13 @@ public class SpawnListeners implements Listener {
                     mobList.add(ent);
                 }
             }
-            if(mobList.size() > 2){
+            if(mobList.size() > 1){
                 en.remove();
             }
 
             e.setCancelled(true);
             en.getLocation().getWorld().spawn(en.getLocation(), Guardian.class);
-        }
+        }*/
     }
 
     public void spawnVexClass(Vex entity) {
@@ -328,11 +303,44 @@ public class SpawnListeners implements Listener {
             Mobs.vexScientist(entity);
         } else {
             Mobs.vexMecha(entity);
+
         }
     }
 
+    public void spawnWitherSkeleton(WitherSkeleton witherskeleton) {
+
+        int type = new Random().nextInt(2);
+
+        if (type == 1) {
+            ItemStack caca = new ItemStack(Material.NETHERITE_SWORD);
+            ItemMeta meta = caca.getItemMeta();
+            meta.addEnchant(Enchantment.DAMAGE_ALL, 20, true);
+            meta.setUnbreakable(true);
+            caca.setItemMeta(meta);
+
+            witherskeleton.setCustomName(format("&cShattered Guardian"));
+            witherskeleton.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(45.0);
+            witherskeleton.setHealth(45);
+            witherskeleton.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
+            witherskeleton.getEquipment().setHelmet(new ItemStack(Material.NETHERITE_HELMET));
+            witherskeleton.getEquipment().setChestplate(new ItemStack(Material.NETHERITE_CHESTPLATE));
+            witherskeleton.getEquipment().setLeggings(new ItemStack(Material.NETHERITE_LEGGINGS));
+            witherskeleton.getEquipment().setBoots(new ItemStack(Material.NETHERITE_BOOTS));
+            witherskeleton.getEquipment().setItemInMainHand(caca);
+            witherskeleton.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
+            witherskeleton.getEquipment().setDropChance(EquipmentSlot.CHEST, 0);
+            witherskeleton.getEquipment().setDropChance(EquipmentSlot.LEGS, 0);
+            witherskeleton.getEquipment().setDropChance(EquipmentSlot.FEET, 0);
+            witherskeleton.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+            witherskeleton.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SHATTER_GUARDIAN"), PersistentDataType.STRING, "SHATTER_GUARDIAN");
+        } else {
+            Mobs.blightedWitherSkeleton(witherskeleton);
+        }
+
+    }
+
     public void spawnSkeletonClass(Skeleton skeleton) {
-        int type = new Random().nextInt(5);
+        int type = new Random().nextInt(6);
         if (type == 1) {
             Mobs.ignitedSkeleton(skeleton);
         } else if (type == 2) {
@@ -341,36 +349,97 @@ public class SpawnListeners implements Listener {
             Mobs.copperSkeleton(skeleton);
         } else if (type == 4) {
             Mobs.bullseyeSkeleton(skeleton);
-        } else {
+        } else if (type == 5){
             Mobs.poweredSkeleton(skeleton);
+        }else{
+            Mobs.blightedSkeleton(skeleton);
         }
 
     }
 
     public void spawnSpiderVariant(Spider spider) {
-        int type = new Random().nextInt(4);
+        int type = new Random().nextInt(5);
         if (type == 1) {
             Mobs.plagueSpider(spider);
         } else if (type == 2) {
             Mobs.solarScorpion(spider);
         } else if (type == 3) {
             Mobs.interdimensionalVisitor(spider);
-        } else {
+        } else if(type == 4){
             Mobs.agileTarantule(spider);
-
+        }else {
+            Mobs.blightedSpider(spider);
         }
     }
 
     public void spawnTierZombies(Zombie zombie) {
-        int type = new Random().nextInt(4);
+        int type = new Random().nextInt(5);
         if (type == 1) {
             Mobs.tntMonster(zombie);
         } else if (type == 2) {
             Mobs.variante1Tier(zombie);
         } else if (type == 3) {
             Mobs.variante2Tier(zombie);
-        } else {
+        } else if(type == 4){
             Mobs.variante3Tier(zombie);
+        }else{
+            Mobs.blightedZombi(zombie);
+        }
+    }
+
+    public void spawnCreeperBlight(Creeper creeper) {
+        int type = new Random().nextInt(2);
+        if (type == 1) {
+            creeper.setCustomName(format("&cCharged Creeper"));
+            creeper.setPowered(true);
+            creeper.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20.0);
+            creeper.setHealth(20);
+        }  else {
+            Mobs.blightedCreeper(creeper);
+        }
+    }
+    public void spawnBrute(PiglinBrute brute) {
+        int type = new Random().nextInt(2);
+        if(type == 1){
+            brute.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, 1, 1));
+        }else{
+            Mobs.blightedPiglin(brute);
+        }
+
+    }
+    public void spawnGhast(Ghast ghast) {
+        int type = new Random().nextInt(2);
+        if(type == 1){
+            ghast.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, 1, 1));
+        }else{
+            Mobs.blightedGhast(ghast);
+        }
+
+    }
+    public void spawnWitch(Witch witch) {
+        int type = new Random().nextInt(2);
+        if(type == 1){
+            witch.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, 1, 1));
+        }else{
+Mobs.blightedWitch(witch);
+        }
+
+    }
+    public void spawnPhantom(Phantom phantom) {
+        int type = new Random().nextInt(2);
+        if(type == 1){
+            phantom.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, 1, 1));
+        }else{
+            Mobs.blightedPhantom(phantom);
+        }
+
+    }
+    public void spawnEnderman(Enderman enderman){
+        int type = new Random().nextInt(2);
+        if(type == 1){
+            enderman.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, 1, 1));
+        }else{
+Mobs.blightedEndermam(enderman);
         }
     }
 

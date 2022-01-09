@@ -30,10 +30,10 @@ public class EventosItems {
             p.playEffect(EntityEffect.TOTEM_RESURRECT);
             Bukkit.getScheduler().runTaskLater(TLL2.getPlugin(TLL2.class), () -> {
                 p.playEffect(EntityEffect.TOTEM_RESURRECT);
-            }, 40);
+            }, 20);
             Bukkit.getScheduler().runTaskLater(TLL2.getPlugin(TLL2.class), () -> {
                 p.playEffect(EntityEffect.TOTEM_RESURRECT);
-            }, 80);
+            }, 40);
         }catch (Exception e){
             e.printStackTrace();
             Warn.Mutant(e);

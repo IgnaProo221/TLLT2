@@ -159,7 +159,7 @@ public class Muerte extends ListenerAdapter implements Listener {
 
             }, 200);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(ChatColor.translateAlternateColorCodes('&', "&4&kzzz &6&lTHE LAST LIFE &4&kzzz"), ChatColor.translateAlternateColorCodes('&', "&8El Jugador " + p.getName() + " &8Ca Muerto!"), 0, 160, 20);
+                players.sendTitle(ChatColor.translateAlternateColorCodes('&', "&4&kzzz &6&lTHE LAST LIFE &4&kzzz"), ChatColor.translateAlternateColorCodes('&', "&8El Jugador " + p.getName() + " &8a Muerto!"), 0, 160, 20);
                 players.playSound(players.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 10.0F, -1.0F);
                 players.sendActionBar(ChatColor.GOLD + "" + ChatColor.BOLD + e.getDeathMessage());
 
@@ -176,13 +176,13 @@ public class Muerte extends ListenerAdapter implements Listener {
 
         eb.setFooter("TheLastLifeT2.jar", "https://media.discordapp.net/attachments/830482526237753395/874379476212019210/transparentexd.png?width=588&height=588");
         eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
-        eb.setTitle("**El Fin del Jugador " + p.getName() + " comienza!**");
-        eb.setDescription(String.format("**:fire: Se añade 30 minutos al tiempo de Blast Storm**\n**Multiplicador por Día: %d", Dia()) + "** :fire:");
-        eb.addField(":skull:**Causa de Muerte: **", e.getDeathMessage(), true);
-        eb.addField(":beginner:**Dia: **" + Dia(), "", true);
-        eb.addField(":map:**Cordernadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-        eb.addField(":low_brightness:**Fecha: **" + Fecha, "", true);
-        eb.addField(":alarm_clock:**Hora: **" + Tiempo,"",true);
+        eb.setTitle("**El Jugador " + p.getName() + " a muerto!**");
+        eb.setDescription(":fire:** ¡La Blast Storm invade los Cielos, preparense para Sufrir! **:fire:");
+        eb.addField(":skull: **Causa de Muerte: **", e.getDeathMessage(), true);
+        eb.addField(":beginner: **Dia: **" + Dia(), "", true);
+        eb.addField(":map: **Cordernadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
+        eb.addField(":low_brightness: **Fecha: **" + Fecha, "", true);
+        eb.addField(":alarm_clock: **Hora: **" + Tiempo,"",true);
         eb.setThumbnail("https://crafatar.com/renders/head/" + p.getUniqueId() + ".png");
         eb.setColor(new Color(252, 186, 3));
 
@@ -314,10 +314,6 @@ public class Muerte extends ListenerAdapter implements Listener {
                     world.setTime(18000);
                     world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
                 }
-
-                String Tormentajaja = Objects.requireNonNull(Bukkit.getWorld("world")).isThundering() ? "weather thunder " + ((Objects.requireNonNull(Bukkit.getWorld("world")).getWeatherDuration() / 20) + (Dia() * 1800)) : "weather thunder " + (Dia() * 1800);
-
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Tormentajaja);
 
                 StartBlastStormEvent start = new StartBlastStormEvent();
                 Bukkit.getPluginManager().callEvent(start);

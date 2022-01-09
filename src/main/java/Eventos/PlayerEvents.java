@@ -60,6 +60,6 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void hambreAgotar(EntityExhaustionEvent e){
-        e.setExhaustion(e.getExhaustion() * 2 );
+        e.setExhaustion(e.getExhaustion() * 4);
     }
 }
