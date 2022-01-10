@@ -445,7 +445,7 @@ Mobs.blightedEndermam(enderman);
     }
 
     public void endSpawn(Enderman enderman){
-        int mobspawn = new Random().nextInt(4);
+        int mobspawn = new Random().nextInt(8);
         if(mobspawn == 1){
             enderman.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1000000,1, false, false, false));
         }else if (mobspawn == 2){
@@ -456,10 +456,18 @@ Mobs.blightedEndermam(enderman);
             enderman.remove();
             var creeper = enderman.getLocation().getWorld().spawn(enderman.getLocation(), Creeper.class);
             Mobs.riftedCreeper(creeper);
-        }else{
+        }else if(mobspawn == 4){
             enderman.remove();
             var ghast = enderman.getLocation().getWorld().spawn(enderman.getLocation(), Ghast.class);
             Mobs.riftedGhast(ghast);
+        }else   if(mobspawn == 5){
+            enderman.remove();
+        }else   if(mobspawn == 6){
+            enderman.remove();
+        }else   if(mobspawn == 7){
+            enderman.remove();
+        }else{
+            enderman.remove();
         }
     }
 
