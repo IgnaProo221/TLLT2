@@ -146,7 +146,7 @@ public class alUsarTotem implements Listener {
                             new BukkitRunnable() {
                                 @Override
                                 public void run() {
-                                    p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 0.0F);
+                                    p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 5.0F, 1.0F);
                                     p.playEffect(EntityEffect.TOTEM_RESURRECT);
                                 }
                             }.runTaskLater(TLL2.getPlugin(TLL2.class), 20L);
@@ -169,7 +169,7 @@ public class alUsarTotem implements Listener {
                         for (Player players : Bukkit.getOnlinePlayers()) {
                             players.sendMessage(ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " a usado un " + ChatColor.YELLOW + "Totem!♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
                             players.sendMessage(ChatColor.RED + "El Totem a caido en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "Numero 6!");
-                            players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Creeper en tus Bloques!");
+                            players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Sin Efectos!");
                         }
                     }
                 }

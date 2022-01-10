@@ -22,7 +22,6 @@ public class BlastStorm implements Listener {
 
         for(Player player : Bukkit.getOnlinePlayers()){
             e.addPotionTiers(player, tierLevel);
-            e.tierTime(tierLevel);
             tormenta.setVisible(true);
             tormenta.addPlayer(player);
         }

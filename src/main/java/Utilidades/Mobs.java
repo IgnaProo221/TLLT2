@@ -284,7 +284,27 @@ public class Mobs implements Listener{
     }
 
 
+    public static void riftedGhast(Ghast self){
+        self.setCustomName(format("&b&lDimensional Ghost"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
+        self.setHealth(50);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DIMEN_GHOST"), PersistentDataType.STRING, "DIMEN_GHOST");
+    }
+    public static void riftedCreeper(Creeper self){
+        self.setCustomName(format("&b&lDimensional Dynamite"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
+        self.setHealth(50);
+        self.setPowered(true);
+        self.setExplosionRadius(10);
+        self.setFuseTicks(20);
 
+    }
+    public static void riftedMage(Illusioner self){
+        self.setCustomName(format("&b&lDimensional Mage"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
+        self.setHealth(50);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DIMEN_MAGE"), PersistentDataType.STRING, "DIMEN_MAGE");
+    }
 
 
 

@@ -23,8 +23,13 @@ public class DanoSinEnieEvento implements Listener{
         Entity entity = e.getEntity();
 
 
-        if(entity instanceof Blaze){
+        if(entity instanceof Blaze || entity instanceof Enderman){
             if(e.getCause().equals(EntityDamageEvent.DamageCause.DROWNING)){
+                e.setCancelled(true);
+            }
+        }
+        if(entity instanceof Wither){
+            if(e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) || e.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)){
                 e.setCancelled(true);
             }
         }

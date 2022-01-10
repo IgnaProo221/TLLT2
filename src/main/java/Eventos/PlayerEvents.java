@@ -11,9 +11,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExhaustionEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 
 public class PlayerEvents implements Listener {
 
@@ -60,6 +62,15 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void hambreAgotar(EntityExhaustionEvent e){
-        e.setExhaustion(e.getExhaustion() * 4);
+        e.setExhaustion(e.getExhaustion() * 3);
+    }
+
+    @EventHandler
+    public void weaknessBuff(EntityDamageEvent e) {
+        if (e instanceof Player player) {
+            if (player.hasPotionEffect(PotionEffectType.WEAKNESS)) {
+                e.setDamage(e.getDamage() * 2);
+            }
+        }
     }
 }

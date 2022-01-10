@@ -73,13 +73,13 @@ public class EntityListeners implements Listener {
         var entity = event.getEntity();
         var damager = event.getDamager();
         if(damager instanceof Player pa){
+            if(!pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
+                return;
+            }
+
             if(pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
                 if(pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4006){
-                if(entity.getFireTicks() != 0){
-                    damager.sendMessage(prefix(), format("&cNo puedes congelar a un mob que esta prendido fuego!"));
-                }else {
-                    entity.setFreezeTicks(200);
-                }
+                    entity.setFreezeTicks(1200);
                 }
             }
         }
@@ -166,14 +166,22 @@ public class EntityListeners implements Listener {
                 event.setProjectile(skull);
             }
         }
+        if (entity instanceof Illusioner) {
+            var illusioner = (Entity) entity;
+            if (illusioner.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DIMEN_MAGE"), PersistentDataType.STRING)) {
+                var fireball = (Fireball)event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0, 1, 0), EntityType.FIREBALL);
+                fireball.setYield(7);
+                event.setProjectile(fireball);
+            }
+        }
         if(entity instanceof WitherSkeleton){
             var witherskeleton = (Entity)entity;
             if(witherskeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_WITHER"), PersistentDataType.STRING)){
-                var skull = (WitherSkull)event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0,1,0), EntityType.WITHER_SKULL);
-                var fireball = (Fireball)event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0,1,0), EntityType.FIREBALL);
                 if(caca == 1){
+                    var skull = (WitherSkull)event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0,1,0), EntityType.WITHER_SKULL);
                     event.setProjectile(skull);
                 }else{
+                    var fireball = (Fireball)event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0,1,0), EntityType.FIREBALL);
                     fireball.setYield(4);
                     event.setProjectile(fireball);
                 }
@@ -191,9 +199,9 @@ public class EntityListeners implements Listener {
 
         if(projectile instanceof WitherSkull){
             if (hitblock != null) {
-                hitblock.getLocation().createExplosion(2, false, true);
+                hitblock.getLocation().createExplosion(projectile,1, false, true);
             } else if (entity != null) {
-                entity.getLocation().createExplosion(2, false, true);
+                entity.getLocation().createExplosion(projectile,1, false, true);
             }
         }
 

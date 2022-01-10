@@ -9,10 +9,7 @@ import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackable
 import net.minecraft.world.entity.monster.EntityPigZombie;
 import net.minecraft.world.entity.player.EntityHuman;
 import net.minecraft.world.level.chunk.IChunkAccess;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
@@ -268,7 +265,11 @@ public class SpawnListeners implements Listener {
             spawnPhantom(self);
         }
         if(en instanceof Enderman self){
-            spawnEnderman(self);
+            if(self.getWorld().getEnvironment().equals(World.Environment.THE_END)){
+                endSpawn(self);
+            }else {
+                spawnEnderman(self);
+            }
         }
 
         /*if (en instanceof Cod) {
@@ -440,6 +441,25 @@ Mobs.blightedWitch(witch);
             enderman.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, 1, 1));
         }else{
 Mobs.blightedEndermam(enderman);
+        }
+    }
+
+    public void endSpawn(Enderman enderman){
+        int mobspawn = new Random().nextInt(4);
+        if(mobspawn == 1){
+            enderman.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1000000,1, false, false, false));
+        }else if (mobspawn == 2){
+            enderman.remove();
+            var illusioner = enderman.getLocation().getWorld().spawn(enderman.getLocation(), Illusioner.class);
+            Mobs.riftedMage(illusioner);
+        }else if(mobspawn == 3){
+            enderman.remove();
+            var creeper = enderman.getLocation().getWorld().spawn(enderman.getLocation(), Creeper.class);
+            Mobs.riftedCreeper(creeper);
+        }else{
+            enderman.remove();
+            var ghast = enderman.getLocation().getWorld().spawn(enderman.getLocation(), Ghast.class);
+            Mobs.riftedGhast(ghast);
         }
     }
 
