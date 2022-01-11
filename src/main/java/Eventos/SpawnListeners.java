@@ -42,14 +42,13 @@ public class SpawnListeners implements Listener {
         this.plugin = plugin;
     }
 
-    Random random = new Random();
-    int spawnmob = random.nextInt(100);
 
     @EventHandler
     public void spawnMob(CreatureSpawnEvent e) {
+        Random random = new Random();
+        int spawnmob = random.nextInt(100);
         var en = e.getEntity();
         var pos = e.getLocation();
-
 
         if (en instanceof Zombie self) {
             spawnTierZombies(self);
@@ -210,8 +209,8 @@ public class SpawnListeners implements Listener {
             spawnWitherSkeleton(self);
 
         }
-        if (en instanceof Chicken ){
-            e.setCancelled(true);
+        if (en instanceof Chicken self){
+            self.remove();
             en.getLocation().getWorld().spawn(en.getLocation(), Vindicator.class);
 
             Chunk chunk = en.getLocation().getChunk();
@@ -266,7 +265,11 @@ public class SpawnListeners implements Listener {
         }
         if(en instanceof Enderman self){
             if(self.getWorld().getEnvironment().equals(World.Environment.THE_END)){
-                endSpawn(self);
+                if(spawnmob < 50){
+                    endSpawn(self);
+                }else{
+                    self.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1000000,1, false, false, false));
+                }
             }else {
                 spawnEnderman(self);
             }
@@ -283,8 +286,7 @@ public class SpawnListeners implements Listener {
                     mobList.add(ent);
                 }
             }
-            if(mobList.size() > 1){
-                en.remove();
+            if(mobList.size() > 1){ 
             }
 
             e.setCancelled(true);
@@ -341,7 +343,7 @@ public class SpawnListeners implements Listener {
     }
 
     public void spawnSkeletonClass(Skeleton skeleton) {
-        int type = new Random().nextInt(6);
+        int type = new Random().nextInt(7);
         if (type == 1) {
             Mobs.ignitedSkeleton(skeleton);
         } else if (type == 2) {
@@ -352,8 +354,12 @@ public class SpawnListeners implements Listener {
             Mobs.bullseyeSkeleton(skeleton);
         } else if (type == 5){
             Mobs.poweredSkeleton(skeleton);
-        }else{
+        }else if(type == 6){
             Mobs.blightedSkeleton(skeleton);
+        }else {
+            skeleton.remove();
+            var illusioner = skeleton.getLocation().getWorld().spawn(skeleton.getLocation(), Illusioner.class);
+            Mobs.riftedMage(illusioner);
         }
 
     }
@@ -389,14 +395,18 @@ public class SpawnListeners implements Listener {
     }
 
     public void spawnCreeperBlight(Creeper creeper) {
-        int type = new Random().nextInt(2);
+        int type = new Random().nextInt(4);
         if (type == 1) {
             creeper.setCustomName(format("&cCharged Creeper"));
             creeper.setPowered(true);
             creeper.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20.0);
             creeper.setHealth(20);
-        }  else {
+        }  else if(type == 2){
             Mobs.blightedCreeper(creeper);
+        }else if(type == 3){
+            Mobs.riftedCreeper(creeper);
+        }else{
+            Mobs.hiveMind(creeper);
         }
     }
     public void spawnBrute(PiglinBrute brute) {
@@ -409,11 +419,13 @@ public class SpawnListeners implements Listener {
 
     }
     public void spawnGhast(Ghast ghast) {
-        int type = new Random().nextInt(2);
+        int type = new Random().nextInt(3);
         if(type == 1){
             ghast.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, 1, 1));
-        }else{
+        }else if(type == 2){
             Mobs.blightedGhast(ghast);
+        }else{
+            Mobs.riftedGhast(ghast);
         }
 
     }
@@ -445,7 +457,7 @@ Mobs.blightedEndermam(enderman);
     }
 
     public void endSpawn(Enderman enderman){
-        int mobspawn = new Random().nextInt(8);
+        int mobspawn = new Random().nextInt(5);
         if(mobspawn == 1){
             enderman.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1000000,1, false, false, false));
         }else if (mobspawn == 2){
@@ -456,18 +468,10 @@ Mobs.blightedEndermam(enderman);
             enderman.remove();
             var creeper = enderman.getLocation().getWorld().spawn(enderman.getLocation(), Creeper.class);
             Mobs.riftedCreeper(creeper);
-        }else if(mobspawn == 4){
+        }else if(mobspawn == 4) {
             enderman.remove();
             var ghast = enderman.getLocation().getWorld().spawn(enderman.getLocation(), Ghast.class);
             Mobs.riftedGhast(ghast);
-        }else   if(mobspawn == 5){
-            enderman.remove();
-        }else   if(mobspawn == 6){
-            enderman.remove();
-        }else   if(mobspawn == 7){
-            enderman.remove();
-        }else{
-            enderman.remove();
         }
     }
 

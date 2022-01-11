@@ -68,26 +68,23 @@ public class DanoSinEnieEvento implements Listener{
 
 
     @EventHandler
-    public void danoProdos(EntityDamageByEntityEvent e){
-            Entity entity = e.getEntity();
-        if(e.getCause() == null){
-            return;
-        }
-        if(e.getEntity().getLastDamageCause() == null){
-            return;
-        }
-
-            if(entity instanceof Player player){
-                if(player.getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK){
-                    if(e.getDamager() instanceof Spider spider){
-                        if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SOLAR_SCORPION"), PersistentDataType.STRING)){
-                            if(e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK){
-                                e.setDamage(e.getDamage() * 8);
-                            }
-                        }
-                    }
-                }
-            }
+    public void danoProdos(EntityDamageEvent e){
+           if(e.isCancelled()){
+               return;
+           }
+           if(e.getEntity() instanceof Player){
+               Player p = (Player)e.getEntity();
+               if(!e.isCancelled()){
+                   if(p.getLastDamageCause() instanceof EntityDamageByEntityEvent){
+                       if(((EntityDamageByEntityEvent) p.getLastDamageCause()).getDamager() instanceof LivingEntity){
+                           LivingEntity monster = (LivingEntity) ((EntityDamageByEntityEvent) p.getLastDamageCause()).getDamager();
+                           if (monster.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SOLAR_SCORPION"), PersistentDataType.STRING)) {
+                               e.setDamage(e.getDamage() * 8);
+                           }
+                       }
+                   }
+               }
+           }
     }
 
 

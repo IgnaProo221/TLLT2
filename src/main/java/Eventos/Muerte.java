@@ -115,18 +115,12 @@ public class Muerte extends ListenerAdapter implements Listener {
 
     @EventHandler
     public void muerteEvento(PlayerDeathEvent e){
-        HashMap<Location, Player> loca = new HashMap<>();
         Player p = e.getEntity();
         p.sendActionBar(format("&4&lGame Over " + p.getName()));
         World world = Bukkit.getWorld("world");
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            loca.put(e.getEntity().getLocation(), p);
-            p.teleport(loca.get(p));
-        },1);
         for (Player players : Bukkit.getOnlinePlayers()){
-            players.playSound(players.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 10.0F, -1.0F);
-            players.sendTitle(format("&6&l&kThe Last Life"), format("&7El Jugador " + p.getName() + "a Muerto!"), 0,80,0);
-
+            players.sendTitle(format("&c&l&k|||  &6&l&kThe Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+            players.playSound(players.getLocation(),"tllt2.deathsound",SoundCategory.RECORDS, 10.0F, 1.0F);
             assert world != null;
 
             cabezaEstructura(p, p.getLocation());
@@ -135,67 +129,66 @@ public class Muerte extends ListenerAdapter implements Listener {
             players.sendMessage(ChatColor.GRAY + "Coordenadas: X: " + p.getLocation().getBlockX() + ", Y: " + p.getLocation().getBlockY() + ", Z: " + p.getLocation().getBlockZ());
             players.sendMessage(ChatColor.GRAY + "Dimension: " +  p.getWorld().getEnvironment());
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&6&l&kThe Last Life"), format("&7El Jugador " + p.getName() + "a Muerto!"), 0,80,0);
-                players.playSound(players.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 10.0F, -1.0F);
+                players.sendTitle(format("&c&l&k|||  &6&l&kThe Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+            }, 5);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lT&6&l&khe Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+            }, 10);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lTh&6&l&ke Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+            }, 15);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lThe&6&l&k Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+            }, 20);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lThe L&6&l&kast Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+
+            }, 25);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lThe La&6&l&kst Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
 
             }, 30);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&6&lT&6&l&khe Last Life"), format("&7El Jugador " + p.getName() + "a Muerto!"), 0,80,0);
+                players.sendTitle(format("&c&l&k|||  &6&lThe Las&6&l&kt Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+
+            }, 35);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lThe Las&6&l&kt Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+
+            }, 40);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lThe Last&6&l&k Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+
+            }, 45);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lThe Last L&6&l&kife  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+
+            }, 50);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lThe Last Li&6&l&kfe  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+
+            }, 55);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lThe Last Lif&6&l&ke  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
 
             }, 60);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&6&lTh&6&l&ke Last Life"), format("&7El Jugador " + p.getName() + "a Muerto!"), 0,80,0);
-
-            }, 90);
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&6&lThe&6&l&k Last Life"), format("&7El Jugador " + p.getName() + "a Muerto!"), 0,80,0);
-
-            }, 120);
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&6&lThe L&6&l&kast Life"), format("&7El Jugador " + p.getName() + "a Muerto!"), 0,80,0);
-
-
-            }, 150);
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&6&lThe La&6&l&kst Life"), format("&7El Jugador " + p.getName() + "a Muerto!"), 0,80,0);
-
-
-            }, 180);
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&6&lThe Las&6&l&kt Life"), format("&7El Jugador " + p.getName() + "a Muerto!"), 0,80,0);
-
-
-            }, 210);
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&6&lThe Las&6&l&kt Life"), format("&7El Jugador " + p.getName() + "a Muerto!"), 0,80,0);
-
-
-            }, 240);
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&6&lThe Last&6&l&k Life"), format("&7El Jugador " + p.getName() + "a Muerto!"), 0,80,0);
-
-
-            }, 270);
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&6&lThe Last L&6&l&kife"), format("&7El Jugador " + p.getName() + "a Muerto!"), 0,80,0);
-
-
-            }, 300);
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&6&lThe Last Li&6&l&kfe"), format("&7El Jugador " + p.getName() + "a Muerto!"), 0,80,0);
-
-
-            }, 330);
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&6&lThe Last Lif&6&l&ke"), format("&7El Jugador " + p.getName() + "a Muerto!"), 0,80,0);
-
-
-            }, 360);
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&6&lThe Last Life"), format("&7El Jugador " + p.getName() + "a Muerto!"), 0,120,50);
+                players.sendTitle(format("&c&l&k|||  &6&lThe Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,20);
                 players.sendActionBar(ChatColor.GOLD + "" + ChatColor.BOLD + e.getDeathMessage());
 
-            }, 390);
+            }, 65);
         }
 
         EmbedBuilder eb = new EmbedBuilder();
@@ -352,6 +345,6 @@ public class Muerte extends ListenerAdapter implements Listener {
 
                 StartBlastStormEvent start = new StartBlastStormEvent();
                 Bukkit.getPluginManager().callEvent(start);
-            }, 460L);
+            }, 200L);
         }
 }

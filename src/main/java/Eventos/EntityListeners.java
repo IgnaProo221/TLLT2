@@ -28,7 +28,11 @@ import static Utilidades.Format.format;
 import static Utilidades.Format.prefix;
 
 public class EntityListeners implements Listener {
+    private final TLL2 plugin;
     public static HashMap<Player, Integer> hash = new HashMap<>();
+    public EntityListeners(TLL2 plugin){
+        this.plugin = plugin;
+    }
 
     public static void addHash(Player p) {
         if (hash.containsKey(p)) {
@@ -76,10 +80,13 @@ public class EntityListeners implements Listener {
             if(!pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
                 return;
             }
+            if(!pa.getInventory().getItemInMainHand().hasItemMeta()){
+                return;
+            }
 
             if(pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
                 if(pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4006){
-                    entity.setFreezeTicks(1200);
+                    entity.setFreezeTicks(400);
                 }
             }
         }
@@ -205,6 +212,17 @@ public class EntityListeners implements Listener {
             }
         }
 
+        if(shooter instanceof Shulker){
+            var shulker = (Entity)shooter;
+            if(shulker.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"DIMEN_SHULKER"), PersistentDataType.STRING)){
+                if (hitblock != null) {
+                    hitblock.getLocation().createExplosion(2, false, true);
+                } else if (entity != null) {
+                    entity.getLocation().createExplosion(2, false, true);
+                }
+            }
+            }
+
         if (shooter instanceof Skeleton) {
             var skeleton = (Entity) shooter;
             if (skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "IGNITED_SKELETON"), PersistentDataType.STRING)) {
@@ -268,8 +286,23 @@ public class EntityListeners implements Listener {
         if(entity instanceof Creeper){
             var creeper = (Creeper)entity;
             if(creeper.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE_CREEPER"), PersistentDataType.STRING)){
-                Player nearby = (Player)entity.getNearbyEntities(10.0D,10.0D,10.0D).stream().filter((player) -> {return player instanceof Player;});
-                nearby.setFireTicks(1200);
+                Player nearby2 = (Player)entity.getLocation().getWorld().getNearbyPlayers(entity.getLocation(), 10.0D,10.0D,10.0D);
+                nearby2.sendMessage(format("TEST"));
+                nearby2.setFireTicks(1200);
+            }
+            if(creeper.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HIVE_MIND"), PersistentDataType.STRING)){
+                Bukkit.getScheduler().runTaskLater(plugin, () ->{
+                    var bee1 = (Bee)creeper.getLocation().getWorld().spawn(creeper.getLocation(), Bee.class);
+                    var bee2 = (Bee)creeper.getLocation().getWorld().spawn(creeper.getLocation(), Bee.class);
+                    var bee3 = (Bee)creeper.getLocation().getWorld().spawn(creeper.getLocation(), Bee.class);
+                    var bee4 = (Bee)creeper.getLocation().getWorld().spawn(creeper.getLocation(), Bee.class);
+                    var bee5 = (Bee)creeper.getLocation().getWorld().spawn(creeper.getLocation(), Bee.class);
+                    Mobs.thePlague(bee1);
+                    Mobs.thePlague(bee2);
+                    Mobs.thePlague(bee3);
+                    Mobs.thePlague(bee4);
+                    Mobs.thePlague(bee5);
+                },4L);
             }
         }
     }

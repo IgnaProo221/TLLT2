@@ -1,6 +1,7 @@
 package Extras;
 
 import Eventos.Muerte;
+import Utilidades.TotemsBar;
 import Utilidades.Warn;
 import org.bukkit.Bukkit;
 import org.bukkit.EntityEffect;
@@ -34,6 +35,7 @@ public class EventosItems {
             Bukkit.getScheduler().runTaskLater(TLL2.getPlugin(TLL2.class), () -> {
                 p.playEffect(EntityEffect.TOTEM_RESURRECT);
             }, 40);
+            TotemsBar.resetAll();
         }catch (Exception e){
             e.printStackTrace();
             Warn.Mutant(e);

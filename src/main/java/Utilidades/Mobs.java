@@ -4,15 +4,14 @@ import net.minecraft.world.entity.EntityInsentient;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalMeleeAttack;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
 import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackableTarget;
+import net.minecraft.world.entity.animal.EntityBee;
 import net.minecraft.world.entity.animal.EntityIronGolem;
 import net.minecraft.world.entity.monster.EntityEnderman;
 import net.minecraft.world.entity.monster.EntityPigZombie;
 import net.minecraft.world.entity.player.EntityHuman;
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.craftbukkit.v1_18_R1.entity.CraftBee;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftEnderman;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftIronGolem;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPigZombie;
@@ -305,6 +304,31 @@ public class Mobs implements Listener{
         self.setHealth(50);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DIMEN_MAGE"), PersistentDataType.STRING, "DIMEN_MAGE");
     }
+    public static void riftedShulker(Shulker self){
+        self.setCustomName(format("&b&lDimensional Shulker"));
+        self.setColor(DyeColor.BLUE);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
+        self.setHealth(40);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DIMEN_SHULKER"), PersistentDataType.STRING, "DIMEN_SHULKER");
+    }
+    public static void riftedWither(WitherSkeleton self){
+        ItemStack b = new ItemStack(Material.BOW);
+        ItemMeta meta = b.getItemMeta();
+        meta.addEnchant(Enchantment.ARROW_DAMAGE,50,true);
+        meta.addEnchant(Enchantment.ARROW_FIRE,1,true);
+        meta.addEnchant(Enchantment.ARROW_KNOCKBACK,50,true);
+        meta.setUnbreakable(true);
+        b.setItemMeta(meta);
+
+        self.setCustomName(format("&b&lDimensional Wither"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
+        self.getEquipment().setItemInMainHand(new ItemStack(Material.BOW));
+        self.setHealth(50);
+        self.getEquipment().setItemInMainHand(b);
+        self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DIMEN_WITHERSK"), PersistentDataType.STRING, "DIMEN_WITHERSK");
+    }
+
 
 
 
@@ -348,6 +372,45 @@ public class Mobs implements Listener{
         self.setCustomName(format("&6Hellfire Creeper"));
         self.setPowered(true);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE_CREEPER"), PersistentDataType.STRING, "HELLFIRE_CREEPER");
+    }
+
+    public static void hiveMind(Creeper self){
+        self.setCustomName(format("&6Hive Mind"));
+        self.setFuseTicks(10);
+        self.setExplosionRadius(1);
+        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 2, false, false, false));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HIVE_MIND"), PersistentDataType.STRING, "HIVE_MIND");
+    }
+    public static void thePlague(Bee self){
+        self.setCustomName(format("&2Plague"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
+        self.setHealth(30);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10);
+
+
+        CraftBee craft = ((CraftBee) self);
+        EntityBee entityBee = craft.getHandle();
+
+        try {
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("bR");
+            gf.setAccessible(true);
+
+            Field tf = cl.getDeclaredField("bS");
+            tf.setAccessible(true);
+
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityBee);
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityBee);
+
+            goal.a(0, new PathfinderGoalMeleeAttack(entityBee, 1.0D, true));
+            target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityBee, EntityHuman.class, 10, true, false, null));
+
+            gf.setAccessible(false);
+            tf.setAccessible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Warn.Mutant(e);
+        }
     }
 
 
@@ -409,6 +472,9 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(14.0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "INTER_SPIDER"), PersistentDataType.STRING, "INTER_SPIDER");
     }
+
+
+
 
 
 
