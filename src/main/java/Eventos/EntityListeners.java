@@ -358,11 +358,10 @@ public class EntityListeners implements Listener {
     public void noZombPig(EntityTransformEvent e) {
         if (e.getTransformReason() == EntityTransformEvent.TransformReason.PIGLIN_ZOMBIFIED) {
             e.setCancelled(true);
-            for(Player player : Bukkit.getOnlinePlayers()){
-                player.sendMessage(format("CACA"));
-            }
         }
     }
+
+
 
     @EventHandler
     public void witchThrow(ProjectileHitEvent e){

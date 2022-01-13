@@ -1,19 +1,19 @@
 # THE LAST LIFE T2 REPOSITORY
-Repositorio para el server de THE LAST LIFE T2, aqui hay de todo menos orden porque mutant es un puto bastardo xdxdxdxd
+Repositorio para el server de THE LAST LIFE T2
 
 # PENDIENTE 
 - cosas de sacrificio: X
 - mobs: V
 - NMS: V
-- Cambios: X
-- Bot: X
+- Cambios: V
+- Bot: V
 - Barra de Totems: X
-- Items: X
+- Items: V
 - Spawners Customs: V
 - Mecanica de Temperatura: X
-- modificar Paper para trolear: X
+- Modificacion Paper: X
 - Estructuras: X
-- Lore?????????: X
+- Lore?????????: V
 
-# % DEL PLUGIN: 30%
+# % DEL PLUGIN: 70%
 

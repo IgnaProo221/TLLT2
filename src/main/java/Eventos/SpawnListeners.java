@@ -50,11 +50,11 @@ public class SpawnListeners implements Listener {
         var en = e.getEntity();
         var pos = e.getLocation();
 
-        if (en instanceof Zombie self) {
+        if (en instanceof Zombie self ) {
             spawnTierZombies(self);
         }
 
-        if (en instanceof Creeper self) {
+        if (en instanceof Creeper self && en.getLocation().getWorld().getEnvironment() == World.Environment.NORMAL){
             spawnCreeperBlight(self);
         }
 
@@ -205,7 +205,7 @@ public class SpawnListeners implements Listener {
             bat.setCustomName(format("&cExplosive Bat"));
             bat.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXPLOSIVE_BAT"), PersistentDataType.STRING, "EXPLOSIVE_BAT");
         }
-        if (en instanceof WitherSkeleton self) {
+        if (en instanceof WitherSkeleton self && en.getEntitySpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             spawnWitherSkeleton(self);
 
         }
@@ -457,7 +457,7 @@ Mobs.blightedEndermam(enderman);
     }
 
     public void endSpawn(Enderman enderman){
-        int mobspawn = new Random().nextInt(5);
+        int mobspawn = new Random().nextInt(6);
         if(mobspawn == 1){
             enderman.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1000000,1, false, false, false));
         }else if (mobspawn == 2){
@@ -472,6 +472,14 @@ Mobs.blightedEndermam(enderman);
             enderman.remove();
             var ghast = enderman.getLocation().getWorld().spawn(enderman.getLocation(), Ghast.class);
             Mobs.riftedGhast(ghast);
+        }else if(mobspawn == 5){
+            enderman.remove();
+            var shulker = enderman.getLocation().getWorld().spawn(enderman.getLocation(), Shulker.class);
+            Mobs.riftedShulker(shulker);
+        }else {
+            enderman.remove();
+            var witherskeleton = enderman.getLocation().getWorld().spawn(enderman.getLocation(), WitherSkeleton.class);
+            Mobs.riftedWither(witherskeleton);
         }
     }
 

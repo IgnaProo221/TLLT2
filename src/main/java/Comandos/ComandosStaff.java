@@ -86,6 +86,13 @@ public class ComandosStaff implements CommandExecutor{
                         pa.sendMessage(Format.format(prefix + "&7¡Ha ocurrido un &c&lerror &7al resetear los tótems."));
                     }
                     break;
+                case "totems":
+                    try{
+                        TotemsBar.getPorcentaje(pa);
+                    }catch (Exception e){
+                        Warn.Mutant(e);
+                        pa.sendMessage(Format.format(prefix + "&7SALIO UN ERROR LOL XDDDDDDDDDDDDD"));
+                    }
 
                 case "debug":
                     if (args[1].equalsIgnoreCase("blastStormTest")) {
