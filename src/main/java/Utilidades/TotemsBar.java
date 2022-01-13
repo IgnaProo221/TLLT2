@@ -24,7 +24,11 @@ public class TotemsBar implements Listener {
 
     public static int getPorcentaje(Player player) {
         int max = 100;
-        return max - totempercentage.get(player.getName());
+        if (totempercentage.get(player.getName()) == null) {
+            return 100;
+        } else {
+            return max - totempercentage.get(player.getName());
+        }
     }
 
     public static void resetAll() {
