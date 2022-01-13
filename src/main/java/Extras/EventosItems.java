@@ -29,6 +29,7 @@ public class EventosItems {
         try{
             p.sendMessage(prefix(), format("&cSe Han Reiniciado el Porcentaje de Totems Correctamente!"));
             p.playEffect(EntityEffect.TOTEM_RESURRECT);
+            TotemsBar.resetAll();
             Bukkit.getScheduler().runTaskLater(TLL2.getPlugin(TLL2.class), () -> {
                 p.playEffect(EntityEffect.TOTEM_RESURRECT);
             }, 20);

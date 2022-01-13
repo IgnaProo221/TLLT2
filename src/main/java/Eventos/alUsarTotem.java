@@ -39,7 +39,6 @@ public class alUsarTotem implements Listener {
 
                     TotemsBar.anadirTC(p);
 
-
                     if (p.hasCooldown(Material.TOTEM_OF_UNDYING)) {
 
                         e.setCancelled(true);

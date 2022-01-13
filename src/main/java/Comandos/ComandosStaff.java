@@ -1,10 +1,8 @@
 package Comandos;
 
-import Eventos.Muerte;
 import Eventos.StartBlastStormEvent;
 import Extras.Items;
 import Utilidades.Format;
-import Utilidades.GUIs;
 import Utilidades.TotemsBar;
 import Utilidades.Warn;
 import org.bukkit.*;
@@ -13,13 +11,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import tlldos.tll2.TLL2;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.Iterator;
 
 import static Utilidades.Format.format;
 
@@ -28,6 +22,8 @@ public class ComandosStaff implements CommandExecutor{
 
     String prefix = ChatColor.translateAlternateColorCodes('&',"&6&lThe&c&lLast&6&lLife &7➤ ");
     public static BossBar tormenta;
+
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
@@ -58,20 +54,36 @@ public class ComandosStaff implements CommandExecutor{
                     break;
 
                 case "testdias":
-                    if(plugin.getConfig().getBoolean("dia6")) {
+                    if (plugin.getConfig().getBoolean("dia6")) {
                         pa.sendMessage(format("&cSI ESTA EL DIA 6 GAY XD"));
-                    }else{
+                    } else {
                         pa.sendMessage(format("&cNO ESTA EL DIA 6 GAY XD"));
                     }
                     break;
 
+                case "totemBar": {
+
+                    int res = TotemsBar.getPorcentaje(pa);
+
+                    String var0;
+
+                    if (res < 50) {
+                        var0 = "&7¡La barra actual se encuentra en &c&l" + res + "%";
+                    } else {
+                        var0 = "&7¡La barra actual se encuentra en &e&l" + res + "%";
+                    }
+
+                    pa.playSound(pa.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
+                    pa.sendMessage(format(prefix + var0));
+                }
+                break;
                 case "totemsclear":
                     try {
                         TotemsBar.resetAll();
                     } catch (Exception e) {
                         e.printStackTrace();
                         Warn.Mutant(e);
-                        pa.sendMessage(Format.format(prefix + "&7¡Ha ocurrido un &c&lerror &7al mandar la GUI."));
+                        pa.sendMessage(Format.format(prefix + "&7¡Ha ocurrido un &c&lerror &7al resetear los tótems."));
                     }
                     break;
 

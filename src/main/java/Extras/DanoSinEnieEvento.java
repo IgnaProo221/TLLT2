@@ -74,8 +74,8 @@ public class DanoSinEnieEvento implements Listener{
            }
            if(e.getEntity() instanceof Player){
                Player p = (Player)e.getEntity();
-               if(!e.isCancelled()){
-                   if(p.getLastDamageCause() instanceof EntityDamageByEntityEvent){
+               if(!e.isCancelled()) {
+                   if(p.getLastDamageCause() instanceof EntityDamageByEntityEvent){ 
                        if(((EntityDamageByEntityEvent) p.getLastDamageCause()).getDamager() instanceof LivingEntity){
                            LivingEntity monster = (LivingEntity) ((EntityDamageByEntityEvent) p.getLastDamageCause()).getDamager();
                            if (monster.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SOLAR_SCORPION"), PersistentDataType.STRING)) {
