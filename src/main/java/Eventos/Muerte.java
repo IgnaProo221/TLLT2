@@ -83,7 +83,7 @@ public class Muerte extends ListenerAdapter implements Listener {
                 if (jugadores.length() > 0) {
                     jugadores.append('\n');
                 }
-                jugadores.append(players.getName() +"  :heart: : "+players.getHealth());
+                jugadores.append(players.getName() +" :heart: : "+players.getHealth());
             }
             eb.setDescription(jugadores.length() > 0 ? jugadores : "No hay Jugadores Conectados");
             eb.setColor(new Color(252, 186, 3));
