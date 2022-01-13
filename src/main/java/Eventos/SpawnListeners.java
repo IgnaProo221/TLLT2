@@ -265,7 +265,7 @@ public class SpawnListeners implements Listener {
         }
         if(en instanceof Enderman self){
             if(self.getWorld().getEnvironment().equals(World.Environment.THE_END)){
-                if(spawnmob < 50){
+                if(spawnmob < 40){
                     endSpawn(self);
                 }else{
                     self.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1000000,1, false, false, false));
