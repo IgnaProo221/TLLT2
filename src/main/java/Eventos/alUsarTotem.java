@@ -19,6 +19,8 @@ import tlldos.tll2.TLL2;
 import java.util.Objects;
 import java.util.Random;
 
+import static Utilidades.Format.format;
+
 public class alUsarTotem implements Listener {
     private final TLL2 plugin;
 
@@ -38,6 +40,14 @@ public class alUsarTotem implements Listener {
                     int TotemCara = new Random().nextInt(6) + 1;
 
                     TotemsBar.anadirTC(p);
+
+                    if (TotemsBar.getPorcentaje(p) == 0) {
+                        e.setCancelled(true);
+
+                        for (Player players : Bukkit.getOnlinePlayers()) {
+                            players.sendMessage(format("&7¡El jugador &c" + p.getName() + "&7 ha llegado al &c0%&7!"));
+                        }
+                    }
 
                     if (p.hasCooldown(Material.TOTEM_OF_UNDYING)) {
 
