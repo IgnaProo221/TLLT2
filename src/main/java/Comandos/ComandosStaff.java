@@ -1,6 +1,7 @@
 package Comandos;
 
 import Eventos.StartBlastStormEvent;
+import Eventos.StopBlastStormEvent;
 import Extras.Items;
 import Utilidades.Format;
 import Utilidades.TotemsBar;
@@ -88,9 +89,13 @@ public class ComandosStaff implements CommandExecutor{
                     break;
 
                 case "debug":
-                    if (args[1].equalsIgnoreCase("blastStormTest")) {
+                    if (args[1].equalsIgnoreCase("blastStormStart")) {
                         StartBlastStormEvent start = new StartBlastStormEvent();
                         s.getPluginManager().callEvent(start);
+                    }
+                    if(args[1].equalsIgnoreCase("blackStormEnd")){
+                        StopBlastStormEvent event = new StopBlastStormEvent(StopBlastStormEvent.Cause.COMMAND);
+                        s.getPluginManager().callEvent(event);
                     }
                     if (args[1].equalsIgnoreCase("totemTest")) {
                         pa.playSound(pa.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);

@@ -9,6 +9,7 @@ public class Contador implements Listener{
     public class ContadorS implements Listener {
         public static ContadorSacrificos contador;
     }
+    //ARRANCO LA PANTALLA Y BUM CALVALAND
 
     public class ContadorSacrificos implements Listener {
         public static HashMap<String, Integer> countPlayer = new HashMap<>();

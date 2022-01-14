@@ -1,6 +1,5 @@
 package Eventos;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -8,9 +7,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.Objects;
 
 import static Utilidades.Format.format;
 

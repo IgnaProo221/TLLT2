@@ -3,6 +3,7 @@ package Eventos;
 import Extras.Items;
 import Utilidades.Mobs;
 import Utilidades.TLLEntities;
+import Utilidades.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -283,12 +284,14 @@ public class EntityListeners implements Listener {
     @EventHandler
     public void explotarRadi(EntityExplodeEvent e){
         var entity = (Entity)e.getEntity();
-        if(entity instanceof Creeper){
-            var creeper = (Creeper)entity;
-            if(creeper.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE_CREEPER"), PersistentDataType.STRING)){
-                Player nearby2 = (Player)entity.getLocation().getWorld().getNearbyPlayers(entity.getLocation(), 10.0D,10.0D,10.0D);
+        if(entity instanceof Creeper creeper){
+
+            if(creeper.getPersistentDataContainer().has(new NamespacedKey(Utils.getPlugin(), "HELLFIRE_CREEPER"), PersistentDataType.STRING)){
+                entity.getLocation().getNearbyPlayers( 10, 10, 10).forEach(player -> player.setFireTicks(1200));
+/*                Player nearby2 = (Player)entity.getLocation().getWorld().getNearbyPlayers(entity.getLocation(), 10.0D,10.0D,10.0D);
                 nearby2.sendMessage(format("TEST"));
                 nearby2.setFireTicks(1200);
+ */
             }
             if(creeper.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HIVE_MIND"), PersistentDataType.STRING)){
                 Bukkit.getScheduler().runTaskLater(plugin, () ->{

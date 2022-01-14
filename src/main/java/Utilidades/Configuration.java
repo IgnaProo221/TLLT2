@@ -7,7 +7,7 @@ import org.bukkit.plugin.Plugin;
 import java.io.File;
 import java.io.IOException;
 
-public class Configuration extends YamlConfiguration {
+public class  Configuration extends YamlConfiguration {
 
     private final String fileName;
     private final File file;

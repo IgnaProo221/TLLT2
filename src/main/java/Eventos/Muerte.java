@@ -1,5 +1,7 @@
 package Eventos;
 
+import Utilidades.Data;
+import Utilidades.Utils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -13,34 +15,26 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Skull;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
-import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.weather.WeatherChangeEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import tlldos.tll2.TLL2;
 
 import javax.security.auth.login.LoginException;
 import java.awt.Color;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
 
 import static Utilidades.Format.format;
-import static Utilidades.Format.prefix;
 
 public class Muerte extends ListenerAdapter implements Listener {
     private final World world;
-    public static BossBar tormenta;
     private final TLL2 plugin;
     private JDA jda;
 
@@ -54,7 +48,7 @@ public class Muerte extends ListenerAdapter implements Listener {
         long seconds = segundos % 60L;
         String time = String.format("%02d:%02d:%02d", hours, minutes, seconds);
 
-        tormenta = Bukkit.createBossBar(ChatColor.translateAlternateColorCodes('&', "&f♥        &6&lBlast Storm: " + time +  "        &f♥"), BarColor.YELLOW , BarStyle.SEGMENTED_6);
+        //tormenta = Bukkit.createBossBar(ChatColor.translateAlternateColorCodes('&', "&f♥        &6&lBlast Storm: " + time +  "        &f♥"), BarColor.YELLOW , BarStyle.SEGMENTED_6);
         try {
             this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
             jda = JDABuilder.createDefault("ODM0MTI1Mjg3NDUyNzA0Nzc5.YH8VtQ.353ChgCa7fFCqi3rq-vIOWimrMg").build();
@@ -118,12 +112,19 @@ public class Muerte extends ListenerAdapter implements Listener {
         Player p = e.getEntity();
         p.sendActionBar(format("&4&lGame Over " + p.getName()));
         World world = Bukkit.getWorld("world");
+        Location loc = p.getLocation();
+        PersistentDataContainer data = Data.get(p);
+        data.set(Utils.key("X") , PersistentDataType.DOUBLE, loc.getX());
+        data.set(Utils.key("Y") , PersistentDataType.DOUBLE, loc.getY());
+        data.set(Utils.key("Z"), PersistentDataType.DOUBLE, loc.getZ());
+        data.set(Utils.key("WORLD"), PersistentDataType.STRING, loc.getWorld().getName());
         for (Player players : Bukkit.getOnlinePlayers()){
             players.sendTitle(format("&c&l&k|||  &6&l&kThe Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
             players.playSound(players.getLocation(),"tllt2.deathsound",SoundCategory.RECORDS, 10.0F, 1.0F);
             assert world != null;
 
-            cabezaEstructura(p, p.getLocation());
+            //cabezaEstructura(p, p.getLocation());
+            Utils.pasteSchematic("death_structure", p.getLocation());
             players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8El Alma de &6&l" + p.getName() + " &8a desaparecido entre la oscuridad eterna del &8&lVacio!, &8&lsu energia se liberara para iniciar &6la &6&lBLAST STORM!"));
             players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Fatum tuum non potes effugere, &c&lsuperesse vel perit"));
             players.sendMessage(ChatColor.GRAY + "Coordenadas: X: " + p.getLocation().getBlockX() + ", Y: " + p.getLocation().getBlockY() + ", Z: " + p.getLocation().getBlockZ());
@@ -204,7 +205,7 @@ public class Muerte extends ListenerAdapter implements Listener {
         eb.setTitle("**El Jugador " + p.getName() + " a muerto!**");
         eb.setDescription(":fire:** ¡La Blast Storm invade los Cielos, preparense para Sufrir! **:fire:");
         eb.addField(":skull: **Causa de Muerte: **", e.getDeathMessage(), true);
-        eb.addField(":beginner: **Dia: **" + Dia(), "", true);
+        eb.addField(":beginner: **Dia: **" + Utils.getDay(), "", true);
         eb.addField(":map: **Cordernadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
         eb.addField(":low_brightness: **Fecha: **" + Fecha, "", true);
         eb.addField(":alarm_clock: **Hora: **" + Tiempo,"",true);
@@ -213,6 +214,20 @@ public class Muerte extends ListenerAdapter implements Listener {
 
         if (channel != null) {
             channel.sendMessage(eb.build()).queue();
+        }
+    }
+    @EventHandler
+    public void onRespawn(PlayerRespawnEvent e){
+        Player p = e.getPlayer();
+        PersistentDataContainer data = Data.get(p);
+        try {
+            double X = data.get(Utils.key("X"), PersistentDataType.DOUBLE);
+            double Y = data.get(Utils.key("Y"), PersistentDataType.DOUBLE);
+            double Z = data.get(Utils.key("Z"), PersistentDataType.DOUBLE);
+            World w = Bukkit.getWorld(Objects.requireNonNull(data.get(Utils.key("WORLD"), PersistentDataType.STRING)));
+            p.teleport(new Location(w, X, Y, Z));
+        }catch (NullPointerException ex){
+            Bukkit.getConsoleSender().sendMessage("RESPAWN EVENT ERROR:"+ex);
         }
     }
     public void cabezaEstructura(Player p, Location location) {
@@ -309,42 +324,6 @@ public class Muerte extends ListenerAdapter implements Listener {
 
 
 
-    public static int Dia() {
-        LocalDate FechaActual = LocalDate.now();
 
-        LocalDate FechaInicio = LocalDate.parse("2022-01-08");
 
-        return (int) ChronoUnit.DAYS.between(FechaInicio, FechaActual);
-    }
-
-    @EventHandler
-    public void cambiodeClima(WeatherChangeEvent e){
-        if(!e.toWeatherState()){
-            for(Player players : Bukkit.getOnlinePlayers()) {
-                tormenta.setVisible(false);
-                tormenta.removePlayer(players);
-                world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true);
-                players.sendMessage(prefix(), format("&6&lLos cielos se despejaron... por ahora."));
-                players.playSound(players.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 10.0F, 0.5F);
-            }
-        }
-    }
-
-    @EventHandler
-    public void tormentaBlastStorm(PlayerDeathEvent e) {
-        World world = Bukkit.getWorld("world");
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-
-                if (world != null) {
-                    world.setTime(18000);
-                    world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
-                }
-                String Tormentajaja = Objects.requireNonNull(Bukkit.getWorld("world")).isThundering() ? "weather thunder " + ((Objects.requireNonNull(Bukkit.getWorld("world")).getWeatherDuration() / 20) + (Muerte.Dia() * 1800)) : "weather thunder " + (Muerte.Dia() * 1800);
-
-                Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Tormentajaja);
-
-                StartBlastStormEvent start = new StartBlastStormEvent();
-                Bukkit.getPluginManager().callEvent(start);
-            }, 200L);
-        }
 }

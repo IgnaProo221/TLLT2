@@ -1,43 +1,42 @@
 package Utilidades;
 
-import Eventos.Muerte;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 import java.util.HashMap;
 
 public class TotemsBar implements Listener {
-    public static HashMap<String, Integer> totempercentage = new HashMap<>();
+    public static HashMap<String, Integer> percentage = new HashMap<>();
     public static int looseNumber = getLooseCount();
 
     public static void anadirTC(Player p) {
         String name = p.getName();
-        if (totempercentage.containsKey(name)) {
-            int oldCount = totempercentage.get(name);
-            int result = oldCount + looseNumber;
-            totempercentage.remove(name);
-            totempercentage.put(name, result);
+        if (percentage.containsKey(name)) {
+            int oldCount = percentage.get(name);
+            int result = oldCount - looseNumber;
+            percentage.remove(name);
+            percentage.put(name, result);
         } else {
-            totempercentage.put(name, looseNumber);
+            percentage.put(name, looseNumber);
         }
     }
 
     public static int getPorcentaje(Player player) {
         int max = 100;
-        if (totempercentage.get(player.getName()) == null) {
+        if (percentage.get(player.getName()) == null) {
             return 100;
         } else {
-            return max - totempercentage.get(player.getName());
+            return max - percentage.get(player.getName());
         }
     }
 
     public static void resetAll() {
-        totempercentage.clear();
+        percentage.clear();
     }
 
     public static int getLooseCount() {
 
-        int day = Muerte.Dia();
+        int day = Utils.getDay();
 
         if (day < 6) {
             return 5;

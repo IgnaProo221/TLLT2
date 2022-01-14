@@ -21,9 +21,7 @@ import team.unnamed.gui.core.GUIListeners;
 public final class TLL2 extends JavaPlugin {
     public World world;
 
-    public static BossBar tormenta;
     private Configuration config;
-    private static TLL2 plugin;
 
 
     @Override
@@ -44,7 +42,7 @@ public final class TLL2 extends JavaPlugin {
             new Muerte(this);
 
             cargarEventos();
-            tormentaTick();
+            //tormentaTick();
             getCommand("thelastlife").setExecutor(new ComandosUsuarios());
             getCommand("tllstaff").setExecutor(new ComandosStaff());
         } catch (Exception e){
@@ -75,13 +73,14 @@ public final class TLL2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Dormir(this),this);
         getServer().getPluginManager().registerEvents(new GhastExplosion(this),this);
         getServer().getPluginManager().registerEvents(new DanoSinEnieEvento(this),this);
-        getServer().getPluginManager().registerEvents(new BlastStorm(),this);
+       // getServer().getPluginManager().registerEvents(new BlastStorm(),this);
         getServer().getPluginManager().registerEvents(new PlayerEvents(), this);
         getServer().getPluginManager().registerEvents(new SpawnListeners(this),this);
         getServer().getPluginManager().registerEvents(new SpawnerListeners(this), this);
         getServer().getPluginManager().registerEvents(new EntityListeners(this), this);
+        getServer().getPluginManager().registerEvents(new BlastStormListeners(), this);
     }
-    public void tormentaTick(){
+    /*public void tormentaTick(){
         if(world.getWeatherDuration() != 0) {
             Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
                 @Override
@@ -101,6 +100,8 @@ public final class TLL2 extends JavaPlugin {
             },0,20L);
         }
     }
+
+     */
 
 
 }

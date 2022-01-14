@@ -1,8 +1,8 @@
 package Comandos;
 
-import Eventos.Muerte;
 import Utilidades.Contador;
 import Utilidades.TotemsBar;
+import Utilidades.Utils;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -12,9 +12,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 public class ComandosUsuarios implements CommandExecutor{
     String prefix = ChatColor.translateAlternateColorCodes('&',"&6&lThe&c&lLast&6&lLife &7➤ ");
@@ -44,7 +41,7 @@ public class ComandosUsuarios implements CommandExecutor{
             sender.sendMessage(ChatColor.GOLD + "----- Version del Plugin: v1.1 -----");
         }
         if (args[0].equalsIgnoreCase("totems")) {
-            sender.sendMessage(ChatColor.GOLD + "----- " + TotemsBar.totempercentage + " -----");
+            sender.sendMessage(ChatColor.GOLD + "----- " + TotemsBar.percentage + " -----");
         }
 
         if(args[0].equalsIgnoreCase("creditos")){
@@ -72,7 +69,7 @@ public class ComandosUsuarios implements CommandExecutor{
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',prefix +"&cHay " + s.getTPS()[0] + " TPS Actuales"));
         }
         if(args[0].equalsIgnoreCase("dia")){
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',prefix + "&7Nos Encontramos en el Dia: &6" + Muerte.Dia()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',prefix + "&7Nos Encontramos en el Dia: &6" + Utils.getDay()));
         }
         if(args[0].equalsIgnoreCase("sacrificios")){
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',prefix + "&7Nos Encontramos en el Dia: &6" + Contador.ContadorS.contador));

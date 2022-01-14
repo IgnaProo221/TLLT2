@@ -4,6 +4,8 @@ import org.bukkit.ChatColor;
 
 public class Format {
 
+    //TODO esto se podria hacer en Utils y nos ahorrariamos una clase si les da la gana claro
+
     public static String format (String msg) {
         return ChatColor.translateAlternateColorCodes('&', msg);
     }

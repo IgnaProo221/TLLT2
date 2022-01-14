@@ -52,22 +52,14 @@ public class SpawnListeners implements Listener {
 
         if (en instanceof Zombie self ) {
             spawnTierZombies(self);
-        }
-
-        if (en instanceof Creeper self && en.getLocation().getWorld().getEnvironment() == World.Environment.NORMAL){
+        } else if (en instanceof Creeper self && en.getLocation().getWorld().getEnvironment() == World.Environment.NORMAL){
             spawnCreeperBlight(self);
-        }
-
-        if (en instanceof Skeleton self) {
+        } else if (en instanceof Skeleton self) {
             this.spawnSkeletonClass(self);
 
-        }
-
-        if (en instanceof Spider self) {
+        }else if (en instanceof Spider self) {
             this.spawnSpiderVariant(self);
-        }
-
-        if (en instanceof Pillager) {
+        }else if (en instanceof Pillager) {
             var pillager = (Pillager) en;
 
             ItemStack ac = new ItemStack(Material.CROSSBOW);

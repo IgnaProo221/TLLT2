@@ -1,7 +1,9 @@
 package Eventos;
 
 import Extras.Items;
+import Utilidades.Data;
 import Utilidades.TotemsBar;
+import Utilidades.Utils;
 import Utilidades.Warn;
 import org.bukkit.*;
 import org.bukkit.entity.*;
@@ -11,6 +13,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityResurrectEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -38,10 +42,17 @@ public class alUsarTotem implements Listener {
                 if (p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING || p.getInventory().getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING) {
 
                     int TotemCara = new Random().nextInt(6) + 1;
+                    PersistentDataContainer data = Data.get(p);
 
-                    TotemsBar.anadirTC(p);
+                    //TotemsBar.anadirTC(p);
+                    if(!data.has(Utils.key("TOTEM_BAR"))){
+                        data.set(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER, 100);
+                    }else{
+                        int i = data.get(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER);
+                        data.set(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER, i - TotemsBar.getLooseCount());
+                    }
 
-                    if (TotemsBar.getPorcentaje(p) == 0) {
+                    if (data.get(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER) == 0) {
                         e.setCancelled(true);
 
                         for (Player players : Bukkit.getOnlinePlayers()) {
@@ -189,6 +200,7 @@ public class alUsarTotem implements Listener {
     }
 
     public static String causadeDaño(EntityDamageEvent e){
+
         switch (e.getCause()){
             case FALL:
                 return "Caída";

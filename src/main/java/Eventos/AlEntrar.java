@@ -17,10 +17,4 @@ public class AlEntrar implements Listener {
     }
 
 
-    @EventHandler
-    public void tormentaJoin(PlayerJoinEvent e) {
-        if (Bukkit.getWorld("world").hasStorm()) {
-            Muerte.tormenta.addPlayer(e.getPlayer());
-        }
-    }
 }
