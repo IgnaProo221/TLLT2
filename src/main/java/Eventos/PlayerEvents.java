@@ -7,6 +7,7 @@ import Utilidades.Warn;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -49,7 +50,7 @@ public class PlayerEvents implements Listener {
                         event.setCancelled(true);
                     } else {
                         EventosItems.totemrestorerEvent(p);
-                        p.setCooldown(Material.PRISMARINE_CRYSTALS,1200);
+                        p.setCooldown(Material.PRISMARINE_CRYSTALS,24000);
                         p.getInventory().removeItem(new ItemStack(Material.PRISMARINE_CRYSTALS, 1));
                     }
                 } catch (Exception e) {
@@ -62,12 +63,13 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void hambreAgotar(EntityExhaustionEvent e){
-        e.setExhaustion(e.getExhaustion() * 3);
+        e.setExhaustion(e.getExhaustion() * 2);
     }
 
     @EventHandler
     public void weaknessBuff(EntityDamageEvent e) {
-        if (e instanceof Player player) {
+        Entity entity = e.getEntity();
+        if (entity instanceof Player player) {
             if (player.hasPotionEffect(PotionEffectType.WEAKNESS)) {
                 e.setDamage(e.getDamage() * 2);
             }

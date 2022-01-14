@@ -307,8 +307,8 @@ public class Mobs implements Listener{
     public static void riftedShulker(Shulker self){
         self.setCustomName(format("&b&lDimensional Shulker"));
         self.setColor(DyeColor.BLUE);
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
-        self.setHealth(40);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
+        self.setHealth(1);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DIMEN_SHULKER"), PersistentDataType.STRING, "DIMEN_SHULKER");
     }
     public static void riftedWither(WitherSkeleton self){

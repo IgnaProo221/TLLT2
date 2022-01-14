@@ -128,7 +128,7 @@ public class Muerte extends ListenerAdapter implements Listener {
             players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8El Alma de &6&l" + p.getName() + " &8a desaparecido entre la oscuridad eterna del &8&lVacio!, &8&lsu energia se liberara para iniciar &6la &6&lBLAST STORM!"));
             players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Fatum tuum non potes effugere, &c&lsuperesse vel perit"));
             players.sendMessage(ChatColor.GRAY + "Coordenadas: X: " + p.getLocation().getBlockX() + ", Y: " + p.getLocation().getBlockY() + ", Z: " + p.getLocation().getBlockZ());
-            players.sendMessage(ChatColor.GRAY + "Dimension: " +  p.getWorld().getEnvironment());
+            players.sendMessage(ChatColor.GRAY + "Dimension: " +  dimension(p.getLocation()));
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 players.sendTitle(format("&c&l&k|||  &6&l&kThe Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
 
@@ -322,7 +322,14 @@ public class Muerte extends ListenerAdapter implements Listener {
 
 
 
-
+    public static String dimension(Location location){
+        return switch (location.getWorld().getEnvironment()) {
+            case NORMAL -> "Overworld";
+            case NETHER -> "Nether";
+            case THE_END -> "The End";
+            default -> "Desconocido";
+        };
+    }
 
 
 
