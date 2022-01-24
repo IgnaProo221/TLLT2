@@ -25,13 +25,16 @@ import static Utilidades.Format.prefix;
 
 public class BlastStormListeners implements Listener {
 
-    private static final BossBar bossBar = Bukkit.createBossBar(Format.format("&f♥        &6&lBlast Storm: " + getTime() +  "        &f♥"), BarColor.YELLOW, BarStyle.SEGMENTED_6);
+    private static BossBar bossBar;
     private static Integer TaskBossBarID = 0;
 
 
     public static void createBossBar() {
+        if (bossBar == null) {
+            bossBar = Bukkit.createBossBar(Format.format("&f♥        &6&lBlast Storm: " + getTime() +  "        &f♥"), BarColor.YELLOW, BarStyle.SEGMENTED_6);
+        }
         TaskBossBarID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Utils.getPlugin(), () -> {
-            Bukkit.createBossBar(Format.format("&f♥        &6&lBlast Storm: " + getTime() +  "        &f♥"), BarColor.YELLOW, BarStyle.SEGMENTED_6);
+            bossBar.setTitle(Format.format("&f♥        &6&lBlast Storm: " + getTime() +  "        &f♥"));
         }, 0L, 20L);
     }
     @EventHandler
@@ -51,7 +54,7 @@ public class BlastStormListeners implements Listener {
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
         world.setTime(18000);
         Bukkit.getScheduler().scheduleSyncDelayedTask(Utils.getPlugin(), () -> {
-            for(Player player : Bukkit.getOnlinePlayers()) {
+            for (Player player : Bukkit.getOnlinePlayers()) {
                 player.playSound(player.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 10.0F, -1.0F);
                 player.sendTitle(Format.format(e.getTitleStorm(tierLevel)), Format.format(e.getSubtitleStorm(tierLevel)));
             }
@@ -100,7 +103,17 @@ public class BlastStormListeners implements Listener {
                 world.setTime(18000);
                 world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
             }
-            String setThunder = Objects.requireNonNull(Bukkit.getWorld("world")).isThundering() ? "weather thunder " + (Utils.getWorld().getWeatherDuration() / 20) + (Utils.getDay() * 1800) : "weather thunder " + (Utils.getDay() * 1800);
+
+            int days = Utils.getDay();
+
+            int time = world.isThundering() ? world.getWeatherDuration() / 20 + days * 18000 : days * 18000;
+
+            if (time >= Integer.MAX_VALUE) {
+                Bukkit.getConsoleSender().sendMessage("El tiempo de la tormenta ha superado el tiempo maximo.");
+                return;
+            }
+
+            String setThunder = "weather thunder " + time;
 
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), setThunder);
 
