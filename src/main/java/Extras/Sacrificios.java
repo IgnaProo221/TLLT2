@@ -1,12 +1,8 @@
 package Extras;
 
 import Utilidades.Warn;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import tlldos.tll2.TLL2;
 
 import java.util.Random;
 

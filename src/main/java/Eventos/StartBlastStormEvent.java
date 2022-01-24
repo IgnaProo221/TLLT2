@@ -48,21 +48,6 @@ public class StartBlastStormEvent extends Event {
         }
     }
 
-    /*public void tierTime(int tier) throws NullPointerException{
-        if(tier == 1){
-            String Tormentajaja = Objects.requireNonNull(Bukkit.getWorld("world")).isThundering() ? "weather thunder " + ((Objects.requireNonNull(Bukkit.getWorld("world")).getWeatherDuration() / 20) + (Muerte.Dia() * 900)) : "weather thunder " + (Muerte.Dia() * 900);
-
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Tormentajaja);
-        }else if(tier == 2){
-            String Tormentajaja = Objects.requireNonNull(Bukkit.getWorld("world")).isThundering() ? "weather thunder " + ((Objects.requireNonNull(Bukkit.getWorld("world")).getWeatherDuration() / 20) + (Muerte.Dia() * 1800)) : "weather thunder " + (Muerte.Dia() * 1800);
-
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Tormentajaja);
-        }else {
-            String Tormentajaja = Objects.requireNonNull(Bukkit.getWorld("world")).isThundering() ? "weather thunder " + ((Objects.requireNonNull(Bukkit.getWorld("world")).getWeatherDuration() / 20) + (Muerte.Dia() * 2700)) : "weather thunder " + (Muerte.Dia() * 2700);
-
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), Tormentajaja);
-        }
-    }*/
 
     public String getSubtitleStorm(int tierLevel) {
 

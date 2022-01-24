@@ -8,13 +8,10 @@ import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
 import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackableTarget;
 import net.minecraft.world.entity.monster.EntityPigZombie;
 import net.minecraft.world.entity.player.EntityHuman;
-import net.minecraft.world.level.chunk.IChunkAccess;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
-import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPigZombie;
-import net.minecraft.server.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -22,6 +19,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
@@ -31,9 +29,9 @@ import tlldos.tll2.TLL2;
 import static Utilidades.Format.format;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class SpawnListeners implements Listener {
     private TLL2 plugin;
@@ -67,10 +65,20 @@ public class SpawnListeners implements Listener {
             meta.addEnchant(Enchantment.QUICK_CHARGE, 3, true);
             ac.setItemMeta(meta);
 
+            ItemStack coh = new ItemStack(Material.FIREWORK_ROCKET, 64);
+            FireworkMeta cacota = (FireworkMeta)coh.getItemMeta();
+            FireworkEffect.Builder builder = FireworkEffect.builder();
+            cacota.addEffect(builder.flicker(true).build());
+            cacota.addEffect(builder.withColor(Color.RED).build());
+            cacota.addEffect(builder.trail(true).build());
+            cacota.addEffect(builder.withFade(Color.WHITE).build());
+            coh.setItemMeta(cacota);
+
             pillager.setCustomName(format("&cPillager Generico Explosivo lol"));
             pillager.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
             pillager.setHealth(40);
             pillager.getEquipment().setItemInMainHand(ac);
+            pillager.getEquipment().setItemInOffHand(coh);
             pillager.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "OVERRATED_PILLAGER"), PersistentDataType.STRING, "OVERRATED_PILLAGER");
         }
 
@@ -197,27 +205,16 @@ public class SpawnListeners implements Listener {
             bat.setCustomName(format("&cExplosive Bat"));
             bat.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXPLOSIVE_BAT"), PersistentDataType.STRING, "EXPLOSIVE_BAT");
         }
-        if (en instanceof WitherSkeleton self && en.getEntitySpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+        if (en instanceof WitherSkeleton self && en.getWorld().getEnvironment().equals(World.Environment.NETHER)){
             spawnWitherSkeleton(self);
 
         }
+
         if (en instanceof Chicken self){
             self.remove();
-            en.getLocation().getWorld().spawn(en.getLocation(), Vindicator.class);
-
-            Chunk chunk = en.getLocation().getChunk();
-
-            ArrayList<Entity> mobList = new ArrayList<>();
-
-            for(Entity ent : chunk.getEntities()){
-                if(ent.getType() == en.getType()){
-                    mobList.add(ent);
-                }
+            if(self.getWorld().getLivingEntities().stream().filter(entity1 -> entity1 instanceof Vindicator).map(Vindicator.class::cast).collect(Collectors.toList()).size() < 10){
+                var vindicator = (Vindicator)self.getLocation().getWorld().spawn(self.getLocation(), Vindicator.class);
             }
-            if(mobList.size() > 2){
-                en.remove();
-            }
-
         }
         if (en instanceof Slime) {
             var slime = (Slime) en;
@@ -241,6 +238,9 @@ public class SpawnListeners implements Listener {
             guardian.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
             guardian.setHealth(40);
             guardian.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 1, false, false, false));
+        }
+        if(en instanceof Evoker self){
+            evokerClass(self);
         }
 
         if(en instanceof PiglinBrute self){
@@ -448,6 +448,18 @@ Mobs.blightedEndermam(enderman);
         }
     }
 
+    public void evokerClass(Evoker evoker){
+        int mobspawn = new Random().nextInt(4);
+        if(mobspawn == 1){
+            Mobs.evokerExplosive(evoker);
+        }else if(mobspawn == 2){
+            Mobs.evokerFire(evoker);
+        }else if(mobspawn == 3){
+            Mobs.evokerFreeze(evoker);
+        }else{
+            Mobs.evokerhex(evoker);
+        }
+    }
     public void endSpawn(Enderman enderman){
         int mobspawn = new Random().nextInt(6);
         if(mobspawn == 1){

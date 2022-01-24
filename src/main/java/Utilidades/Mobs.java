@@ -7,14 +7,12 @@ import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackable
 import net.minecraft.world.entity.animal.EntityBee;
 import net.minecraft.world.entity.animal.EntityIronGolem;
 import net.minecraft.world.entity.monster.EntityEnderman;
-import net.minecraft.world.entity.monster.EntityPigZombie;
 import net.minecraft.world.entity.player.EntityHuman;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftBee;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftEnderman;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftIronGolem;
-import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPigZombie;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
@@ -27,7 +25,6 @@ import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
-import org.checkerframework.checker.units.qual.A;
 import tlldos.tll2.TLL2;
 
 
@@ -295,6 +292,7 @@ public class Mobs implements Listener{
         self.setHealth(50);
         self.setPowered(true);
         self.setExplosionRadius(10);
+        self.setMaxFuseTicks(20);
         self.setFuseTicks(20);
 
     }
@@ -327,6 +325,24 @@ public class Mobs implements Listener{
         self.getEquipment().setItemInMainHand(b);
         self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DIMEN_WITHERSK"), PersistentDataType.STRING, "DIMEN_WITHERSK");
+    }
+
+    public static void evokerExplosive(Evoker self){
+        self.setCustomName(format("&c&lExplosive Evoker"));
+
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXPLOSIVE_EVOKER"), PersistentDataType.STRING, "EXPLOSIVE_EVOKER");
+    }
+    public static void evokerFire(Evoker self){
+        self.setCustomName(format("&6&lHellfire Evoker"));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "FIRE_EVOKER"), PersistentDataType.STRING, "FIRE_EVOKER");
+    }
+    public static void evokerFreeze(Evoker self){
+        self.setCustomName(format("&c&lBlizzard Evoker"));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "FREEZE_EVOKER"), PersistentDataType.STRING, "FREEZE_EVOKER");
+    }
+    public static void evokerhex(Evoker self){
+        self.setCustomName(format("&4&lHex Evoker"));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HEX_EVOKER"), PersistentDataType.STRING, "HEX_EVOKER");
     }
 
 

@@ -1,8 +1,6 @@
 package Eventos;
 
-import Extras.Items;
 import Utilidades.Mobs;
-import Utilidades.TLLEntities;
 import Utilidades.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -15,18 +13,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionType;
 import tlldos.tll2.TLL2;
 
-import javax.swing.text.StyleContext;
 import java.util.*;
 
 import static Extras.Items.createFragmentoSangre;
 import static Utilidades.Format.format;
-import static Utilidades.Format.prefix;
 
 public class EntityListeners implements Listener {
     private final TLL2 plugin;
@@ -78,24 +72,37 @@ public class EntityListeners implements Listener {
         var entity = event.getEntity();
         var damager = event.getDamager();
         if(damager instanceof Player pa){
-            if(!pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
-                return;
-            }
-            if(!pa.getInventory().getItemInMainHand().hasItemMeta()){
-                return;
-            }
-
             if(pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
                 if(pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4006){
                     entity.setFreezeTicks(400);
+                }else{
+                    return;
                 }
+            }else{
+                return;
             }
         }
 
+
+
         if (entity instanceof Player p) {
+            if(damager instanceof EvokerFangs z){
+                if(z.getOwner() instanceof Evoker evoker){
+                    if(evoker.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "FIRE_EVOKER"), PersistentDataType.STRING)){
+                        entity.setFireTicks(1200);
+                    }else if(evoker.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "FREEZE_EVOKER"), PersistentDataType.STRING)){
+                        entity.setFreezeTicks(1200);
+                    }else if(evoker.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HEX_EVOKER"), PersistentDataType.STRING)){
+                        ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 400, 0, true, true, true));
+                        ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 400, 4, true, true, true));
+                        ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 400, 0, true, true, true));
+                    }
+                }
+            }
             if (damager instanceof Vex) {
                 var vex = (Vex) damager;
                 if (vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_EXPLOSIVE"), PersistentDataType.STRING)) {
+                    event.setCancelled(true);
                     p.getLocation().getWorld().createExplosion(p.getLocation(), 5, false, true);
                 }
                 if (vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_SCIENTIST"), PersistentDataType.STRING)) {
@@ -388,5 +395,15 @@ public class EntityListeners implements Listener {
                  }
              }
          }
+    }
+
+    @EventHandler
+    public void fangqueExplotan(EntitySpawnEvent e){
+        if(e.getEntity() instanceof EvokerFangs fangs)
+            if(fangs.getOwner() instanceof Evoker evoker){
+                if(evoker.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXPLOSIVE_EVOKER"),PersistentDataType.STRING)){
+                    fangs.getLocation().createExplosion(evoker, 3, false, true);
+                }
+            }
     }
 }

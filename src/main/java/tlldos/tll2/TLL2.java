@@ -3,20 +3,12 @@ package tlldos.tll2;
 import Comandos.ComandosStaff;
 import Comandos.ComandosUsuarios;
 import Eventos.*;
-import Extras.DanoSinEnieEvento;
-import Extras.EnderPearlEvent;
-import Extras.GhastExplosion;
-import Extras.SpawnerListeners;
+import Extras.*;
 import Utilidades.Configuration;
-import Utilidades.GUIs;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
-import org.bukkit.boss.BossBar;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
-import team.unnamed.gui.core.GUIListeners;
 
 public final class TLL2 extends JavaPlugin {
     public World world;
@@ -65,7 +57,6 @@ public final class TLL2 extends JavaPlugin {
     }
 
     public void cargarEventos(){
-        getServer().getPluginManager().registerEvents(new GUIListeners(),this);
         getServer().getPluginManager().registerEvents(new alUsarTotem(this), this);
         getServer().getPluginManager().registerEvents(new AlEntrar(this),this);
         getServer().getPluginManager().registerEvents(new Comer(this), this);
@@ -78,7 +69,9 @@ public final class TLL2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SpawnListeners(this),this);
         getServer().getPluginManager().registerEvents(new SpawnerListeners(this), this);
         getServer().getPluginManager().registerEvents(new EntityListeners(this), this);
-        getServer().getPluginManager().registerEvents(new BlastStormListeners(), this);
+        getServer().getPluginManager().registerEvents(new BlastStormListeners(this), this);
+        getServer().getPluginManager().registerEvents(new BlocksListeners(this),this);
+        getServer().getPluginManager().registerEvents(new MobsTeleports(this),this);
     }
     /*public void tormentaTick(){
         if(world.getWeatherDuration() != 0) {

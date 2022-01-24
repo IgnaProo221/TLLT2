@@ -45,7 +45,7 @@ public class alUsarTotem implements Listener {
                     PersistentDataContainer data = Data.get(p);
 
                     //TotemsBar.anadirTC(p);
-                    if(!data.has(Utils.key("TOTEM_BAR"))){
+                    if(!data.has(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER)){
                         data.set(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER, 100);
                     }else{
                         int i = data.get(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER);

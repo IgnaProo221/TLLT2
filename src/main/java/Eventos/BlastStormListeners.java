@@ -7,6 +7,7 @@ import org.bukkit.GameRule;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
@@ -16,14 +17,18 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
+import tlldos.tll2.TLL2;
 
-import java.util.Objects;
 import java.util.Random;
 
 import static Utilidades.Format.format;
 import static Utilidades.Format.prefix;
 
 public class BlastStormListeners implements Listener {
+    private TLL2 plugin;
+    public BlastStormListeners(TLL2 plugin){
+        this.plugin = plugin;
+    }
 
     private static final BossBar bossBar = Bukkit.createBossBar(Format.format("&f♥        &6&lBlast Storm: " + getTime() +  "        &f♥"), BarColor.YELLOW, BarStyle.SEGMENTED_6);
     private static Integer TaskBossBarID = 0;
@@ -34,6 +39,8 @@ public class BlastStormListeners implements Listener {
             Bukkit.createBossBar(Format.format("&f♥        &6&lBlast Storm: " + getTime() +  "        &f♥"), BarColor.YELLOW, BarStyle.SEGMENTED_6);
         }, 0L, 20L);
     }
+
+
     @EventHandler
     public void onBlastStormStart(StartBlastStormEvent e) {
         int tierLevel = new Random().nextInt(3) + 1;
@@ -42,6 +49,7 @@ public class BlastStormListeners implements Listener {
             e.addPotionTiers(player, tierLevel);
             bossBar.setVisible(true);
             bossBar.addPlayer(player);
+            bossBar.addFlag(BarFlag.CREATE_FOG);
         });
         createBossBar();
 
@@ -100,9 +108,16 @@ public class BlastStormListeners implements Listener {
                 world.setTime(18000);
                 world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
             }
-            String setThunder = Objects.requireNonNull(Bukkit.getWorld("world")).isThundering() ? "weather thunder " + (Utils.getWorld().getWeatherDuration() / 20) + (Utils.getDay() * 1800) : "weather thunder " + (Utils.getDay() * 1800);
 
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), setThunder);
+            // String setThunder = Objects.requireNonNull(Bukkit.getWorld("world")).isThundering() ? "weather thunder " + (Utils.getWorld().getWeatherDuration() / 20) + (Utils.getDay() * 1800) : "weather thunder " + (Utils.getDay() * 1800);
+            //String TormentaXD = Objects.requireNonNull(Bukkit.getWorld("world")).isThundering() ? "weather thunder " + ((Objects.requireNonNull(Bukkit.getWorld("world")).getWeatherDuration() / 20) + (Utils.getDay() * 1800)) : "weather thunder " + (Utils.getDay() * 1800);
+            //Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), TormentaXD);
+            //ESTAS COSAS ME COMEN LA PICHA ENTERA DOU    @Paper chingas a tada tu puta madre pendejo .I. .I. .I. .I. .I. .I.
+
+
+            int time = world.isThundering() ? world.getWeatherDuration() / 20 * Utils.getDay() * 1800 : Utils.getDay() * 1800;
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"minecraft:weather thunder");
+            world.setWeatherDuration(time);
 
             StartBlastStormEvent start = new StartBlastStormEvent();
             Bukkit.getPluginManager().callEvent(start);
@@ -126,8 +141,6 @@ public class BlastStormListeners implements Listener {
             if (random.nextInt(a) < chance) {
                 StartBlastStormEvent start = new StartBlastStormEvent();
                 Bukkit.getPluginManager().callEvent(start);
-            }else{
-                e.setCancelled(true);
             }
         }else if(!e.toWeatherState()){
             for(Player players : Bukkit.getOnlinePlayers()) {
@@ -137,6 +150,7 @@ public class BlastStormListeners implements Listener {
 
             }
             bossBar.setVisible(false);
+            bossBar.removeFlag(BarFlag.CREATE_FOG);
             Utils.getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true);
             StopBlastStormEvent event = new StopBlastStormEvent(StopBlastStormEvent.Cause.NATURAL);
             Bukkit.getPluginManager().callEvent(event);

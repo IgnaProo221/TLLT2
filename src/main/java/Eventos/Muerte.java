@@ -124,7 +124,7 @@ public class Muerte extends ListenerAdapter implements Listener {
             assert world != null;
 
             //cabezaEstructura(p, p.getLocation());
-            Utils.pasteSchematic("death_structure", p.getLocation());
+           // Utils.pasteSchematic("death_structure", p.getLocation());
             players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8El Alma de &6&l" + p.getName() + " &8a desaparecido entre la oscuridad eterna del &8&lVacio!, &8&lsu energia se liberara para iniciar &6la &6&lBLAST STORM!"));
             players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Fatum tuum non potes effugere, &c&lsuperesse vel perit"));
             players.sendMessage(ChatColor.GRAY + "Coordenadas: X: " + p.getLocation().getBlockX() + ", Y: " + p.getLocation().getBlockY() + ", Z: " + p.getLocation().getBlockZ());

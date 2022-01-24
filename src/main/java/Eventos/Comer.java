@@ -1,6 +1,5 @@
 package Eventos;
 
-import Extras.Items;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,7 +9,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import tlldos.tll2.TLL2;
 
-import java.io.IOException;
 import java.util.List;
 
 public class Comer implements Listener {

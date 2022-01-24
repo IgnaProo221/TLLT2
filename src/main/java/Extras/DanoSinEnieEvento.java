@@ -1,8 +1,5 @@
 package Extras;
 
-import Utilidades.Mobs;
-import net.minecraft.world.damagesource.DamageSource;
-import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;

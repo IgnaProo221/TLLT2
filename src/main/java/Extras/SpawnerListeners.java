@@ -1,8 +1,6 @@
 package Extras;
 
 import Utilidades.Mobs;
-import Utilidades.TLLEntities;
-import org.bukkit.Location;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

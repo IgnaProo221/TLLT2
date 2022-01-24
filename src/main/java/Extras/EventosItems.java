@@ -1,13 +1,10 @@
 package Extras;
 
-import Eventos.Muerte;
 import Utilidades.TotemsBar;
 import Utilidades.Warn;
 import org.bukkit.Bukkit;
 import org.bukkit.EntityEffect;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import tlldos.tll2.TLL2;
 
 import static Utilidades.Format.format;
