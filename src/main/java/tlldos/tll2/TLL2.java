@@ -69,7 +69,7 @@ public final class TLL2 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SpawnListeners(this),this);
         getServer().getPluginManager().registerEvents(new SpawnerListeners(this), this);
         getServer().getPluginManager().registerEvents(new EntityListeners(this), this);
-        getServer().getPluginManager().registerEvents(new BlastStormListeners(this), this);
+        getServer().getPluginManager().registerEvents(new BlastStormListeners(), this);
         getServer().getPluginManager().registerEvents(new BlocksListeners(this),this);
         getServer().getPluginManager().registerEvents(new MobsTeleports(this),this);
     }
