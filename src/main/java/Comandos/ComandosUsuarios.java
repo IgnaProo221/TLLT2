@@ -1,5 +1,6 @@
 package Comandos;
 
+import Utilidades.Format;
 import Utilidades.Contador;
 import Utilidades.TotemsBar;
 import Utilidades.Utils;
@@ -14,7 +15,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class ComandosUsuarios implements CommandExecutor{
-    String prefix = ChatColor.translateAlternateColorCodes('&',"&6&lThe&c&lLast&6&lLife &7➤ ");
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
@@ -66,13 +67,13 @@ public class ComandosUsuarios implements CommandExecutor{
             sender.sendMessage(ChatColor.DARK_GRAY + "----------------------");
         }
         if(args[0].equalsIgnoreCase("tps")){
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',prefix +"&cHay " + s.getTPS()[0] + " TPS Actuales"));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',Format.PREFIX +"&cHay " + s.getTPS()[0] + " TPS Actuales"));
         }
         if(args[0].equalsIgnoreCase("dia")){
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',prefix + "&7Nos Encontramos en el Dia: &6" + Utils.getDay()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',Format.PREFIX + "&7Nos Encontramos en el Dia: &6" + Utils.getDay()));
         }
         if(args[0].equalsIgnoreCase("sacrificios")){
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',prefix + "&7Nos Encontramos en el Dia: &6" + Contador.ContadorS.contador));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Format.PREFIX + "&7Nos Encontramos en el Dia: &6" + Contador.ContadorS.contador));
         }
         return false;
     }

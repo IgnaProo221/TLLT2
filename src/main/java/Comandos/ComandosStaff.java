@@ -4,6 +4,7 @@ import Eventos.StartBlastStormEvent;
 import Eventos.StopBlastStormEvent;
 import Extras.Items;
 import Utilidades.Format;
+import Utilidades.Format;
 import Utilidades.TotemsBar;
 import Utilidades.Warn;
 import org.bukkit.*;
@@ -19,12 +20,7 @@ import tlldos.tll2.TLL2;
 import static Utilidades.Format.format;
 
 public class ComandosStaff implements CommandExecutor{
-    TLL2 plugin;
-
-    String prefix = ChatColor.translateAlternateColorCodes('&',"&6&lThe&c&lLast&6&lLife &7➤ ");
-    public static BossBar tormenta;
-
-
+    
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
@@ -54,14 +50,6 @@ public class ComandosStaff implements CommandExecutor{
                     s.getConsoleSender().sendMessage("Alguien hizo el coso de Alerta @Mutant te llaman xdxdxd");
                     break;
 
-                case "testdias":
-                    if (plugin.getConfig().getBoolean("dia6")) {
-                        pa.sendMessage(format("&cSI ESTA EL DIA 6 GAY XD"));
-                    } else {
-                        pa.sendMessage(format("&cNO ESTA EL DIA 6 GAY XD"));
-                    }
-                    break;
-
                 case "totemBar": {
 
                     int res = TotemsBar.getPorcentaje(pa);
@@ -75,7 +63,7 @@ public class ComandosStaff implements CommandExecutor{
                     }
 
                     pa.playSound(pa.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
-                    pa.sendMessage(format(prefix + var0));
+                    pa.sendMessage(format(Format.PREFIX + var0));
                 }
                 break;
                 case "totemsclear":
@@ -84,7 +72,7 @@ public class ComandosStaff implements CommandExecutor{
                     } catch (Exception e) {
                         e.printStackTrace();
                         Warn.Mutant(e);
-                        pa.sendMessage(Format.format(prefix + "&7¡Ha ocurrido un &c&lerror &7al resetear los tótems."));
+                        pa.sendMessage(Format.format(Format.PREFIX + "&7¡Ha ocurrido un &c&lerror &7al resetear los tótems."));
                     }
                     break;
 
@@ -108,53 +96,53 @@ public class ComandosStaff implements CommandExecutor{
                     } catch (Exception e) {
                         e.printStackTrace();
                         Warn.Mutant(e);
-                        pa.sendMessage(Format.format(prefix + "&7¡Ha ocurrido un &c&lerror &7al mandar la GUI."));
+                        pa.sendMessage(Format.format(Format.PREFIX + "&7¡Ha ocurrido un &c&lerror &7al mandar la GUI."));
                     }
                     break;
                 case "give":
                     if(args[1] == null){
-                        pa.sendMessage(prefix + ChatColor.YELLOW + "Debes colocar el item que te quieres givear.");
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Debes colocar el item que te quieres givear.");
                         return false;
                     }
                     if (args[1].equalsIgnoreCase("FUNGAL_CLUMPS")) {
                         pa.getInventory().addItem(Items.FungaClu());
-                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                     if (args[1].equalsIgnoreCase("WEIRD_DAGGER")) {
                         pa.getInventory().addItem(Items.createDaga());
-                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                     if (args[1].equalsIgnoreCase("CATACLYSM_PEARL")) {
                         pa.getInventory().addItem(Items.CataclysPear());
-                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                     if (args[1].equalsIgnoreCase("BERSERKER_TOTEM")) {
                         pa.getInventory().addItem(Items.ToteBeserk());
-                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                     if (args[1].equalsIgnoreCase("CLOUDY_MARSH")) {
                         pa.getInventory().addItem(Items.CloudMarsh());
-                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                     if (args[1].equalsIgnoreCase("BLOOD_STONE")) {
                         pa.getInventory().addItem(Items.BloodShard());
-                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                     if (args[1].equalsIgnoreCase("BLOOD_SHARD")) {
                         pa.getInventory().addItem(Items.createFragmentoSangre(1));
-                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                     if (args[1].equalsIgnoreCase("TEMPERATURE_METER")) {
                         pa.getInventory().addItem(Items.termometroItem());
-                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                     if (args[1].equalsIgnoreCase("TOTEM_RESTORER")) {
                         pa.getInventory().addItem(Items.totemRestorer());
-                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                     if (args[1].equalsIgnoreCase("FALLEN_SWORD")) {
                         pa.getInventory().addItem(Items.fallenSword());
-                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                 default:
                     pa.sendMessage(format("&7No has indicado ningun subcomando."));
@@ -162,7 +150,7 @@ public class ComandosStaff implements CommandExecutor{
                     break;
             }
         } else {
-            sender.sendMessage(prefix + ChatColor.RED + "No tienes Permisos para Ejecutar este comando");
+            sender.sendMessage(Format.PREFIX + ChatColor.RED + "No tienes Permisos para Ejecutar este comando");
         }
         return false;
     }
