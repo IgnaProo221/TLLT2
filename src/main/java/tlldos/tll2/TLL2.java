@@ -5,10 +5,13 @@ import Comandos.ComandosUsuarios;
 import Eventos.*;
 import Extras.*;
 import Utilidades.Configuration;
+import Utilidades.Format;
+import Utilidades.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
+import static Eventos.BlastStormListeners.*;
 
 public final class TLL2 extends JavaPlugin {
     public World world;
@@ -37,7 +40,7 @@ public final class TLL2 extends JavaPlugin {
             //tormentaTick();
             getCommand("thelastlife").setExecutor(new ComandosUsuarios());
             getCommand("tllstaff").setExecutor(new ComandosStaff());
-        } catch (Exception e){
+        } catch (Exception e) {
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("######################################################");
@@ -56,22 +59,22 @@ public final class TLL2 extends JavaPlugin {
         getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "El Plugin se deshabilito correctamente!");
     }
 
-    public void cargarEventos(){
+    public void cargarEventos() {
         getServer().getPluginManager().registerEvents(new alUsarTotem(this), this);
-        getServer().getPluginManager().registerEvents(new AlEntrar(this),this);
+        getServer().getPluginManager().registerEvents(new AlEntrar(this), this);
         getServer().getPluginManager().registerEvents(new Comer(this), this);
         getServer().getPluginManager().registerEvents(new EnderPearlEvent(this), this);
-        getServer().getPluginManager().registerEvents(new Dormir(this),this);
-        getServer().getPluginManager().registerEvents(new GhastExplosion(this),this);
-        getServer().getPluginManager().registerEvents(new DanoSinEnieEvento(this),this);
-       // getServer().getPluginManager().registerEvents(new BlastStorm(),this);
+        getServer().getPluginManager().registerEvents(new Dormir(this), this);
+        getServer().getPluginManager().registerEvents(new GhastExplosion(this), this);
+        getServer().getPluginManager().registerEvents(new DanoSinEnieEvento(this), this);
+        // getServer().getPluginManager().registerEvents(new BlastStorm(),this);
         getServer().getPluginManager().registerEvents(new PlayerEvents(), this);
-        getServer().getPluginManager().registerEvents(new SpawnListeners(this),this);
+        getServer().getPluginManager().registerEvents(new SpawnListeners(this), this);
         getServer().getPluginManager().registerEvents(new SpawnerListeners(this), this);
         getServer().getPluginManager().registerEvents(new EntityListeners(this), this);
-        getServer().getPluginManager().registerEvents(new BlastStormListeners(), this);
-        getServer().getPluginManager().registerEvents(new BlocksListeners(this),this);
-        getServer().getPluginManager().registerEvents(new MobsTeleports(this),this);
+        getServer().getPluginManager().registerEvents(new BlastStormListeners(this), this);
+        getServer().getPluginManager().registerEvents(new BlocksListeners(this), this);
+        getServer().getPluginManager().registerEvents(new MobsTeleports(this), this);
     }
     /*public void tormentaTick(){
         if(world.getWeatherDuration() != 0) {
@@ -95,6 +98,5 @@ public final class TLL2 extends JavaPlugin {
     }
 
      */
-
 
 }

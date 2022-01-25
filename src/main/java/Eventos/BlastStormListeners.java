@@ -16,6 +16,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
+import tlldos.tll2.TLL2;
 
 import java.util.Objects;
 import java.util.Random;
@@ -25,18 +26,17 @@ import static Utilidades.Format.prefix;
 
 public class BlastStormListeners implements Listener {
 
-    private static BossBar bossBar;
+    private TLL2 plugin;
+    public static BossBar bossBar;
     private static Integer TaskBossBarID = 0;
 
-
-    public static void createBossBar() {
-        if (bossBar == null) {
-            bossBar = Bukkit.createBossBar(Format.format("&f♥        &6&lBlast Storm: " + getTime() +  "        &f♥"), BarColor.YELLOW, BarStyle.SEGMENTED_6);
-        }
-        TaskBossBarID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Utils.getPlugin(), () -> {
-            bossBar.setTitle(Format.format("&f♥        &6&lBlast Storm: " + getTime() +  "        &f♥"));
-        }, 0L, 20L);
+    public BlastStormListeners(TLL2 plugin){
+        this.plugin = plugin;
+        bossBar = Bukkit.createBossBar(Format.format("&f♥        &6&lBlast Storm: " + getTime() +  "        &f♥"), BarColor.YELLOW, BarStyle.SEGMENTED_6);
     }
+
+
+
     @EventHandler
     public void onBlastStormStart(StartBlastStormEvent e) {
         int tierLevel = new Random().nextInt(3) + 1;
@@ -46,7 +46,7 @@ public class BlastStormListeners implements Listener {
             bossBar.setVisible(true);
             bossBar.addPlayer(player);
         });
-        createBossBar();
+
 
 
         World world = Utils.getWorld();
@@ -62,6 +62,7 @@ public class BlastStormListeners implements Listener {
     }
     @EventHandler
     public void onBlastStormEnd(StopBlastStormEvent e){
+
         Bukkit.getScheduler().cancelTask(TaskBossBarID);
         TaskBossBarID = null;
         //Weather clear y lo demas
@@ -83,10 +84,8 @@ public class BlastStormListeners implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        if (Utils.getWorld().hasStorm()) {
-            bossBar.addPlayer(e.getPlayer());
-        }
-
+        var p = e.getPlayer();
+        bossBar.addPlayer(p);
     }
     @EventHandler
     public void onQuit(PlayerQuitEvent e){
@@ -106,7 +105,7 @@ public class BlastStormListeners implements Listener {
 
             int days = Utils.getDay();
 
-            int time = world.isThundering() ? world.getWeatherDuration() / 20 + days * 18000 : days * 18000;
+            int time = world.isThundering() ? world.getWeatherDuration() / 20 + days * 1800 : days * 1800;
 
             if (time >= Integer.MAX_VALUE) {
                 Bukkit.getConsoleSender().sendMessage("El tiempo de la tormenta ha superado el tiempo maximo.");

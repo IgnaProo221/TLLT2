@@ -21,6 +21,7 @@ import java.util.*;
 
 import static Extras.Items.createFragmentoSangre;
 import static Utilidades.Format.format;
+import static Utilidades.Format.prefix;
 
 public class EntityListeners implements Listener {
     private final TLL2 plugin;
@@ -69,14 +70,27 @@ public class EntityListeners implements Listener {
     @EventHandler
     public void damageEntity(EntityDamageByEntityEvent event) {
 
+        Random random = new Random();
+        int lifestealpercentage = random.nextInt(100);
         var entity = event.getEntity();
         var damager = event.getDamager();
         if(damager instanceof Player pa){
-            if(pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
+
+            if(pa.getInventory().getItemInMainHand().getItemMeta() != null){
+                return;
+            }else if(pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
                 if(pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4006){
                     entity.setFreezeTicks(400);
-                }else{
-                    return;
+                }else if(pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4010){
+                    if(lifestealpercentage > 90) {
+                        if (pa.hasCooldown(Material.NETHERITE_SWORD)) {
+                            return;
+                        } else {
+                            pa.setHealth(pa.getHealth() + 2);
+                            pa.sendMessage(prefix(), format("&c¡Tu Bloodstained Saber te a curado por 1 corazon!"));
+                            pa.setCooldown(Material.NETHERITE_SWORD, 400);
+                        }
+                    }
                 }
             }else{
                 return;
@@ -103,7 +117,7 @@ public class EntityListeners implements Listener {
                 var vex = (Vex) damager;
                 if (vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_EXPLOSIVE"), PersistentDataType.STRING)) {
                     event.setCancelled(true);
-                    p.getLocation().getWorld().createExplosion(p.getLocation(), 5, false, true);
+                    p.getLocation().getWorld().createExplosion(vex,5, false, true);
                 }
                 if (vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_SCIENTIST"), PersistentDataType.STRING)) {
                     p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 800, 0, true, false, true));
@@ -224,9 +238,9 @@ public class EntityListeners implements Listener {
             var shulker = (Entity)shooter;
             if(shulker.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"DIMEN_SHULKER"), PersistentDataType.STRING)){
                 if (hitblock != null) {
-                    hitblock.getLocation().createExplosion(2, false, true);
+                    hitblock.getLocation().createExplosion(shulker,2, false, true);
                 } else if (entity != null) {
-                    entity.getLocation().createExplosion(2, false, true);
+                    entity.getLocation().createExplosion(shulker,2, false, true);
                 }
             }
             }
@@ -235,21 +249,21 @@ public class EntityListeners implements Listener {
             var skeleton = (Entity) shooter;
             if (skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "IGNITED_SKELETON"), PersistentDataType.STRING)) {
                 if (hitblock != null) {
-                    hitblock.getLocation().createExplosion(2, false, true);
+                    hitblock.getLocation().createExplosion(skeleton,2, false, true);
                     projectile.remove();
                 } else if (entity != null) {
-                    entity.getLocation().createExplosion(2, false, true);
+                    entity.getLocation().createExplosion(skeleton,2, false, true);
                     projectile.remove();
                 }
             }
 
             if (skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_SKELETON"), PersistentDataType.STRING)) {
                 if (hitblock != null) {
-                    hitblock.getLocation().createExplosion(3, false, true);
+                    hitblock.getLocation().createExplosion(skeleton,3, false, true);
                     hitblock.getLocation().getWorld().strikeLightning(hitblock.getLocation());
                     projectile.remove();
                 } else if (entity != null) {
-                    entity.getLocation().createExplosion(3,false, true);
+                    entity.getLocation().createExplosion(skeleton,3,false, true);
                     entity.getLocation().getWorld().strikeLightning(entity.getLocation());
                     projectile.remove();
                 }
@@ -267,10 +281,10 @@ public class EntityListeners implements Listener {
             var pillager = (Entity) shooter;
             if (pillager.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "OVERRATED_PILLAGER"), PersistentDataType.STRING)) {
                 if (hitblock != null) {
-                    hitblock.getLocation().createExplosion(2, false, true);
+                    hitblock.getLocation().createExplosion(pillager,2, false, true);
                     projectile.remove();
                 } else if (entity != null) {
-                    entity.getLocation().createExplosion(2, false, true);
+                    entity.getLocation().createExplosion(pillager,2, false, true);
                     projectile.remove();
                 }
             }
@@ -279,9 +293,9 @@ public class EntityListeners implements Listener {
             var blaze = (Entity) shooter;
             if (blaze.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE"), PersistentDataType.STRING)) {
                 if (hitblock != null) {
-                    hitblock.getLocation().createExplosion(3, false, true);
+                    hitblock.getLocation().createExplosion(blaze,3, false, true);
                 } else if (entity != null) {
-                    entity.getLocation().createExplosion(3, false, true);
+                    entity.getLocation().createExplosion(blaze,3, false, true);
                     entity.setFireTicks(2400);
                 }
             }
@@ -338,7 +352,7 @@ public class EntityListeners implements Listener {
         if(e instanceof Bat){
             var bat = (Bat)e;
             if(bat.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXPLOSIVE_BAT"), PersistentDataType.STRING)){
-                bat.getLocation().createExplosion(8, false, true);
+                bat.getLocation().createExplosion(bat, 8, false, true);
             }
         }
     }

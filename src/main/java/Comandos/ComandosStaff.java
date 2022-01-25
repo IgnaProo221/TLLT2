@@ -77,7 +77,14 @@ public class ComandosStaff implements CommandExecutor{
                     pa.playSound(pa.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
                     pa.sendMessage(format(prefix + var0));
                 }
+
+                case "resetHealth": {
+                    pa.playSound(pa.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
+                    pa.sendMessage(format(prefix + "&eHas Reiniciado tu Vida Correctamente!"));
+                    pa.setMaxHealth(20);
+                }
                 break;
+
                 case "totemsclear":
                     try {
                         TotemsBar.resetAll();
@@ -128,8 +135,20 @@ public class ComandosStaff implements CommandExecutor{
                         pa.getInventory().addItem(Items.CataclysPear());
                         pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
+                    if (args[1].equalsIgnoreCase("BLOOD_SABER")) {
+                        pa.getInventory().addItem(Items.bloodSaber());
+                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }
                     if (args[1].equalsIgnoreCase("BERSERKER_TOTEM")) {
                         pa.getInventory().addItem(Items.ToteBeserk());
+                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }
+                    if (args[1].equalsIgnoreCase("CRYSTAL_HEART")) {
+                        pa.getInventory().addItem(Items.crystalHeart());
+                        pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }
+                    if (args[1].equalsIgnoreCase("DISCORD")) {
+                        pa.getInventory().addItem(Items.varaDis());
                         pa.sendMessage(prefix + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                     if (args[1].equalsIgnoreCase("CLOUDY_MARSH")) {
