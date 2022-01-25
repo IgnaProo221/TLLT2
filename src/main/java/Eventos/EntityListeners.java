@@ -1,5 +1,6 @@
 package Eventos;
 
+import Utilidades.Format;
 import Utilidades.Mobs;
 import Utilidades.Utils;
 import org.bukkit.Bukkit;
@@ -21,7 +22,6 @@ import java.util.*;
 
 import static Extras.Items.createFragmentoSangre;
 import static Utilidades.Format.format;
-import static Utilidades.Format.prefix;
 
 public class EntityListeners implements Listener {
     private final TLL2 plugin;
@@ -87,7 +87,7 @@ public class EntityListeners implements Listener {
                             return;
                         } else {
                             pa.setHealth(pa.getHealth() + 2);
-                            pa.sendMessage(prefix(), format("&c¡Tu Bloodstained Saber te a curado por 1 corazon!"));
+                            pa.sendMessage(Format.PREFIX, format("&c¡Tu Bloodstained Saber te a curado por 1 corazon!"));
                             pa.setCooldown(Material.NETHERITE_SWORD, 400);
                         }
                     }

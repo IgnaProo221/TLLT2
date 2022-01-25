@@ -44,7 +44,7 @@ public class EventosItems {
     }
     public static void crystalHealthup(Player p){
         try {
-            p.sendMessage(prefix(), format("&c¡Has aumentado tu Vida Maxima!"));
+            p.sendMessage(Format.PREFIX, format("&c¡Has aumentado tu Vida Maxima!"));
             p.setMaxHealth(p.getMaxHealth() + 2);
             p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10.0F, -1.0F);
         }catch (Exception e){
