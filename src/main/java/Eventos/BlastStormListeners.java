@@ -15,6 +15,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.weather.ThunderChangeEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
 import java.util.Objects;
@@ -31,7 +32,6 @@ public class BlastStormListeners implements Listener {
     public static void createBossBar() {
         if (bossBar == null) {
             bossBar = Bukkit.createBossBar(Format.format("&f♥        &6&lBlast Storm: " + getTime() +  "        &f♥"), BarColor.YELLOW, BarStyle.SEGMENTED_6);
-            Bukkit.getLogger().info(BlastStormListeners::getTime);
         }
 
         TaskBossBarID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Utils.getPlugin(), () -> {
@@ -63,10 +63,10 @@ public class BlastStormListeners implements Listener {
     }
     @EventHandler
     public void onBlastStormEnd(StopBlastStormEvent e){
+        Bukkit.getOnlinePlayers().forEach(bossBar::removePlayer);
+
         Bukkit.getScheduler().cancelTask(TaskBossBarID);
         TaskBossBarID = null;
-        //Weather clear y lo demas
-        Bukkit.getOnlinePlayers().forEach(bossBar::removePlayer);
     }
 
     private static String getTime(){
@@ -84,14 +84,14 @@ public class BlastStormListeners implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        if (Utils.getWorld().getWeatherDuration() > 0 ) {
+        if (Utils.getWorld().getWeatherDuration() > 0 && bossBar != null) {
             bossBar.addPlayer(e.getPlayer());
         }
 
     }
     @EventHandler
     public void onQuit(PlayerQuitEvent e){
-        if(bossBar.getPlayers().contains(e.getPlayer())){
+        if(bossBar != null && bossBar.getPlayers().contains(e.getPlayer())){
             bossBar.removePlayer(e.getPlayer());
         }
     }
@@ -127,7 +127,11 @@ public class BlastStormListeners implements Listener {
 
     @EventHandler //no entiendo para que es esto pero ok
     public void setBlastStorm(WeatherChangeEvent e) {
-        if (e.toWeatherState()) {
+        Bukkit.getLogger().info("asd");
+
+        if(e.toWeatherState()){
+            Bukkit.getLogger().info("asd1");
+
             Random random = new Random();
             int chance = 2 * Utils.getDay() - 1;
 
@@ -143,7 +147,13 @@ public class BlastStormListeners implements Listener {
             }else{
                 e.setCancelled(true);
             }
-        }else if(!e.toWeatherState()){
+        }
+    }
+
+    @EventHandler
+    public void onThunderChange(ThunderChangeEvent e){
+        if(!e.toThunderState()){
+            Bukkit.getLogger().info("asd2");
             for(Player players : Bukkit.getOnlinePlayers()) {
                 bossBar.removePlayer(players);
                 players.sendMessage(Format.PREFIX, format("&6&lLos cielos se despejaron... por ahora."));
@@ -152,6 +162,7 @@ public class BlastStormListeners implements Listener {
             }
             bossBar.setVisible(false);
             Utils.getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true);
+
             StopBlastStormEvent event = new StopBlastStormEvent(StopBlastStormEvent.Cause.NATURAL);
             Bukkit.getPluginManager().callEvent(event);
         }

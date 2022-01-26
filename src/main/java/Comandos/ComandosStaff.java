@@ -82,6 +82,8 @@ public class ComandosStaff implements CommandExecutor{
                         s.getPluginManager().callEvent(start);
                     }
                     if(args[1].equalsIgnoreCase("blackStormEnd")){
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "weather clear");
+
                         StopBlastStormEvent event = new StopBlastStormEvent(StopBlastStormEvent.Cause.COMMAND);
                         s.getPluginManager().callEvent(event);
                     }
