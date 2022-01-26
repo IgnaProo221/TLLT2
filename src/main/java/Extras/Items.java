@@ -154,4 +154,59 @@ public class Items {
         return falsw;
     }
 
+    public static ItemStack bloodSaber(){
+        ItemStack bloodsa = new ItemStack(Material.NETHERITE_SWORD);
+        ItemMeta meta = bloodsa.getItemMeta();
+        meta.setDisplayName(format("&c&lBloodstained Saber"));
+        meta.setUnbreakable(true);
+        meta.setCustomModelData(4010);
+        List<String> lore = new ArrayList<>();
+        lore.add(format(""));
+        lore.add(format("&6&lHABILIDAD: &eLifesteal"));
+        lore.add(format("&7La Espada tiene un Chance de robar vida al"));
+        lore.add(format("&7golpear una Entidad"));
+        lore.add(format(""));
+        lore.add(format("&c¡Al Hacer esto la Espada se pondra en Cooldown!"));
+        meta.setLore(lore);
+        bloodsa.setItemMeta(meta);
+        return bloodsa;
+    }
+
+    public static ItemStack crystalHeart(){
+        ItemStack crysher = new ItemStack(Material.RED_DYE);
+        ItemMeta meta = crysher.getItemMeta();
+        meta.setCustomModelData(4069);
+        meta.setDisplayName(format("&cCrystal Heart"));
+        List<String> lore = new ArrayList<>();
+        lore.add(format(""));
+        lore.add(format("&7Rumores dicen que los Corazones de Cristal"));
+        lore.add(format("&7son Objetos magicos capaz de volverte mas Resistente"));
+        lore.add(format("&7pero tienen un Limite."));
+        meta.setLore(lore);
+        crysher.setItemMeta(meta);
+        return crysher;
+    }
+
+    public static ItemStack varaDis(){
+        ItemStack varadiscord = new ItemStack(Material.STICK);
+        ItemMeta meta = varadiscord.getItemMeta();
+        meta.setDisplayName(format("&d&lVara de la Discordia"));
+        meta.setUnbreakable(true);
+        meta.setCustomModelData(5002);
+        List<String> lore = new ArrayList<>();
+        lore.add(format(""));
+        lore.add(format("&6&lHABILIDAD: Discordia Absoluta"));
+        lore.add(format("&7Otorga Buffs a Jugadores Alrededor tuyo"));
+        lore.add(format("&7(y a ti Mismo)"));
+        lore.add(format(""));
+        lore.add(format("&6&lBUFFS:"));
+        lore.add(format("&7Fuerza III, Speed II, Regeneracion II, Resistencia I"));
+        lore.add(format("&7Resistencia al Fuego y Health Boost II"));
+        lore.add(format("&71 minuto"));
+        lore.add(format(""));
+        meta.setLore(lore);
+        varadiscord.setItemMeta(meta);
+        return varadiscord;
+    }
+
 }

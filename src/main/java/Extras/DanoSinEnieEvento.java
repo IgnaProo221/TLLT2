@@ -19,43 +19,14 @@ public class DanoSinEnieEvento implements Listener{
     public void cancelledDamage(EntityDamageEvent e) {
         Entity entity = e.getEntity();
 
+        if(!(entity instanceof Player)){
+            if(e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) || e.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)){
+                e.setCancelled(true);
+            }
+        }
 
         if(entity instanceof Blaze || entity instanceof Enderman){
             if(e.getCause().equals(EntityDamageEvent.DamageCause.DROWNING)){
-                e.setCancelled(true);
-            }
-        }
-        if(entity instanceof Wither){
-            if(e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) || e.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)){
-                e.setCancelled(true);
-            }
-        }
-
-        if(entity instanceof Skeleton){
-            if(e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) || e.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)){
-                if(entity.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "IGNITED_SKELETON"), PersistentDataType.STRING)){
-                 e.setCancelled(true);
-                }
-            }
-        }
-
-        if(entity instanceof Pillager){
-            if(e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) || e.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)){
-                if(entity.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "OVERRATED_PILLAGER"), PersistentDataType.STRING)){
-                    e.setCancelled(true);
-                }
-            }
-        }
-
-
-        if (entity instanceof Ghast) {
-            if(e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) || e.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)){
-                e.setCancelled(true);
-            }
-        }
-
-        if (entity instanceof Bat) {
-            if(e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) || e.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)){
                 e.setCancelled(true);
             }
         }
@@ -65,11 +36,11 @@ public class DanoSinEnieEvento implements Listener{
 
 
     @EventHandler
-    public void danoProdos(EntityDamageEvent e){
+    public void danoProdos(EntityDamageEvent e) {
            if(e.isCancelled()){
                return;
            }
-           if(e.getEntity() instanceof Player){
+           if (e.getEntity() instanceof Player) {
                Player p = (Player)e.getEntity();
                if(!e.isCancelled()) {
                    if(p.getLastDamageCause() instanceof EntityDamageByEntityEvent){ 

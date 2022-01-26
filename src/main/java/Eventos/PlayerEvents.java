@@ -26,6 +26,28 @@ public class PlayerEvents implements Listener {
         }
 
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if(p.getInventory().getItemInMainHand().equals(Items.crystalHeart())){
+                if(p.hasCooldown(Material.RED_DYE)){
+                    event.setCancelled(true);
+                }else{
+                    EventosItems.crystalHealthup(p);
+                    p.getInventory().removeItem(Items.crystalHeart());
+                    p.getInventory().remove(Material.RED_DYE);
+                }
+            }
+        }
+        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if(p.getInventory().getItemInMainHand().equals(Items.varaDis())){
+                if(p.hasCooldown(Material.STICK)){
+                    event.setCancelled(true);
+                }else{
+                    EventosItems.discordxd(p);
+                    p.setCooldown(Material.STICK, 12000);
+                }
+            }
+        }
+
+        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (p.getInventory().getItemInMainHand().equals(Items.termometroItem())) {
                 try {
                     if (p.hasCooldown(Material.AMETHYST_SHARD)) {
