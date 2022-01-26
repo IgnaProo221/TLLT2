@@ -21,7 +21,6 @@ import java.util.Objects;
 import java.util.Random;
 
 import static Utilidades.Format.format;
-import static Utilidades.Format.prefix;
 
 public class BlastStormListeners implements Listener {
 
@@ -32,7 +31,9 @@ public class BlastStormListeners implements Listener {
     public static void createBossBar() {
         if (bossBar == null) {
             bossBar = Bukkit.createBossBar(Format.format("&f♥        &6&lBlast Storm: " + getTime() +  "        &f♥"), BarColor.YELLOW, BarStyle.SEGMENTED_6);
+            Bukkit.getLogger().info(BlastStormListeners::getTime);
         }
+
         TaskBossBarID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Utils.getPlugin(), () -> {
             bossBar.setTitle(Format.format("&f♥        &6&lBlast Storm: " + getTime() +  "        &f♥"));
         }, 0L, 20L);
@@ -41,13 +42,13 @@ public class BlastStormListeners implements Listener {
     public void onBlastStormStart(StartBlastStormEvent e) {
         int tierLevel = new Random().nextInt(3) + 1;
 
+        createBossBar();
+
         Bukkit.getOnlinePlayers().forEach(player -> {
             e.addPotionTiers(player, tierLevel);
             bossBar.setVisible(true);
             bossBar.addPlayer(player);
         });
-        createBossBar();
-
 
         World world = Utils.getWorld();
 
@@ -69,7 +70,7 @@ public class BlastStormListeners implements Listener {
     }
 
     private static String getTime(){
-        if(Utils.getWorld().hasStorm()) {
+        if(Utils.getWorld().getWeatherDuration() > 0){
             long segundos = (long) (Utils.getWorld().getWeatherDuration() / 20);
             long hours = segundos / 3600L;
             long minutes = segundos % 3600L / 60L;
@@ -83,7 +84,7 @@ public class BlastStormListeners implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        if (Utils.getWorld().hasStorm()) {
+        if (Utils.getWorld().getWeatherDuration() > 0 ) {
             bossBar.addPlayer(e.getPlayer());
         }
 
@@ -145,7 +146,7 @@ public class BlastStormListeners implements Listener {
         }else if(!e.toWeatherState()){
             for(Player players : Bukkit.getOnlinePlayers()) {
                 bossBar.removePlayer(players);
-                players.sendMessage(prefix(), format("&6&lLos cielos se despejaron... por ahora."));
+                players.sendMessage(Format.PREFIX, format("&6&lLos cielos se despejaron... por ahora."));
                 players.playSound(players.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 10.0F, 0.5F);
 
             }

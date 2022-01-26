@@ -5,16 +5,16 @@ import Comandos.ComandosUsuarios;
 import Eventos.*;
 import Extras.*;
 import Utilidades.Configuration;
+import Utilidades.Mobs;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class TLL2 extends JavaPlugin {
     public World world;
-
     private Configuration config;
-
 
     @Override
     public void onEnable() {
@@ -57,44 +57,26 @@ public final class TLL2 extends JavaPlugin {
     }
 
     public void cargarEventos(){
-        getServer().getPluginManager().registerEvents(new alUsarTotem(this), this);
-        getServer().getPluginManager().registerEvents(new AlEntrar(this),this);
-        getServer().getPluginManager().registerEvents(new Comer(this), this);
-        getServer().getPluginManager().registerEvents(new EnderPearlEvent(this), this);
-        getServer().getPluginManager().registerEvents(new Dormir(this),this);
-        getServer().getPluginManager().registerEvents(new GhastExplosion(this),this);
-        getServer().getPluginManager().registerEvents(new DanoSinEnieEvento(this),this);
-       // getServer().getPluginManager().registerEvents(new BlastStorm(),this);
-        getServer().getPluginManager().registerEvents(new PlayerEvents(), this);
-        getServer().getPluginManager().registerEvents(new SpawnListeners(this),this);
-        getServer().getPluginManager().registerEvents(new SpawnerListeners(this), this);
-        getServer().getPluginManager().registerEvents(new EntityListeners(this), this);
-        getServer().getPluginManager().registerEvents(new BlastStormListeners(), this);
-        getServer().getPluginManager().registerEvents(new BlocksListeners(this),this);
-        getServer().getPluginManager().registerEvents(new MobsTeleports(this),this);
+        registerListeners(
+                new alUsarTotem(this),
+                new Comer(this),
+                new EnderPearlEvent(this),
+                new Dormir(this),
+                new GhastExplosion(this),
+                new DanoSinEnieEvento(this),
+                new PlayerEvents(),
+                new SpawnerListeners(this),
+                new SpawnListeners(this),
+                new EntityListeners(this),
+                new BlastStormListeners(),
+                new BlocksListeners(this),
+                new MobsTeleports(this)
+        );
     }
-    /*public void tormentaTick(){
-        if(world.getWeatherDuration() != 0) {
-            Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
-                @Override
-                public void run() {
-                    if (world.hasStorm()) {
-                        for(Player players : Bukkit.getOnlinePlayers()){
-                            long segundos = (long) (world.getWeatherDuration() / 20);
-                            long hours = segundos  / 3600L;
-                            long minutes = segundos % 3600L / 60L;
-                            long seconds = segundos % 60L;
-                            String time = String.format("%02d:%02d:%02d", hours, minutes, seconds);
 
-                            Muerte.tormenta.setTitle(ChatColor.translateAlternateColorCodes('&', "&f♥        &6&lBlast Storm: " + time +  "        &f♥"));
-                        }
-                    }
-                }
-            },0,20L);
+    private void registerListeners(Listener... listeners){
+        for(Listener listener : listeners){
+            getServer().getPluginManager().registerEvents(listener, this);
         }
     }
-
-     */
-
-
 }

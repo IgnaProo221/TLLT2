@@ -28,9 +28,9 @@ import java.time.temporal.ChronoUnit;
 public class Utils {
 
     private static final Plugin plugin = TLL2.getPlugin(TLL2.class);
-    private static final World world = Bukkit.getWorld("world");
+
     public static World getWorld(){
-        return world;
+        return Bukkit.getWorld("world");
     }
 
     public static Plugin getPlugin() {
@@ -43,7 +43,7 @@ public class Utils {
     private static int Day() {
         LocalDate FechaActual = LocalDate.now();
 
-        LocalDate FechaInicio = LocalDate.parse("2022-01-23");
+        LocalDate FechaInicio = LocalDate.parse("2022-01-24");
 
         return (int) ChronoUnit.DAYS.between(FechaInicio, FechaActual);
     }

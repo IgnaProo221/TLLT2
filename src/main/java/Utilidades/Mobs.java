@@ -155,7 +155,7 @@ public class Mobs implements Listener{
         self.setCustomName(format("&4&lBlighted Zombie"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
         self.setHealth(50);
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(17);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(21);
         self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 1, false, false, false));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_ZOMBIE"), PersistentDataType.STRING, "BLIGHTED_ZOMBIE");
     }
@@ -188,8 +188,7 @@ public class Mobs implements Listener{
     public static void blightedCreeper(Creeper self){
         self.setCustomName(format("&c&lBlighted Creeper"));
         self.setExplosionRadius(8);
-        self.setPowered(true);
-        self.setFuseTicks(20);
+        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 1, false, false, false));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_CREEPER"), PersistentDataType.STRING, "BLIGHTED_CREEPER");
     }
 
@@ -206,7 +205,7 @@ public class Mobs implements Listener{
         self.setCustomName(format("&5&lBlighted Enderman"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(75);
         self.setHealth(75);
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(15);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_ENDERMAN"), PersistentDataType.STRING, "BLIGHTED_ENDERMAN");
         CraftEnderman craft = ((CraftEnderman) self);
         EntityEnderman entityEnderman = craft.getHandle();
