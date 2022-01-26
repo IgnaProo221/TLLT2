@@ -65,11 +65,11 @@ public class DanoSinEnieEvento implements Listener{
 
 
     @EventHandler
-    public void danoProdos(EntityDamageEvent e){
+    public void danoProdos(EntityDamageEvent e) {
            if(e.isCancelled()){
                return;
            }
-           if(e.getEntity() instanceof Player){
+           if (e.getEntity() instanceof Player) {
                Player p = (Player)e.getEntity();
                if(!e.isCancelled()) {
                    if(p.getLastDamageCause() instanceof EntityDamageByEntityEvent){ 

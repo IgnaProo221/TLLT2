@@ -1,6 +1,8 @@
 package Extras;
 
+import org.bukkit.EntityEffect;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -18,15 +20,15 @@ public class MobsTeleports implements Listener {
     public MobsTeleports(TLL2 plugin){
         this.plugin = plugin;
     }
-    public boolean teleport(Entity e, int locX, int locY, int locZ, World world) {
+
+    public void teleport(Entity e, int locX, int locY, int locZ, World world) {
         for (int i = 0; i < 64; ++i) {
             if (eq(e, locX, locY, locZ, world)) {
-                return true;
+                return;
             }
         }
-
-        return false;
     }
+
     private boolean eq(Entity e, int locX, int locY, int locZ, World world) {
         Random random = new Random();
 
@@ -46,22 +48,25 @@ public class MobsTeleports implements Listener {
 
     @EventHandler
     public void creeperTp(EntityDamageEvent event){
-        Random random   = new Random();
+        Random random = new Random();
+
         int tp = random.nextInt(100);
-        if(event.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION){
-            if(event.getEntity() instanceof Creeper c){
+
+        if (event.getCause() != EntityDamageEvent.DamageCause.VOID) {
+            if (event.getEntity() instanceof Creeper c) {
+
                 int locX = c.getLocation().getBlockX();
                 int locY = c.getLocation().getBlockY();
                 int locZ = c.getLocation().getBlockZ();
-                teleport(c,locX,locY,locZ, c.getWorld());
-            }
-        }else if(event.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK){
-            if(event.getEntity() instanceof Creeper c){
-                if(tp > 80){
-                    int locX = c.getLocation().getBlockX();
-                    int locY = c.getLocation().getBlockY();
-                    int locZ = c.getLocation().getBlockZ();
-                    teleport(c,locX,locY,locZ, c.getWorld());
+
+
+                if (tp < 60) {
+
+                    c.playEffect(EntityEffect.TELEPORT_ENDER);
+
+                    c.getWorld().playSound(c.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 10.0F, 1.0F);
+
+                    teleport(c, locX, locY, locZ, c.getWorld());
                 }
             }
         }
