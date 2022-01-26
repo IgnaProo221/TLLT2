@@ -113,10 +113,10 @@ public class EntityListeners implements Listener {
                     }
                 }
             }
-            if (damager instanceof Vex) {
-                var vex = (Vex) damager;
+            if (damager instanceof Vex vex) {
                 if (vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_EXPLOSIVE"), PersistentDataType.STRING)) {
                     event.setCancelled(true);
+                    vex.remove();
                     p.getLocation().getWorld().createExplosion(vex,5, false, true);
                 }
                 if (vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_SCIENTIST"), PersistentDataType.STRING)) {
@@ -127,11 +127,29 @@ public class EntityListeners implements Listener {
                 if (vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_MECHA"), PersistentDataType.STRING)) {
                     p.getLocation().getWorld().strikeLightning(p.getLocation());
                 }
+                if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"CINDER"), PersistentDataType.STRING)){
+                    p.setFireTicks(1200);
+                }
+                if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"JENGU"), PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 300, 1, true, false, true));
+                }
+                if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"DJIIN"), PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 400, 1, true, false, true));
+                }
+                if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"GRUE"), PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 400, 0, true, false, true));
+                }
             }
             if(damager instanceof WitherSkeleton){
                 var witherskeleton = (WitherSkeleton)damager;
                 if(witherskeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SHATTER_GUARDIAN"), PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 2400, 3,true, true, true));
+                }
+            }
+            if(damager instanceof IronGolem ironGolem){
+                if(ironGolem.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"LAVA_GOLEM"),PersistentDataType.STRING)){
+                    p.setFireTicks(1200);
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,200,0, true, false, true));
                 }
             }
             if(damager instanceof Spider){
@@ -228,9 +246,9 @@ public class EntityListeners implements Listener {
 
         if(projectile instanceof WitherSkull){
             if (hitblock != null) {
-                hitblock.getLocation().createExplosion(projectile,1, false, true);
+                hitblock.getLocation().createExplosion(projectile,2, false, true);
             } else if (entity != null) {
-                entity.getLocation().createExplosion(projectile,1, false, true);
+                entity.getLocation().createExplosion(projectile,2, false, true);
             }
         }
 
@@ -340,6 +358,11 @@ public class EntityListeners implements Listener {
             if (spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "PLAGUE_SPIDER"), PersistentDataType.STRING)) {
                 var nube = e.getLocation().getWorld().spawn(e.getLocation(), AreaEffectCloud.class);
                 Mobs.plagueEntity(nube);
+            }
+        }
+        if(e instanceof IronGolem ironGolem){
+            if(ironGolem.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"LAVA_GOLEM"),PersistentDataType.STRING)){
+                ironGolem.getLocation().getBlock().setType(Material.LAVA);
             }
         }
         if(e instanceof Zombie){

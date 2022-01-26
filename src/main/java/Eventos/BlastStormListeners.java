@@ -31,11 +31,11 @@ public class BlastStormListeners implements Listener {
 
     public static void createBossBar() {
         if (bossBar == null) {
-            bossBar = Bukkit.createBossBar(Format.format("&f♥        &6&lBlast Storm: " + getTime() +  "        &f♥"), BarColor.YELLOW, BarStyle.SEGMENTED_6);
+            bossBar = Bukkit.createBossBar(Format.format("&f♥         &6&lBlast Storm: " + getTime() +  "         &f♥"), BarColor.YELLOW, BarStyle.SEGMENTED_6);
         }
 
         TaskBossBarID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Utils.getPlugin(), () -> {
-            bossBar.setTitle(Format.format("&f♥        &6&lBlast Storm: " + getTime() +  "        &f♥"));
+            bossBar.setTitle(Format.format("&f♥         &6&lBlast Storm: " + getTime() +  "         &f♥"));
         }, 0L, 20L);
     }
     @EventHandler
@@ -107,7 +107,7 @@ public class BlastStormListeners implements Listener {
 
             int days = Utils.getDay();
 
-            int time = world.isThundering() ? world.getWeatherDuration() / 20 + days * 18000 : days * 18000;
+            int time = world.isThundering() ? world.getWeatherDuration() / 20 + days * 1800 : days * 1800;
 
             if (time >= Integer.MAX_VALUE) {
                 Bukkit.getConsoleSender().sendMessage("El tiempo de la tormenta ha superado el tiempo maximo.");

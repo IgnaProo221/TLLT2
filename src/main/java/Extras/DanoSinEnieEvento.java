@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffectType;
 import tlldos.tll2.TLL2;
 
 public class DanoSinEnieEvento implements Listener{
@@ -62,46 +63,34 @@ public class DanoSinEnieEvento implements Listener{
     @EventHandler
     public void danoPro(EntityDamageEvent e){
         Entity entity = e.getEntity();
-        if(entity instanceof Player ){
-            if(e.getCause() == null){
-                return;
-            }
+        if(entity instanceof Player player){
             if(e.getEntity().getLastDamageCause() == null){
                 return;
             }
+            if(player.hasPotionEffect(PotionEffectType.UNLUCK)){
+                if(player.getPotionEffect(PotionEffectType.UNLUCK).getAmplifier() == 0){
+                    if(e.getCause() != EntityDamageEvent.DamageCause.SUICIDE || e.getCause() != EntityDamageEvent.DamageCause.THORNS || e.getCause() != EntityDamageEvent.DamageCause.POISON || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK){
+                        e.setDamage(e.getDamage() * 2);
+                    }
+                }else if(player.getPotionEffect(PotionEffectType.UNLUCK).getAmplifier() == 1){
+                    if(e.getCause() != EntityDamageEvent.DamageCause.SUICIDE || e.getCause() != EntityDamageEvent.DamageCause.THORNS || e.getCause() != EntityDamageEvent.DamageCause.POISON || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK){
+                        e.setDamage(e.getDamage() * 3);
+                    }
+                }else if(player.getPotionEffect(PotionEffectType.UNLUCK).getAmplifier() == 2){
+                    if(e.getCause() != EntityDamageEvent.DamageCause.SUICIDE || e.getCause() != EntityDamageEvent.DamageCause.THORNS || e.getCause() != EntityDamageEvent.DamageCause.POISON || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK){
+                        e.setDamage(e.getDamage() * 4);
+                    }
+                }else if(player.getPotionEffect(PotionEffectType.UNLUCK).getAmplifier() == 3){
+                    if(e.getCause() != EntityDamageEvent.DamageCause.SUICIDE || e.getCause() != EntityDamageEvent.DamageCause.THORNS || e.getCause() != EntityDamageEvent.DamageCause.POISON || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK){
+                        e.setDamage(e.getDamage() * 4);
+                    }
+                }
 
-            if(e.getCause() == EntityDamageEvent.DamageCause.DROWNING){
-                e.setDamage(100000);
-            }
-            if(e.getCause() == EntityDamageEvent.DamageCause.VOID){
-                e.setDamage(100000);
-            }
-            if(e.getCause() == EntityDamageEvent.DamageCause.CONTACT){
-                e.setDamage(100000);
-            }
-            if(e.getCause() == EntityDamageEvent.DamageCause.STARVATION){
-                e.setDamage(100000);
-            }
-            if(e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {
-                e.setDamage(e.getDamage() * 5);
-            }
-            if(e.getCause() == EntityDamageEvent.DamageCause.FALL) {
-                e.setDamage(e.getDamage() * 4);
-            }
-            if(e.getCause() == EntityDamageEvent.DamageCause.FIRE){
-                e.setDamage(e.getDamage() * 6);
-            }
-            if(e.getCause() == EntityDamageEvent.DamageCause.FREEZE){
-                e.setDamage(e.getDamage() * 10);
-            }
-            if(e.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION){
-                e.setDamage(e.getDamage() * 10);
-            }
-            if(e.getCause() == EntityDamageEvent.DamageCause.LAVA){
-                e.setDamage(e.getDamage() * 10);
-            }
-            if(e.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR){
-                e.setDamage(e.getDamage() * 10);
+
+            }else{
+                if(e.getCause() == EntityDamageEvent.DamageCause.FALL){
+                    e.setDamage(e.getDamage() * 6);
+                }
             }
         }
     }

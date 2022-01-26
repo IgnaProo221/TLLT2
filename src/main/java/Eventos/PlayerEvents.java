@@ -4,6 +4,7 @@ import Extras.EventosItems;
 import Extras.Items;
 import Extras.Sacrificios;
 import Utilidades.Warn;
+import io.papermc.paper.event.entity.ElderGuardianAppearanceEvent;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -81,5 +82,11 @@ public class PlayerEvents implements Listener {
     @EventHandler
     public void hambreAgotar(EntityExhaustionEvent e) {
         e.setExhaustion(e.getExhaustion() * 2);
+    }
+
+    @EventHandler
+    public void elderGuardianXd(ElderGuardianAppearanceEvent event){
+        var p = event.getAffectedPlayer();
+        p.setRemainingAir(0);
     }
 }

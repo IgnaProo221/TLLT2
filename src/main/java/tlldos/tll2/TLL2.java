@@ -70,7 +70,8 @@ public final class TLL2 extends JavaPlugin {
                 new EntityListeners(this),
                 new BlastStormListeners(),
                 new BlocksListeners(this),
-                new MobsTeleports(this)
+                new MobsTeleports(this),
+                new DropsListeners(this)
         );
     }
 
