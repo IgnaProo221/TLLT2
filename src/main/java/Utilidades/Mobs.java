@@ -7,6 +7,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.EnderMan;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.boss.BarColor;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftBee;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftEnderman;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftIronGolem;
@@ -204,7 +205,7 @@ public class Mobs implements Listener{
         self.setHealth(75);
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(30);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_ENDERMAN"), PersistentDataType.STRING, "BLIGHTED_ENDERMAN");
-        CraftEnderman craft = ((CraftEnderman) self);
+        /*CraftEnderman craft = ((CraftEnderman) self);
         EnderMan entityEnderman = craft.getHandle();
 
         try {
@@ -213,7 +214,7 @@ public class Mobs implements Listener{
         } catch (Exception e) {
             e.printStackTrace();
             Warn.Mutant(e);
-        }
+        }*/
 
     }
 
@@ -378,7 +379,34 @@ public class Mobs implements Listener{
     }
 
     public static void vortice(Creeper self){
+        self.setCustomName(format("&bVorticé"));
+        self.setExplosionRadius(40);
+        self.setMaxFuseTicks(10);
+        self.setFuseTicks(10);
+        self.setPowered(true);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
+        self.setHealth(50);
+        self.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(1.4);
+        self.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,Integer.MAX_VALUE, 0, false, false, false));
+    }
 
+    public static void cosmicSilver(Silverfish self){
+        self.setCustomName(format("&d&lCosmic Silverfish"));
+        self.setHealth(1);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20.0);
+        self.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(1.2);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"COSMIC_SILVERFISH"), PersistentDataType.STRING, "COSMIC_SILVERFISH");
+    }
+
+    public static void tyranyWither(Wither self){
+        self.setCustomName(format("&6&k||| &c&lTyrant Wither &6&k|||"));
+        self.setInvulnerableTicks(500);
+        self.getBossBar().setColor(BarColor.RED);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(500);
+        self.setHealth(500);
+        self.setRemoveWhenFarAway(true);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"TYRANT_WITHER"), PersistentDataType.STRING, "TYRANT_WITHER");
     }
 
 

@@ -63,21 +63,10 @@ public class SpawnListeners implements Listener {
             ItemMeta meta = ac.getItemMeta();
             meta.addEnchant(Enchantment.QUICK_CHARGE, 3, true);
             ac.setItemMeta(meta);
-
-            ItemStack coh = new ItemStack(Material.FIREWORK_ROCKET, 64);
-            FireworkMeta cacota = (FireworkMeta)coh.getItemMeta();
-            FireworkEffect.Builder builder = FireworkEffect.builder();
-            cacota.addEffect(builder.flicker(true).build());
-            cacota.addEffect(builder.withColor(Color.RED).build());
-            cacota.addEffect(builder.trail(true).build());
-            cacota.addEffect(builder.withFade(Color.WHITE).build());
-            coh.setItemMeta(cacota);
-
             pillager.setCustomName(format("&cPillager Generico Explosivo lol"));
             pillager.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
             pillager.setHealth(40);
             pillager.getEquipment().setItemInMainHand(ac);
-            pillager.getEquipment().setItemInOffHand(coh);
             pillager.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "OVERRATED_PILLAGER"), PersistentDataType.STRING, "OVERRATED_PILLAGER");
         }
 
