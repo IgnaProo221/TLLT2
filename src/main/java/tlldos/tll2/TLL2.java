@@ -64,7 +64,7 @@ public final class TLL2 extends JavaPlugin {
                 new Dormir(this),
                 new GhastExplosion(this),
                 new DanoSinEnieEvento(this),
-                new PlayerEvents(),
+                new PlayerEvents(this),
                 new SpawnerListeners(this),
                 new SpawnListeners(this),
                 new EntityListeners(this),

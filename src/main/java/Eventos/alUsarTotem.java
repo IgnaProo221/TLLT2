@@ -72,9 +72,9 @@ public class alUsarTotem implements Listener {
                         }
                     }
 
-                    if (p.getInventory().getItemInMainHand().equals(Items.ToteBeserk()) || p.getInventory().getItemInOffHand().equals(Items.ToteBeserk())) {
+                    if (p.getInventory().getItemInMainHand().equals(Items.totemBerserk()) || p.getInventory().getItemInOffHand().equals(Items.totemBerserk())) {
 
-                        if (p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING && !p.getInventory().getItemInMainHand().equals(Items.ToteBeserk()))
+                        if (p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING && !p.getInventory().getItemInMainHand().equals(Items.totemBerserk()))
                             return;
 
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);

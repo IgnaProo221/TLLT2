@@ -4,17 +4,14 @@ import Eventos.StartBlastStormEvent;
 import Eventos.StopBlastStormEvent;
 import Extras.Items;
 import Utilidades.Format;
-import Utilidades.Format;
 import Utilidades.TotemsBar;
 import Utilidades.Warn;
 import org.bukkit.*;
-import org.bukkit.boss.BossBar;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import tlldos.tll2.TLL2;
 
 
 import static Utilidades.Format.format;
@@ -114,7 +111,7 @@ public class ComandosStaff implements CommandExecutor{
                         return false;
                     }
                     if (args[1].equalsIgnoreCase("FUNGAL_CLUMPS")) {
-                        pa.getInventory().addItem(Items.FungaClu());
+                        pa.getInventory().addItem(Items.fungalClumps());
                         pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                     if (args[1].equalsIgnoreCase("WEIRD_DAGGER")) {
@@ -122,7 +119,7 @@ public class ComandosStaff implements CommandExecutor{
                         pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                     if (args[1].equalsIgnoreCase("CATACLYSM_PEARL")) {
-                        pa.getInventory().addItem(Items.CataclysPear());
+                        pa.getInventory().addItem(Items.cataclysmPearl());
                         pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                     if (args[1].equalsIgnoreCase("BLOOD_SABER")) {
@@ -130,7 +127,7 @@ public class ComandosStaff implements CommandExecutor{
                         pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                     if (args[1].equalsIgnoreCase("BERSERKER_TOTEM")) {
-                        pa.getInventory().addItem(Items.ToteBeserk());
+                        pa.getInventory().addItem(Items.totemBerserk());
                         pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                     if (args[1].equalsIgnoreCase("CRYSTAL_HEART")) {
@@ -142,11 +139,11 @@ public class ComandosStaff implements CommandExecutor{
                         pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                     if (args[1].equalsIgnoreCase("CLOUDY_MARSH")) {
-                        pa.getInventory().addItem(Items.CloudMarsh());
+                        pa.getInventory().addItem(Items.cloudMarsh());
                         pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                     if (args[1].equalsIgnoreCase("BLOOD_STONE")) {
-                        pa.getInventory().addItem(Items.BloodShard());
+                        pa.getInventory().addItem(Items.bloodShard());
                         pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                     if (args[1].equalsIgnoreCase("BLOOD_SHARD")) {
