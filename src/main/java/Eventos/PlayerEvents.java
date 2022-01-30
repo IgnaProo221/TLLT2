@@ -6,11 +6,16 @@ import Extras.Sacrificios;
 import Utilidades.Format;
 import Utilidades.ItemBuilder;
 import Utilidades.Warn;
+<<<<<<< HEAD
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.EntityType;
+=======
+import io.papermc.paper.event.entity.ElderGuardianAppearanceEvent;
+import org.bukkit.Material;
+>>>>>>> 9cab10ae0b401cb592c3f84ed1cdd85ae5d993b1
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -151,5 +156,11 @@ public class PlayerEvents implements Listener {
     @EventHandler
     public void hambreAgotar(EntityExhaustionEvent e) {
         e.setExhaustion(e.getExhaustion() * 2);
+    }
+
+    @EventHandler
+    public void elderGuardianXd(ElderGuardianAppearanceEvent event){
+        var p = event.getAffectedPlayer();
+        p.setRemainingAir(0);
     }
 }

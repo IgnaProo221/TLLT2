@@ -155,7 +155,7 @@ public class Mobs implements Listener{
         self.setCustomName(format("&4&lBlighted Zombie"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
         self.setHealth(50);
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(21);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(30);
         self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 1, false, false, false));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_ZOMBIE"), PersistentDataType.STRING, "BLIGHTED_ZOMBIE");
     }
@@ -196,7 +196,7 @@ public class Mobs implements Listener{
         self.setCustomName(format("&6&lBlighted Spider"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
         self.setHealth(50);
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(15);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(35);
         self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 1, false, false, false));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_SPIDER"), PersistentDataType.STRING, "BLIGHTED_SPIDER");
     }
@@ -205,7 +205,7 @@ public class Mobs implements Listener{
         self.setCustomName(format("&5&lBlighted Enderman"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(75);
         self.setHealth(75);
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(30);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_ENDERMAN"), PersistentDataType.STRING, "BLIGHTED_ENDERMAN");
         CraftEnderman craft = ((CraftEnderman) self);
         EntityEnderman entityEnderman = craft.getHandle();
@@ -244,6 +244,7 @@ public class Mobs implements Listener{
         self.setHealth(65);
         self.getEquipment().setItemInMainHand(es);
         self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_BRUTE"), PersistentDataType.STRING, "BLIGHTED_BRUTE");
     }
 
     public static void blightedPhantom(Phantom self){
@@ -348,10 +349,62 @@ public class Mobs implements Listener{
 
 
 
+    public static void cinder(Vex self){
+        self.setCustomName(format("&6&lCinder"));
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(8);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "CINDER"), PersistentDataType.STRING, "CINDER");
+    }
+    public static void jengu(Vex self){
+        self.setCustomName(format("&1&lJengu"));
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(8);
+        self.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(1.3);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "JENGU"), PersistentDataType.STRING, "JENGU");
+    }
+    public static void djiin(Vex self){
+        self.setCustomName(format("&f&lDjiin"));
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(8);
+        self.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK).setBaseValue(2.3);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DJIIN"), PersistentDataType.STRING, "DJIIN");
+    }
+    public static void grue(Vex self){
+        self.setCustomName(format("&8&lGrue"));
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(8);
+        self.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(1);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "GRUE"), PersistentDataType.STRING, "GRUE");
+    }
 
 
 
+    public static void lavaGolem(IronGolem self){
+        self.setCustomName(format("&6&lLava Golem"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(150);
+        self.setHealth(150);
+        self.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE,Integer.MAX_VALUE,0, false, false, false));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"LAVA_GOLEM"),PersistentDataType.STRING, "LAVA_GOLEM");
+        CraftIronGolem craft = ((CraftIronGolem) self);
+        EntityIronGolem entityGolem = craft.getHandle();
 
+        try {
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("bR");
+            gf.setAccessible(true);
+
+            Field tf = cl.getDeclaredField("bS");
+            tf.setAccessible(true);
+
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityGolem);
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityGolem);
+
+            goal.a(0, new PathfinderGoalMeleeAttack(entityGolem, 1.0D, true));
+            target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityGolem, EntityHuman.class, 10, true, false, null));
+
+            gf.setAccessible(false);
+            tf.setAccessible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Warn.Mutant(e);
+        }
+    }
 
 
 
@@ -391,7 +444,8 @@ public class Mobs implements Listener{
 
     public static void hiveMind(Creeper self){
         self.setCustomName(format("&6Hive Mind"));
-        self.setFuseTicks(10);
+        self.setMaxFuseTicks(1);
+        self.setFuseTicks(1);
         self.setExplosionRadius(1);
         self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 2, false, false, false));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HIVE_MIND"), PersistentDataType.STRING, "HIVE_MIND");

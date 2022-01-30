@@ -111,10 +111,8 @@ public class SpawnListeners implements Listener {
             blaze.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE"), PersistentDataType.STRING, "HELLFIRE");
         }
 
-        if (en instanceof Vex self) {
-
+        if (en instanceof Vex self && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPELL){
             this.spawnVexClass(self);
-
         }
         if (en instanceof Husk) {
             Location l = en.getLocation().clone();
@@ -212,11 +210,19 @@ public class SpawnListeners implements Listener {
 
         if (en instanceof Chicken self){
             self.remove();
-            if(self.getWorld().getLivingEntities().stream().filter(entity1 -> entity1 instanceof Vindicator).map(Vindicator.class::cast).collect(Collectors.toList()).size() < 10){
+            if(self.getWorld().getLivingEntities().stream().filter(entity1 -> entity1 instanceof Vindicator).map(Vindicator.class::cast).collect(Collectors.toList()).size() < 5){
                 var vindicator = (Vindicator)self.getLocation().getWorld().spawn(self.getLocation(), Vindicator.class);
             }
         }
-        if (en instanceof Slime) {
+
+        if (en instanceof Salmon self){
+            self.remove();
+            if(self.getWorld().getLivingEntities().stream().filter(entity1 -> entity1 instanceof PufferFish).map(PufferFish.class::cast).collect(Collectors.toList()).size() < 2){
+                var pufferfish = self.getLocation().getWorld().spawn(self.getLocation(), PufferFish.class);
+                pufferfish.setCustomName(format("&cPufferfish"));
+            }
+        }
+        if (en instanceof Slime && en.getWorld().getEnvironment() == World.Environment.NORMAL) {
             var slime = (Slime) en;
             if (e.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.SLIME_SPLIT)) {
                 slime.setCustomName(format("Freezing Slime"));
@@ -241,6 +247,12 @@ public class SpawnListeners implements Listener {
         }
         if(en instanceof Evoker self){
             evokerClass(self);
+        }
+        if(en instanceof Sheep self){
+            self.remove();
+            if(self.getWorld().getLivingEntities().stream().filter(entity1 -> entity1 instanceof Vex).map(Vex.class::cast).collect(Collectors.toList()).size() < 2){
+                elementalSpawn(self);
+            }
         }
 
         if(en instanceof PiglinBrute self){
@@ -304,7 +316,7 @@ public class SpawnListeners implements Listener {
 
     public void spawnWitherSkeleton(WitherSkeleton witherskeleton) {
 
-        int type = new Random().nextInt(2);
+        int type = new Random().nextInt(3);
 
         if (type == 1) {
             ItemStack caca = new ItemStack(Material.NETHERITE_SWORD);
@@ -328,8 +340,12 @@ public class SpawnListeners implements Listener {
             witherskeleton.getEquipment().setDropChance(EquipmentSlot.FEET, 0);
             witherskeleton.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
             witherskeleton.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SHATTER_GUARDIAN"), PersistentDataType.STRING, "SHATTER_GUARDIAN");
-        } else {
+        } else if(type == 2){
             Mobs.blightedWitherSkeleton(witherskeleton);
+        }else{
+            witherskeleton.remove();
+            var irongolem = (IronGolem)witherskeleton.getLocation().getWorld().spawn(witherskeleton.getLocation(),IronGolem.class);
+            Mobs.lavaGolem(irongolem);
         }
 
     }
@@ -484,6 +500,28 @@ Mobs.blightedEndermam(enderman);
             enderman.remove();
             var witherskeleton = enderman.getLocation().getWorld().spawn(enderman.getLocation(), WitherSkeleton.class);
             Mobs.riftedWither(witherskeleton);
+        }
+    }
+
+    public void elementalSpawn(Sheep sheep){
+        Random random = new Random();
+        int vexes = random.nextInt(4);
+        if(vexes == 1){
+            sheep.remove();
+            var vex = sheep.getLocation().getWorld().spawn(sheep.getLocation(), Vex.class);
+            Mobs.cinder(vex);
+        }else if(vexes == 2){
+            sheep.remove();
+            var vex = sheep.getLocation().getWorld().spawn(sheep.getLocation(), Vex.class);
+            Mobs.jengu(vex);
+        }else if(vexes == 3){
+            sheep.remove();
+            var vex = sheep.getLocation().getWorld().spawn(sheep.getLocation(), Vex.class);
+            Mobs.djiin(vex);
+        }else{
+            sheep.remove();
+            var vex = sheep.getLocation().getWorld().spawn(sheep.getLocation(), Vex.class);
+            Mobs.grue(vex);
         }
     }
 
