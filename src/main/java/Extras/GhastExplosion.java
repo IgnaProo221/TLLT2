@@ -33,8 +33,10 @@ public class GhastExplosion implements Listener{
                 fireball.setYield(7);
             }else if(ghast.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"DIMEN_GHOST"), PersistentDataType.STRING)){
                 fireball.setYield(9);
+            }else if(ghast.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"FLYING_NIGHTMARE"), PersistentDataType.STRING)){
+                fireball.setYield(10);
             }else{
-                fireball.setYield(3);
+                fireball.setYield(4);
             }
         }
     }

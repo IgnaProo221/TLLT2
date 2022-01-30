@@ -76,13 +76,13 @@ public class EntityListeners implements Listener {
         var damager = event.getDamager();
         if(damager instanceof Player pa){
 
-            if(pa.getInventory().getItemInMainHand().getItemMeta() != null){
-                return;
-            }else if(pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
+            if(!(pa.getInventory().getItemInMainHand().getItemMeta() == null))return;
+            if(!(pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()))return;
+            if(pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
                 if(pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4006){
                     entity.setFreezeTicks(400);
                 }else if(pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4010){
-                    if(lifestealpercentage > 90) {
+                    if(lifestealpercentage < 90) {
                         if (pa.hasCooldown(Material.NETHERITE_SWORD)) {
                             return;
                         } else {
@@ -92,8 +92,6 @@ public class EntityListeners implements Listener {
                         }
                     }
                 }
-            }else{
-                return;
             }
         }
 
@@ -115,9 +113,7 @@ public class EntityListeners implements Listener {
             }
             if (damager instanceof Vex vex) {
                 if (vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_EXPLOSIVE"), PersistentDataType.STRING)) {
-                    event.setCancelled(true);
                     vex.remove();
-                    p.getLocation().getWorld().createExplosion(vex,5, false, true);
                 }
                 if (vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_SCIENTIST"), PersistentDataType.STRING)) {
                     p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 800, 0, true, false, true));

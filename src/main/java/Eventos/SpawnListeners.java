@@ -1,16 +1,14 @@
 package Eventos;
 
+import CustomMobs.FlyingNightmare;
+import CustomMobs.MyEntity;
 import Utilidades.Mobs;
 import Utilidades.Warn;
-import net.minecraft.world.entity.EntityInsentient;
-import net.minecraft.world.entity.ai.goal.PathfinderGoalMeleeAttack;
-import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
-import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackableTarget;
-import net.minecraft.world.entity.monster.EntityPigZombie;
-import net.minecraft.world.entity.player.EntityHuman;
+import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
+import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPigZombie;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
@@ -47,6 +45,7 @@ public class SpawnListeners implements Listener {
         int spawnmob = random.nextInt(100);
         var en = e.getEntity();
         var pos = e.getLocation();
+        var world = Bukkit.getWorld("world");
 
         if (en instanceof Zombie self ) {
             spawnTierZombies(self);
@@ -164,39 +163,8 @@ public class SpawnListeners implements Listener {
         }
         if (en instanceof PigZombie) {
             var zombipig = (PigZombie) en;
-            zombipig.setCustomName(format("&cEnraged Pigman"));
+            zombipig.setCustomName(format("&cPigman"));
             zombipig.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
-
-
-            CraftPigZombie craft = ((CraftPigZombie) zombipig);
-            EntityPigZombie zombiPig = craft.getHandle();
-
-
-            try {
-                Class<? extends EntityInsentient> cl = EntityInsentient.class;
-                Field gf = cl.getDeclaredField("bR");
-                gf.setAccessible(true);
-
-                Field tf = cl.getDeclaredField("bS");
-                tf.setAccessible(true);
-
-                PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(zombiPig);
-                PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(zombiPig);
-
-                goal.a(0, new PathfinderGoalMeleeAttack(zombiPig, 1.0D, true));
-                target.a(0, new PathfinderGoalNearestAttackableTarget<>(zombiPig, EntityHuman.class, 10, true, false, null));
-
-                gf.setAccessible(false);
-                tf.setAccessible(false);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Warn.Mutant(ex);
-            }
-
-            if(spawnmob < 80){
-                var creeper = en.getLocation().getWorld().spawn(en.getLocation(), Creeper.class);
-                Mobs.hellfireCreeper(creeper);
-            }
         }
         if (en instanceof Bat) {
             var bat = (Bat) en;
@@ -210,14 +178,14 @@ public class SpawnListeners implements Listener {
 
         if (en instanceof Chicken self){
             self.remove();
-            if(self.getWorld().getLivingEntities().stream().filter(entity1 -> entity1 instanceof Vindicator).map(Vindicator.class::cast).collect(Collectors.toList()).size() < 5){
+            if(self.getWorld().getLivingEntities().stream().filter(entity1 -> entity1 instanceof Vindicator).map(Vindicator.class::cast).collect(Collectors.toList()).size() < 30){
                 var vindicator = (Vindicator)self.getLocation().getWorld().spawn(self.getLocation(), Vindicator.class);
             }
         }
 
         if (en instanceof Salmon self){
             self.remove();
-            if(self.getWorld().getLivingEntities().stream().filter(entity1 -> entity1 instanceof PufferFish).map(PufferFish.class::cast).collect(Collectors.toList()).size() < 2){
+            if(self.getWorld().getLivingEntities().stream().filter(entity1 -> entity1 instanceof PufferFish).map(PufferFish.class::cast).collect(Collectors.toList()).size() < 30){
                 var pufferfish = self.getLocation().getWorld().spawn(self.getLocation(), PufferFish.class);
                 pufferfish.setCustomName(format("&cPufferfish"));
             }
@@ -250,7 +218,7 @@ public class SpawnListeners implements Listener {
         }
         if(en instanceof Sheep self){
             self.remove();
-            if(self.getWorld().getLivingEntities().stream().filter(entity1 -> entity1 instanceof Vex).map(Vex.class::cast).collect(Collectors.toList()).size() < 2){
+            if(self.getWorld().getLivingEntities().stream().filter(entity1 -> entity1 instanceof Vex).map(Vex.class::cast).collect(Collectors.toList()).size() < 35){
                 elementalSpawn(self);
             }
         }
@@ -261,7 +229,7 @@ public class SpawnListeners implements Listener {
         if(en instanceof Witch self){
             spawnWitch(self);
         }
-        if(en instanceof Ghast self){
+        if(en instanceof Ghast self && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
             spawnGhast(self);
         }
         if(en instanceof Phantom self){

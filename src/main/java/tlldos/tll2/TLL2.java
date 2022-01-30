@@ -40,7 +40,7 @@ public final class TLL2 extends JavaPlugin {
 
             getCommand("thelastlife").setTabCompleter(new ComandosUsuarios(this));
             getCommand("tllstaff").setTabCompleter(new ComandosStaff(this));
-        } catch (Exception e){
+        } catch (Error e){
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("######################################################");
@@ -50,7 +50,7 @@ public final class TLL2 extends JavaPlugin {
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("######################################################");
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "stop");
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "/stop");
         }
     }
 
@@ -74,7 +74,9 @@ public final class TLL2 extends JavaPlugin {
                 new BlastStormListeners(),
                 new BlocksListeners(this),
                 new MobsTeleports(this),
-                new DropsListeners(this)
+                new DropsListeners(this),
+                new ChatListeners(this),
+                new NMSSpawn(this)
         );
     }
 
@@ -83,4 +85,5 @@ public final class TLL2 extends JavaPlugin {
             getServer().getPluginManager().registerEvents(listener, this);
         }
     }
+
 }
