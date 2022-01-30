@@ -250,15 +250,17 @@ public class Muerte extends ListenerAdapter implements Listener {
     public void onRespawn(PlayerRespawnEvent e){
         Player p = e.getPlayer();
         PersistentDataContainer data = Data.get(p);
-        try {
-            double X = data.get(Utils.key("X"), PersistentDataType.DOUBLE);
-            double Y = data.get(Utils.key("Y"), PersistentDataType.DOUBLE);
-            double Z = data.get(Utils.key("Z"), PersistentDataType.DOUBLE);
-            World w = Bukkit.getWorld(Objects.requireNonNull(data.get(Utils.key("WORLD"), PersistentDataType.STRING)));
+        if(!e.getRespawnFlags().equals(PlayerRespawnEvent.RespawnFlag.END_PORTAL)) {
+            try {
+                double X = data.get(Utils.key("X"), PersistentDataType.DOUBLE);
+                double Y = data.get(Utils.key("Y"), PersistentDataType.DOUBLE);
+                double Z = data.get(Utils.key("Z"), PersistentDataType.DOUBLE);
+                World w = Bukkit.getWorld(Objects.requireNonNull(data.get(Utils.key("WORLD"), PersistentDataType.STRING)));
 
-            Bukkit.getScheduler().runTaskLater(plugin, () -> p.teleport(new Location(w, X, Y, Z)), 1L);
-        }catch (NullPointerException ex){
-            Bukkit.getConsoleSender().sendMessage("RESPAWN EVENT ERROR:"+ex);
+                Bukkit.getScheduler().runTaskLater(plugin, () -> p.teleport(new Location(w, X, Y, Z)), 1L);
+            } catch (NullPointerException ex) {
+                Bukkit.getConsoleSender().sendMessage("RESPAWN EVENT ERROR:" + ex);
+            }
         }
     }
 
