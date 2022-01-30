@@ -23,7 +23,7 @@ public class ItemBuilder {
 
     public ItemBuilder setName(String name){
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.displayName(Component.text(name));
+        itemMeta.displayName(Component.text(Format.format(name)));
         itemStack.setItemMeta(itemMeta);
 
         return this;

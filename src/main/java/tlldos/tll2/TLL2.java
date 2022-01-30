@@ -35,8 +35,11 @@ public final class TLL2 extends JavaPlugin {
 
             cargarEventos();
             //tormentaTick();
-            getCommand("thelastlife").setExecutor(new ComandosUsuarios());
-            getCommand("tllstaff").setExecutor(new ComandosStaff());
+            getCommand("thelastlife").setExecutor(new ComandosUsuarios(this));
+            getCommand("tllstaff").setExecutor(new ComandosStaff(this));
+
+            getCommand("thelastlife").setTabCompleter(new ComandosUsuarios(this));
+            getCommand("tllstaff").setTabCompleter(new ComandosStaff(this));
         } catch (Exception e){
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("######################################################");

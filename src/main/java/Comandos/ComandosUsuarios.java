@@ -7,22 +7,44 @@ import Utilidades.Utils;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tlldos.tll2.TLL2;
 
-public class ComandosUsuarios implements CommandExecutor{
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class ComandosUsuarios implements CommandExecutor, TabCompleter {
+
+    private final TLL2 plugin;
+
+    public ComandosUsuarios(TLL2 plugin){
+        this.plugin = plugin;
+    }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             sender.getServer().getConsoleSender().sendMessage("Eres barja o te haces");
+            return true;
         }
 
         Server s = sender.getServer();
+
+        if(args[0].isEmpty()){
+            player.sendMessage(Format.PREFIX + "Debes colocar un comando valido.");
+            return false;
+        }
 
         if (args[0].equalsIgnoreCase("info")) {
 
@@ -73,8 +95,23 @@ public class ComandosUsuarios implements CommandExecutor{
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',Format.PREFIX + "&7Nos Encontramos en el Dia: &6" + Utils.getDay()));
         }
         if(args[0].equalsIgnoreCase("sacrificios")){
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Format.PREFIX + "&7Nos Encontramos en el Dia: &6" + Contador.ContadorS.contador));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Format.PREFIX + "&7Te encuentras con: &6" + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER) + "&7 sacrificios"));
         }
         return false;
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+        List<String> complements = new ArrayList<>();
+
+        String[] commands = {
+                "totems", "creditos", "comandoslista", "tps", "dia", "sacrificios", "info"
+        };
+
+        StringUtil.copyPartialMatches(args[0], List.of(commands), complements);
+
+        Collections.sort(complements);
+
+        return complements;
     }
 }
