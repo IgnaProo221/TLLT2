@@ -113,7 +113,9 @@ public final class TLL2 extends JavaPlugin {
             public void run() {
                 for(World worlds :Bukkit.getWorlds()){
                     for(LivingEntity liv = (LivingEntity) worlds.getLivingEntities();;){
-                        remplazoMobperoenMain(liv);
+                        if(!liv.isDead()) {
+                            remplazoMobperoenMain(liv);
+                        }
                     }
                 }
             }
