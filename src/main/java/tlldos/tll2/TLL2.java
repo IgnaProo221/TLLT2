@@ -37,7 +37,6 @@ public final class TLL2 extends JavaPlugin {
 
             cargarEventos();
             //tormentaTick();
-            tickAll();
             getCommand("thelastlife").setExecutor(new ComandosUsuarios(this));
             getCommand("tllstaff").setExecutor(new ComandosStaff(this));
 
@@ -88,38 +87,6 @@ public final class TLL2 extends JavaPlugin {
         for(Listener listener : listeners){
             getServer().getPluginManager().registerEvents(listener, this);
         }
-    }
-    public void remplazoMobperoenMain(LivingEntity entity){
-        if(entity instanceof Cow){
-            entity.remove();
-            var vort = entity.getLocation().getWorld().spawn(entity.getLocation(), Creeper.class);
-            Mobs.vortice(vort);
-        }
-        if(entity instanceof Chicken){
-            entity.remove();
-            var silvercos = entity.getLocation().getWorld().spawn(entity.getLocation(), Silverfish.class);
-            Mobs.cosmicSilver(silvercos);
-        }
-        if(entity instanceof Rabbit){
-            entity.remove();
-            var ghastdou = entity.getLocation().getWorld().spawn(entity.getLocation(), Ghast.class);
-            Mobs.riftedGhast(ghastdou);
-        }
-    }
-
-    public void tickAll(){
-        Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
-            @Override
-            public void run() {
-                for(World worlds :Bukkit.getWorlds()){
-                    for(LivingEntity liv = (LivingEntity) worlds.getLivingEntities();;){
-                        if(!liv.isDead()) {
-                            remplazoMobperoenMain(liv);
-                        }
-                    }
-                }
-            }
-        },0L,20L);
     }
 
 }
