@@ -15,6 +15,11 @@ import static Utilidades.Format.format;
 
 public class EventosItems {
 
+    private final TLL2 plugin;
+
+    public EventosItems(TLL2 plugin){
+        this.plugin = plugin;
+    }
 
     public static void temperatura(Player p) {
       try{
@@ -25,18 +30,17 @@ public class EventosItems {
       }
     }
 
-    public static void totemrestorerEvent(Player p) {
+    public static void totemrestorerEvent(Player p, TLL2 plugin) {
         try{
             p.sendMessage(Format.PREFIX, format("&cSe Han Reiniciado el Porcentaje de Totems Correctamente!"));
             p.playEffect(EntityEffect.TOTEM_RESURRECT);
-            TotemsBar.resetAll();
+            TotemsBar.resetAll(p, plugin);
             Bukkit.getScheduler().runTaskLater(TLL2.getPlugin(TLL2.class), () -> {
                 p.playEffect(EntityEffect.TOTEM_RESURRECT);
             }, 20);
             Bukkit.getScheduler().runTaskLater(TLL2.getPlugin(TLL2.class), () -> {
                 p.playEffect(EntityEffect.TOTEM_RESURRECT);
             }, 40);
-            TotemsBar.resetAll();
         }catch (Exception e){
             e.printStackTrace();
             Warn.Mutant(e);

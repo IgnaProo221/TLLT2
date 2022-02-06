@@ -1,7 +1,10 @@
 package Utilidades;
 
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.persistence.PersistentDataType;
+import tlldos.tll2.TLL2;
 
 import java.util.HashMap;
 
@@ -30,12 +33,11 @@ public class TotemsBar implements Listener {
         }
     }
 
-    public static void resetAll() {
-        percentage.clear();
+    public static void resetAll(Player player, TLL2 plugin) {
+        player.getPersistentDataContainer().set(new NamespacedKey(plugin, "TOTEMS_BAR"), PersistentDataType.INTEGER, 100);
     }
 
     public static int getLooseCount() {
-
         int day = Utils.getDay();
 
         if (day < 6) {
@@ -43,7 +45,7 @@ public class TotemsBar implements Listener {
         } else if (day > 6 && day < 12) {
             return 10;
         } else {
-            return 0;
+            return 5;
         }
     }
 

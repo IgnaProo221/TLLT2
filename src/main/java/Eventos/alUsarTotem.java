@@ -1,10 +1,7 @@
 package Eventos;
 
 import Extras.Items;
-import Utilidades.Data;
-import Utilidades.TotemsBar;
-import Utilidades.Utils;
-import Utilidades.Warn;
+import Utilidades.*;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -42,14 +39,16 @@ public class alUsarTotem implements Listener {
                 if (p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING || p.getInventory().getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING) {
 
                     int TotemCara = new Random().nextInt(6) + 1;
-                    PersistentDataContainer data = Data.get(p);
+                    PersistentDataContainer data = p.getPersistentDataContainer();
 
                     //TotemsBar.anadirTC(p);
                     if(!data.has(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER)){
                         data.set(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER, 100);
                     }else{
                         int i = data.get(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER);
-                        data.set(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER, i - TotemsBar.getLooseCount());
+                        data.set(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER, i - 5);
+
+                        p.sendMessage(Format.format(String.format("asd: %d", i)));
                     }
 
                     if (data.get(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER) == 0) {

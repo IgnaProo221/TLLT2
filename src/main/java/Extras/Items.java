@@ -18,6 +18,19 @@ import java.util.Objects;
 import static Utilidades.Format.format;
 
 public class Items {
+
+    public static ItemStack ringOfAbaddon(){
+        return new ItemBuilder(Material.IRON_NUGGET)
+                .setName(format("&cRing of Abaddon"))
+                .build();
+    }
+
+    public static ItemStack brimStone(){
+       return new ItemBuilder(Material.IRON_NUGGET)
+               .setName(format("&cBrimstone"))
+               .build();
+    }
+
     public static ItemStack fungalClumps() {
         return new ItemBuilder(Material.DRIED_KELP)
                 .setName(format("&7Fungal Clumps"))
@@ -67,13 +80,13 @@ public class Items {
                 .build();
     }
 
-    public static ItemStack crystalApple() {
+    public static ItemStack crystalApple(int amount) {
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(ChatColor.GRAY + "Regeneracion III y Resistencia"));
         lore.add(Component.text(ChatColor.GRAY + "Pero tu habilidad de Minar y Golpear"));
-        lore.add(Component.text(ChatColor.GRAY + "Pero tu habilidad de Minar y Golpear"));
+        lore.add(Component.text(ChatColor.GRAY + "están debilitadas"));
 
-        return new ItemBuilder(Material.GOLDEN_APPLE)
+        return new ItemBuilder(Material.GOLDEN_APPLE, amount)
                 .setName(ChatColor.GRAY + "Crystal Apple")
                 .setLore(lore)
                 .setCustomModelData(4003) // No se cual es el custom model data de la manzanita

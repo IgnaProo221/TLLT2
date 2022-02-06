@@ -4,7 +4,6 @@ import Extras.EventosItems;
 import Extras.Items;
 import Extras.Sacrificios;
 import Utilidades.Format;
-import Utilidades.ItemBuilder;
 import Utilidades.Warn;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
@@ -21,6 +20,7 @@ import org.bukkit.event.entity.EntityExhaustionEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import tlldos.tll2.TLL2;
 
@@ -42,7 +42,7 @@ public class PlayerEvents implements Listener {
         Player p = event.getPlayer();
 
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (p.getInventory().getItemInMainHand().equals(Items.createDaga())) {
+            if (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasDisplayName() && p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(Format.format("&7Daga Ceremonial"))) {
                 Sacrificios.start(p);
                 var data = p.getPersistentDataContainer();
                 var inventory = p.getInventory();
@@ -117,7 +117,7 @@ public class PlayerEvents implements Listener {
                     if (p.hasCooldown(Material.PRISMARINE_CRYSTALS)) {
                         event.setCancelled(true);
                     } else {
-                        EventosItems.totemrestorerEvent(p);
+                        p.getPersistentDataContainer().set(new NamespacedKey(plugin, "TOTEM_BAR"), PersistentDataType.INTEGER, 100);
                         p.setCooldown(Material.PRISMARINE_CRYSTALS, 24000);
                         p.getInventory().removeItem(new ItemStack(Material.PRISMARINE_CRYSTALS, 1));
                     }
@@ -140,10 +140,41 @@ public class PlayerEvents implements Listener {
         var random = new Random();
         var randomInt = random.nextInt(100)+1;
 
-        if(randomInt == 10){
+        var data = player.getPersistentDataContainer();
 
-        }else{
+        if (randomInt > 1 && randomInt <= 20){
+            Bukkit.broadcast(Component.text(Format.format(String.format("&bEl jugador %s ha subido un nivel.", player.getName()))));
+
+            player.giveExp(400);
+
+        }else if (randomInt >= 20 && randomInt <= 45){
+            Bukkit.broadcast(Component.text(Format.format(String.format("&7El jugador %s recibió BloodStone extra.", player.getName()))));
+
+            player.getInventory().addItem(Items.bloodShard());
+        } else if (randomInt >= 45 && randomInt <= 70){
+            Bukkit.broadcast(Component.text(Format.format(String.format("&7El jugador %s recibió 10 piedras de diamante.", player.getName()))));
+
+            player.getInventory().addItem(new ItemStack(Material.DIAMOND, 10));
+        } else if (randomInt >= 70 && randomInt <= 80) {
+            Bukkit.broadcast(Comp   onent.text(Format.format(String.format("&bDentro de las profundidades... %s a conseguido una misteriosa manzana.", player.getName()))));
+
+            player.getInventory().addItem(Items.crystalApple(15));
+        } else if (randomInt >= 80 && randomInt <= 85) {
+            Bukkit.broadcast(Component.text(Format.format(String.format("&cLas llamas del infierno han otorgado su fuerza a %s", player.getName()))));
+
+            player.getInventory().addItem(Items.brimStone());
+        } else if (randomInt >= 85 && randomInt <= 90) {
+            Bukkit.broadcast(Component.text(Format.format(String.format("&cEl jugador %s creo un Anillo Misterioso de su propia sangre...", player.getName()))));
+
+            player.getInventory().addItem(Items.ringOfAbaddon());
+        } else if (randomInt >= 90 && randomInt <= 95 ) {
+            Bukkit.broadcast(Component.text(Format.format(String.format("&cEl jugador %s recibió la bendición de sangre por su sacrificio...", player.getName()))));
+
+            player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 2.0D);
+        } else if (randomInt >= 95 && randomInt < 99) {
             Bukkit.broadcast(Component.text(Format.format(String.format("&cEl sacrificio del jugador %s no fue digno de una recompensa...", player.getName()))));
+        } else {
+            Bukkit.getLogger().info("qpro");
         }
 
         player.getInventory().addItem(Items.bloodShard());
@@ -158,5 +189,9 @@ public class PlayerEvents implements Listener {
     public void elderGuardianXd(ElderGuardianAppearanceEvent event){
         var p = event.getAffectedPlayer();
         p.setRemainingAir(0);
+    }
+
+    public boolean isAchievedInSacrifice(PersistentDataContainer data, String value){
+        return data.get(new NamespacedKey(plugin, "sacrifices_"+value), PersistentDataType.INTEGER) != 1;
     }
 }

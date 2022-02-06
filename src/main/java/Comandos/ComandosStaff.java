@@ -100,7 +100,6 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     break;
 
                 case "totem_bar": {
-
                     int res = TotemsBar.getPorcentaje(pa);
 
                     String var0;
@@ -113,6 +112,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
                     pa.playSound(pa.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
                     pa.sendMessage(format(Format.PREFIX + var0));
+                    break;
                 }
 
                 case "vida_reset": {
@@ -124,7 +124,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
                 case "totems_clear":
                     try {
-                        TotemsBar.resetAll();
+                        pa.getPersistentDataContainer().set(new NamespacedKey(plugin, "TOTEM_BAR"), PersistentDataType.INTEGER, 100);
                     } catch (Exception e) {
                         e.printStackTrace();
                         Warn.Mutant(e);
