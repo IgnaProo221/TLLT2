@@ -47,13 +47,12 @@ public class EventosItems {
         }
     }
     public static void crystalHealthup(Player p){
-        try {
+        if(p.getHealth() < 40) {
             p.sendMessage(Format.PREFIX, format("&c¡Has aumentado tu Vida Maxima!"));
             p.setMaxHealth(p.getMaxHealth() + 2);
             p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 10.0F, -1.0F);
-        }catch (Exception e){
-            e.printStackTrace();
-            Warn.Mutant(e);
+        }else{
+            p.sendMessage(Format.PREFIX, format("&c¡No puedes activar mas tu vida maxima!"));
         }
     }
     public static void discordxd(Player p){

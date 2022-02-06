@@ -52,7 +52,27 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
         if(sender.isOp()) {
             switch (args[0]) {
-                ///aqui no tengo idea de que hacer, intente verme un tutorial acerca de eso pero me rendi :P
+                case "dimension":
+                    if (args[1].isEmpty()){
+                        pa.sendMessage(Format.PREFIX + "Debes Colocar una Dimension!");
+                    }
+                    if(args[1].equalsIgnoreCase("builder_world")){
+                        Location spawnbuilder = new Location(Bukkit.getWorld("build_world"), 0 , 64, 0);
+                        pa.teleport(spawnbuilder);
+                        return true;
+                    }
+                    if(args[1].equalsIgnoreCase("overworld")){
+                        Location spawnover = new Location(Bukkit.getWorld("world"), 0 , 100, 0);
+                        pa.teleport(spawnover);
+                        return true;
+                    }
+                    if(args[1].equalsIgnoreCase("lost_cities")){
+                    Location spawnlost = new Location(Bukkit.getWorld("lost_world"), 0 , 100, 0);
+                    pa.teleport(spawnlost);
+                    pa.setGameMode(GameMode.SPECTATOR);
+                    return true;
+                }
+                    break;
                 case "sacrificios":
                     if(args[1].isEmpty()){
                         pa.sendMessage(Format.PREFIX + "Debes colocar un subcomando valido (modify, clear, reset)");
@@ -100,6 +120,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     break;
 
                 case "totem_bar": {
+
                     int res = TotemsBar.getPorcentaje(pa);
 
                     String var0;
@@ -112,7 +133,6 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
                     pa.playSound(pa.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
                     pa.sendMessage(format(Format.PREFIX + var0));
-                    break;
                 }
                 break;
 
@@ -125,6 +145,8 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
                 case "totems_clear":
                     try {
+                        pa.playSound(pa.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
+                        pa.sendMessage(format(Format.PREFIX + "&eHas Reiniciado tu Porcentaje de Totems!"));
                         pa.getPersistentDataContainer().set(new NamespacedKey(plugin, "TOTEM_BAR"), PersistentDataType.INTEGER, 100);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -206,6 +228,15 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     }else if (args[1].equalsIgnoreCase("FALLEN_SWORD")) {
                         pa.getInventory().addItem(Items.fallenSword());
                         pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }else if (args[1].equalsIgnoreCase("CELULA_ENERGIA")) {
+                        pa.getInventory().addItem(Items.celulaEnergia());
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }else if (args[1].equalsIgnoreCase("METAL_DESC")) {
+                        pa.getInventory().addItem(Items.metaldes());
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }else if (args[1].equalsIgnoreCase("EXO_SHIELD")) {
+                        pa.getInventory().addItem(Items.exoShield());
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                 default:
                     pa.sendMessage(format("&7No has indicado ningun subcomando."));
@@ -227,12 +258,17 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
         if(commandSender.isOp()) {
             if(args.length == 1){
                 String[] argsArray = {
-                        "sacrificios", "alerta", "give", "sacrificios_test", "debug", "totems_bar", "totems_clear", "vida_reset", "totems_bar"
+                        "sacrificios", "alerta", "give", "sacrificios_test", "debug", "totem_bar", "totems_clear", "vida_reset", "dimension"
                 };
 
                 commands.addAll(Arrays.asList(argsArray));
                 StringUtil.copyPartialMatches(args[0], commands, completions);
             }else if(args.length == 2){
+                if(args[0].equals("dimension")){
+                    commands.add("builder_world");
+                    commands.add("overworld");
+                    commands.add("lost_cities");
+                }
                 if(args[0].equals("sacrificios")){
                     commands.add("modify");
                     commands.add("clear");
@@ -243,7 +279,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     commands.add("totemTest");
                 }else if(args[0].equals("give")){
                     String[] items = {
-                      "FUNGAL_CLUMPS","WEIRD_DAGGER", "CATACLYSM_PEARL", "BLOOD_SABER", "BERSERKER_TOTEM", "CRYSTAL_HEART", "DISCORD", "CLOUDY_MARSH", "BLOOD_STONE", "BLOOD_SHARD", "TEMPERATURE_METER", "TOTEM_RESTORER", "FALLEN_SWORD"
+                      "FUNGAL_CLUMPS","WEIRD_DAGGER", "CATACLYSM_PEARL", "BLOOD_SABER", "BERSERKER_TOTEM", "CRYSTAL_HEART", "DISCORD", "CLOUDY_MARSH", "BLOOD_STONE", "BLOOD_SHARD", "TEMPERATURE_METER", "TOTEM_RESTORER", "FALLEN_SWORD","CELULA_ENERGIA","METAL_DESC","EXO_SHIELD"
                     };
 
                     commands.addAll(Arrays.asList(items));

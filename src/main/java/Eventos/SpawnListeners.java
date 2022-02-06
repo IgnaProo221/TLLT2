@@ -1,15 +1,10 @@
 package Eventos;
 
-import CustomMobs.FlyingNightmare;
-import CustomMobs.MyEntity;
 import Utilidades.Mobs;
 import Utilidades.Warn;
-import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
-import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPigZombie;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -47,14 +42,14 @@ public class SpawnListeners implements Listener {
         var pos = e.getLocation();
         var world = Bukkit.getWorld("world");
 
-        if (en instanceof Zombie self ) {
+        if (en instanceof Zombie self && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             spawnTierZombies(self);
         } else if (en instanceof Creeper self && en.getLocation().getWorld().getEnvironment() == World.Environment.NORMAL){
             spawnCreeperBlight(self);
-        } else if (en instanceof Skeleton self) {
+        } else if (en instanceof Skeleton self && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             this.spawnSkeletonClass(self);
 
-        }else if (en instanceof Spider self) {
+        }else if (en instanceof Spider self && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             this.spawnSpiderVariant(self);
         }else if (en instanceof Pillager) {
             var pillager = (Pillager) en;
@@ -68,6 +63,19 @@ public class SpawnListeners implements Listener {
             pillager.setHealth(40);
             pillager.getEquipment().setItemInMainHand(ac);
             pillager.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "OVERRATED_PILLAGER"), PersistentDataType.STRING, "OVERRATED_PILLAGER");
+        }
+        if(en instanceof Wither wither){
+            Mobs.tyranyWither(wither);
+        }
+        if(en instanceof Silverfish silverfish){
+            Mobs.cosmicSilver(silverfish);
+        }
+        if(en instanceof Cow self){
+            self.remove();
+            if(self.getWorld().getLivingEntities().stream().filter(entity1 -> entity1 instanceof Creeper).map(Creeper.class::cast).collect(Collectors.toList()).size() < 60){
+                var creeper = self.getLocation().getWorld().spawn(self.getLocation(), Creeper.class);
+                Mobs.galaxyCalamity(creeper);
+            }
         }
 
         if (en instanceof Vindicator) {
@@ -108,26 +116,11 @@ public class SpawnListeners implements Listener {
             l.getWorld().spawn(l, Blaze.class);
         }
 
-        if (en instanceof Rabbit) {
-            var rabbit = (Rabbit) en;
-            if (rabbit.getLocation().getBlock().getBiome().equals(Biome.DESERT)) {
-
-                Chunk chunk = en.getLocation().getChunk();
-
-                ArrayList<Entity> mobList = new ArrayList<>();
-
-                for(Entity ent : chunk.getEntities()){
-                    if(ent.getType() == en.getType()){
-                        mobList.add(ent);
-                        e.setCancelled(true);
-                        var ghast = en.getLocation().getWorld().spawn(en.getLocation(), Ghast.class);
-                        Mobs.ghastDesert(ghast);
-                    }
-                }
-                if(mobList.size() > 2){
-                    en.remove();
-                }
-
+        if (en instanceof Rabbit self) {
+            self.remove();
+            if(self.getWorld().getLivingEntities().stream().filter(entity1 -> entity1 instanceof Creeper).map(Creeper.class::cast).collect(Collectors.toList()).size() < 60){
+                var creepercx = self.getLocation().getWorld().spawn(self.getLocation(), Creeper.class);
+                Mobs.vortice(creepercx);
             }
         }
 
@@ -150,16 +143,20 @@ public class SpawnListeners implements Listener {
             Mobs.piglinBrutedim(pigbrute);
 
         }
-        if (en instanceof PigZombie) {
-            var zombipig = (PigZombie) en;
+        if (en instanceof PigZombie zombipig) {
             zombipig.setCustomName(format("&cPigman"));
             zombipig.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
+            zombipig.setAngry(true);
+            zombipig.setAnger(Integer.MAX_VALUE);
         }
-        if (en instanceof Bat) {
-            var bat = (Bat) en;
-            bat.setCustomName(format("&cExplosive Bat"));
-            bat.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXPLOSIVE_BAT"), PersistentDataType.STRING, "EXPLOSIVE_BAT");
-        }
+        /*if (en instanceof Bat bat) {
+            if (world.getName().contains("build_world")) {
+                en.remove();
+            } else {
+                bat.setCustomName(format("&cExplosive Bat"));
+                bat.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXPLOSIVE_BAT"), PersistentDataType.STRING, "EXPLOSIVE_BAT");
+            }
+        }*/
         if (en instanceof WitherSkeleton self && en.getWorld().getEnvironment().equals(World.Environment.NETHER)){
             spawnWitherSkeleton(self);
 

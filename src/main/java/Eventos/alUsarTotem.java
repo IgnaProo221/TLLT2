@@ -19,6 +19,7 @@ import tlldos.tll2.TLL2;
 
 import java.util.Objects;
 import java.util.Random;
+import static Utilidades.Format.format;
 
 import static Utilidades.Format.format;
 
@@ -41,8 +42,16 @@ public class alUsarTotem implements Listener {
                     int TotemCara = new Random().nextInt(6) + 1;
                     PersistentDataContainer data = p.getPersistentDataContainer();
 
-                    //TotemsBar.anadirTC(p);
-                    if(!data.has(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER)){
+                    TotemsBar.anadirTC(p);
+                    if(TotemsBar.getPorcentaje(p) == 200){
+                        e.setCancelled(true);
+                        Bukkit.getOnlinePlayers().forEach(player -> {
+                            player.sendMessage(Format.PREFIX + format("&8&l¡Los Totems del Jugador " + p.getName() + " se han desactivado y ha muerto! &c&l(Su Porcentaje de Totems esta en 0%)"));
+
+                        });
+                        return;
+                    }
+                    /*if(!data.has(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER)){
                         data.set(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER, 100);
                     }else{
                         int i = data.get(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER);
@@ -57,7 +66,7 @@ public class alUsarTotem implements Listener {
                         for (Player players : Bukkit.getOnlinePlayers()) {
                             players.sendMessage(format("&7¡El jugador &c" + p.getName() + "&7 ha llegado al &c0%&7!"));
                         }
-                    }
+                    }*/
 
                     if (p.hasCooldown(Material.TOTEM_OF_UNDYING)) {
 
@@ -66,9 +75,9 @@ public class alUsarTotem implements Listener {
                         for (Player players : Bukkit.getOnlinePlayers()) {
 
                             players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8El Cooldown del Totem del Jugador &6&l" + p.getName() + "&8 se a Activado!"));
-                            return;
 
                         }
+                        return;
                     }
 
                     if (p.getInventory().getItemInMainHand().equals(Items.totemBerserk()) || p.getInventory().getItemInOffHand().equals(Items.totemBerserk())) {

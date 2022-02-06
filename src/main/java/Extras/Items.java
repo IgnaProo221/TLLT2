@@ -207,4 +207,39 @@ public class Items {
                 .build();
     }
 
+    public static ItemStack celulaEnergia(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Celulas antiguas usadas por los Laboratorios")));
+        lore.add(Component.text(format("&7su energía proviene de algo desconocido")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.GOLD_NUGGET).setName(format("&4Celulas de Energía")).setLore(lore).build();
+    }
+
+    public static ItemStack metaldes(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Metal de una fuente desconocida")));
+        lore.add(Component.text(format("&7tiene una fuerza sobrenatural")));
+        lore.add(Component.text(format("")));
+        return  new ItemBuilder(Material.IRON_NUGGET).setName(format("&6Metal Desconocido")).setLore(lore).build();
+    }
+
+    public static ItemStack exoShield(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lHABILIDAD: &eNano Proteccion")));
+        lore.add(Component.text(format("&7Si el escudo es Dañado por una Entidad")));
+        lore.add(Component.text(format("&7este es Paralizado!")));
+        lore.add(Component.text(format("&7al Tenerlo en mano eres imune al daño por Rayos")));
+        return new ItemBuilder(Material.SHIELD).setName(format("&6&lExo-Shield")).setLore(lore).setUnbreakable(true).setCustomModelData(5005).build();
+    }
+
+    public static ItemStack iceShot(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lHABILIDAD: &eTiro Congelado")));
+        lore.add(Component.text(format("&7Si una flecha impacata contra un mob")));
+        lore.add(Component.text(format("&7este es Congelado!")));
+        return new ItemBuilder(Material.BOW).setName(format("&b&lIce-Shot")).setLore(lore).setUnbreakable(true).setCustomModelData(5080).build();
+    }
+
 }

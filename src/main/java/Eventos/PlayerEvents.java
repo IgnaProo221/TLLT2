@@ -156,7 +156,7 @@ public class PlayerEvents implements Listener {
 
             player.getInventory().addItem(new ItemStack(Material.DIAMOND, 10));
         } else if (randomInt >= 70 && randomInt <= 80) {
-            Bukkit.broadcast(Comp   onent.text(Format.format(String.format("&bDentro de las profundidades... %s a conseguido una misteriosa manzana.", player.getName()))));
+            Bukkit.broadcast(Component.text(Format.format(String.format("&bDentro de las profundidades... %s a conseguido una misteriosa manzana.", player.getName()))));
 
             player.getInventory().addItem(Items.crystalApple(15));
         } else if (randomInt >= 80 && randomInt <= 85) {
