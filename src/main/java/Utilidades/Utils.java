@@ -70,6 +70,7 @@ public class Utils {
                 try (EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(adaptedWorld,-1)) {
                     Operation operation = new ClipboardHolder(clipboard).createPaste(editSession).to(BlockVector3.at(X, Y, Z)).copyEntities(true)
                             .ignoreAirBlocks(true).build();
+                    Bukkit.getConsoleSender().sendMessage("La Schematic se pego en " + loc.getBlock().getX() +loc.getBlock().getY() +loc.getBlock().getZ());
                     try {
                         Operations.complete(operation);
                         editSession.flushSession();

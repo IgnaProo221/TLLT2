@@ -6,6 +6,7 @@ import Utilidades.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -40,11 +41,53 @@ public class EntityListeners implements Listener {
         hash.put(p, 1);
     }
 
+    public void cosmosMobs(Entity entity){
+        int cosmoschance = new Random().nextInt(10);
+        if(cosmoschance == 1){
+            var vortilol = entity.getLocation().getWorld().spawn(entity.getLocation(), Creeper.class);
+            Mobs.vortice(vortilol);
+        }else if(cosmoschance == 2){
+            var evokerxdlol = entity.getLocation().getWorld().spawn(entity.getLocation(), Evoker.class);
+            Mobs.evokerExplosive(evokerxdlol);
+        }else if(cosmoschance == 3){
+            var withertroll = entity.getLocation().getWorld().spawn(entity.getLocation(), Wither.class);
+            Mobs.tyranyWither(withertroll);
+        }else if(cosmoschance == 4){
+            var esqueletomamado = entity.getLocation().getWorld().spawn(entity.getLocation(), WitherSkeleton.class);
+            Mobs.blightedWitherSkeleton(esqueletomamado);
+        }else if(cosmoschance == 5){
+            var jodidoghast = entity.getLocation().getWorld().spawn(entity.getLocation(),Ghast.class);
+            Mobs.riftedGhast(jodidoghast);
+        }else if(cosmoschance == 6){
+            var zombipendejo = entity.getLocation().getWorld().spawn(entity.getLocation(), Zombie.class);
+            Mobs.blightedZombi(zombipendejo);
+        }else if(cosmoschance == 7){
+            var brujapendeja = entity.getLocation().getWorld().spawn(entity.getLocation(), Witch.class);
+            Mobs.blightedWitch(brujapendeja);
+        }else if(cosmoschance == 8){
+            var blaze = entity.getLocation().getWorld().spawn(entity.getLocation(), Blaze.class);
+            blaze.setCustomName(format("&cHellfire"));
+            blaze.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
+            blaze.setHealth(40);
+            blaze.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE"), PersistentDataType.STRING, "HELLFIRE");
+        }else  if(cosmoschance == 9){
+            var slime = entity.getLocation().getWorld().spawn(entity.getLocation(), Slime.class);
+            slime.setCustomName(format("Freezing Slime"));
+            slime.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
+            slime.setHealth(60);
+            slime.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(12);
+            slime.setSize(12);
+            slime.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "FREEZING_SLIME"), PersistentDataType.STRING, "FREEZING_SLIME");
+        }else{
+            var magopendejo = entity.getLocation().getWorld().spawn(entity.getLocation(), Illusioner.class);
+            Mobs.riftedMage(magopendejo);
+        }
+    }
 
     public void interEffects(Player p) {
         int effect = new Random().nextInt(3);
         if (effect == 1) {
-            p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 1200, 4, true, true, true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 400, 4, true, true, true));
         } else if (effect == 2) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 400, 1, true, true, true));
         } else {
@@ -68,6 +111,15 @@ public class EntityListeners implements Listener {
     }
 
     @EventHandler
+    public void witherTest(ExplosionPrimeEvent e){
+        if(e.getEntity() instanceof Wither wither){
+            if(wither.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TYRANT_WITHER"), PersistentDataType.STRING)) {
+                e.setRadius(13);
+            }
+        }
+    }
+
+    @EventHandler
     public void damageEntity(EntityDamageByEntityEvent event) {
 
         Random random = new Random();
@@ -76,13 +128,13 @@ public class EntityListeners implements Listener {
         var damager = event.getDamager();
         if(damager instanceof Player pa){
 
-            if(pa.getInventory().getItemInMainHand().getItemMeta() != null){
-                return;
-            }else if(pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
+            if(!(pa.getInventory().getItemInMainHand().getItemMeta() == null))return;
+            if(!(pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()))return;
+            if(pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
                 if(pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4006){
                     entity.setFreezeTicks(400);
                 }else if(pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4010){
-                    if(lifestealpercentage > 90) {
+                    if(lifestealpercentage < 90) {
                         if (pa.hasCooldown(Material.NETHERITE_SWORD)) {
                             return;
                         } else {
@@ -92,8 +144,6 @@ public class EntityListeners implements Listener {
                         }
                     }
                 }
-            }else{
-                return;
             }
         }
 
@@ -115,9 +165,7 @@ public class EntityListeners implements Listener {
             }
             if (damager instanceof Vex vex) {
                 if (vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_EXPLOSIVE"), PersistentDataType.STRING)) {
-                    event.setCancelled(true);
                     vex.remove();
-                    p.getLocation().getWorld().createExplosion(vex,5, false, true);
                 }
                 if (vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_SCIENTIST"), PersistentDataType.STRING)) {
                     p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 800, 0, true, false, true));
@@ -358,6 +406,14 @@ public class EntityListeners implements Listener {
             if (spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "PLAGUE_SPIDER"), PersistentDataType.STRING)) {
                 var nube = e.getLocation().getWorld().spawn(e.getLocation(), AreaEffectCloud.class);
                 Mobs.plagueEntity(nube);
+            }
+        }
+        if(e instanceof Silverfish silverfish){
+            if(silverfish.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "COSMIC_SILVERFISH"), PersistentDataType.STRING)){
+                cosmosMobs(silverfish);
+                Bukkit.getOnlinePlayers().forEach(player -> {
+                    player.sendMessage(Format.PREFIX + format("&c&l!El Cosmos a Invocado un Mob Aleatorio en " + e.getLocation().getBlockX() + e.getLocation().getBlockY() + e.getLocation().getBlockZ() +"!"));
+                });
             }
         }
         if(e instanceof IronGolem ironGolem){

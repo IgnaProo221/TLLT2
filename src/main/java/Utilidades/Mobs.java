@@ -1,15 +1,13 @@
 package Utilidades;
 
-import net.minecraft.world.entity.EntityInsentient;
-import net.minecraft.world.entity.ai.goal.PathfinderGoalMeleeAttack;
-import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
-import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackableTarget;
-import net.minecraft.world.entity.animal.EntityBee;
-import net.minecraft.world.entity.animal.EntityIronGolem;
-import net.minecraft.world.entity.monster.EntityEnderman;
-import net.minecraft.world.entity.player.EntityHuman;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.EnderMan;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.boss.BarColor;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftBee;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftEnderman;
 import org.bukkit.craftbukkit.v1_18_R1.entity.CraftIronGolem;
@@ -207,29 +205,16 @@ public class Mobs implements Listener{
         self.setHealth(75);
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(30);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_ENDERMAN"), PersistentDataType.STRING, "BLIGHTED_ENDERMAN");
-        CraftEnderman craft = ((CraftEnderman) self);
-        EntityEnderman entityEnderman = craft.getHandle();
+        /*CraftEnderman craft = ((CraftEnderman) self);
+        EnderMan entityEnderman = craft.getHandle();
 
         try {
-            Class<? extends EntityInsentient> cl = EntityInsentient.class;
-            Field gf = cl.getDeclaredField("bR");
-            gf.setAccessible(true);
+            entityEnderman.goalSelector.addGoal(0, new NearestAttackableTargetGoal<>(entityEnderman, ServerPlayer.class,true, false));
 
-            Field tf = cl.getDeclaredField("bS");
-            tf.setAccessible(true);
-
-            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityEnderman);
-            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityEnderman);
-
-            goal.a(0, new PathfinderGoalMeleeAttack(entityEnderman, 1.0D, true));
-            target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityEnderman, EntityHuman.class, 10, true, false, null));
-
-            gf.setAccessible(false);
-            tf.setAccessible(false);
         } catch (Exception e) {
             e.printStackTrace();
             Warn.Mutant(e);
-        }
+        }*/
 
     }
 
@@ -307,6 +292,7 @@ public class Mobs implements Listener{
         self.setColor(DyeColor.BLUE);
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
         self.setHealth(1);
+        self.setRemoveWhenFarAway(true);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DIMEN_SHULKER"), PersistentDataType.STRING, "DIMEN_SHULKER");
     }
     public static void riftedWither(WitherSkeleton self){
@@ -382,31 +368,46 @@ public class Mobs implements Listener{
         self.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE,Integer.MAX_VALUE,0, false, false, false));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"LAVA_GOLEM"),PersistentDataType.STRING, "LAVA_GOLEM");
         CraftIronGolem craft = ((CraftIronGolem) self);
-        EntityIronGolem entityGolem = craft.getHandle();
-
-        try {
-            Class<? extends EntityInsentient> cl = EntityInsentient.class;
-            Field gf = cl.getDeclaredField("bR");
-            gf.setAccessible(true);
-
-            Field tf = cl.getDeclaredField("bS");
-            tf.setAccessible(true);
-
-            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityGolem);
-            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityGolem);
-
-            goal.a(0, new PathfinderGoalMeleeAttack(entityGolem, 1.0D, true));
-            target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityGolem, EntityHuman.class, 10, true, false, null));
-
-            gf.setAccessible(false);
-            tf.setAccessible(false);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Warn.Mutant(e);
-        }
+        net.minecraft.world.entity.animal.IronGolem entityGolem = craft.getHandle();
+            try {
+                entityGolem.targetSelector.addGoal(0, new MeleeAttackGoal(entityGolem, 1.0D, true));
+                entityGolem.goalSelector.addGoal(0, new NearestAttackableTargetGoal<>(entityGolem, ServerPlayer.class,true, false));
+            } catch (Exception e) {
+                e.printStackTrace();
+                Warn.Mutant(e);
+            }
     }
 
+    public static void vortice(Creeper self){
+        self.setCustomName(format("&bVorticé"));
+        self.setExplosionRadius(40);
+        self.setMaxFuseTicks(10);
+        self.setFuseTicks(10);
+        self.setPowered(true);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
+        self.setHealth(50);
+        self.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(1.4);
+        self.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,Integer.MAX_VALUE, 0, false, false, false));
+    }
 
+    public static void cosmicSilver(Silverfish self){
+        self.setCustomName(format("&d&lCosmic Silverfish"));
+        self.setHealth(1);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20.0);
+        self.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(1.2);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"COSMIC_SILVERFISH"), PersistentDataType.STRING, "COSMIC_SILVERFISH");
+    }
+
+    public static void tyranyWither(Wither self){
+        self.setCustomName(format("&6&k||| &c&lTyrant Wither &6&k|||"));
+        self.setInvulnerableTicks(500);
+        self.getBossBar().setColor(BarColor.RED);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(500);
+        self.setHealth(500);
+        self.setRemoveWhenFarAway(true);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"TYRANT_WITHER"), PersistentDataType.STRING, "TYRANT_WITHER");
+    }
 
 
 
@@ -458,24 +459,11 @@ public class Mobs implements Listener{
 
 
         CraftBee craft = ((CraftBee) self);
-        EntityBee entityBee = craft.getHandle();
+        net.minecraft.world.entity.animal.Bee entityBee = craft.getHandle();
 
         try {
-            Class<? extends EntityInsentient> cl = EntityInsentient.class;
-            Field gf = cl.getDeclaredField("bR");
-            gf.setAccessible(true);
-
-            Field tf = cl.getDeclaredField("bS");
-            tf.setAccessible(true);
-
-            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityBee);
-            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityBee);
-
-            goal.a(0, new PathfinderGoalMeleeAttack(entityBee, 1.0D, true));
-            target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityBee, EntityHuman.class, 10, true, false, null));
-
-            gf.setAccessible(false);
-            tf.setAccessible(false);
+            entityBee.targetSelector.addGoal(0, new MeleeAttackGoal(entityBee, 1.0D, true));
+            entityBee.goalSelector.addGoal(0, new NearestAttackableTargetGoal<>(entityBee, ServerPlayer.class,true, false));
         } catch (Exception e) {
             e.printStackTrace();
             Warn.Mutant(e);
@@ -567,24 +555,11 @@ public class Mobs implements Listener{
         ///pongan que el golem este enojado porfavor
 
         CraftIronGolem craft = ((CraftIronGolem) self);
-        EntityIronGolem entityGolem = craft.getHandle();
+        net.minecraft.world.entity.animal.IronGolem entityGolem = craft.getHandle();
 
         try {
-            Class<? extends EntityInsentient> cl = EntityInsentient.class;
-            Field gf = cl.getDeclaredField("bR");
-            gf.setAccessible(true);
-
-            Field tf = cl.getDeclaredField("bS");
-            tf.setAccessible(true);
-
-            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityGolem);
-            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityGolem);
-
-            goal.a(0, new PathfinderGoalMeleeAttack(entityGolem, 1.0D, true));
-            target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityGolem, EntityHuman.class, 10, true, false, null));
-
-            gf.setAccessible(false);
-            tf.setAccessible(false);
+            entityGolem.targetSelector.addGoal(0, new MeleeAttackGoal(entityGolem, 1.0D, true));
+            entityGolem.goalSelector.addGoal(0, new NearestAttackableTargetGoal<>(entityGolem, ServerPlayer.class,true, false));
         } catch (Exception e) {
             e.printStackTrace();
             Warn.Mutant(e);

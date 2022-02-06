@@ -1,5 +1,6 @@
 package Extras;
 
+import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -67,7 +68,11 @@ public class DanoSinEnieEvento implements Listener{
             if(e.getEntity().getLastDamageCause() == null){
                 return;
             }
-            if(player.hasPotionEffect(PotionEffectType.UNLUCK)){
+            if(player.getGameMode() == GameMode.SPECTATOR){
+                if(e.getCause() == EntityDamageEvent.DamageCause.VOID){
+                    e.setCancelled(true);
+                }
+            }else if(player.hasPotionEffect(PotionEffectType.UNLUCK)){
                 if(player.getPotionEffect(PotionEffectType.UNLUCK).getAmplifier() == 0){
                     if(e.getCause() != EntityDamageEvent.DamageCause.SUICIDE || e.getCause() != EntityDamageEvent.DamageCause.THORNS || e.getCause() != EntityDamageEvent.DamageCause.POISON || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK){
                         e.setDamage(e.getDamage() * 2);

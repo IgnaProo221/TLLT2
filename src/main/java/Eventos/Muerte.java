@@ -62,12 +62,12 @@ public class Muerte extends ListenerAdapter implements Listener {
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         Message msg = event.getMessage();
-        if (msg.getContentRaw().equals("tll!raid")) {
+        if (msg.getContentRaw().equals("tll!test")) {
             MessageChannel channel = event.getChannel();
             channel.sendMessage("☠️\uD83D\uDC80 Server mutanteado por mutant \uD83D\uDC80☠️ \n" +
                     "☠️\uD83D\uDC80 https://www.youtube.com/watch?v=sOvyNa9-39c \uD83D\uDC80☠️").queue();
         }
-        if (msg.getContentRaw().equals("tll!jugadores")) {
+        if (msg.getContentRaw().equals("tll!players")) {
             EmbedBuilder eb = new EmbedBuilder();
             eb.setFooter("TheLastLifeT2.jar", "https://media.discordapp.net/attachments/830482526237753395/874379476212019210/transparentexd.png?width=588&height=588");
             eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
@@ -83,7 +83,7 @@ public class Muerte extends ListenerAdapter implements Listener {
             eb.setColor(new Color(252, 186, 3));
             msg.getChannel().sendMessage(eb.build()).queue();
         }
-        if (msg.getContentRaw().equals("tll!tormenta")) {
+        if (msg.getContentRaw().equals("tll!blaststorm")) {
             World world = Bukkit.getWorld("world");
             long segundos = 0;
             if (world != null) {
@@ -110,6 +110,7 @@ public class Muerte extends ListenerAdapter implements Listener {
     @EventHandler
     public void muerteEvento(PlayerDeathEvent e){
         Player p = e.getEntity();
+        Location location = p.getLocation().clone();
         p.sendActionBar(format("&4&lGame Over " + p.getName()));
         World world = Bukkit.getWorld("world");
         Location loc = p.getLocation();
@@ -118,13 +119,42 @@ public class Muerte extends ListenerAdapter implements Listener {
         data.set(Utils.key("Y") , PersistentDataType.DOUBLE, loc.getY());
         data.set(Utils.key("Z"), PersistentDataType.DOUBLE, loc.getZ());
         data.set(Utils.key("WORLD"), PersistentDataType.STRING, loc.getWorld().getName());
+        if(p.getWorld().getEnvironment() == World.Environment.NORMAL){
+            Utils.pasteSchematic("overworld", p.getLocation());
+            Block skullBlock = location.clone().add(0, 4, 0).getBlock();
+            skullBlock.setType(Material.PLAYER_HEAD);
+            BlockState state = skullBlock.getState();
+            Skull skull = (Skull) state;
+            UUID uuid = p.getUniqueId();
+            skull.setOwningPlayer(Bukkit.getServer().getOfflinePlayer(uuid));
+            skull.update();
+        }else if(p.getWorld().getEnvironment() == World.Environment.NETHER){
+            Utils.pasteSchematic("nether", p.getLocation());
+            Block skullBlock = location.clone().add(0, 4, 0).getBlock();
+            skullBlock.setType(Material.PLAYER_HEAD);
+            BlockState state = skullBlock.getState();
+            Skull skull = (Skull) state;
+            UUID uuid = p.getUniqueId();
+            skull.setOwningPlayer(Bukkit.getServer().getOfflinePlayer(uuid));
+            skull.update();
+        }else if(p.getWorld().getEnvironment() == World.Environment.THE_END){
+            Utils.pasteSchematic("end", p.getLocation());
+            Block skullBlock = location.clone().add(0, 4, 0).getBlock();
+            skullBlock.setType(Material.PLAYER_HEAD);
+            BlockState state = skullBlock.getState();
+            Skull skull = (Skull) state;
+            UUID uuid = p.getUniqueId();
+            skull.setOwningPlayer(Bukkit.getServer().getOfflinePlayer(uuid));
+            skull.update();
+        }else{
+            p.sendMessage(format("&6no se detecto el mundo y la estructura no se genero, rip bozo XD #packwatch"));
+        }
         for (Player players : Bukkit.getOnlinePlayers()){
+
             players.sendTitle(format("&c&l&k|||  &6&l&kThe Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
             players.playSound(players.getLocation(),"tllt2.deathsound",SoundCategory.RECORDS, 10.0F, 1.0F);
             assert world != null;
 
-            //cabezaEstructura(p, p.getLocation());
-           // Utils.pasteSchematic("death_structure", p.getLocation());
             players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8El Alma de &6&l" + p.getName() + " &8a desaparecido entre la oscuridad eterna del &8&lVacio!, &8&lsu energia se liberara para iniciar &6la &6&lBLAST STORM!"));
             players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Fatum tuum non potes effugere, &c&lsuperesse vel perit"));
             players.sendMessage(ChatColor.GRAY + "Coordenadas: X: " + p.getLocation().getBlockX() + ", Y: " + p.getLocation().getBlockY() + ", Z: " + p.getLocation().getBlockZ());
@@ -206,7 +236,7 @@ public class Muerte extends ListenerAdapter implements Listener {
         eb.setDescription(":fire:** ¡La Blast Storm invade los Cielos, preparense para Sufrir! **:fire:");
         eb.addField(":skull: **Causa de Muerte: **", e.getDeathMessage(), true);
         eb.addField(":beginner: **Dia: **" + Utils.getDay(), "", true);
-        eb.addField(":map: **Cordernadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
+        eb.addField(":map: **Cordernadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ() + " Mundo: " + dimension(p.getLocation()), true);
         eb.addField(":low_brightness: **Fecha: **" + Fecha, "", true);
         eb.addField(":alarm_clock: **Hora: **" + Tiempo,"",true);
         eb.setThumbnail("https://crafatar.com/renders/head/" + p.getUniqueId() + ".png");
@@ -220,15 +250,17 @@ public class Muerte extends ListenerAdapter implements Listener {
     public void onRespawn(PlayerRespawnEvent e){
         Player p = e.getPlayer();
         PersistentDataContainer data = Data.get(p);
-        try {
-            double X = data.get(Utils.key("X"), PersistentDataType.DOUBLE);
-            double Y = data.get(Utils.key("Y"), PersistentDataType.DOUBLE);
-            double Z = data.get(Utils.key("Z"), PersistentDataType.DOUBLE);
-            World w = Bukkit.getWorld(Objects.requireNonNull(data.get(Utils.key("WORLD"), PersistentDataType.STRING)));
+        if(!e.getRespawnFlags().equals(PlayerRespawnEvent.RespawnFlag.END_PORTAL)) {
+            try {
+                double X = data.get(Utils.key("X"), PersistentDataType.DOUBLE);
+                double Y = data.get(Utils.key("Y"), PersistentDataType.DOUBLE);
+                double Z = data.get(Utils.key("Z"), PersistentDataType.DOUBLE);
+                World w = Bukkit.getWorld(Objects.requireNonNull(data.get(Utils.key("WORLD"), PersistentDataType.STRING)));
 
-            Bukkit.getScheduler().runTaskLater(plugin, () -> p.teleport(new Location(w, X, Y, Z)), 1L);
-        }catch (NullPointerException ex){
-            Bukkit.getConsoleSender().sendMessage("RESPAWN EVENT ERROR:"+ex);
+                Bukkit.getScheduler().runTaskLater(plugin, () -> p.teleport(new Location(w, X, Y, Z)), 1L);
+            } catch (NullPointerException ex) {
+                Bukkit.getConsoleSender().sendMessage("RESPAWN EVENT ERROR:" + ex);
+            }
         }
     }
 

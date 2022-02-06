@@ -4,10 +4,10 @@ Repositorio para el server de THE LAST LIFE T2
 # PENDIENTE 
 - cosas de sacrificio: X
 - mobs: V
-- NMS: V
+- NMS: X
 - Cambios: V
 - Bot: V
-- Barra de Totems: X
+- Barra de Totems: V
 - Items: V
 - Spawners Customs: V
 - Mecanica de Temperatura: X
@@ -15,5 +15,5 @@ Repositorio para el server de THE LAST LIFE T2
 - Estructuras: X
 - Lore?????????: V
 
-# % DEL PLUGIN: 70%
+# % DEL PLUGIN: 50%
 

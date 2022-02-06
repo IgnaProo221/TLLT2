@@ -1,5 +1,6 @@
 package Eventos;
 
+import Utilidades.Format;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,6 +11,8 @@ import org.bukkit.potion.PotionEffectType;
 import tlldos.tll2.TLL2;
 
 import java.util.List;
+
+import static Utilidades.Format.format;
 
 public class Comer implements Listener {
     private TLL2 plugin;
@@ -22,6 +25,16 @@ public class Comer implements Listener {
     @EventHandler
     public void comerEv(PlayerItemConsumeEvent e){
         Player p = e.getPlayer();
+         if(p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 1){
+            e.setCancelled(true);
+            p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+        }else if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 2){
+            e.setCancelled(true);
+            p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+        }else if(p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 3){
+            e.setCancelled(true);
+            p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+        }
         if(e.getItem() != null && e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(ChatColor.GRAY + "Fungal Clumps")){
             if (plugin.getConfig().getStringList("ConsumidodoFungalClumps").contains(p.getUniqueId().toString())) {
                 p.sendMessage(prefix + ChatColor.RED + "Ya has consumido este Item!");
