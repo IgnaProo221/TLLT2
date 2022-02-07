@@ -10,6 +10,7 @@ import Utilidades.Utils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import Eventos.ReplaceListeners.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 public final class TLL2 extends JavaPlugin {
     public World world;
     private Configuration config;
+    private ReplaceListeners replaceListeners;
 
     @Override
     public void onEnable() {
@@ -100,6 +102,11 @@ public final class TLL2 extends JavaPlugin {
 
     public void sinofuncionamemato(){
         Bukkit.getScheduler().runTaskTimer(this,()->{
+            for (World worlds : Bukkit.getWorlds()) {
+                for (LivingEntity liv : worlds.getLivingEntities()) {
+                    replaceListeners.remplazoMob(liv);
+                }
+            }
             pichaXd();
         },0L,20L);
 
