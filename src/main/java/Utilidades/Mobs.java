@@ -1,16 +1,10 @@
 package Utilidades;
 
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.monster.EnderMan;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.boss.BarColor;
-import org.bukkit.craftbukkit.v1_18_R1.entity.CraftBee;
-import org.bukkit.craftbukkit.v1_18_R1.entity.CraftEnderman;
-import org.bukkit.craftbukkit.v1_18_R1.entity.CraftIronGolem;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftBee;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftIronGolem;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
@@ -368,14 +362,14 @@ public class Mobs implements Listener{
         self.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE,Integer.MAX_VALUE,0, false, false, false));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"LAVA_GOLEM"),PersistentDataType.STRING, "LAVA_GOLEM");
         CraftIronGolem craft = ((CraftIronGolem) self);
-        net.minecraft.world.entity.animal.IronGolem entityGolem = craft.getHandle();
+      /*  net.minecraft.world.entity.animal.IronGolem entityGolem = craft.getHandle();
             try {
                 entityGolem.targetSelector.addGoal(0, new MeleeAttackGoal(entityGolem, 1.0D, true));
                 entityGolem.goalSelector.addGoal(0, new NearestAttackableTargetGoal<>(entityGolem, ServerPlayer.class,true, false));
             } catch (Exception e) {
                 e.printStackTrace();
                 Warn.Mutant(e);
-            }
+            }*/
     }
 
     public static void vortice(Creeper self){
@@ -459,7 +453,7 @@ public class Mobs implements Listener{
 
 
         CraftBee craft = ((CraftBee) self);
-        net.minecraft.world.entity.animal.Bee entityBee = craft.getHandle();
+        /*net.minecraft.world.entity.animal.Bee entityBee = craft.getHandle();
 
         try {
             entityBee.targetSelector.addGoal(0, new MeleeAttackGoal(entityBee, 1.0D, true));
@@ -467,7 +461,8 @@ public class Mobs implements Listener{
         } catch (Exception e) {
             e.printStackTrace();
             Warn.Mutant(e);
-        }
+
+         */
     }
 
 
@@ -553,7 +548,7 @@ public class Mobs implements Listener{
         self.setHealth(50);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXO_GOLEM"), PersistentDataType.STRING, "EXO_GOLEM");
         ///pongan que el golem este enojado porfavor
-
+/*
         CraftIronGolem craft = ((CraftIronGolem) self);
         net.minecraft.world.entity.animal.IronGolem entityGolem = craft.getHandle();
 
@@ -564,6 +559,8 @@ public class Mobs implements Listener{
             e.printStackTrace();
             Warn.Mutant(e);
         }
+        
+ */
     }
 
     public static void labSilver(Silverfish self){

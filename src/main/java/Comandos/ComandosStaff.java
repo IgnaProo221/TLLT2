@@ -114,7 +114,6 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     pa.sendMessage(format(Format.PREFIX + var0));
                     break;
                 }
-                break;
 
                 case "vida_reset": {
                     pa.playSound(pa.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);

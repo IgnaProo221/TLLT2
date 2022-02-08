@@ -1,15 +1,12 @@
 package Eventos;
 
 import CustomMobs.FlyingNightmare;
-import CustomMobs.MyEntity;
 import Utilidades.Mobs;
 import Utilidades.Warn;
-import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
-import org.bukkit.craftbukkit.v1_18_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPigZombie;
+
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -99,9 +96,7 @@ public class SpawnListeners implements Listener {
             blaze.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE"), PersistentDataType.STRING, "HELLFIRE");
         }
 
-        if (en instanceof Vex self && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPELL){
-            this.spawnVexClass(self);
-        }
+
         if (en instanceof Husk) {
             Location l = en.getLocation().clone();
             e.setCancelled(true);

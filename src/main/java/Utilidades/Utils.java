@@ -55,8 +55,9 @@ public class Utils {
         if(loc.getY() < -64){
             loc.setY(0);
         }
+
         int X = loc.getBlockX();
-        int Y = loc.getBlockZ();
+        int Y = loc.getBlockY();
         int Z = loc.getBlockZ();
 
         File file = new File(plugin.getDataFolder().getPath() + "/schematics/" + filename + ".schem");
