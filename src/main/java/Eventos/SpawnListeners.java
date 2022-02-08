@@ -58,10 +58,18 @@ public class SpawnListeners implements Listener {
             ItemMeta meta = ac.getItemMeta();
             meta.addEnchant(Enchantment.QUICK_CHARGE, 3, true);
             ac.setItemMeta(meta);
+
+            var rocket = new ItemStack(Material.FIREWORK_ROCKET, 64);
+            var rocketMeta = (FireworkMeta) rocket.getItemMeta();
+            var fireworkEffect = FireworkEffect.builder().withColor(Color.OLIVE).withFade(Color.RED).build();
+            rocketMeta.addEffect(fireworkEffect);
+            rocket.setItemMeta(rocketMeta);
+
             pillager.setCustomName(format("&cPillager Generico Explosivo lol"));
             pillager.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
             pillager.setHealth(40);
             pillager.getEquipment().setItemInMainHand(ac);
+            pillager.getEquipment().setItemInOffHand(rocket);
             pillager.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "OVERRATED_PILLAGER"), PersistentDataType.STRING, "OVERRATED_PILLAGER");
         }
         if(en instanceof Wither wither){
@@ -107,7 +115,7 @@ public class SpawnListeners implements Listener {
             blaze.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE"), PersistentDataType.STRING, "HELLFIRE");
         }
 
-        if (en instanceof Vex self && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPELL){
+        if (en instanceof Vex self && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.RAID){
             this.spawnVexClass(self);
         }
         if (en instanceof Husk) {

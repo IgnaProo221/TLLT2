@@ -129,7 +129,7 @@ public final class TLL2 extends JavaPlugin {
         if (Bukkit.getOnlinePlayers().size() < 1) return;
         for (Player player : Bukkit.getOnlinePlayers()) {
             Location l = player.getLocation().clone();
-            if (r.nextInt(50) == 1) {
+            if (r.nextInt(2) == 1) {
                 int pX = (r.nextBoolean() ? -1 : 1) * (r.nextInt(15)) + 15;
                 int pZ = (r.nextBoolean() ? -1 : 1) * (r.nextInt(15)) + 15;
                 int y = (int) l.getY();
