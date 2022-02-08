@@ -25,20 +25,22 @@ public class ReplaceListeners implements Listener{
 
 
     public void remplazoMob(LivingEntity entity){
-        if(entity instanceof Cow){
-            entity.remove();
-            var vort = entity.getLocation().getWorld().spawn(entity.getLocation(), Creeper.class);
-            Mobs.vortice(vort);
-        }
-        if(entity instanceof Chicken){
-            entity.remove();
-            var silvercos = entity.getLocation().getWorld().spawn(entity.getLocation(), Silverfish.class);
-            Mobs.cosmicSilver(silvercos);
-        }
-        if(entity instanceof Rabbit){
-            entity.remove();
-            var ghastdou = entity.getLocation().getWorld().spawn(entity.getLocation(), Ghast.class);
-            Mobs.riftedGhast(ghastdou);
+        if(entity != null) {
+            if (entity instanceof Cow) {
+                entity.remove();
+                var vort = entity.getLocation().getWorld().spawn(entity.getLocation(), Creeper.class);
+                Mobs.vortice(vort);
+            }
+            if (entity instanceof Chicken) {
+                entity.remove();
+                var silvercos = entity.getLocation().getWorld().spawn(entity.getLocation(), Silverfish.class);
+                Mobs.cosmicSilver(silvercos);
+            }
+            if (entity instanceof Rabbit) {
+                entity.remove();
+                var ghastdou = entity.getLocation().getWorld().spawn(entity.getLocation(), Ghast.class);
+                Mobs.riftedGhast(ghastdou);
+            }
         }
     }
 

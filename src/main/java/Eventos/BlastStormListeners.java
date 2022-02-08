@@ -64,9 +64,10 @@ public class BlastStormListeners implements Listener {
     @EventHandler
     public void onBlastStormEnd(StopBlastStormEvent e){
         Bukkit.getOnlinePlayers().forEach(bossBar::removePlayer);
-
-        Bukkit.getScheduler().cancelTask(TaskBossBarID);
-        TaskBossBarID = null;
+        if(TaskBossBarID != null) {
+            Bukkit.getScheduler().cancelTask(TaskBossBarID);
+            TaskBossBarID = null;
+        }
     }
 
     private static String getTime(){
@@ -142,8 +143,9 @@ public class BlastStormListeners implements Listener {
                 a = a + chance - b;
             }
             if (random.nextInt(a) < chance) {
-                StartBlastStormEvent start = new StartBlastStormEvent();
-                Bukkit.getPluginManager().callEvent(start);
+                e.setCancelled(true);
+                //StartBlastStormEvent start = new StartBlastStormEvent();
+                //Bukkit.getPluginManager().callEvent(start);
             }else{
                 e.setCancelled(true);
             }

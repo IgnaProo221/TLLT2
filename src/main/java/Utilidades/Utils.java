@@ -43,7 +43,7 @@ public class Utils {
     private static int Day() {
         LocalDate FechaActual = LocalDate.now();
 
-        LocalDate FechaInicio = LocalDate.parse("2022-01-25");
+        LocalDate FechaInicio = LocalDate.parse("2022-02-05");
 
         return (int) ChronoUnit.DAYS.between(FechaInicio, FechaActual);
     }

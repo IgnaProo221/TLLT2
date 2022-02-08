@@ -1,6 +1,7 @@
 package Eventos;
 
 import Utilidades.Format;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,33 +26,37 @@ public class BlocksListeners implements Listener{
         if(spawner.getType().equals(Material.SPAWNER)){
             e.setCancelled(true);
         }
+        if (spawner.getType().equals(Material.OBSIDIAN)) {
+            spawner.breakNaturally();
+            Bukkit.getServer().getConsoleSender().sendMessage("OBSIDIANA XD");
+        }
     }
 
-    /*@EventHandler
+    @EventHandler
     public void miedoXd(BlockPlaceEvent e){
         var p = e.getPlayer();
-        if()return;
-        if(!(p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 2))return;
-         if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 2){
-            e.setCancelled(true);
-            p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
-        }else if(p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 3){
-            e.setCancelled(true);
-            p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+        if (p.hasPotionEffect(PotionEffectType.LUCK)) {
+            if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 3) {
+                e.setCancelled(true);
+                p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+            }else if(p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 4){
+                e.setCancelled(true);
+                p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+            }
         }
-    }*/
+    }
 
-    /*@EventHandler
-    public void miedodeMierdaLol(BlockBreakEvent e){
+    @EventHandler
+    public void miedodeMierdaLol(BlockBreakEvent e) {
         var p = e.getPlayer();
-        if(!(p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 2)){
-            return;
-        }else if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 2){
-            e.setCancelled(true);
-            p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
-        }else if(p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 3){
-            e.setCancelled(true);
-            p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+        if (p.hasPotionEffect(PotionEffectType.LUCK)) {
+            if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 3) {
+                e.setCancelled(true);
+                p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+            }else if(p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 4){
+                e.setCancelled(true);
+                p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+            }
         }
-    }*/
+    }
 }

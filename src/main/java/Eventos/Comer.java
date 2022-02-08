@@ -25,15 +25,17 @@ public class Comer implements Listener {
     @EventHandler
     public void comerEv(PlayerItemConsumeEvent e){
         Player p = e.getPlayer();
-         if(p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 1){
-            e.setCancelled(true);
-            p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
-        }else if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 2){
-            e.setCancelled(true);
-            p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
-        }else if(p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 3){
-            e.setCancelled(true);
-            p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+        if (p.hasPotionEffect(PotionEffectType.LUCK)) {
+            if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 2) {
+                e.setCancelled(true);
+                p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+            }else if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 3) {
+                e.setCancelled(true);
+                p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+            }else if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 4) {
+                e.setCancelled(true);
+                p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+            }
         }
         if(e.getItem() != null && e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(ChatColor.GRAY + "Fungal Clumps")){
             if (plugin.getConfig().getStringList("ConsumidodoFungalClumps").contains(p.getUniqueId().toString())) {

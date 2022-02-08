@@ -1,10 +1,17 @@
 package Utilidades;
 
+<<<<<<< HEAD
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.boss.BarColor;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftBee;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftIronGolem;
+=======
+
+import org.bukkit.*;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.boss.BarColor;
+>>>>>>> c3242743cd2d4882f4a530b227accfaea4cd72df
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
@@ -355,10 +362,11 @@ public class Mobs implements Listener{
 
 
 
-    public static void lavaGolem(IronGolem self){
+    public static void lavaGolem(IronGolem self) {
         self.setCustomName(format("&6&lLava Golem"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(150);
         self.setHealth(150);
+<<<<<<< HEAD
         self.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE,Integer.MAX_VALUE,0, false, false, false));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"LAVA_GOLEM"),PersistentDataType.STRING, "LAVA_GOLEM");
         CraftIronGolem craft = ((CraftIronGolem) self);
@@ -370,6 +378,10 @@ public class Mobs implements Listener{
                 e.printStackTrace();
                 Warn.Mutant(e);
             }*/
+=======
+        self.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false, false));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "LAVA_GOLEM"), PersistentDataType.STRING, "LAVA_GOLEM");
+>>>>>>> c3242743cd2d4882f4a530b227accfaea4cd72df
     }
 
     public static void vortice(Creeper self){
@@ -380,7 +392,7 @@ public class Mobs implements Listener{
         self.setPowered(true);
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
         self.setHealth(50);
-        self.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(1.4);
+        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 3, false, false, false));
         self.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,Integer.MAX_VALUE, 0, false, false, false));
     }
 
@@ -389,7 +401,7 @@ public class Mobs implements Listener{
         self.setHealth(1);
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(1);
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20.0);
-        self.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(1.2);
+        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 3, false, false, false));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"COSMIC_SILVERFISH"), PersistentDataType.STRING, "COSMIC_SILVERFISH");
     }
 
@@ -400,7 +412,17 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(500);
         self.setHealth(500);
         self.setRemoveWhenFarAway(true);
+        self.setPersistent(false);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"TYRANT_WITHER"), PersistentDataType.STRING, "TYRANT_WITHER");
+    }
+    public static void galaxyCalamity(Creeper self){
+        self.setCustomName(format("&b&lCosmos &dCalamity"));
+        self.setPowered(true);
+        self.setMaxFuseTicks(10);
+        self.setFuseTicks(10);
+        self.setExplosionRadius(0);
+        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 4, false, false, false));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"COSMOS_CALAMITY"), PersistentDataType.STRING, "COSMOS_CALAMITY");
     }
 
 
@@ -450,6 +472,7 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
         self.setHealth(30);
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10);
+<<<<<<< HEAD
 
 
         CraftBee craft = ((CraftBee) self);
@@ -463,6 +486,9 @@ public class Mobs implements Listener{
             Warn.Mutant(e);
 
          */
+=======
+        self.setAnger(Integer.MAX_VALUE);
+>>>>>>> c3242743cd2d4882f4a530b227accfaea4cd72df
     }
 
 
@@ -548,6 +574,7 @@ public class Mobs implements Listener{
         self.setHealth(50);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXO_GOLEM"), PersistentDataType.STRING, "EXO_GOLEM");
         ///pongan que el golem este enojado porfavor
+<<<<<<< HEAD
 /*
         CraftIronGolem craft = ((CraftIronGolem) self);
         net.minecraft.world.entity.animal.IronGolem entityGolem = craft.getHandle();
@@ -561,6 +588,9 @@ public class Mobs implements Listener{
         }
         
  */
+=======
+
+>>>>>>> c3242743cd2d4882f4a530b227accfaea4cd72df
     }
 
     public static void labSilver(Silverfish self){
@@ -786,5 +816,58 @@ public class Mobs implements Listener{
 
 
 
+    //PARASITOS Y ESAS COSAS
+    public static void parasite(Endermite self){
+        self.setCustomName(format("&1Parasite"));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"PARASITE_MINOR"),PersistentDataType.STRING,"PARASITE_MINOR");
+    }
+    public static void parasite2(Bee self){
+        self.setCustomName(format("&1Parasite"));
+        self.setAnger(Integer.MAX_VALUE);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"PARASITE_MINOR"),PersistentDataType.STRING,"PARASITE_MINOR");
+    }
+    public static void minorparasite1(CaveSpider self){
+        self.setCustomName(format("&1Incomplete Parasite"));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"PARASITE_MINOR"),PersistentDataType.STRING,"PARASITE_MINOR");
+    }
+    public static void minorparasite2(Vex self){
+        self.setCustomName(format("&1Flying Parasite"));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"PARASITE_MINOR"),PersistentDataType.STRING,"PARASITE_MINOR");
+    }
 
+    //PARASITOS NORMALES
+    public static void parasitez(Zombie self){
+        self.setCustomName(format("&1&lParasite Z"));
+        self.setShouldBurnInDay(false);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
+        self.setHealth(40);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
+        self.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(20);
+        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, false, false, false));
+        self.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, Integer.MAX_VALUE, 1, false, false, false));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"PARASITE_NORMAL"),PersistentDataType.STRING,"PARASITE_NORMAL");
+    }
+    public static void parasitearcher1(Skeleton self){
+        self.setCustomName(format("&1&lParasite Archer"));
+        self.setShouldBurnInDay(false);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
+        self.setHealth(40);
+        ItemStack flecha1 = new ItemStack(Material.TIPPED_ARROW, 64);
+        PotionMeta flecha1efect = (PotionMeta) flecha1.getItemMeta();
+        flecha1efect.setBasePotionData(new PotionData(PotionType.SLOWNESS));
+        flecha1efect.addCustomEffect(new PotionEffect(PotionEffectType.SLOW, 400, 1), true);
+        flecha1efect.addCustomEffect(new PotionEffect(PotionEffectType.POISON, 400, 1), true);
+        flecha1efect.addCustomEffect(new PotionEffect(PotionEffectType.CONFUSION, 400, 1), true);
+        flecha1.setItemMeta(flecha1efect);
+        ItemStack bowed = new ItemStack(Material.BOW);
+        ItemMeta meta = bowed.getItemMeta();
+        meta.setUnbreakable(true);
+        meta.addEnchant(Enchantment.ARROW_DAMAGE, 50, true);
+        meta.addEnchant(Enchantment.ARROW_FIRE,1,true);
+        bowed.setItemMeta(meta);
+        self.getEquipment().setItemInMainHandDropChance(0);
+        self.getEquipment().setItemInOffHandDropChance(0);
+        self.getEquipment().setItemInOffHand(flecha1);
+        self.getEquipment().setItemInMainHand(bowed);
+    }
 }

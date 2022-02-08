@@ -56,7 +56,7 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
             listadecmd.setText(ChatColor.YELLOW + "Lista de Comandos (has click aqui)");
             listadecmd.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/thelastlife comandoslista"));
             sender.sendMessage(ChatColor.GOLD + "----- TLL T2 -----");
-            sender.sendMessage(ChatColor.YELLOW + "Plugin para THE LAST LIFE T2, hecho por Mr_StupidMutant");
+            sender.sendMessage(ChatColor.YELLOW + "Plugin para THE LAST LIFE T2, hecho por MutantFm");
             sender.sendMessage(ChatColor.YELLOW + "Prefix de Comando: /thelastlife");
             sender.sendMessage(creditos);
             sender.sendMessage(listadecmd);
@@ -69,23 +69,22 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
 
         if(args[0].equalsIgnoreCase("creditos")){
             sender.sendMessage(ChatColor.DARK_GRAY + "------ CREDITOS ------");
-            sender.sendMessage(ChatColor.AQUA + "iTsContrasMC: " + ChatColor.GRAY + "Creador de TLL");
-            sender.sendMessage(ChatColor.AQUA + "WickedDroid, MutantFm, ItzFel17 & LePepos: " + ChatColor.GRAY + "Desarrolladores del Plugin");
-            sender.sendMessage(ChatColor.AQUA + "JohanBigCum: " + ChatColor.GRAY + "Hostear el Server!");
-            sender.sendMessage(ChatColor.AQUA + "Carrot, Seven, GusGus y Tom_: " + ChatColor.GRAY + "Diseños, Modelos y Texturas ");
-            sender.sendMessage(ChatColor.AQUA + "Mikel_Craft: " + ChatColor.GRAY + "Estructuras del server");
-            sender.sendMessage(ChatColor.AQUA + "Apinga2 y Yisus " + ChatColor.GRAY + "Beta Testers de TLL T2");
-            sender.sendMessage(ChatColor.AQUA + "Antonio, Wither, Alex y Admi9 " + ChatColor.GRAY + "Ayuda Principal, y Moderacion");
+            sender.sendMessage(ChatColor.AQUA + "MutantFm: " + ChatColor.GRAY + "Organizador de TLL.");
+            sender.sendMessage(ChatColor.AQUA + "WickedDroid, ItzFel17 & LePepos: " + ChatColor.GRAY + "Desarrolladores del Plugin.");
+            sender.sendMessage(ChatColor.AQUA + "JohanBigCum y Null1390: " + ChatColor.GRAY + "Hostear el Server.");
+            sender.sendMessage(ChatColor.AQUA + "Carrot, Seven, GusGus, TheSmol_T, Skarby y NovaKingdom: " + ChatColor.GRAY + "Diseños, Modelos, Texturas y Sonidos.");
+            sender.sendMessage(ChatColor.AQUA + "cBaguette y wHermes: " + ChatColor.GRAY + "Estructuras del server.");
+            sender.sendMessage(ChatColor.AQUA + "Storm_WaterTime, kennyelduro, 5r_i4n, Pepe_3012, Mikel, SalvaGamer, Wither y Gatin72 " + ChatColor.GRAY + "Beta Testers de TLL T2.");
+            sender.sendMessage(ChatColor.AQUA + "Alex, LechugaMC, Blackstamp y Tom_" + ChatColor.GRAY + "Ayuda Principal, y Moderacion.");
             sender.sendMessage(ChatColor.DARK_GRAY + "----------------------");
         }
         if(args[0].equalsIgnoreCase("comandoslista")) {
             sender.sendMessage(ChatColor.DARK_GRAY + "------ COMANDOS ------");
             sender.sendMessage(ChatColor.GOLD + "creditos: " + ChatColor.GRAY + "Muestra los creditos de TLL");
             sender.sendMessage(ChatColor.GOLD + "receta <ITEM>: " + ChatColor.GRAY + "Muestra la receta del item seleccionado");
-            sender.sendMessage(ChatColor.GOLD + "mob <MOB>: " + ChatColor.GRAY + "Muestra algo de Info del Mob");
             sender.sendMessage(ChatColor.GOLD + "dia: " + ChatColor.GRAY + "Muestra el dia donde nos encontramos");
             sender.sendMessage(ChatColor.GOLD + "tps: " + ChatColor.GRAY + "Muestra los TPS del servidor");
-            sender.sendMessage(ChatColor.GOLD + "sacrificios: " + ChatColor.GRAY + "Muestra la Cantidad de Sacrificios que has Hecho");
+            sender.sendMessage(ChatColor.GOLD + "sacrificios: " + ChatColor.GRAY + "Muestra Info sobre los Sacrificios");
             sender.sendMessage(ChatColor.DARK_GRAY + "----------------------");
         }
         if(args[0].equalsIgnoreCase("tps")){

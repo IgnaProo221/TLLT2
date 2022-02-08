@@ -1,8 +1,11 @@
 package Extras;
 
+import Utilidades.Format;
+import Utilidades.Mobs;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -40,6 +43,11 @@ public class EnderPearlEvent implements Listener {
             if (enderfail < 10) {
                 e.setCancelled(true);
                 p.sendMessage(ChatColor.RED + "La Enderpearl que Tiraste no te Teletransporto Correctamente!");
+            } else if(enderfail < 20){
+                e.setCancelled(true);
+                p.sendMessage(Format.PREFIX, Format.format("&c&l¡Se genero un &b&lVorticé &c&len tu Posicion!"));
+                var creeprr = p.getLocation().getWorld().spawn(p.getLocation(), Creeper.class);
+                Mobs.vortice(creeprr);
             }
         }
     }

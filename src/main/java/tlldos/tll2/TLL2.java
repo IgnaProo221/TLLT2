@@ -6,17 +6,23 @@ import Eventos.*;
 import Extras.*;
 import Utilidades.Configuration;
 import Utilidades.Mobs;
-import Utilidades.Utils;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.World;
+import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
-public final class TLL2 extends JavaPlugin {
+import java.util.Random;
+
+public final class TLL2 extends JavaPlugin implements Listener{
     public World world;
     private Configuration config;
+    ReplaceListeners replaceListeners;
+
+
 
     @Override
     public void onEnable() {
@@ -37,6 +43,9 @@ public final class TLL2 extends JavaPlugin {
 
             cargarEventos();
             //tormentaTick();
+            sinofuncionamemato();
+            tickTormenta();
+            pichaXd();
             getCommand("thelastlife").setExecutor(new ComandosUsuarios(this));
             getCommand("tllstaff").setExecutor(new ComandosStaff(this));
 
@@ -79,13 +88,60 @@ public final class TLL2 extends JavaPlugin {
                 new DropsListeners(this),
                 new ChatListeners(this),
                 new NMSSpawn(this),
-                new ReplaceListeners(this)
+                new ReplaceListeners(this),
+                new WorldEventsListeners(this)
         );
     }
 
     private void registerListeners(Listener... listeners){
         for(Listener listener : listeners){
             getServer().getPluginManager().registerEvents(listener, this);
+        }
+    }
+
+    public void sinofuncionamemato(){
+        Bukkit.getScheduler().runTaskTimer(this,()->{
+            /*for (World worlds : Bukkit.getWorlds()) {
+                for (LivingEntity liv : worlds.getLivingEntities()) {
+                    replaceListeners.remplazoMob(liv);
+                }
+            }*/
+            pichaXd();
+        },0L,20L);
+
+    }
+
+    public void tickTormenta(){
+        if(world.getWeatherDuration() != 0){
+            Bukkit.getScheduler().runTaskTimer(this, ()->{
+                if(world.isThundering()) {
+                    Bukkit.getOnlinePlayers().forEach(player -> {
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK, 100, 0, true, false, true));
+                    });
+                }
+            },0L, 20L);
+
+        }
+    }
+    public void pichaXd() {
+        Random r = new Random();
+        if (Bukkit.getOnlinePlayers().size() < 1) return;
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            Location l = player.getLocation().clone();
+            if (r.nextInt(2) == 1) {
+                int pX = (r.nextBoolean() ? -1 : 1) * (r.nextInt(15)) + 15;
+                int pZ = (r.nextBoolean() ? -1 : 1) * (r.nextInt(15)) + 15;
+                int y = (int) l.getY();
+
+                Block block = l.getWorld().getBlockAt(l.getBlockX() + pX, y, l.getBlockZ() + pZ);
+                Block up = block.getRelative(BlockFace.UP);
+
+                if (block.getType() != Material.AIR && up.getType() == Material.AIR) {
+                    var vorlolxdxdxd = player.getLocation().getWorld().spawn(block.getLocation(), Creeper.class);
+                    Mobs.vortice(vorlolxdxdxd);
+                    getServer().getConsoleSender().sendMessage("DEBUG DE CREEPERS Y ESA MIERDA XDDDDDDDDDD");
+                }
+            }
         }
     }
 

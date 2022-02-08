@@ -1,8 +1,8 @@
 package Eventos;
 
-import CustomMobs.FlyingNightmare;
 import Utilidades.Mobs;
 import Utilidades.Warn;
+<<<<<<< HEAD
 import net.minecraft.world.entity.Entity;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
@@ -10,6 +10,9 @@ import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.LivingEntity;
+=======
+import org.bukkit.entity.*;
+>>>>>>> c3242743cd2d4882f4a530b227accfaea4cd72df
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -27,19 +30,8 @@ public class NMSSpawn implements Listener{
             if(!(e.getEntity() instanceof Animals)) return;
             if(e.getLocation().getBlock().isLiquid()) return;
 
-            if ((int)(Math.random() * 10) == 1){
-                FlyingNightmare flyingNightmare = new FlyingNightmare(e.getLocation());
-                CraftWorld world = ((CraftWorld)e.getLocation().getWorld());
-                LivingEntity elpep = (LivingEntity)flyingNightmare;
-                elpep.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
-                elpep.setHealth(50);
-                elpep.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"FLYING_NIGHTMARE"), PersistentDataType.STRING, "FLYING_NIGHTMARE");
-                world.addEntityToWorld(flyingNightmare, CreatureSpawnEvent.SpawnReason.CUSTOM);
-            }else if((int)(Math.random() * 10) == 10){
-                var dymensesenta = e.getLocation().getWorld().spawn(e.getLocation(), Creeper.class);
-                Mobs.riftedCreeper(dymensesenta);
-                CraftWorld world = ((CraftWorld)e.getLocation().getWorld());
-                world.addEntityToWorld((Entity) dymensesenta, CreatureSpawnEvent.SpawnReason.CUSTOM);
+            if ((int)(Math.random() * 10) == 100){
+
             }
         }catch (Exception exception){
             exception.printStackTrace();
