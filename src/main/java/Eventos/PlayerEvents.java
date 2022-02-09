@@ -71,7 +71,7 @@ public class PlayerEvents implements Listener {
 
                 p.damage(0.2D);
                 p.sendMessage(Format.format(String.format("&cHaz hecho tu sacrificio #%s", totalSacrifices)));
-                p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()-1.0D);
+                p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()-2.0D);
                 giveReward(p);
             }
         }
@@ -117,8 +117,8 @@ public class PlayerEvents implements Listener {
                     if (p.hasCooldown(Material.PRISMARINE_CRYSTALS)) {
                         event.setCancelled(true);
                     } else {
-                        p.getPersistentDataContainer().set(new NamespacedKey(plugin, "TOTEM_BAR"), PersistentDataType.INTEGER, 100);
-                        p.setCooldown(Material.PRISMARINE_CRYSTALS, 24000);
+                        EventosItems.totemrestorerEvent(p, plugin);
+                        //alguien puede hacer que al usar esto se saque 1 totem restorer si es que esta stackeado? gracias
                         p.getInventory().removeItem(new ItemStack(Material.PRISMARINE_CRYSTALS, 1));
                     }
                 } catch (Exception e) {
@@ -170,7 +170,7 @@ public class PlayerEvents implements Listener {
         } else if (randomInt >= 90 && randomInt <= 95 ) {
             Bukkit.broadcast(Component.text(Format.format(String.format("&cEl jugador %s recibió la bendición de sangre por su sacrificio...", player.getName()))));
 
-            player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 2.0D);
+            player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 1.0D);
         } else if (randomInt >= 95 && randomInt < 99) {
             Bukkit.broadcast(Component.text(Format.format(String.format("&cEl sacrificio del jugador %s no fue digno de una recompensa...", player.getName()))));
         } else {

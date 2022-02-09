@@ -147,7 +147,7 @@ public class Items {
         lore.add(Component.text(format("&c&lEs Recomendable no usar Fire Aspect en esta Espada")));
 
         return new ItemBuilder(Material.NETHERITE_SWORD)
-                .setName(format("&c&lFallen Rage"))
+                .setName(format("&b&lFrostbite"))
                 .setCustomModelData(4006)
                 .setLore(lore)
                 .addEnchantment(Enchantment.SWEEPING_EDGE, 3)
@@ -213,7 +213,7 @@ public class Items {
         lore.add(Component.text(format("&7Celulas antiguas usadas por los Laboratorios")));
         lore.add(Component.text(format("&7su energía proviene de algo desconocido")));
         lore.add(Component.text(format("")));
-        return new ItemBuilder(Material.GOLD_NUGGET).setName(format("&4Celulas de Energía")).setLore(lore).build();
+        return new ItemBuilder(Material.GOLD_NUGGET).setName(format("&4Celulas de Energía")).setLore(lore).setCustomModelData(4111).build();
     }
 
     public static ItemStack metaldes(){
@@ -231,7 +231,7 @@ public class Items {
         lore.add(Component.text(format("&7Si el escudo es Dañado por una Entidad")));
         lore.add(Component.text(format("&7este es Paralizado!")));
         lore.add(Component.text(format("&7al Tenerlo en mano eres imune al daño por Rayos")));
-        return new ItemBuilder(Material.SHIELD).setName(format("&6&lExo-Shield")).setLore(lore).setUnbreakable(true).setCustomModelData(5005).build();
+        return new ItemBuilder(Material.SHIELD).setName(format("&6&lExo-Shield")).setLore(lore).setUnbreakable(true).setCustomModelData(5015).build();
     }
 
     public static ItemStack iceShot(){
@@ -240,6 +240,50 @@ public class Items {
         lore.add(Component.text(format("&7Si una flecha impacata contra un mob")));
         lore.add(Component.text(format("&7este es Congelado!")));
         return new ItemBuilder(Material.BOW).setName(format("&b&lIce-Shot")).setLore(lore).setUnbreakable(true).setCustomModelData(5080).build();
+    }
+
+    public static ItemStack exoDrill(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lHABILIDAD: &e&lExo-Scan")));
+        lore.add(Component.text(format("&7Ciertos Bloques dropearan Items Extras")));
+        lore.add(Component.text(format("&7Esos Items se añadiran a tu Inventario")));
+        return new ItemBuilder(Material.NETHERITE_PICKAXE).setName(format("&6&lExo-Driller")).setLore(lore).setUnbreakable(true).setCustomModelData(6660).addEnchantment(Enchantment.DIG_SPEED, 5).build();
+    }
+
+
+
+    //Blood Armor
+    public static ItemStack bloodyHelmet(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Una Armadura hecho de la sangre de millones.")));
+        lore.add(Component.text(format("&7Tener el Set Completo otorgara 6 corazones extras.")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.NETHERITE_HELMET).setName(format("&c&lBloodstained Helmet")).setLore(lore).setUnbreakable(true).setCustomModelData(8010).build();
+    }
+    public static ItemStack bloodyChestplate(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Una Armadura hecho de la sangre de millones.")));
+        lore.add(Component.text(format("&7Tener el Set Completo otorgara 6 corazones extras.")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.NETHERITE_CHESTPLATE).setName(format("&c&lBloodstained Chestplate")).setLore(lore).setUnbreakable(true).setCustomModelData(8010).build();
+    }
+    public static ItemStack bloodyLeggings(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Una Armadura hecho de la sangre de millones.")));
+        lore.add(Component.text(format("&7Tener el Set Completo otorgara 6 corazones extras.")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.NETHERITE_LEGGINGS).setName(format("&c&lBloodstained Leggings")).setLore(lore).setUnbreakable(true).setCustomModelData(8010).build();
+    }
+    public static ItemStack bloodyBoots(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Una Armadura hecho de la sangre de millones.")));
+        lore.add(Component.text(format("&7Tener el Set Completo otorgara 6 corazones extras.")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.NETHERITE_BOOTS).setName(format("&c&lBloodstained Boots")).setLore(lore).setUnbreakable(true).setCustomModelData(8010).build();
     }
 
 }

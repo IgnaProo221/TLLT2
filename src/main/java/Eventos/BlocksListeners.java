@@ -3,6 +3,7 @@ package Eventos;
 import Utilidades.Format;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -21,14 +22,9 @@ public class BlocksListeners implements Listener{
 
 
     @EventHandler
-    public void spawnerXd(BlockExplodeEvent e){
-        var spawner = e.getBlock();
-        if(spawner.getType().equals(Material.SPAWNER)){
-            e.setCancelled(true);
-        }
-        if (spawner.getType().equals(Material.OBSIDIAN)) {
-            spawner.breakNaturally();
-            Bukkit.getServer().getConsoleSender().sendMessage("OBSIDIANA XD");
+    public void bambuInutil(BlockBreakEvent e){
+        if(e.getBlock().getType() == Material.BAMBOO || e.getBlock().getType() == Material.BAMBOO_SAPLING){
+            e.getBlock().getLocation().createExplosion(10,true,true);
         }
     }
 

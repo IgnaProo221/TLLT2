@@ -119,36 +119,38 @@ public class Muerte extends ListenerAdapter implements Listener {
         data.set(Utils.key("Y") , PersistentDataType.DOUBLE, loc.getY());
         data.set(Utils.key("Z"), PersistentDataType.DOUBLE, loc.getZ());
         data.set(Utils.key("WORLD"), PersistentDataType.STRING, loc.getWorld().getName());
-        if(p.getWorld().getEnvironment() == World.Environment.NORMAL){
-            Utils.pasteSchematic("overworld", p.getLocation());
-            Block skullBlock = location.clone().add(0, 4, 0).getBlock();
-            skullBlock.setType(Material.PLAYER_HEAD);
-            BlockState state = skullBlock.getState();
-            Skull skull = (Skull) state;
-            UUID uuid = p.getUniqueId();
-            skull.setOwningPlayer(Bukkit.getServer().getOfflinePlayer(uuid));
-            skull.update();
-        }else if(p.getWorld().getEnvironment() == World.Environment.NETHER){
-            Utils.pasteSchematic("nether", p.getLocation());
-            Block skullBlock = location.clone().add(0, 4, 0).getBlock();
-            skullBlock.setType(Material.PLAYER_HEAD);
-            BlockState state = skullBlock.getState();
-            Skull skull = (Skull) state;
-            UUID uuid = p.getUniqueId();
-            skull.setOwningPlayer(Bukkit.getServer().getOfflinePlayer(uuid));
-            skull.update();
-        }else if(p.getWorld().getEnvironment() == World.Environment.THE_END){
-            Utils.pasteSchematic("end", p.getLocation());
-            Block skullBlock = location.clone().add(0, 4, 0).getBlock();
-            skullBlock.setType(Material.PLAYER_HEAD);
-            BlockState state = skullBlock.getState();
-            Skull skull = (Skull) state;
-            UUID uuid = p.getUniqueId();
-            skull.setOwningPlayer(Bukkit.getServer().getOfflinePlayer(uuid));
-            skull.update();
-        }else{
-            p.sendMessage(format("&6no se detecto el mundo y la estructura no se genero, rip bozo XD #packwatch"));
-        }
+        Bukkit.getScheduler().runTaskLater(Utils.getPlugin(), () ->{
+            if(p.getWorld().getEnvironment() == World.Environment.NORMAL){
+                Utils.pasteSchematic("overworld", p.getLocation());
+                Block skullBlock = location.clone().add(0, 4, 0).getBlock();
+                skullBlock.setType(Material.PLAYER_HEAD);
+                BlockState state = skullBlock.getState();
+                Skull skull = (Skull) state;
+                UUID uuid = p.getUniqueId();
+                skull.setOwningPlayer(Bukkit.getServer().getOfflinePlayer(uuid));
+                skull.update();
+            }else if(p.getWorld().getEnvironment() == World.Environment.NETHER){
+                Utils.pasteSchematic("nether", p.getLocation());
+                Block skullBlock = location.clone().add(0, 4, 0).getBlock();
+                skullBlock.setType(Material.PLAYER_HEAD);
+                BlockState state = skullBlock.getState();
+                Skull skull = (Skull) state;
+                UUID uuid = p.getUniqueId();
+                skull.setOwningPlayer(Bukkit.getServer().getOfflinePlayer(uuid));
+                skull.update();
+            }else if(p.getWorld().getEnvironment() == World.Environment.THE_END){
+                Utils.pasteSchematic("end", p.getLocation());
+                Block skullBlock = location.clone().add(0, 4, 0).getBlock();
+                skullBlock.setType(Material.PLAYER_HEAD);
+                BlockState state = skullBlock.getState();
+                Skull skull = (Skull) state;
+                UUID uuid = p.getUniqueId();
+                skull.setOwningPlayer(Bukkit.getServer().getOfflinePlayer(uuid));
+                skull.update();
+            }else{
+                p.sendMessage(format("&6no se detecto el mundo y la estructura no se genero, rip bozo XD #packwatch"));
+            }
+        },3L);
         for (Player players : Bukkit.getOnlinePlayers()){
 
             players.sendTitle(format("&c&l&k|||  &6&l&kThe Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
@@ -236,7 +238,8 @@ public class Muerte extends ListenerAdapter implements Listener {
         eb.setDescription(":fire:** ¡La Blast Storm invade los Cielos, preparense para Sufrir! **:fire:");
         eb.addField(":skull: **Causa de Muerte: **", e.getDeathMessage(), true);
         eb.addField(":beginner: **Dia: **" + Utils.getDay(), "", true);
-        eb.addField(":map: **Cordernadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ() + " Mundo: " + dimension(p.getLocation()), true);
+        eb.addField(":map: **Coordenadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ() + " Mundo: " + dimension(p.getLocation()), true);
+        eb.addField(":globe_with_meridians: **Dimension: **", dimension(p.getLocation()),true);
         eb.addField(":low_brightness: **Fecha: **" + Fecha, "", true);
         eb.addField(":alarm_clock: **Hora: **" + Tiempo,"",true);
         eb.setThumbnail("https://crafatar.com/renders/head/" + p.getUniqueId() + ".png");
@@ -250,7 +253,6 @@ public class Muerte extends ListenerAdapter implements Listener {
     public void onRespawn(PlayerRespawnEvent e){
         Player p = e.getPlayer();
         PersistentDataContainer data = Data.get(p);
-        if(!e.getRespawnFlags().equals(PlayerRespawnEvent.RespawnFlag.END_PORTAL)) {
             try {
                 double X = data.get(Utils.key("X"), PersistentDataType.DOUBLE);
                 double Y = data.get(Utils.key("Y"), PersistentDataType.DOUBLE);
@@ -261,14 +263,15 @@ public class Muerte extends ListenerAdapter implements Listener {
             } catch (NullPointerException ex) {
                 Bukkit.getConsoleSender().sendMessage("RESPAWN EVENT ERROR:" + ex);
             }
-        }
     }
 
     public static String dimension(Location location){
-        return switch (location.getWorld().getEnvironment()) {
-            case NORMAL -> "Overworld";
-            case NETHER -> "Nether";
-            case THE_END -> "The End";
+        return switch (location.getWorld().getName()) {
+            case "world" -> "Overworld";
+            case "world_nether" -> "Nether";
+            case "world_the_end" -> "The End";
+            case "build_world" -> "Mundo de Builders (Pendejo)";
+            case "lost_world" -> "Lost Cities";
             default -> "Desconocido";
         };
     }

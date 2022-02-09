@@ -402,6 +402,14 @@ public class Mobs implements Listener{
         self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 4, false, false, false));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"COSMOS_CALAMITY"), PersistentDataType.STRING, "COSMOS_CALAMITY");
     }
+    public static void ladronFel(Vindicator self){
+        self.setCustomName(format("&cLadrón"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
+        self.setHealth(40);
+        self.getEquipment().setItemInMainHand(new ItemStack(Material.GOLD_INGOT));
+        self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"THIEF"),PersistentDataType.STRING, "THIEF");
+    }
 
 
 

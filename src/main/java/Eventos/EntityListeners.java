@@ -264,6 +264,20 @@ public class EntityListeners implements Listener {
                     p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 1200, 4, true, true, true));
                     }
             }
+            if(damager instanceof Vindicator vindicator){
+                if(vindicator.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"THIEF"),PersistentDataType.STRING)){
+                    var player = (Player) entity;
+                    var inv = player.getInventory().getContents();
+                    var pos = random.nextInt(inv.length);
+                    var item = inv[pos];
+
+                    if(item != null){
+                        var drop = item.clone();
+                        player.getInventory().setItem(pos, null);
+                        player.getWorld().dropItemNaturally(player.getLocation().add(0, 5, 0), drop);
+                    }
+                }
+            }
         }
 
     }
@@ -401,8 +415,14 @@ public class EntityListeners implements Listener {
     @EventHandler
     public void explotarRadi(EntityExplodeEvent e){
         var entity = (Entity)e.getEntity();
+        if(e.blockList() != null){
+            e.blockList().forEach(block -> {
+                if(block.getType() == Material.OBSIDIAN){
+                    block.breakNaturally();
+                }
+            });
+        }
         if(entity instanceof Creeper creeper){
-
             if(creeper.getPersistentDataContainer().has(new NamespacedKey(Utils.getPlugin(), "HELLFIRE_CREEPER"), PersistentDataType.STRING)){
                 entity.getLocation().getNearbyPlayers( 10, 10, 10).forEach(player -> player.setFireTicks(1200));
 /*                Player nearby2 = (Player)entity.getLocation().getWorld().getNearbyPlayers(entity.getLocation(), 10.0D,10.0D,10.0D);
@@ -543,12 +563,21 @@ public class EntityListeners implements Listener {
     public void escudoHabiliadd(EntityDamageByEntityEvent e){
         var entity = e.getEntity();
         var damager = e.getDamager();
-        if(entity instanceof Player player){
-            if(player.isBlocking()){
-                if(player.getInventory().getItemInMainHand().equals(Items.exoShield()) ||player.getInventory().getItemInOffHand().equals(Items.exoShield())){
-                    if(damager instanceof Monster monster){
-                        monster.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 99, false, false, false));
-                        monster.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 200, 0, false, false, false));
+        if(entity instanceof Player player) {
+            if (player.isBlocking()) {
+                if (player.getInventory().getItemInMainHand() != null || player.getInventory().getItemInOffHand() != null) {
+                    if (player.getInventory().getItemInMainHand().hasItemMeta() || player.getInventory().getItemInOffHand().hasItemMeta()) {
+                        if (player.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || player.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()) {
+                            if (player.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 5015 || player.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 5015) {
+                                if (damager instanceof Monster monster) {
+                                    monster.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 99, false, false, false));
+                                    monster.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 200, 0, false, false, false));
+                                }
+                                if(e.getCause() == EntityDamageEvent.DamageCause.LIGHTNING){
+                                    e.setDamage(0);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -558,14 +587,20 @@ public class EntityListeners implements Listener {
     @EventHandler
     public void arcoHabilidaddes(ProjectileHitEvent event){
         var projectile = event.getEntity();
-        var damaged = event.getHitBlock();
+        var damaged = event.getHitEntity();
         var shooter = event.getEntity().getShooter();
         if(shooter instanceof Player){
             if(projectile instanceof Arrow){
-                if(((Player) shooter).getInventory().getItemInMainHand().equals(Items.iceShot())){
-                    var entity = (Entity)damaged;
-                    if(entity != null){
-                        entity.setFreezeTicks(1200);
+                Player p = (Player) shooter;
+                if(p.getInventory().getItemInMainHand() != null ||p.getInventory().getItemInOffHand() != null){
+                    if(p.getInventory().getItemInMainHand().hasItemMeta() || p.getInventory().getItemInOffHand().hasItemMeta()){
+                        if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()){
+                            if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 5080 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 5080){
+                                if(damaged != null){
+                                    damaged.setFreezeTicks(1200);
+                                }
+                            }
+                        }
                     }
                 }
             }

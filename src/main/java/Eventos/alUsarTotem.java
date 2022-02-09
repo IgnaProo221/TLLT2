@@ -42,31 +42,29 @@ public class alUsarTotem implements Listener {
                     int TotemCara = new Random().nextInt(6) + 1;
                     PersistentDataContainer data = p.getPersistentDataContainer();
 
-                    TotemsBar.anadirTC(p);
-                    if(TotemsBar.getPorcentaje(p) == 200){
+                    //TotemsBar.anadirTC(p);
+                    /*if(TotemsBar.getPorcentaje(p) == 200){
                         e.setCancelled(true);
                         Bukkit.getOnlinePlayers().forEach(player -> {
                             player.sendMessage(Format.PREFIX + format("&8&l¡Los Totems del Jugador " + p.getName() + " se han desactivado y ha muerto! &c&l(Su Porcentaje de Totems esta en 0%)"));
 
                         });
                         return;
-                    }
-                    /*if(!data.has(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER)){
+                    }*/
+                    if(!data.has(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER)){
                         data.set(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER, 100);
                     }else{
                         int i = data.get(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER);
                         data.set(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER, i - 5);
-
-                        p.sendMessage(Format.format(String.format("asd: %d", i)));
                     }
-
                     if (data.get(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER) == 0) {
                         e.setCancelled(true);
 
                         for (Player players : Bukkit.getOnlinePlayers()) {
-                            players.sendMessage(format("&7¡El jugador &c" + p.getName() + "&7 ha llegado al &c0%&7!"));
+                            players.sendMessage(Format.PREFIX + format("&8&l¡Los Totems del Jugador " + p.getName() + " se han desactivado y ha muerto! &c&l(Su Porcentaje de Totems esta en 0%)"));
                         }
-                    }*/
+                        return;
+                    }
 
                     if (p.hasCooldown(Material.TOTEM_OF_UNDYING)) {
 

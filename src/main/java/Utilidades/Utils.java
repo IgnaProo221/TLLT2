@@ -56,7 +56,7 @@ public class Utils {
             loc.setY(0);
         }
         int X = loc.getBlockX();
-        int Y = loc.getBlockZ();
+        int Y = loc.getBlockY();
         int Z = loc.getBlockZ();
 
         File file = new File(plugin.getDataFolder().getPath() + "/schematics/" + filename + ".schem");
@@ -70,7 +70,7 @@ public class Utils {
                 try (EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(adaptedWorld,-1)) {
                     Operation operation = new ClipboardHolder(clipboard).createPaste(editSession).to(BlockVector3.at(X, Y, Z)).copyEntities(true)
                             .ignoreAirBlocks(true).build();
-                    Bukkit.getConsoleSender().sendMessage("La Schematic se pego en " + loc.getBlock().getX() +loc.getBlock().getY() +loc.getBlock().getZ());
+                    Bukkit.getConsoleSender().sendMessage("La Schematic se pego en " + loc.getBlock().getX() +"  "+loc.getBlock().getY() +"  "+loc.getBlock().getZ());
                     try {
                         Operations.complete(operation);
                         editSession.flushSession();

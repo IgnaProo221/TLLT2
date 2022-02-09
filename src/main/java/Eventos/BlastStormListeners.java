@@ -2,10 +2,7 @@ package Eventos;
 
 import Utilidades.Format;
 import Utilidades.Utils;
-import org.bukkit.Bukkit;
-import org.bukkit.GameRule;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -56,7 +53,8 @@ public class BlastStormListeners implements Listener {
         world.setTime(18000);
         Bukkit.getScheduler().scheduleSyncDelayedTask(Utils.getPlugin(), () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
-                player.playSound(player.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 10.0F, -1.0F);
+                //player.playSound(player.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 10.0F, -1.0F);
+                player.playSound(player.getLocation(),"tllt2.stormsound", SoundCategory.RECORDS,10.0F, 1.0F);
                 player.sendTitle(Format.format(e.getTitleStorm(tierLevel)), Format.format(e.getSubtitleStorm(tierLevel)));
             }
         }, 2L);

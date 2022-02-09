@@ -139,9 +139,33 @@ public final class TLL2 extends JavaPlugin implements Listener{
                 if (block.getType() != Material.AIR && up.getType() == Material.AIR) {
                     var vorlolxdxdxd = player.getLocation().getWorld().spawn(block.getLocation(), Creeper.class);
                     Mobs.vortice(vorlolxdxdxd);
-                    getServer().getConsoleSender().sendMessage("DEBUG DE CREEPERS Y ESA MIERDA XDDDDDDDDDD");
                 }
             }
+            if(hasBloodstainedArmor(player)){
+                player.setMaxHealth(28);
+            }else{
+                player.setMaxHealth(20);
+            }
+        }
+    }
+
+    public boolean hasBloodstainedArmor(Player p){
+        if(p.getInventory().getHelmet() != null && p.getInventory().getChestplate() != null && p.getInventory().getLeggings() != null && p.getInventory().getBoots() != null){
+            if(p.getInventory().getHelmet().hasItemMeta() && p.getInventory().getChestplate().hasItemMeta() && p.getInventory().getLeggings().hasItemMeta() && p.getInventory().getBoots().hasItemMeta()){
+                if(p.getInventory().getHelmet().getItemMeta().hasCustomModelData() && p.getInventory().getChestplate().getItemMeta().hasCustomModelData() && p.getInventory().getLeggings().getItemMeta().hasCustomModelData() && p.getInventory().getBoots().getItemMeta().hasCustomModelData()){
+                    if(p.getInventory().getHelmet().getItemMeta().getCustomModelData() == 8010 && p.getInventory().getChestplate().getItemMeta().getCustomModelData() == 8010 && p.getInventory().getLeggings().getItemMeta().getCustomModelData() == 8010 && p.getInventory().getBoots().getItemMeta().getCustomModelData() == 8010){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }else{
+            return false;
         }
     }
 

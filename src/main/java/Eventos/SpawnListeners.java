@@ -42,14 +42,14 @@ public class SpawnListeners implements Listener {
         var pos = e.getLocation();
         var world = Bukkit.getWorld("world");
 
-        if (en instanceof Zombie self && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+        if (en instanceof Zombie self && !(en instanceof Husk) && !(en instanceof Drowned) && !(en instanceof PigZombie)) {
             spawnTierZombies(self);
         } else if (en instanceof Creeper self && en.getLocation().getWorld().getEnvironment() == World.Environment.NORMAL){
             spawnCreeperBlight(self);
-        } else if (en instanceof Skeleton self && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+        } else if (en instanceof Skeleton self && en.getLocation().getWorld().getEnvironment() == World.Environment.NORMAL) {
             this.spawnSkeletonClass(self);
 
-        }else if (en instanceof Spider self && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+        }else if (en instanceof Spider self && !(en instanceof CaveSpider)) {
             this.spawnSpiderVariant(self);
         }else if (en instanceof Pillager) {
             var pillager = (Pillager) en;
@@ -115,7 +115,7 @@ public class SpawnListeners implements Listener {
             blaze.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE"), PersistentDataType.STRING, "HELLFIRE");
         }
 
-        if (en instanceof Vex self && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.RAID){
+        if (en instanceof Vex self){
             this.spawnVexClass(self);
         }
         if (en instanceof Husk) {
@@ -152,10 +152,20 @@ public class SpawnListeners implements Listener {
 
         }
         if (en instanceof PigZombie zombipig) {
-            zombipig.setCustomName(format("&cPigman"));
-            zombipig.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
-            zombipig.setAngry(true);
-            zombipig.setAnger(Integer.MAX_VALUE);
+            if(spawnmob < 50){
+                var randomskeleton = zombipig.getLocation().getWorld().spawn(zombipig.getLocation(),Skeleton.class);
+                Mobs.blightedSkeleton(randomskeleton);
+                zombipig.setPassenger(randomskeleton);
+                zombipig.setCustomName(format("&cPigman"));
+                zombipig.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
+                zombipig.setAngry(true);
+                zombipig.setAnger(Integer.MAX_VALUE);
+            }else {
+                zombipig.setCustomName(format("&cPigman"));
+                zombipig.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
+                zombipig.setAngry(true);
+                zombipig.setAnger(Integer.MAX_VALUE);
+            }
         }
         /*if (en instanceof Bat bat) {
             if (world.getName().contains("build_world")) {
@@ -179,12 +189,12 @@ public class SpawnListeners implements Listener {
 
         if (en instanceof Salmon self){
             self.remove();
-            if(self.getWorld().getLivingEntities().stream().filter(entity1 -> entity1 instanceof PufferFish).map(PufferFish.class::cast).collect(Collectors.toList()).size() < 30){
+            if(self.getWorld().getLivingEntities().stream().filter(entity1 -> entity1 instanceof PufferFish).map(PufferFish.class::cast).collect(Collectors.toList()).size() < 70){
                 var pufferfish = self.getLocation().getWorld().spawn(self.getLocation(), PufferFish.class);
                 pufferfish.setCustomName(format("&cPufferfish"));
             }
         }
-        if (en instanceof Slime && en.getWorld().getEnvironment() == World.Environment.NORMAL) {
+        if (en instanceof Slime && !(en instanceof MagmaCube)) {
             var slime = (Slime) en;
             if (e.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.SLIME_SPLIT)) {
                 slime.setCustomName(format("Freezing Slime"));
@@ -200,7 +210,7 @@ public class SpawnListeners implements Listener {
             }
         }
 
-        if (en instanceof Guardian) {
+        if (en instanceof Guardian && !(en instanceof ElderGuardian)) {
             var guardian = (Guardian) en;
             guardian.setCustomName(format("&6Caca"));
             guardian.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
@@ -209,12 +219,6 @@ public class SpawnListeners implements Listener {
         }
         if(en instanceof Evoker self){
             evokerClass(self);
-        }
-        if(en instanceof Sheep self){
-            self.remove();
-            if(self.getWorld().getLivingEntities().stream().filter(entity1 -> entity1 instanceof Vex).map(Vex.class::cast).collect(Collectors.toList()).size() < 35){
-                elementalSpawn(self);
-            }
         }
 
         if(en instanceof PiglinBrute self){
@@ -260,19 +264,17 @@ public class SpawnListeners implements Listener {
         }*/
     }
 
-    public void spawnVexClass(Vex entity) {
-
-        int type = new Random().nextInt(4);
-
-        if (type == 1) {
-            Mobs.vexExplosive(entity);
-        } else if (type == 2) {
-            Mobs.vexExecution(entity);
-        } else if (type == 3) {
-            Mobs.vexScientist(entity);
-        } else {
-            Mobs.vexMecha(entity);
-
+    public void spawnVexClass(Vex sheep) {
+        Random random = new Random();
+        int vexes = random.nextInt(4);
+        if(vexes == 1){
+            Mobs.cinder(sheep);
+        }else if(vexes == 2){
+            Mobs.jengu(sheep);
+        }else if(vexes == 3){
+            Mobs.djiin(sheep);
+        }else{
+            Mobs.grue(sheep);
         }
     }
 
@@ -418,11 +420,15 @@ Mobs.blightedWitch(witch);
 
     }
     public void spawnEnderman(Enderman enderman){
-        int type = new Random().nextInt(2);
+        int type = new Random().nextInt(3);
         if(type == 1){
             enderman.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, 1, 1));
-        }else{
+        }else if(type == 2){
 Mobs.blightedEndermam(enderman);
+        }else{
+            enderman.remove();
+            var vindicacaca = enderman.getLocation().getWorld().spawn(enderman.getLocation(),Vindicator.class);
+            Mobs.ladronFel(vindicacaca);
         }
     }
 

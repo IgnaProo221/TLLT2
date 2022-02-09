@@ -5,6 +5,7 @@ import Eventos.StopBlastStormEvent;
 import Extras.Items;
 import Utilidades.Format;
 import Utilidades.TotemsBar;
+import Utilidades.Utils;
 import Utilidades.Warn;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -59,11 +60,13 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     if(args[1].equalsIgnoreCase("builder_world")){
                         Location spawnbuilder = new Location(Bukkit.getWorld("build_world"), 0 , 64, 0);
                         pa.teleport(spawnbuilder);
+                        pa.setGameMode(GameMode.SPECTATOR);
                         return true;
                     }
                     if(args[1].equalsIgnoreCase("overworld")){
                         Location spawnover = new Location(Bukkit.getWorld("world"), 0 , 100, 0);
                         pa.teleport(spawnover);
+                        pa.setGameMode(GameMode.SPECTATOR);
                         return true;
                     }
                     if(args[1].equalsIgnoreCase("lost_cities")){
@@ -120,19 +123,11 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     break;
 
                 case "totem_bar": {
-
-                    int res = TotemsBar.getPorcentaje(pa);
-
-                    String var0;
-
-                    if (res < 50) {
-                        var0 = "&7¡La barra actual se encuentra en &c&l" + res + "%";
-                    } else {
-                        var0 = "&7¡La barra actual se encuentra en &e&l" + res + "%";
-                    }
+                    PersistentDataContainer data = ((Player) sender).getPersistentDataContainer();
+                    int i = data.get(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER);
 
                     pa.playSound(pa.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
-                    pa.sendMessage(format(Format.PREFIX + var0));
+                    pa.sendMessage(Format.PREFIX, format("&7&l¡Tienes &e&l" +i + "% &7&lporcentaje de Totems!"));
                 }
                 break;
 
@@ -225,7 +220,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     }else if (args[1].equalsIgnoreCase("TOTEM_RESTORER")) {
                         pa.getInventory().addItem(Items.totemRestorer());
                         pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
-                    }else if (args[1].equalsIgnoreCase("FALLEN_SWORD")) {
+                    }else if (args[1].equalsIgnoreCase("FROSTBITE")) {
                         pa.getInventory().addItem(Items.fallenSword());
                         pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }else if (args[1].equalsIgnoreCase("CELULA_ENERGIA")) {
@@ -236,6 +231,18 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                         pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }else if (args[1].equalsIgnoreCase("EXO_SHIELD")) {
                         pa.getInventory().addItem(Items.exoShield());
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }else if (args[1].equalsIgnoreCase("ICESHOT")) {
+                        pa.getInventory().addItem(Items.iceShot());
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }else if (args[1].equalsIgnoreCase("BLOOD_ARMOR")) {
+                        pa.getInventory().addItem(Items.bloodyHelmet());
+                        pa.getInventory().addItem(Items.bloodyChestplate());
+                        pa.getInventory().addItem(Items.bloodyLeggings());
+                        pa.getInventory().addItem(Items.bloodyBoots());
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }else if (args[1].equalsIgnoreCase("EXO_DRILL")) {
+                        pa.getInventory().addItem(Items.exoDrill());
                         pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                 default:
@@ -279,7 +286,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     commands.add("totemTest");
                 }else if(args[0].equals("give")){
                     String[] items = {
-                      "FUNGAL_CLUMPS","WEIRD_DAGGER", "CATACLYSM_PEARL", "BLOOD_SABER", "BERSERKER_TOTEM", "CRYSTAL_HEART", "DISCORD", "CLOUDY_MARSH", "BLOOD_STONE", "BLOOD_SHARD", "TEMPERATURE_METER", "TOTEM_RESTORER", "FALLEN_SWORD","CELULA_ENERGIA","METAL_DESC","EXO_SHIELD"
+                      "FUNGAL_CLUMPS","WEIRD_DAGGER", "CATACLYSM_PEARL", "BLOOD_SABER", "BERSERKER_TOTEM", "CRYSTAL_HEART", "DISCORD", "CLOUDY_MARSH", "BLOOD_STONE", "BLOOD_SHARD", "TEMPERATURE_METER", "TOTEM_RESTORER", "FROSTBITE","CELULA_ENERGIA","METAL_DESC","EXO_SHIELD","ICE_SHOT","BLOOD_ARMOR","EXO_DRILL"
                     };
 
                     commands.addAll(Arrays.asList(items));
