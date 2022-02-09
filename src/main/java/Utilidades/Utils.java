@@ -55,6 +55,7 @@ public class Utils {
         if(loc.getY() < -64){
             loc.setY(0);
         }
+
         int X = loc.getBlockX();
         int Y = loc.getBlockY();
         int Z = loc.getBlockZ();

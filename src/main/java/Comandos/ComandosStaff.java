@@ -129,7 +129,6 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     pa.playSound(pa.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
                     pa.sendMessage(Format.PREFIX, format("&7&l¡Tienes &e&l" +i + "% &7&lporcentaje de Totems!"));
                 }
-                break;
 
                 case "vida_reset": {
                     pa.playSound(pa.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
