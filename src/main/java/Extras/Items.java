@@ -285,5 +285,11 @@ public class Items {
         lore.add(Component.text(format("")));
         return new ItemBuilder(Material.NETHERITE_BOOTS).setName(format("&c&lBloodstained Boots")).setLore(lore).setUnbreakable(true).setCustomModelData(8010).build();
     }
+    public static ItemStack rareGem(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&7Mineral misterioso y apreciado")));
+        lore.add(Component.text(format("&7encontrado en las cuevas de Deepslate")));
+        return new ItemBuilder(Material.DIAMOND).setName(format("&cRare Gem")).setLore(lore).setCustomModelData(5420).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setItemFlags(ItemFlag.HIDE_ENCHANTS).build();
+    }
 
 }

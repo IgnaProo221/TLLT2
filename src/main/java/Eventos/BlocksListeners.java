@@ -1,5 +1,6 @@
 package Eventos;
 
+import Extras.Items;
 import Utilidades.Format;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -55,4 +56,30 @@ public class BlocksListeners implements Listener{
             }
         }
     }
+
+    @EventHandler
+    public void picoHabilidad(BlockBreakEvent e){
+        var p = e.getPlayer();
+        var block = e.getBlock();
+        if(block.getType() == Material.DEEPSLATE_DIAMOND_ORE){
+            if(p.getInventory().getItemInMainHand() != null){
+                if(p.getInventory().getItemInMainHand().hasItemMeta()){
+                    if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
+                        if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 6660){
+                            if(p.getInventory().firstEmpty() == -1){
+                                p.sendMessage(format("&6&lEXO-SCAN: &7¡Tu Inventario esta Lleno!"));
+                            }else{
+                                p.getInventory().addItem(Items.rareGem());
+                            }
+                        }
+                    }else{
+                        return;
+                    }
+                }else{
+                    return;
+                }
+            }
+        }
+    }
+
 }

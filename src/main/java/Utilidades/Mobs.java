@@ -1,17 +1,14 @@
 package Utilidades;
 
-<<<<<<< HEAD
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.boss.BarColor;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftBee;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftIronGolem;
-=======
 
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.boss.BarColor;
->>>>>>> c3242743cd2d4882f4a530b227accfaea4cd72df
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
@@ -366,7 +363,6 @@ public class Mobs implements Listener{
         self.setCustomName(format("&6&lLava Golem"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(150);
         self.setHealth(150);
-<<<<<<< HEAD
         self.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE,Integer.MAX_VALUE,0, false, false, false));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"LAVA_GOLEM"),PersistentDataType.STRING, "LAVA_GOLEM");
         CraftIronGolem craft = ((CraftIronGolem) self);
@@ -378,10 +374,8 @@ public class Mobs implements Listener{
                 e.printStackTrace();
                 Warn.Mutant(e);
             }*/
-=======
         self.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false, false));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "LAVA_GOLEM"), PersistentDataType.STRING, "LAVA_GOLEM");
->>>>>>> c3242743cd2d4882f4a530b227accfaea4cd72df
     }
 
     public static void vortice(Creeper self){
@@ -480,7 +474,6 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
         self.setHealth(30);
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10);
-<<<<<<< HEAD
 
 
         CraftBee craft = ((CraftBee) self);
@@ -494,9 +487,8 @@ public class Mobs implements Listener{
             Warn.Mutant(e);
 
          */
-=======
         self.setAnger(Integer.MAX_VALUE);
->>>>>>> c3242743cd2d4882f4a530b227accfaea4cd72df
+
     }
 
 
@@ -582,7 +574,7 @@ public class Mobs implements Listener{
         self.setHealth(50);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXO_GOLEM"), PersistentDataType.STRING, "EXO_GOLEM");
         ///pongan que el golem este enojado porfavor
-<<<<<<< HEAD
+
 /*
         CraftIronGolem craft = ((CraftIronGolem) self);
         net.minecraft.world.entity.animal.IronGolem entityGolem = craft.getHandle();
@@ -596,9 +588,6 @@ public class Mobs implements Listener{
         }
         
  */
-=======
-
->>>>>>> c3242743cd2d4882f4a530b227accfaea4cd72df
     }
 
     public static void labSilver(Silverfish self){

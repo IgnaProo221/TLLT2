@@ -238,7 +238,7 @@ public class Muerte extends ListenerAdapter implements Listener {
         eb.setDescription(":fire:** ¡La Blast Storm invade los Cielos, preparense para Sufrir! **:fire:");
         eb.addField(":skull: **Causa de Muerte: **", e.getDeathMessage(), true);
         eb.addField(":beginner: **Dia: **" + Utils.getDay(), "", true);
-        eb.addField(":map: **Coordenadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ() + " Mundo: " + dimension(p.getLocation()), true);
+        eb.addField(":map: **Coordenadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
         eb.addField(":globe_with_meridians: **Dimension: **", dimension(p.getLocation()),true);
         eb.addField(":low_brightness: **Fecha: **" + Fecha, "", true);
         eb.addField(":alarm_clock: **Hora: **" + Tiempo,"",true);

@@ -2,17 +2,16 @@ package Eventos;
 
 import CustomMobs.Argus;
 import CustomMobs.DreadNightmare;
-import Utilidades.Mobs;
-import Utilidades.Warn;
+import com.sk89q.worldedit.world.entity.EntityTypes;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
-import org.bukkit.persistence.PersistentDataType;
 import tlldos.tll2.TLL2;
 
 import java.util.Random;
@@ -30,13 +29,15 @@ public class NMSSpawn implements Listener{
             if (e.getLocation().getBlock().isLiquid()) return;
             if (spawnlol < 30) {
                 Argus argus = new Argus(e.getLocation());
-                CraftWorld craftWorld = (CraftWorld) e.getLocation().getWorld();
-                craftWorld.addEntity(argus, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                WorldServer caca3 = (WorldServer)e.getLocation().getWorld();
+                caca3.addEntity(argus);
+                caca3.addEntity(argus, CreatureSpawnEvent.SpawnReason.NATURAL);
                 Bukkit.getServer().getConsoleSender().sendMessage("Debug 1 nms");
             } else if (spawnlol < 31) {
                 DreadNightmare dreadNightmare = new DreadNightmare(e.getLocation());
-                CraftWorld craftWorld = (CraftWorld)e.getLocation().getWorld();
-                craftWorld.addEntity(dreadNightmare, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                WorldServer caca3 = (WorldServer)e.getLocation().getWorld();
+                caca3.addEntity(dreadNightmare);
+                caca3.addEntity(dreadNightmare, CreatureSpawnEvent.SpawnReason.NATURAL);
                 Bukkit.getServer().getConsoleSender().sendMessage("Debug 2 nms");
             }
     }
