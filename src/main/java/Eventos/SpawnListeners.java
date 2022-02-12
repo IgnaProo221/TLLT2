@@ -1,10 +1,13 @@
 package Eventos;
 
+import CustomMobs.Argus;
 import Utilidades.Mobs;
 import Utilidades.Warn;
+import net.minecraft.server.level.WorldServer;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
+import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -266,14 +269,19 @@ public class SpawnListeners implements Listener {
 
     public void spawnVexClass(Vex sheep) {
         Random random = new Random();
-        int vexes = random.nextInt(4);
-        if(vexes == 1){
+        int vexes = random.nextInt(5);
+        if (vexes == 1) {
             Mobs.cinder(sheep);
-        }else if(vexes == 2){
+        } else if (vexes == 2) {
             Mobs.jengu(sheep);
-        }else if(vexes == 3){
+        } else if (vexes == 3) {
             Mobs.djiin(sheep);
-        }else{
+        } else if (vexes == 4) {
+            Argus argus = new Argus(sheep.getLocation());
+            WorldServer world = ((CraftWorld) sheep.getLocation().getWorld()).getHandle();
+            world.addEntity(argus, CreatureSpawnEvent.SpawnReason.NATURAL);
+            Bukkit.getServer().getConsoleSender().sendMessage("Entidad: " + argus.getEntityType().id);
+        }  else {
             Mobs.grue(sheep);
         }
     }

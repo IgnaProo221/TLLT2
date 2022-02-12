@@ -9,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
@@ -21,24 +22,16 @@ public class NMSSpawn implements Listener{
     public NMSSpawn(TLL2 plugin){
         this.plugin = plugin;
     }
+
     @EventHandler
-    public void customGen(EntitySpawnEvent e){
+    public void customGen(CreatureSpawnEvent e){
         Random random = new Random();
-        int spawnlol = random.nextInt(100);
-            if (!(e.getEntity() instanceof Animals)) return;
-            if (e.getLocation().getBlock().isLiquid()) return;
-            if (spawnlol < 30) {
-                Argus argus = new Argus(e.getLocation());
-                WorldServer caca3 = (WorldServer)e.getLocation().getWorld();
-                caca3.addEntity(argus);
-                caca3.addEntity(argus, CreatureSpawnEvent.SpawnReason.NATURAL);
-                Bukkit.getServer().getConsoleSender().sendMessage("Debug 1 nms");
-            } else if (spawnlol < 31) {
-                DreadNightmare dreadNightmare = new DreadNightmare(e.getLocation());
-                WorldServer caca3 = (WorldServer)e.getLocation().getWorld();
-                caca3.addEntity(dreadNightmare);
-                caca3.addEntity(dreadNightmare, CreatureSpawnEvent.SpawnReason.NATURAL);
-                Bukkit.getServer().getConsoleSender().sendMessage("Debug 2 nms");
-            }
+
+        if (!(e.getEntity() instanceof Animals) || e.getLocation().getBlock().isLiquid()) return;
+
+        DreadNightmare dreadNightmare = new DreadNightmare(e.getLocation());
+        WorldServer world = ((CraftWorld) e.getEntity().getWorld()).getHandle();
+
+        world.addEntity(dreadNightmare, CreatureSpawnEvent.SpawnReason.NATURAL);Bukkit.getServer().getConsoleSender().sendMessage("Entidad: " + dreadNightmare.getEntityType().id);
     }
 }
