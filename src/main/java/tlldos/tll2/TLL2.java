@@ -5,16 +5,21 @@ import Comandos.ComandosUsuarios;
 import Eventos.*;
 import Extras.*;
 import Utilidades.Configuration;
+import Utilidades.Format;
 import Utilidades.Mobs;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import javax.swing.plaf.LabelUI;
 import java.util.Random;
 
 public final class TLL2 extends JavaPlugin implements Listener{
@@ -89,7 +94,9 @@ public final class TLL2 extends JavaPlugin implements Listener{
                 new ChatListeners(this),
                 new NMSSpawn(this),
                 new ReplaceListeners(this),
-                new WorldEventsListeners(this)
+                new WorldEventsListeners(this),
+                new Mecanica12(this),
+                new AlEntrar(this)
         );
     }
 
@@ -146,6 +153,15 @@ public final class TLL2 extends JavaPlugin implements Listener{
             }else{
                 player.setMaxHealth(20);
             }
+
+            if(player.hasPotionEffect(PotionEffectType.UNLUCK)){
+                if(r.nextInt(10000) == 1){
+                    EventosItems.animacion(player,player);
+                }
+            }
+            var data = player.getPersistentDataContainer();
+            var dataTemperatura = data.get(new NamespacedKey(this, "temperatura"), PersistentDataType.INTEGER);
+            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&f[&6&lTemperatura&f] &c" + dataTemperatura + "°")));
         }
     }
 

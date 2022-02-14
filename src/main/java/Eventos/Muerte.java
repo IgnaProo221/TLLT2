@@ -18,8 +18,12 @@ import org.bukkit.block.Skull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import tlldos.tll2.TLL2;
@@ -119,7 +123,6 @@ public class Muerte extends ListenerAdapter implements Listener {
         data.set(Utils.key("Y") , PersistentDataType.DOUBLE, loc.getY());
         data.set(Utils.key("Z"), PersistentDataType.DOUBLE, loc.getZ());
         data.set(Utils.key("WORLD"), PersistentDataType.STRING, loc.getWorld().getName());
-        Bukkit.getScheduler().runTaskLater(Utils.getPlugin(), () ->{
             if(p.getWorld().getEnvironment() == World.Environment.NORMAL){
                 Utils.pasteSchematic("overworld", p.getLocation());
                 Block skullBlock = location.clone().add(0, 4, 0).getBlock();
@@ -150,7 +153,6 @@ public class Muerte extends ListenerAdapter implements Listener {
             }else{
                 p.sendMessage(format("&6no se detecto el mundo y la estructura no se genero, rip bozo XD #packwatch"));
             }
-        },3L);
         for (Player players : Bukkit.getOnlinePlayers()){
 
             players.sendTitle(format("&c&l&k|||  &6&l&kThe Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
@@ -236,7 +238,7 @@ public class Muerte extends ListenerAdapter implements Listener {
         eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
         eb.setTitle("**El Jugador " + p.getName() + " a muerto!**");
         eb.setDescription(":fire:** ¡La Blast Storm invade los Cielos, preparense para Sufrir! **:fire:");
-        eb.addField(":skull: **Causa de Muerte: **", e.getDeathMessage(), true);
+        eb.addField(":skull: **Causa de Muerte: **", deathreason(Objects.requireNonNull(p.getLastDamageCause())), true);
         eb.addField(":beginner: **Dia: **" + Utils.getDay(), "", true);
         eb.addField(":map: **Coordenadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
         eb.addField(":globe_with_meridians: **Dimension: **", dimension(p.getLocation()),true);
@@ -275,7 +277,65 @@ public class Muerte extends ListenerAdapter implements Listener {
             default -> "Desconocido";
         };
     }
-
+    public static String deathreason(EntityDamageEvent e){
+        switch (e.getCause()){
+            case FALL:
+                return "Caída";
+            case FIRE:
+                return "Fuego";
+            case FREEZE:
+                return "Congelado";
+            case LAVA:
+                return "Lava";
+            case VOID:
+                return "Vacio";
+            case MAGIC:
+                return "Magia";
+            case BLOCK_EXPLOSION:
+                return "Explosión";
+            case POISON:
+                return "Envenenado";
+            case THORNS:
+                return "Espinado";
+            case WITHER:
+                return "Efecto Wither";
+            case CONTACT:
+                return "Contacto";
+            case CRAMMING:
+                return "Cramming";
+            case DRAGON_BREATH:
+                return "Aliento del dragon";
+            case DROWNING:
+                return "Ahogado";
+            case FIRE_TICK:
+                return "Tick del Fuego";
+            case HOT_FLOOR:
+                return "Piso en llamas";
+            case LIGHTNING:
+                return "Rayo";
+            case PROJECTILE:
+                return "Proyectil";
+            case STARVATION:
+                return "Hambre";
+            case SUFFOCATION:
+                return "Sofocación";
+            case ENTITY_SWEEP_ATTACK:
+            case ENTITY_ATTACK:
+                if(e instanceof EntityDamageByEntityEvent){
+                    return "Ataque de " + ((EntityDamageByEntityEvent) e).getDamager().getName();
+                }
+            case FALLING_BLOCK:
+                return "Caída de un bloque";
+            case FLY_INTO_WALL:
+                return "Volar en la pared";
+            case ENTITY_EXPLOSION:
+                if(e instanceof EntityDamageByEntityEvent){
+                    return "Explosión de " + ((EntityDamageByEntityEvent) e).getDamager().getName();
+                }
+            default:
+                return "Desconocida";
+        }
+    }
 
 
 }

@@ -2,11 +2,9 @@ package Extras;
 
 import Utilidades.Format;
 import Utilidades.TotemsBar;
+import Utilidades.Utils;
 import Utilidades.Warn;
-import org.bukkit.Bukkit;
-import org.bukkit.EntityEffect;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
@@ -57,6 +55,73 @@ public class EventosItems {
             p.sendMessage(Format.PREFIX, format("&c¡No puedes activar mas tu vida maxima!"));
         }
     }
+
+    public static void animacion(Player p, Player players){
+            players.sendTitle(format("&c&l&k|||  &6&l&kThe Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+            players.playSound(players.getLocation(),"tllt2.deathsound", SoundCategory.RECORDS, 10.0F, 1.0F);
+            Bukkit.getScheduler().runTaskLater(Utils.getPlugin(), () -> {
+                players.sendTitle(format("&c&l&k|||  &6&l&kThe Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+            }, 5);
+            Bukkit.getScheduler().runTaskLater(Utils.getPlugin(), () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lT&6&l&khe Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+            }, 10);
+            Bukkit.getScheduler().runTaskLater(Utils.getPlugin(), () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lTh&6&l&ke Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+            }, 15);
+            Bukkit.getScheduler().runTaskLater(Utils.getPlugin(), () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lThe&6&l&k Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+            }, 20);
+            Bukkit.getScheduler().runTaskLater(Utils.getPlugin(), () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lThe L&6&l&kast Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+
+            }, 25);
+            Bukkit.getScheduler().runTaskLater(Utils.getPlugin(), () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lThe La&6&l&kst Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+
+            }, 30);
+            Bukkit.getScheduler().runTaskLater(Utils.getPlugin(), () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lThe Las&6&l&kt Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+
+            }, 35);
+            Bukkit.getScheduler().runTaskLater(Utils.getPlugin(), () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lThe Las&6&l&kt Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+
+            }, 40);
+            Bukkit.getScheduler().runTaskLater(Utils.getPlugin(), () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lThe Last&6&l&k Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+
+            }, 45);
+            Bukkit.getScheduler().runTaskLater(Utils.getPlugin(), () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lThe Last L&6&l&kife  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+
+            }, 50);
+            Bukkit.getScheduler().runTaskLater(Utils.getPlugin(), () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lThe Last Li&6&l&kfe  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+
+            }, 55);
+            Bukkit.getScheduler().runTaskLater(Utils.getPlugin(), () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lThe Last Lif&6&l&ke  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+
+
+            }, 60);
+            Bukkit.getScheduler().runTaskLater(Utils.getPlugin(), () -> {
+                players.sendTitle(format("&c&l&k|||  &6&lThe Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,20);
+
+            }, 65);
+    }
+
+
     public static void discordxd(Player p){
         p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1200,2, true, false, true));
         p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1200,1, true, false, true));

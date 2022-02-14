@@ -588,6 +588,7 @@ public class EntityListeners implements Listener {
     public void arcoHabilidaddes(ProjectileHitEvent event){
         var projectile = event.getEntity();
         var damaged = event.getHitEntity();
+        var block = event.getHitBlock();
         var shooter = event.getEntity().getShooter();
         if(shooter instanceof Player){
             if(projectile instanceof Arrow){
@@ -599,8 +600,20 @@ public class EntityListeners implements Listener {
                                 if(damaged != null){
                                     damaged.setFreezeTicks(1200);
                                 }
+                            }else if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 7891 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 7891){
+                             if(damaged != null){
+                                 damaged.getLocation().createExplosion(p,4,false, true);
+                             }else if(block != null){
+                                 block.getLocation().createExplosion(p,4,false, true);
+                             }
+                            }else{
+                                return;
                             }
+                        }else{
+                            return;
                         }
+                    }else{
+                        return;
                     }
                 }
             }

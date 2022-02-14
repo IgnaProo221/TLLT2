@@ -89,7 +89,7 @@ public class Items {
         return new ItemBuilder(Material.GOLDEN_APPLE, amount)
                 .setName(ChatColor.GRAY + "Crystal Apple")
                 .setLore(lore)
-                .setCustomModelData(4003) // No se cual es el custom model data de la manzanita
+                .setCustomModelData(4033) // No se cual es el custom model data de la manzanita
                 .build();
     }
 
@@ -101,6 +101,7 @@ public class Items {
 
         return new ItemBuilder(Material.IRON_SWORD)
                 .setName("&7Daga Ceremonial")
+                .setCustomModelData(4778)
                 .setLore(lore)
                 .build();
     }
@@ -115,6 +116,7 @@ public class Items {
                 .setLore(lore)
                 .addEnchantment(Enchantment.ARROW_INFINITE, 1)
                 .setItemFlags(ItemFlag.HIDE_ENCHANTS)
+                .setCustomModelData(4983)
                 .setUnbreakable(true)
                 .build();
     }
@@ -130,7 +132,7 @@ public class Items {
     public static ItemStack totemRestorer() {
         return new ItemBuilder(Material.PRISMARINE_CRYSTALS)
                 .setName(format("&6&lTotem Restorer"))
-                .setCustomModelData(4005)
+                .setCustomModelData(4455)
                 .addEnchantment(Enchantment.LUCK, 1)
                 .setItemFlags(ItemFlag.HIDE_ENCHANTS)
                 .setUnbreakable(true)
@@ -222,7 +224,7 @@ public class Items {
         lore.add(Component.text(format("&7Metal de una fuente desconocida")));
         lore.add(Component.text(format("&7tiene una fuerza sobrenatural")));
         lore.add(Component.text(format("")));
-        return  new ItemBuilder(Material.IRON_NUGGET).setName(format("&6Metal Desconocido")).setLore(lore).build();
+        return  new ItemBuilder(Material.IRON_NUGGET).setName(format("&6Metal Desconocido")).setLore(lore).setCustomModelData(5663).build();
     }
 
     public static ItemStack exoShield(){
@@ -248,6 +250,22 @@ public class Items {
         lore.add(Component.text(format("&7Ciertos Bloques dropearan Items Extras")));
         lore.add(Component.text(format("&7Esos Items se añadiran a tu Inventario")));
         return new ItemBuilder(Material.NETHERITE_PICKAXE).setName(format("&6&lExo-Driller")).setLore(lore).setUnbreakable(true).setCustomModelData(6660).addEnchantment(Enchantment.DIG_SPEED, 5).build();
+    }
+
+    public static ItemStack exoTotem(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lHABILIDAD: &e&lNanotech")));
+        lore.add(Component.text(format("&7Al Activarse los Mobs de un radio de 15")));
+        lore.add(Component.text(format("&7bloques recibiran un debuff de Velocidad y Fuerza")));
+        return new ItemBuilder(Material.TOTEM_OF_UNDYING).setName(format("&7&lExo-Totem")).setLore(lore).setUnbreakable(true).setCustomModelData(6891).build();
+
+    }
+    public static ItemStack pyroCross(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lHABILIDAD: &e&lPirotecnia")));
+        lore.add(Component.text(format("&7Las Flechas que Caigan al Suelo o Golpeen Entidades")));
+        lore.add(Component.text(format("&7Explotan.")));
+        return new ItemBuilder(Material.CROSSBOW).setName(format("&6&lCross-pyro")).setLore(lore).setUnbreakable(true).setCustomModelData(7891).build();
     }
 
 

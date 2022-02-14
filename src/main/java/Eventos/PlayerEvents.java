@@ -19,6 +19,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityExhaustionEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRiptideEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -43,7 +44,6 @@ public class PlayerEvents implements Listener {
 
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasDisplayName() && p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(Format.format("&7Daga Ceremonial"))) {
-                Sacrificios.start(p);
                 var data = p.getPersistentDataContainer();
                 var inventory = p.getInventory();
                 var dataSacrifices = data.get(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER);
@@ -70,6 +70,7 @@ public class PlayerEvents implements Listener {
                 areaEffectCloud.setRadius(1.3F);
 
                 p.damage(0.2D);
+                Sacrificios.start(p);
                 p.sendMessage(Format.format(String.format("&cHaz hecho tu sacrificio #%s", totalSacrifices)));
                 p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()-2.0D);
                 giveReward(p);
@@ -112,12 +113,13 @@ public class PlayerEvents implements Listener {
                     Warn.Mutant(e);
                 }
             }
-            if (p.getInventory().getItemInMainHand().equals(Items.totemRestorer())) {
+            if (isATotemRestorer(p)) {
                 try {
                     if (p.hasCooldown(Material.PRISMARINE_CRYSTALS)) {
                         event.setCancelled(true);
                     } else {
                         EventosItems.totemrestorerEvent(p, plugin);
+                        p.setCooldown(Material.PRISMARINE_CRYSTALS, 400);
                         //alguien puede hacer que al usar esto se saque 1 totem restorer si es que esta stackeado? gracias
                         p.getInventory().removeItem(new ItemStack(Material.PRISMARINE_CRYSTALS, 1));
                     }
@@ -129,12 +131,6 @@ public class PlayerEvents implements Listener {
         }
     }
 
-    @EventHandler
-    public void onJoin(PlayerJoinEvent e){
-        var player = e.getPlayer();
-
-        player.getInventory().addItem(Items.createDaga());
-    }
 
     private void giveReward(Player player){
         var random = new Random();
@@ -191,7 +187,32 @@ public class PlayerEvents implements Listener {
         p.setRemainingAir(0);
     }
 
+
+
     public boolean isAchievedInSacrifice(PersistentDataContainer data, String value){
         return data.get(new NamespacedKey(plugin, "sacrifices_"+value), PersistentDataType.INTEGER) != 1;
     }
+
+
+    public boolean isATotemRestorer(Player p){
+        if(p.getInventory().getItemInMainHand() != null || p.getInventory().getItemInOffHand() != null){
+            if(p.getInventory().getItemInMainHand().hasItemMeta() || p.getInventory().getItemInOffHand().hasItemMeta()){
+                if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
+                    if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 4455){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+
 }

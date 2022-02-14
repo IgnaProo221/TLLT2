@@ -135,25 +135,7 @@ public class SpawnListeners implements Listener {
             }
         }
 
-        if (en instanceof Pig) {
 
-            Chunk chunk = en.getLocation().getChunk();
-
-            ArrayList<Entity> mobList = new ArrayList<>();
-
-            for(Entity ent : chunk.getEntities()){
-                if(ent.getType() == en.getType()){
-                    mobList.add(ent);
-                }
-            }
-            if(mobList.size() > 2){
-                en.remove();
-            }
-            e.setCancelled(true);
-            var pigbrute = en.getLocation().getWorld().spawn(en.getLocation(), PiglinBrute.class);
-            Mobs.piglinBrutedim(pigbrute);
-
-        }
         if (en instanceof PigZombie zombipig) {
             if(spawnmob < 50){
                 var randomskeleton = zombipig.getLocation().getWorld().spawn(zombipig.getLocation(),Skeleton.class);

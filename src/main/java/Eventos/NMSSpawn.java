@@ -2,6 +2,7 @@ package Eventos;
 
 import CustomMobs.Argus;
 import CustomMobs.DreadNightmare;
+import CustomMobs.UltraSniper;
 import com.sk89q.worldedit.world.entity.EntityTypes;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.Bukkit;
@@ -24,14 +25,25 @@ public class NMSSpawn implements Listener{
     }
 
     @EventHandler
-    public void customGen(CreatureSpawnEvent e){
+    public void customGen(EntitySpawnEvent e) {
         Random random = new Random();
-
+        int spawn = random.nextInt(100);
         if (!(e.getEntity() instanceof Animals) || e.getLocation().getBlock().isLiquid()) return;
+        if (spawn < 20) {
+            int mob = random.nextInt(2);
+            if(mob == 1) {
+                DreadNightmare dreadNightmare = new DreadNightmare(e.getLocation());
+                WorldServer world = ((CraftWorld) e.getEntity().getWorld()).getHandle();
 
-        DreadNightmare dreadNightmare = new DreadNightmare(e.getLocation());
-        WorldServer world = ((CraftWorld) e.getEntity().getWorld()).getHandle();
-
-        world.addEntity(dreadNightmare, CreatureSpawnEvent.SpawnReason.NATURAL);Bukkit.getServer().getConsoleSender().sendMessage("Entidad: " + dreadNightmare.getEntityType().id);
+                world.addEntity(dreadNightmare, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                Bukkit.getServer().getConsoleSender().sendMessage("Entidad: " + dreadNightmare.getEntityType().id);
+            }else if(mob == 2){
+                UltraSniper sniper = new UltraSniper(e.getLocation());
+                WorldServer worldServer = ((CraftWorld)e.getEntity().getWorld()).getHandle();
+                worldServer.addEntity(sniper, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                Bukkit.getServer().getConsoleSender().sendMessage("Entidad: " + sniper.getEntityType().id);
+            }
+        }
     }
+
 }

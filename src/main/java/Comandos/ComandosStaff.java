@@ -2,6 +2,7 @@ package Comandos;
 
 import Eventos.StartBlastStormEvent;
 import Eventos.StopBlastStormEvent;
+import Extras.EventosItems;
 import Extras.Items;
 import Utilidades.Format;
 import Utilidades.TotemsBar;
@@ -129,6 +130,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     pa.playSound(pa.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
                     pa.sendMessage(Format.PREFIX, format("&7&l¡Tienes &e&l" +i + "% &7&lporcentaje de Totems!"));
                 }
+                break;
 
                 case "vida_reset": {
                     pa.playSound(pa.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
@@ -148,10 +150,22 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                         pa.sendMessage(Format.format(Format.PREFIX + "&7¡Ha ocurrido un &c&lerror &7al resetear los tótems."));
                     }
                     break;
+                case "temperatura":
+                    if(args[1].isEmpty()){
+                        pa.sendMessage(Format.PREFIX + "Debes colocar un subcomando valido!");
+                        return true;
+                    }
+                    if(args[1].equalsIgnoreCase("clear")){
+                        var data = pa.getPersistentDataContainer();
+                        var dataTemperatura = data.get(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER);
+                        pa.sendMessage(Format.PREFIX + "&7Reiniciaste tu Temperatura a 30°!");
+                        data.set(new NamespacedKey(plugin, "temperatura"),PersistentDataType.INTEGER, 30);
+                    }
+                    break;
 
                 case "debug":
                     if(args[1].isEmpty()){
-                        pa.sendMessage(Format.PREFIX + "Debes colocar un debug valido (blastStormStart, blackStormEnd, totemTest)");
+                        pa.sendMessage(Format.PREFIX + "Debes colocar un debug valido (blastStormStart, blackStormEnd, totemTest, muerteFake)");
                         return true;
                     }
 
@@ -166,6 +180,8 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     }else if (args[1].equalsIgnoreCase("totemTest")) {
                         pa.playSound(pa.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
                         pa.playEffect(EntityEffect.TOTEM_RESURRECT);
+                    }else if(args[1].equalsIgnoreCase("muerteFake")){
+                        EventosItems.animacion(pa,pa);
                     }
                     break;
                 case "sacrificios_test":
@@ -243,6 +259,12 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     }else if (args[1].equalsIgnoreCase("EXO_DRILL")) {
                         pa.getInventory().addItem(Items.exoDrill());
                         pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }else if(args[1].equalsIgnoreCase("EXO_TOTEM")){
+                        pa.getInventory().addItem(Items.exoTotem());
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }else if(args[1].equalsIgnoreCase("PYROCROSS")){
+                        pa.getInventory().addItem(Items.pyroCross());
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                 default:
                     pa.sendMessage(format("&7No has indicado ningun subcomando."));
@@ -274,18 +296,21 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     commands.add("builder_world");
                     commands.add("overworld");
                     commands.add("lost_cities");
-                }
-                if(args[0].equals("sacrificios")){
+                }else if(args[0].equals("sacrificios")){
                     commands.add("modify");
                     commands.add("clear");
                     commands.add("reset");
-                }else if(args[0].equals("debug")){
+                }else if(args[0].equals("debug")) {
                     commands.add("blastStormStart");
                     commands.add("blackStormStart");
                     commands.add("totemTest");
+                    commands.add("muerteFake");
+                }else if(args[0].equals("temperatura")){
+                    commands.add("clear");
                 }else if(args[0].equals("give")){
                     String[] items = {
-                      "FUNGAL_CLUMPS","WEIRD_DAGGER", "CATACLYSM_PEARL", "BLOOD_SABER", "BERSERKER_TOTEM", "CRYSTAL_HEART", "DISCORD", "CLOUDY_MARSH", "BLOOD_STONE", "BLOOD_SHARD", "TEMPERATURE_METER", "TOTEM_RESTORER", "FROSTBITE","CELULA_ENERGIA","METAL_DESC","EXO_SHIELD","ICE_SHOT","BLOOD_ARMOR","EXO_DRILL"
+                      "FUNGAL_CLUMPS","WEIRD_DAGGER", "CATACLYSM_PEARL", "BLOOD_SABER", "BERSERKER_TOTEM", "CRYSTAL_HEART", "DISCORD", "CLOUDY_MARSH", "BLOOD_STONE", "BLOOD_SHARD", "TEMPERATURE_METER", "TOTEM_RESTORER", "FROSTBITE","CELULA_ENERGIA","METAL_DESC","EXO_SHIELD","ICE_SHOT","BLOOD_ARMOR","EXO_DRILL",
+                            "EXO_TOTEM","PYROCROSS"
                     };
 
                     commands.addAll(Arrays.asList(items));

@@ -6,6 +6,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -14,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.persistence.PersistentDataType;
 import tlldos.tll2.TLL2;
 
 import static Eventos.BlastStormListeners.*;
@@ -28,21 +30,10 @@ public class AlEntrar implements Listener {
     @EventHandler
     public void zTest(PlayerJoinEvent e){
         Player p = e.getPlayer();
-        Bukkit.getScheduler().runTaskTimer(Utils.getPlugin(), ()->{
-            if (Utils.getWorld().isThundering()) {
-                long segundos = (long) (Utils.getWorld().getWeatherDuration() / 20);
-                long hours = segundos  / 3600L;
-                long minutes = segundos % 3600L / 60L;
-                long seconds = segundos % 60L;
-
-                String time = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-                String s = ChatColor.GRAY + "ZTestXD: " + time;
-                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(s));
-
-                //BlastStormListeners.bossBar.setTitle(Format.format("&f♥        &6&lBlast Storm: " + time +  "        &f♥"));
-
-
-            }
-        },0L,20L);
+        var data = p.getPersistentDataContainer();
+        var dataTemperatura = data.get(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER);
+        if(dataTemperatura != null){
+            data.set(Utils.key("temperatura"),PersistentDataType.INTEGER, 30);
+        }
     }
 }

@@ -74,15 +74,15 @@ public class DanoSinEnieEvento implements Listener{
                 }
             }else if(player.hasPotionEffect(PotionEffectType.UNLUCK)) {
                 if (player.getPotionEffect(PotionEffectType.UNLUCK).getAmplifier() == 1) {
-                    if (e.getCause() != EntityDamageEvent.DamageCause.SUICIDE || e.getCause() != EntityDamageEvent.DamageCause.THORNS || e.getCause() != EntityDamageEvent.DamageCause.POISON || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK) {
+                    if (e.getCause() != EntityDamageEvent.DamageCause.SUICIDE || e.getCause() != EntityDamageEvent.DamageCause.THORNS || e.getCause() != EntityDamageEvent.DamageCause.POISON || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK || e.getCause() != EntityDamageEvent.DamageCause.VOID) {
                         e.setDamage(e.getDamage() * 2);
                     }
                 } else if (player.getPotionEffect(PotionEffectType.UNLUCK).getAmplifier() == 2) {
-                    if (e.getCause() != EntityDamageEvent.DamageCause.SUICIDE || e.getCause() != EntityDamageEvent.DamageCause.THORNS || e.getCause() != EntityDamageEvent.DamageCause.POISON || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK) {
+                    if (e.getCause() != EntityDamageEvent.DamageCause.SUICIDE || e.getCause() != EntityDamageEvent.DamageCause.THORNS || e.getCause() != EntityDamageEvent.DamageCause.POISON || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK || e.getCause() != EntityDamageEvent.DamageCause.VOID) {
                         e.setDamage(e.getDamage() * 3);
                     }
                 } else if (player.getPotionEffect(PotionEffectType.UNLUCK).getAmplifier() == 3) {
-                    if (e.getCause() != EntityDamageEvent.DamageCause.SUICIDE || e.getCause() != EntityDamageEvent.DamageCause.THORNS || e.getCause() != EntityDamageEvent.DamageCause.POISON || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK) {
+                    if (e.getCause() != EntityDamageEvent.DamageCause.SUICIDE || e.getCause() != EntityDamageEvent.DamageCause.THORNS || e.getCause() != EntityDamageEvent.DamageCause.POISON || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK || e.getCause() != EntityDamageEvent.DamageCause.VOID) {
                         e.setDamage(e.getDamage() * 4);
                     }
                 }
