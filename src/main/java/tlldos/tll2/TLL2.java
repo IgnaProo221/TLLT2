@@ -18,6 +18,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import tasks.TemperatureTask;
 
 import javax.swing.plaf.LabelUI;
 import java.util.Random;
@@ -56,6 +57,8 @@ public final class TLL2 extends JavaPlugin implements Listener{
 
             getCommand("thelastlife").setTabCompleter(new ComandosUsuarios(this));
             getCommand("tllstaff").setTabCompleter(new ComandosStaff(this));
+
+            new TemperatureTask(this).runTaskTimer(this, 0L, 200L);
         } catch (Error e){
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("######################################################");
@@ -95,7 +98,6 @@ public final class TLL2 extends JavaPlugin implements Listener{
                 new NMSSpawn(this),
                 new ReplaceListeners(this),
                 new WorldEventsListeners(this),
-                new Mecanica12(this),
                 new AlEntrar(this)
         );
     }

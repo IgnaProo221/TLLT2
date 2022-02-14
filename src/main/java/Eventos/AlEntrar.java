@@ -32,8 +32,9 @@ public class AlEntrar implements Listener {
         Player p = e.getPlayer();
         var data = p.getPersistentDataContainer();
         var dataTemperatura = data.get(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER);
-        if(dataTemperatura != null){
-            data.set(Utils.key("temperatura"),PersistentDataType.INTEGER, 30);
+
+        if(dataTemperatura == null){
+            data.set(Utils.key("temperatura"), PersistentDataType.INTEGER, 30);
         }
     }
 }
