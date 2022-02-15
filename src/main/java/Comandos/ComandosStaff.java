@@ -286,7 +286,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
         if(commandSender.isOp()) {
             if(args.length == 1){
                 String[] argsArray = {
-                        "sacrificios", "alerta", "give", "sacrificios_test", "debug", "totem_bar", "totems_clear", "vida_reset", "dimension"
+                        "sacrificios", "alerta", "give", "sacrificios_test", "debug", "totem_bar", "totems_clear", "vida_reset", "dimension","temperatura"
                 };
 
                 commands.addAll(Arrays.asList(argsArray));

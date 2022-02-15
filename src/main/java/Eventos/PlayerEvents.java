@@ -4,6 +4,7 @@ import Extras.EventosItems;
 import Extras.Items;
 import Extras.Sacrificios;
 import Utilidades.Format;
+import Utilidades.Utils;
 import Utilidades.Warn;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
@@ -27,6 +28,8 @@ import tlldos.tll2.TLL2;
 
 import java.util.HashMap;
 import java.util.Random;
+
+import static Utilidades.Format.format;
 
 public class PlayerEvents implements Listener {
 
@@ -113,19 +116,27 @@ public class PlayerEvents implements Listener {
                     Warn.Mutant(e);
                 }
             }
-            if (isATotemRestorer(p)) {
-                try {
-                    if (p.hasCooldown(Material.PRISMARINE_CRYSTALS)) {
-                        event.setCancelled(true);
-                    } else {
-                        EventosItems.totemrestorerEvent(p, plugin);
-                        p.setCooldown(Material.PRISMARINE_CRYSTALS, 400);
-                        //alguien puede hacer que al usar esto se saque 1 totem restorer si es que esta stackeado? gracias
-                        p.getInventory().removeItem(new ItemStack(Material.PRISMARINE_CRYSTALS, 1));
+            if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                if(hasCustomModelData(p)){
+                    if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 4455){
+                        if (p.hasCooldown(Material.PRISMARINE_CRYSTALS)) {
+                            event.setCancelled(true);
+                        } else {
+                            EventosItems.totemrestorerEvent(p, plugin);
+                            p.setCooldown(Material.PRISMARINE_CRYSTALS, 400);
+                            //alguien puede hacer que al usar esto se saque 1 totem restorer si es que esta stackeado? gracias
+                            p.getInventory().removeItem(new ItemStack(Material.PRISMARINE_CRYSTALS, 1));
+                        }
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Warn.Mutant(e);
+                }
+            }
+            if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
+                if(hasCustomModelData(p)){
+                    if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 4455){
+                        PersistentDataContainer data = p.getPersistentDataContainer();
+                        int i = data.get(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER);
+                        p.sendMessage(Format.PREFIX, format("&7&l¡Tienes &e&l" +i + "% &7&lporcentaje de Totems!"));
+                    }
                 }
             }
         }
@@ -214,5 +225,8 @@ public class PlayerEvents implements Listener {
         }
     }
 
+    public boolean hasCustomModelData(Player p){
+        return ((p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()) || (p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()));
+    }
 
 }

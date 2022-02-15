@@ -98,7 +98,27 @@ public class alUsarTotem implements Listener {
                         }
                         return;
                     }
-                    if (p.getInventory().getItemInMainHand().equals(Items.exoTotem()) || p.getInventory().getItemInOffHand().equals(Items.exoTotem())) {
+
+                    if(hasCustomModelData(p)){
+                        if(p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 6891 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 6891){
+                            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
+                            p.setCooldown(Material.TOTEM_OF_UNDYING, 200);
+                            p.getLocation().getNearbyEntities(15,15,15).forEach(entity -> {
+                                Monster monster = (Monster)entity;
+                                monster.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 300,1, false, false, false));
+                                monster.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 1, false, false, false));
+                            });
+
+                            for (Player players : Bukkit.getOnlinePlayers()) {
+                                players.sendMessage(ChatColor.DARK_GRAY + "El Jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.GRAY + "Exo Totém!" + ChatColor.WHITE + "♦" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
+                                players.sendMessage(ChatColor.RED + "Los Totéms de " + ChatColor.YELLOW + "" + ChatColor.BOLD + p.getName() + ChatColor.RED + " Entraron en Cooldown de 10 Segundos! ");
+
+                            }
+                            return;
+                        }
+                    }
+
+                    /*if (p.getInventory().getItemInMainHand().equals(Items.exoTotem()) || p.getInventory().getItemInOffHand().equals(Items.exoTotem())) {
 
                         if (p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING || !p.getInventory().getItemInMainHand().equals(Items.exoTotem())){
                             return;
@@ -118,7 +138,7 @@ public class alUsarTotem implements Listener {
 
                         }
                         return;
-                    }
+                    }*/
 
 
                     if (TotemCara == 1) {
@@ -286,6 +306,9 @@ public class alUsarTotem implements Listener {
             default:
                 return "Desconocida";
         }
+    }
+    public boolean hasCustomModelData(Player p){
+        return ((p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()) || (p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()));
     }
 
 }

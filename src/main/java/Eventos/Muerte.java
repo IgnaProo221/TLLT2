@@ -123,6 +123,7 @@ public class Muerte extends ListenerAdapter implements Listener {
         data.set(Utils.key("Y") , PersistentDataType.DOUBLE, loc.getY());
         data.set(Utils.key("Z"), PersistentDataType.DOUBLE, loc.getZ());
         data.set(Utils.key("WORLD"), PersistentDataType.STRING, loc.getWorld().getName());
+        Bukkit.getScheduler().runTaskLater(plugin, ()->{
             if(p.getWorld().getEnvironment() == World.Environment.NORMAL){
                 Utils.pasteSchematic("overworld", p.getLocation());
                 Block skullBlock = location.clone().add(0, 4, 0).getBlock();
@@ -153,6 +154,7 @@ public class Muerte extends ListenerAdapter implements Listener {
             }else{
                 p.sendMessage(format("&6no se detecto el mundo y la estructura no se genero, rip bozo XD #packwatch"));
             }
+        },5L);
         for (Player players : Bukkit.getOnlinePlayers()){
 
             players.sendTitle(format("&c&l&k|||  &6&l&kThe Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);

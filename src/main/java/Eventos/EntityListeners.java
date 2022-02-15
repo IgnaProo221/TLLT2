@@ -593,7 +593,20 @@ public class EntityListeners implements Listener {
         if(shooter instanceof Player){
             if(projectile instanceof Arrow){
                 Player p = (Player) shooter;
-                if(p.getInventory().getItemInMainHand() != null ||p.getInventory().getItemInOffHand() != null){
+                if(hasCustomModelData(p)){
+                    if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 5080 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 5080){
+                        if(damaged != null){
+                            damaged.setFreezeTicks(1200);
+                        }
+                    }else if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 7891 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 7891){
+                        if(damaged != null){
+                            damaged.getLocation().createExplosion(p,4,false, true);
+                        }else if(block != null){
+                            block.getLocation().createExplosion(p,4,false, true);
+                        }
+                    }
+                }
+               /* if(p.getInventory().getItemInMainHand() != null ||p.getInventory().getItemInOffHand() != null){
                     if(p.getInventory().getItemInMainHand().hasItemMeta() || p.getInventory().getItemInOffHand().hasItemMeta()){
                         if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()){
                             if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 5080 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 5080){
@@ -615,8 +628,13 @@ public class EntityListeners implements Listener {
                     }else{
                         return;
                     }
-                }
+                }*/
             }
         }
     }
+
+    public boolean hasCustomModelData(Player p){
+        return ((p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()) || (p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()));
+    }
+
 }
