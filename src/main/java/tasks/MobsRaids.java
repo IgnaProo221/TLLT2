@@ -32,8 +32,8 @@ public class MobsRaids extends BukkitRunnable{
                 Location l = player.getLocation().clone();
                 if(chancelol == 1) {
                     player.sendTitle(format("&6&l¡Blighted Rage!"), format("&7&lEVENTO"), 0, 100, 0);
-                    player.sendMessage(PREFIX, format("&c¡Ha Comenzado un Evento de Mobs en todos los Jugadores, Preparense!"));
-                    //nose como hacer esto xd lol
+                    player.sendMessage(PREFIX, format("&c¡Se aproxima un evento de mobs en todos los Jugadores, ¡Afilen sus armas!"));
+                    //nose como hacer esto xd lol, Buena suerte. (CARROT)
                 }
             }
         }

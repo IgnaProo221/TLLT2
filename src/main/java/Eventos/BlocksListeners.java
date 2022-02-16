@@ -35,10 +35,10 @@ public class BlocksListeners implements Listener{
         if (p.hasPotionEffect(PotionEffectType.LUCK)) {
             if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 3) {
                 e.setCancelled(true);
-                p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+                p.sendMessage(Format.PREFIX + format("&c¡Estas paniquiado!"));
             }else if(p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 4){
                 e.setCancelled(true);
-                p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+                p.sendMessage(Format.PREFIX + format("&c¡Estas paniquiado!"));
             }
         }
     }
@@ -49,10 +49,10 @@ public class BlocksListeners implements Listener{
         if (p.hasPotionEffect(PotionEffectType.LUCK)) {
             if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 3) {
                 e.setCancelled(true);
-                p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+                p.sendMessage(Format.PREFIX + format("&c¡Estas paniquiado!"));
             }else if(p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 4){
                 e.setCancelled(true);
-                p.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+                p.sendMessage(Format.PREFIX + format("&c¡Estas paniquiado!"));
             }
         }
     }
@@ -67,7 +67,7 @@ public class BlocksListeners implements Listener{
                     if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
                         if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 6660){
                             if(p.getInventory().firstEmpty() == -1){
-                                p.sendMessage(format("&6&lEXO-SCAN: &7¡Tu Inventario esta Lleno!"));
+                                p.sendMessage(format("&6&lEXO-SCAN: &7¡Tu inventario esta lleno!"));
                             }else{
                                 p.getInventory().addItem(Items.rareGem());
                             }

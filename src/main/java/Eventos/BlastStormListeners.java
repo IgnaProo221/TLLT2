@@ -156,7 +156,7 @@ public class BlastStormListeners implements Listener {
             Bukkit.getLogger().info("asd2");
             for(Player players : Bukkit.getOnlinePlayers()) {
                 bossBar.removePlayer(players);
-                players.sendMessage(Format.PREFIX, format("&6&lLos cielos se despejaron... por ahora."));
+                players.sendMessage(Format.PREFIX, format("&6&lLos cielos se han despejado... por ahora."));
                 players.playSound(players.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 10.0F, 0.5F);
 
             }

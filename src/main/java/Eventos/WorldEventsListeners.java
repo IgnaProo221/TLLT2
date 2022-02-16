@@ -24,11 +24,11 @@ public class WorldEventsListeners implements Listener{
         var p = event.getPlayer();
         if(event.getPlayer().getWorld().getName().equalsIgnoreCase("lost_world")){
             if(p.getGameMode() != GameMode.SURVIVAL){
-                p.getServer().getConsoleSender().sendMessage("El Jugador " + p.getName() + " entro a lOst cities xddddddd");
+                p.getServer().getConsoleSender().sendMessage("El Jugador " + p.getName() + " entro al Lost Cities.");
                 p.setGameMode(GameMode.SPECTATOR);
             }else{
                 Bukkit.getOnlinePlayers().forEach(player -> {
-                    player.sendMessage(Format.PREFIX, Format.format("&c&l¡El Jugador " + p.getName() + " a entrado a las Lost Cities!"));
+                    player.sendMessage(Format.PREFIX, Format.format("&c&l¡El Jugador " + p.getName() + " ha entrado al Lost Cities!"));
                 });
             }
         }

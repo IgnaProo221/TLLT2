@@ -54,12 +54,12 @@ public class PlayerEvents implements Listener {
                 var totalSacrifices = (dataSacrifices == null ? 1 : ++dataSacrifices);
 
                 if(dataSacrifices != null && totalSacrifices > 5){
-                    p.sendMessage(Format.format("&cLos Dioses rechazan tu sacrificio, ya has perdido mucha sangre y ya no eres digno."));
+                    p.sendMessage(Format.format("&cLos Dioses rechazan tu sacrificio, has perdido mucha sangre y ya no eres digno para un sacrificio más."));
                     return;
                 }
 
                 if(p.getInventory().firstEmpty() == -1){
-                    p.sendMessage(Format.format("&cOfreciste un sacrificio pero tu inventario esta lleno."));
+                    p.sendMessage(Format.format("&c¡Ofreciste un sacrificio! pero tu inventario esta lleno."));
                     return;
                 }
 
@@ -74,7 +74,7 @@ public class PlayerEvents implements Listener {
 
                 p.damage(0.2D);
                 Sacrificios.start(p);
-                p.sendMessage(Format.format(String.format("&cHaz hecho tu sacrificio #%s", totalSacrifices)));
+                p.sendMessage(Format.format(String.format("&cHaz hecho un sacrificio #%s", totalSacrifices)));
                 p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()-2.0D);
                 giveReward(p);
             }
@@ -155,7 +155,7 @@ public class PlayerEvents implements Listener {
             player.giveExp(400);
 
         }else if (randomInt >= 20 && randomInt <= 45){
-            Bukkit.broadcast(Component.text(Format.format(String.format("&7El jugador %s recibió BloodStone extra.", player.getName()))));
+            Bukkit.broadcast(Component.text(Format.format(String.format("&7El jugador %s recibió una BloodStone extra.", player.getName()))));
 
             player.getInventory().addItem(Items.bloodShard());
         } else if (randomInt >= 45 && randomInt <= 70){
@@ -163,11 +163,11 @@ public class PlayerEvents implements Listener {
 
             player.getInventory().addItem(new ItemStack(Material.DIAMOND, 10));
         } else if (randomInt >= 70 && randomInt <= 80) {
-            Bukkit.broadcast(Component.text(Format.format(String.format("&bDentro de las profundidades... %s a conseguido una misteriosa manzana.", player.getName()))));
+            Bukkit.broadcast(Component.text(Format.format(String.format("&bDentro de las profundidades... %s has conseguido una misteriosa manzana.", player.getName()))));
 
             player.getInventory().addItem(Items.crystalApple(15));
         } else if (randomInt >= 80 && randomInt <= 85) {
-            Bukkit.broadcast(Component.text(Format.format(String.format("&cLas llamas del infierno han otorgado su fuerza a %s", player.getName()))));
+            Bukkit.broadcast(Component.text(Format.format(String.format("&cLas llamas del infierno han otorgado su fuerza al jugador %s.", player.getName()))));
 
             player.getInventory().addItem(Items.brimStone());
         } else if (randomInt >= 85 && randomInt <= 90) {
@@ -179,7 +179,7 @@ public class PlayerEvents implements Listener {
 
             player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 1.0D);
         } else if (randomInt >= 95 && randomInt < 99) {
-            Bukkit.broadcast(Component.text(Format.format(String.format("&cEl sacrificio del jugador %s no fue digno de una recompensa...", player.getName()))));
+            Bukkit.broadcast(Component.text(Format.format(String.format("&cEl sacrificio del jugador %s no fue digno para una recompensa...", player.getName()))));
         } else {
             Bukkit.getLogger().info("qpro");
         }

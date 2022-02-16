@@ -149,7 +149,7 @@ public class EntityListeners implements Listener {
                             return;
                         } else {
                             pa.setHealth(pa.getHealth() + 2);
-                            pa.sendMessage(Format.PREFIX, format("&c¡Tu Bloodstained Saber te a curado por 1 corazon!"));
+                            pa.sendMessage(Format.PREFIX, format("&c¡Tu Bloodstained Saber te ha curado 1 corazón!"));
                             pa.setCooldown(Material.NETHERITE_SWORD, 400);
                         }
                     }
@@ -472,7 +472,7 @@ public class EntityListeners implements Listener {
             if(silverfish.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "COSMIC_SILVERFISH"), PersistentDataType.STRING)){
                 cosmosMobs(silverfish);
                 Bukkit.getOnlinePlayers().forEach(player -> {
-                    player.sendMessage(Format.PREFIX + format("&c&l!El Cosmos a Invocado un Mob Aleatorio en X: " + e.getLocation().getBlockX() + " Y: " +e.getLocation().getBlockY() +" Z: "+ e.getLocation().getBlockZ() +"!"));
+                    player.sendMessage(Format.PREFIX + format("&c&l!El Cosmos ha invocado un mob aleatorio en X: " + e.getLocation().getBlockX() + " Y: " +e.getLocation().getBlockY() +" Z: "+ e.getLocation().getBlockZ() +"!"));
                 });
             }
         }
@@ -513,7 +513,7 @@ public class EntityListeners implements Listener {
             event.getDrops().add(dropFrag);
 
             addHash(p);
-            p.sendMessage(format("&7¡Has sacrificado a un &6&lAldeano&7, has recibido &6&l" + size + " &cFragmento(s) de Sangre&7!"));
+            p.sendMessage(format("&7¡Has sacrificado a un &6&lAldeano&7, has recibido un &6&l" + size + " &cFragmento(s) de Sangre&7!"));
         }
     }
 
