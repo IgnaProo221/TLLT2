@@ -278,6 +278,13 @@ public class EntityListeners implements Listener {
                     }
                 }
             }
+            if(damager instanceof Villager villager){
+                if(villager.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"VILLAGER_TERRORISTA"),PersistentDataType.STRING)){
+                    var player = (Player)entity;
+                    player.getLocation().getWorld().createExplosion(villager,8,false,true);
+                    villager.damage(1000);
+                }
+            }
         }
 
     }

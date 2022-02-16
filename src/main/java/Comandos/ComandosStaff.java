@@ -1,5 +1,6 @@
 package Comandos;
 
+import CustomMobs.HostileTest;
 import Eventos.StartBlastStormEvent;
 import Eventos.StopBlastStormEvent;
 import Extras.EventosItems;
@@ -8,13 +9,16 @@ import Utilidades.Format;
 import Utilidades.TotemsBar;
 import Utilidades.Utils;
 import Utilidades.Warn;
+import net.minecraft.server.level.WorldServer;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.StringUtil;
@@ -192,6 +196,27 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                         Warn.Mutant(e);
                         pa.sendMessage(Format.format(Format.PREFIX + "&7¡Ha ocurrido un &c&lerror &7al mandar la GUI."));
                     }
+                    break;
+                case "spawn":
+                    if(args[1].isEmpty()){
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Debes colocar un mob!");
+                        return false;
+                    }
+                    if(args[1].equalsIgnoreCase("HOSTILE_COW")){
+                        try {
+                            HostileTest hostileTest = new HostileTest(pa.getLocation());
+                            WorldServer worldServer = ((CraftWorld) pa.getLocation().getWorld()).getHandle();
+                            worldServer.addEntity(hostileTest, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                            pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Invocaste al mob correctamente!");
+                        }catch (Exception e){
+                            e.printStackTrace();
+                            Warn.Mutant(e);
+                        }
+                    }else{
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Debes colocar un mob valido!");
+                        return false;
+                    }
+
                     break;
                 case "give":
                     if(args[1].isEmpty()){

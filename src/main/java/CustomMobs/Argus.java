@@ -15,6 +15,5 @@ public class Argus extends EntityVex{
         this.setPosition(loc.getX(),loc.getY(),loc.getZ());
         this.setHealth(10);
         this.setCustomName(new ChatComponentText(format("&2&lArgus")));
-
     }
 }

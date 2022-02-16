@@ -45,8 +45,8 @@ public class SpawnListeners implements Listener {
         var pos = e.getLocation();
         var world = Bukkit.getWorld("world");
 
-        if (en instanceof Zombie self && !(en instanceof Husk) && !(en instanceof Drowned) && !(en instanceof PigZombie)) {
-            spawnTierZombies(self);
+        if (en instanceof Zombie self && !(en instanceof Husk) && !(en instanceof Drowned) && !(en instanceof PigZombie) && !(en instanceof ZombieVillager)){
+            spawnZombiClass(self);
         } else if (en instanceof Creeper self && en.getLocation().getWorld().getEnvironment() == World.Environment.NORMAL){
             spawnCreeperBlight(self);
         } else if (en instanceof Skeleton self && en.getLocation().getWorld().getEnvironment() == World.Environment.NORMAL) {
@@ -80,13 +80,6 @@ public class SpawnListeners implements Listener {
         }
         if(en instanceof Silverfish silverfish){
             Mobs.cosmicSilver(silverfish);
-        }
-        if(en instanceof Cow self){
-            self.remove();
-            if(self.getWorld().getLivingEntities().stream().filter(entity1 -> entity1 instanceof Creeper).map(Creeper.class::cast).collect(Collectors.toList()).size() < 60){
-                var creeper = self.getLocation().getWorld().spawn(self.getLocation(), Creeper.class);
-                Mobs.galaxyCalamity(creeper);
-            }
         }
 
         if (en instanceof Vindicator) {
@@ -229,24 +222,6 @@ public class SpawnListeners implements Listener {
                 spawnEnderman(self);
             }
         }
-
-        /*if (en instanceof Cod) {
-
-            Chunk chunk = en.getLocation().getChunk();
-
-            ArrayList<Entity> mobList = new ArrayList<>();
-
-            for(Entity ent : chunk.getEntities()){
-                if(ent.getType() == en.getType()){
-                    mobList.add(ent);
-                }
-            }
-            if(mobList.size() > 1){ 
-            }
-
-            e.setCancelled(true);
-            en.getLocation().getWorld().spawn(en.getLocation(), Guardian.class);
-        }*/
     }
 
     public void spawnVexClass(Vex sheep) {
@@ -341,18 +316,26 @@ public class SpawnListeners implements Listener {
         }
     }
 
-    public void spawnTierZombies(Zombie zombie) {
-        int type = new Random().nextInt(5);
-        if (type == 1) {
-            Mobs.tntMonster(zombie);
-        } else if (type == 2) {
-            Mobs.variante1Tier(zombie);
-        } else if (type == 3) {
-            Mobs.variante2Tier(zombie);
-        } else if(type == 4){
-            Mobs.variante3Tier(zombie);
+
+    public void spawnZombiClass(Zombie self){
+        int type = new Random().nextInt(6);
+        if(type == 1){
+            Mobs.zombBox(self);
+        }else if(type == 2){
+            Mobs.zombHerrero(self);
+        }else if(type == 3){
+            Mobs.zombCarni(self);
+        }else if(type == 4){
+            self.remove();
+            var iron = self.getLocation().getWorld().spawn(self.getLocation(),IronGolem.class);
+            Mobs.zombObeso(iron);
+        }else if(type == 5){
+            Mobs.zombiJinete(self);
+            var callabo = self.getLocation().getWorld().spawn(self.getLocation(),ZombieHorse.class);
+            Mobs.caballoJinete(callabo);
+            callabo.setPassenger(self);
         }else{
-            Mobs.blightedZombi(zombie);
+            Mobs.blightedZombi(self);
         }
     }
 

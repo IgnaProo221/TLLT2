@@ -3,6 +3,7 @@ package CustomMobs;
 import net.minecraft.network.chat.ChatComponentText;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.ai.attributes.GenericAttributes;
+import net.minecraft.world.entity.animal.EntityIronGolem;
 import net.minecraft.world.entity.monster.EntityGhast;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
