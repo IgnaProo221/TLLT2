@@ -53,11 +53,11 @@ public class StartBlastStormEvent extends Event {
         if (tierLevel == 1) {
 
 
-            return format("&8¿Podran sobrevivir?");
+            return format("&8¿Podrán sobrevivir?");
 
         } else if (tierLevel == 2) {
 
-            return format("&8¡Que comienze el Fin!");
+            return format("&8¡Que comience el Fin!");
         } else if (tierLevel == 3) {
 
             return format("&8¡Sobrevive y prueba el &7SUFRIMIENTO!");
