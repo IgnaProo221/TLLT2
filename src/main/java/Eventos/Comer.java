@@ -2,16 +2,19 @@ package Eventos;
 
 import Utilidades.Format;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import tlldos.tll2.TLL2;
 
 import java.util.List;
 
+import static Utilidades.Format.PREFIX;
 import static Utilidades.Format.format;
 
 public class Comer implements Listener {
@@ -25,6 +28,8 @@ public class Comer implements Listener {
     @EventHandler
     public void comerEv(PlayerItemConsumeEvent e){
         Player p = e.getPlayer();
+        var data = p.getPersistentDataContainer();
+        var temperature = data.get(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER);
         if (p.hasPotionEffect(PotionEffectType.LUCK)) {
             if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 2) {
                 e.setCancelled(true);
@@ -55,6 +60,16 @@ public class Comer implements Listener {
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 400, 1));
             p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 1));
             p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1, 0));
+        }
+
+
+        if(e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(format("&bCooler Fruit"))){
+            data.set(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER, temperature - 10);
+            p.sendMessage(PREFIX, format("&b¡Tu temperatura bajo 10°!"));
+        }
+        if(e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(format("&6Hot Fruit"))){
+            data.set(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER, temperature + 10);
+            p.sendMessage(PREFIX, format("&6¡Tu temperatura subio 10°!"));
         }
 }
 }

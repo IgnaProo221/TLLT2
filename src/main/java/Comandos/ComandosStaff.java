@@ -265,6 +265,12 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     }else if(args[1].equalsIgnoreCase("PYROCROSS")){
                         pa.getInventory().addItem(Items.pyroCross());
                         pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }else if(args[1].equalsIgnoreCase("COOLER_FRUIT")){
+                        pa.getInventory().addItem(Items.temperatureCooler());
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
+                    }else if(args[1].equalsIgnoreCase("HOT_FRUIT")){
+                        pa.getInventory().addItem(Items.temperatureHot());
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has Recibido el Item! Si no lo Recibiste es por tener el Inventario lleno");
                     }
                 default:
                     pa.sendMessage(format("&7No has indicado ningun subcomando."));
@@ -310,7 +316,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                 }else if(args[0].equals("give")){
                     String[] items = {
                       "FUNGAL_CLUMPS","WEIRD_DAGGER", "CATACLYSM_PEARL", "BLOOD_SABER", "BERSERKER_TOTEM", "CRYSTAL_HEART", "DISCORD", "CLOUDY_MARSH", "BLOOD_STONE", "BLOOD_SHARD", "TEMPERATURE_METER", "TOTEM_RESTORER", "FROSTBITE","CELULA_ENERGIA","METAL_DESC","EXO_SHIELD","ICE_SHOT","BLOOD_ARMOR","EXO_DRILL",
-                            "EXO_TOTEM","PYROCROSS"
+                            "EXO_TOTEM","PYROCROSS","COOLER_FRUIT","HOT_FRUIT"
                     };
 
                     commands.addAll(Arrays.asList(items));

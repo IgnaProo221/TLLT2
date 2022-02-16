@@ -268,6 +268,13 @@ public class Items {
         return new ItemBuilder(Material.CROSSBOW).setName(format("&6&lCross-pyro")).setLore(lore).setUnbreakable(true).setCustomModelData(7891).build();
     }
 
+    public static ItemStack temperatureCooler(){
+        return new ItemBuilder(Material.GOLDEN_APPLE).setName("&bCooler Fruit").setCustomModelData(8883).build();
+    }
+    public static ItemStack temperatureHot(){
+        return new ItemBuilder(Material.GOLDEN_APPLE).setName("&6Hot Fruit").setCustomModelData(8993).build();
+    }
+
 
 
     //Blood Armor

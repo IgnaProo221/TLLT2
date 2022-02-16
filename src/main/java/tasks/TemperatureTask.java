@@ -59,7 +59,7 @@ public class TemperatureTask extends BukkitRunnable {
                     player.sendMessage(Format.PREFIX, Format.format("&7¡Estas recibiendo daño por estar en temperaturas altas!"));
                     player.damage(1000);
                     player.setFireTicks(203);
-                }else if(temperature <= -50){
+                }else if(temperature <= -70){
                     player.sendMessage(Format.PREFIX, "&7¡Estas recibiendo daño por estar en temperaturas bajas!");
                     player.damage(1000);
                     player.setFreezeTicks(204);

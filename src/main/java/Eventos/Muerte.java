@@ -116,6 +116,7 @@ public class Muerte extends ListenerAdapter implements Listener {
         Player p = e.getEntity();
         Location location = p.getLocation().clone();
         p.sendActionBar(format("&4&lGame Over " + p.getName()));
+        Bukkit.getScoreboardManager().getMainScoreboard().getTeam("11-Muerto").addEntry(p.getName());
         World world = Bukkit.getWorld("world");
         Location loc = p.getLocation();
         PersistentDataContainer data = Data.get(p);
@@ -154,7 +155,7 @@ public class Muerte extends ListenerAdapter implements Listener {
             }else{
                 p.sendMessage(format("&6no se detecto el mundo y la estructura no se genero, rip bozo XD #packwatch"));
             }
-        },5L);
+        },8L);
         for (Player players : Bukkit.getOnlinePlayers()){
 
             players.sendTitle(format("&c&l&k|||  &6&l&kThe Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
