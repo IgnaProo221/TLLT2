@@ -64,7 +64,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("HA OCURRIDO UN ERROR FATAL Y EL PLUGIN NO PUDO SER INICIADO");
-            getServer().getConsoleSender().sendMessage("EL SERVER SE AUTO-CERRARA PARA EVITAR ALGUN TIPO DE EXPLOIT");
+            getServer().getConsoleSender().sendMessage("EL SERVER SE AUTO-CERRARA PARA EVITAR ALGÚN TIPO DE EXPLOIT");
             getServer().getConsoleSender().sendMessage("ERROR: " + e);
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("######################################################");

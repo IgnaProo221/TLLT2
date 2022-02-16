@@ -20,7 +20,7 @@ public class ChatListeners implements Listener{
     @EventHandler
     public void mierdaMute(PlayerChatEvent event) {
         var player = event.getPlayer();
-        if (event.getMessage().contains("Nigga") || event.getMessage().contains("Nigger") || event.getMessage().contains("nigga") || event.getMessage().contains("nigger") || event.getMessage().contains("n1gga") || event.getMessage().contains("n1ggers") || event.getMessage().contains("NIGGA") || event.getMessage().contains("NIGGERS") || event.getMessage().contains("n!gga") || event.getMessage().contains("n!ggers")) {
+        if (event.getMessage().contains("Nigga") || event.getMessage().contains("Nigger") || event.getMessage().contains("nigga") || event.getMessage().contains("nigger") || event.getMessage().contains("n1gga") || event.getMessage().contains("n1ggers") || event.getMessage().contains("NIGGA") || event.getMessage().contains("NIGGERS") || event.getMessage().contains("n!gga") || event.getMessage().contains("n!ggers") || event.getMessage().contains("ni44ers") || event.getMessage().contains("Niggga") || event.getMessage().contains("niigga") || event.getMessage().contains("Niigga") || event.getMessage().contains("niiggaa") ) {
             event.setCancelled(true);
             player.kickPlayer(format("&c&lHas sido baneado permanentemente por usar un lenguaje moralmente incorrecto"));
             Bukkit.getBanList(BanList.Type.NAME).addBan(player.getName(), Format.format("&c&lHas sido baneado permanentemente por usar un lenguaje moralmente incorrecto."), null, String.valueOf(Bukkit.getConsoleSender()));

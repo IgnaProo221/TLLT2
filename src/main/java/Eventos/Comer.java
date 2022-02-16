@@ -69,7 +69,7 @@ public class Comer implements Listener {
         }
         if(e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(format("&6Hot Fruit"))){
             data.set(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER, temperature + 10);
-            p.sendMessage(PREFIX, format("&6¡Tu temperatura subio 10°!"));
+            p.sendMessage(PREFIX, format("&6¡Tu temperatura subió 10°!"));
         }
 }
 }
