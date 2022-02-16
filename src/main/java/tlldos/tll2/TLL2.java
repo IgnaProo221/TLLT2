@@ -42,7 +42,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
                     "    | |  | |    | |         | |    / / \n" +
                     "    | |  | |____| |____     | |   / /_ \n" +
                     "    |_|  |______|______|    |_|  |____|");
-            getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "THE LAST LIFE T2 >>> " + ChatColor.YELLOW + "TheLastLifeT2Test.jar se cargo correctamente!");
+            getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "THE LAST LIFE T2 >>> " + ChatColor.YELLOW + "¡TheLastLifeT2Test.jar se cargo correctamente!");
             getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "_______________________________________________________________________");
             world = Bukkit.getWorld("world");
             new Muerte(this);
@@ -63,7 +63,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("######################################################");
-            getServer().getConsoleSender().sendMessage("A OCURRIDO UN ERROR FATAL Y EL PLUGIN NO PUDO SER INICIADO");
+            getServer().getConsoleSender().sendMessage("HA OCURRIDO UN ERROR FATAL Y EL PLUGIN NO PUDO SER INICIADO");
             getServer().getConsoleSender().sendMessage("EL SERVER SE AUTO-CERRARA PARA EVITAR ALGUN TIPO DE EXPLOIT");
             getServer().getConsoleSender().sendMessage("ERROR: " + e);
             getServer().getConsoleSender().sendMessage("######################################################");
@@ -75,7 +75,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
 
     @Override
     public void onDisable() {
-        getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "El Plugin se deshabilito correctamente!");
+        getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "¡El Plugin se deshabilito correctamente!");
     }
 
     public void cargarEventos(){

@@ -30,7 +30,7 @@ public class Dormir implements Listener{
         World world = Bukkit.getWorld("world");
         Player p = e.getPlayer();
         if(world.isDayTime() || world.isThundering()){
-            p.sendMessage( prefix + "¡No puedes Dormir de Dia o en Tormenta!");
+            p.sendMessage( prefix + "¡No puedes dormir de día o en tormenta!");
             e.setCancelled(true);
             return;
         } else {
@@ -43,7 +43,7 @@ public class Dormir implements Listener{
                         if(jugadores.isSleeping()){
                             jugadores.setStatistic(Statistic.TIME_SINCE_REST, 0);
                         }
-                        jugadores.sendMessage(ChatColor.translateAlternateColorCodes('&'," " + prefix +  "&6El Jugador &4" + p.getName()+ " &6a Dormido!"));
+                        jugadores.sendMessage(ChatColor.translateAlternateColorCodes('&'," " + prefix +  "&6El jugador &4" + p.getName()+ " &6ha dormido!"));
                         players.clear();
                     }
                 }

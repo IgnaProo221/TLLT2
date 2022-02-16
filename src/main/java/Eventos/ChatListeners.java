@@ -25,19 +25,22 @@ public class ChatListeners implements Listener{
             player.kickPlayer(format("&c&lHas sido baneado permanentemente por usar un lenguaje moralmente incorrecto"));
             Bukkit.getBanList(BanList.Type.NAME).addBan(player.getName(), Format.format("&c&lHas sido baneado permanentemente por usar un lenguaje moralmente incorrecto."), null, String.valueOf(Bukkit.getConsoleSender()));
         }
+        if (event.getMessage().contains("♥") || event.getMessage().contains("♦️") || event.getMessage().contains("\uE001") || event.getMessage().contains("\uE06D") || event.getMessage().contains("阿") || event.getMessage().contains("色") || event.getMessage().contains("维") || event.getMessage().contains("哦") || event.getMessage().contains("到") || event.getMessage().contains("和") || event.getMessage().contains("他") || event.getMessage().contains("米") || event.getMessage().contains("你") || event.getMessage().contains("或") || event.getMessage().contains("者") || event.getMessage().contains("世") || event.getMessage().contains("什") || event.getMessage().contains("麼") || event.getMessage().contains("☣") ) {
+            event.setCancelled(true);
+        }
         if (player.hasPotionEffect(PotionEffectType.LUCK)) {
         if(player.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 1){
             event.setCancelled(true);
-            player.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+            player.sendMessage(Format.PREFIX + format("&c¡Estas paniquiado!"));
         }else if (player.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 2){
             event.setCancelled(true);
-            player.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+            player.sendMessage(Format.PREFIX + format("&c¡Estas paniquiado!"));
         }else if(player.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 3){
             event.setCancelled(true);
-            player.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+            player.sendMessage(Format.PREFIX + format("&c¡Estas paniquiado!"));
         }else if(player.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 4){
             event.setCancelled(true);
-            player.sendMessage(Format.PREFIX + format("&cEstas Paniqueando!"));
+            player.sendMessage(Format.PREFIX + format("&c¡Estas paniquiado!"));
         }
         }
     }

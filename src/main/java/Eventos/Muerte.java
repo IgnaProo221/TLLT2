@@ -73,9 +73,9 @@ public class Muerte extends ListenerAdapter implements Listener {
         }
         if (msg.getContentRaw().equals("tll!players")) {
             EmbedBuilder eb = new EmbedBuilder();
-            eb.setFooter("TheLastLifeT2.jar", "https://media.discordapp.net/attachments/830482526237753395/874379476212019210/transparentexd.png?width=588&height=588");
+            eb.setFooter("TheLastLifeT2.jar", "https://cdn.discordapp.com/attachments/906642578013843526/943284426442436679/hardcorehearth-export.png");
             eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
-            eb.setTitle("Jugadores Conectados:");
+            eb.setTitle("Jugadores conectados en estos momentos:");
             StringBuilder jugadores = new StringBuilder();
             for (Player players : Bukkit.getOnlinePlayers()) {
                 if (jugadores.length() > 0) {
@@ -83,7 +83,7 @@ public class Muerte extends ListenerAdapter implements Listener {
                 }
                 jugadores.append(players.getName() +" :heart: : "+players.getHealth());
             }
-            eb.setDescription(jugadores.length() > 0 ? jugadores : "No hay Jugadores Conectados");
+            eb.setDescription(jugadores.length() > 0 ? jugadores : "No hay jugadores conectados en estos momentos.");
             eb.setColor(new Color(252, 186, 3));
             msg.getChannel().sendMessage(eb.build()).queue();
         }
@@ -100,10 +100,10 @@ public class Muerte extends ListenerAdapter implements Listener {
             String time = String.format("%02d:%02d:%02d", hours, minutes, seconds);
 
             EmbedBuilder eb = new EmbedBuilder();
-            eb.setFooter("TheLastLifeT2.jar", "https://media.discordapp.net/attachments/830482526237753395/874379476212019210/transparentexd.png?width=588&height=588");
+            eb.setFooter("TheLastLifeT2.jar", "https://cdn.discordapp.com/attachments/906642578013843526/943284426442436679/hardcorehearth-export.png");
             eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
-            eb.setTitle("Duracion de BlastStorm");
-            eb.setDescription((segundos > 0) ? "La Duracion de la BlastStorm Actual es: " + time : "No Hay una Blast Storm Activa!");
+            eb.setTitle("Duración de BlastStorm:");
+            eb.setDescription((segundos > 0) ? "La Duración de la BlastStorm actualmente es: " + time : "En estos momentos, no hay ninguna Blast Storm activa.");
             eb.setThumbnail("https://media.discordapp.net/attachments/830482526237753395/888118123696373790/blaststorm_icon.png");
             eb.setColor(new Color(252, 186, 3));
             msg.getChannel().sendMessage(eb.build()).queue();
@@ -158,72 +158,72 @@ public class Muerte extends ListenerAdapter implements Listener {
         },8L);
         for (Player players : Bukkit.getOnlinePlayers()){
 
-            players.sendTitle(format("&c&l&k|||  &6&l&kThe Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+            players.sendTitle(format("&c&l&k|||  &6&l&kThe Last Life  &c&l&k|||"), format("&7¡El jugador " + p.getName() + " ha muerto!"), 0,80,0);
             players.playSound(players.getLocation(),"tllt2.deathsound",SoundCategory.RECORDS, 10.0F, 1.0F);
             assert world != null;
 
-            players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8El Alma de &6&l" + p.getName() + " &8a desaparecido entre la oscuridad eterna del &8&lVacio!, &8&lsu energia se liberara para iniciar &6la &6&lBLAST STORM!"));
+            players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8¡El Alma de &6&l" + p.getName() + " &8a desaparecido entre la oscuridad eterna del &8&lvacío!, &8&lsu energía se liberara para iniciar &6la &6&lBLAST STORM."));
             players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Fatum tuum non potes effugere, &c&lsuperesse vel perit"));
             players.sendMessage(ChatColor.GRAY + "Coordenadas: X: " + p.getLocation().getBlockX() + ", Y: " + p.getLocation().getBlockY() + ", Z: " + p.getLocation().getBlockZ());
-            players.sendMessage(ChatColor.GRAY + "Dimension: " +  dimension(p.getLocation()));
+            players.sendMessage(ChatColor.GRAY + "Dimensión: " +  dimension(p.getLocation()));
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&c&l&k|||  &6&l&kThe Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+                players.sendTitle(format("&c&l&k|||  &6&l&kThe Last Life  &c&l&k|||"), format("&7¡El jugador " + p.getName() + " ha muerto!"), 0,80,0);
 
             }, 5);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&c&l&k|||  &6&lT&6&l&khe Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+                players.sendTitle(format("&c&l&k|||  &6&lT&6&l&khe Last Life  &c&l&k|||"), format("&7¡El jugador " + p.getName() + " ha muerto!"), 0,80,0);
 
             }, 10);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&c&l&k|||  &6&lTh&6&l&ke Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+                players.sendTitle(format("&c&l&k|||  &6&lTh&6&l&ke Last Life  &c&l&k|||"), format("&7¡El jugador " + p.getName() + " ha muerto!"), 0,80,0);
 
             }, 15);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&c&l&k|||  &6&lThe&6&l&k Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+                players.sendTitle(format("&c&l&k|||  &6&lThe&6&l&k Last Life  &c&l&k|||"), format("&7¡El jugador " + p.getName() + " ha muerto!"), 0,80,0);
 
             }, 20);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&c&l&k|||  &6&lThe L&6&l&kast Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+                players.sendTitle(format("&c&l&k|||  &6&lThe L&6&l&kast Life  &c&l&k|||"), format("&7¡El jugador " + p.getName() + " ha muerto!"), 0,80,0);
 
 
             }, 25);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&c&l&k|||  &6&lThe La&6&l&kst Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+                players.sendTitle(format("&c&l&k|||  &6&lThe La&6&l&kst Life  &c&l&k|||"), format("&7¡El jugador " + p.getName() + " ha muerto!"), 0,80,0);
 
 
             }, 30);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&c&l&k|||  &6&lThe Las&6&l&kt Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+                players.sendTitle(format("&c&l&k|||  &6&lThe Las&6&l&kt Life  &c&l&k|||"), format("&7¡El jugador " + p.getName() + " ha muerto!"), 0,80,0);
 
 
             }, 35);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&c&l&k|||  &6&lThe Las&6&l&kt Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+                players.sendTitle(format("&c&l&k|||  &6&lThe Las&6&l&kt Life  &c&l&k|||"), format("&7¡El jugador " + p.getName() + " ha muerto!"), 0,80,0);
 
 
             }, 40);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&c&l&k|||  &6&lThe Last&6&l&k Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+                players.sendTitle(format("&c&l&k|||  &6&lThe Last&6&l&k Life  &c&l&k|||"), format("&7¡El jugador " + p.getName() + " ha muerto!"), 0,80,0);
 
 
             }, 45);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&c&l&k|||  &6&lThe Last L&6&l&kife  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+                players.sendTitle(format("&c&l&k|||  &6&lThe Last L&6&l&kife  &c&l&k|||"), format("&7¡El jugador " + p.getName() + " ha muerto!"), 0,80,0);
 
 
             }, 50);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&c&l&k|||  &6&lThe Last Li&6&l&kfe  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+                players.sendTitle(format("&c&l&k|||  &6&lThe Last Li&6&l&kfe  &c&l&k|||"), format("&7¡El jugador " + p.getName() + " ha muerto!"), 0,80,0);
 
 
             }, 55);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&c&l&k|||  &6&lThe Last Lif&6&l&ke  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,0);
+                players.sendTitle(format("&c&l&k|||  &6&lThe Last Lif&6&l&ke  &c&l&k|||"), format("&7¡El jugador " + p.getName() + " ha muerto!"), 0,80,0);
 
 
             }, 60);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                players.sendTitle(format("&c&l&k|||  &6&lThe Last Life  &c&l&k|||"), format("&7El Jugador " + p.getName() + " ha Muerto!"), 0,80,20);
+                players.sendTitle(format("&c&l&k|||  &6&lThe Last Life  &c&l&k|||"), format("&7¡El jugador " + p.getName() + " ha muerto!"), 0,80,20);
                 players.sendActionBar(ChatColor.GOLD + "" + ChatColor.BOLD + e.getDeathMessage());
 
             }, 65);
@@ -234,20 +234,20 @@ public class Muerte extends ListenerAdapter implements Listener {
 
         LocalDate Fecha = LocalDate.now();
 
-        LocalTime Tiempo = LocalTime.now();
+        LocalTime Tiempo = LocalTime.of(LocalTime.now().getHour(), LocalTime.now().getMinute(), LocalTime.now().getSecond());
 
 
-        eb.setFooter("TheLastLifeT2.jar", "https://media.discordapp.net/attachments/830482526237753395/874379476212019210/transparentexd.png?width=588&height=588");
+        eb.setFooter("TheLastLifeT2.jar", "https://cdn.discordapp.com/attachments/906642578013843526/943284426442436679/hardcorehearth-export.png");
         eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
-        eb.setTitle("**El Jugador " + p.getName() + " a muerto!**");
-        eb.setDescription(":fire:** ¡La Blast Storm invade los Cielos, preparense para Sufrir! **:fire:");
-        eb.addField(":skull: **Causa de Muerte: **", deathreason(Objects.requireNonNull(p.getLastDamageCause())), true);
-        eb.addField(":beginner: **Dia: **" + Utils.getDay(), "", true);
+        eb.setTitle("**¡El jugador " + p.getName() + " ha perdido su última vida!**");
+        eb.setDescription(":fire:** ¡La Blast Storm invade los cielos, preparense para sufrir! **");
+        eb.addField(":skull: **Causa de muerte: **", deathreason(Objects.requireNonNull(p.getLastDamageCause())), true);
+        eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
         eb.addField(":map: **Coordenadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-        eb.addField(":globe_with_meridians: **Dimension: **", dimension(p.getLocation()),true);
-        eb.addField(":low_brightness: **Fecha: **" + Fecha, "", true);
-        eb.addField(":alarm_clock: **Hora: **" + Tiempo,"",true);
-        eb.setThumbnail("https://crafatar.com/renders/head/" + p.getUniqueId() + ".png");
+        eb.addField(":globe_with_meridians: **Dimensión: **", dimension(p.getLocation()),true);
+        eb.addField(":low_brightness: **Fecha: **",  Fecha + "" , true);
+        eb.addField(":alarm_clock: **Hora: **", "" + Tiempo,true);
+        eb.setThumbnail("https://crafatar.com/renders/head/" + p.getUniqueId() + "?&overlay");
         eb.setColor(new Color(252, 186, 3));
 
         if (channel != null) {
@@ -291,7 +291,7 @@ public class Muerte extends ListenerAdapter implements Listener {
             case LAVA:
                 return "Lava";
             case VOID:
-                return "Vacio";
+                return "Vacío";
             case MAGIC:
                 return "Magia";
             case BLOCK_EXPLOSION:
@@ -307,7 +307,7 @@ public class Muerte extends ListenerAdapter implements Listener {
             case CRAMMING:
                 return "Cramming";
             case DRAGON_BREATH:
-                return "Aliento del dragon";
+                return "Aliento del dragón";
             case DROWNING:
                 return "Ahogado";
             case FIRE_TICK:

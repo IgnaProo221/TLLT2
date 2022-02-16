@@ -46,8 +46,8 @@ public class Items {
 
     public static ItemStack cloudMarsh() {
         List<Component> lore = new ArrayList<>();
-        lore.add(Component.text(ChatColor.GRAY + "Sientete en las Nubes..."));
-        lore.add(Component.text(ChatColor.GOLD + "Otorga Levitacion, Slow Falling y Regeneracion"));
+        lore.add(Component.text(ChatColor.GRAY + "Sientete en las nubes..."));
+        lore.add(Component.text(ChatColor.GOLD + "Te otorgara Levitación, Slow Falling y Regeneración por un tiempo."));
 
         return new ItemBuilder(Material.GLOW_BERRIES)
                 .setName(Format.format("&f&lCloudy Marshmallow"))
@@ -58,9 +58,9 @@ public class Items {
 
     public static ItemStack totemBerserk() {
         List<Component> lore = new ArrayList<>();
-        lore.add(Component.text(ChatColor.GRAY + "Otorga Fuerza X y Speed V por"));
+        lore.add(Component.text(ChatColor.GRAY + "Te otorgara Fuerza X y Speed V por"));
         lore.add(Component.text(ChatColor.GRAY + "5 segundos!"));
-        lore.add(Component.text(ChatColor.RED + "Pone un Cooldown de Totem de 10 segundos"));
+        lore.add(Component.text(ChatColor.RED + "(Este al gastarlo tiene un cooldown de tótem de 10 segundos)"));
 
         return new ItemBuilder(Material.TOTEM_OF_UNDYING)
                 .setName(ChatColor.RED + "Totem Berserk")
@@ -71,7 +71,7 @@ public class Items {
 
     public static ItemStack bloodShard() {
         List<Component> lore = new ArrayList<>();
-        lore.add(Component.text(ChatColor.GRAY + "Un Sacrificio Justo."));
+        lore.add(Component.text(ChatColor.GRAY + "Un sacrificio justo."));
 
         return new ItemBuilder(Material.IRON_NUGGET)
                 .setName(ChatColor.RED + "Blood Stone")
@@ -82,9 +82,9 @@ public class Items {
 
     public static ItemStack crystalApple(int amount) {
         List<Component> lore = new ArrayList<>();
-        lore.add(Component.text(ChatColor.GRAY + "Regeneracion III y Resistencia"));
+        lore.add(Component.text(ChatColor.GRAY + "Regeneración III y Resistencia"));
         lore.add(Component.text(ChatColor.GRAY + "Pero tu habilidad de Minar y Golpear"));
-        lore.add(Component.text(ChatColor.GRAY + "están debilitadas"));
+        lore.add(Component.text(ChatColor.GRAY + "seran debilitadas."));
 
         return new ItemBuilder(Material.GOLDEN_APPLE, amount)
                 .setName(ChatColor.GRAY + "Crystal Apple")
@@ -142,11 +142,11 @@ public class Items {
     public static ItemStack fallenSword() {
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("&6&lHABILIDAD: &eSubzero Edge")));
-        lore.add(Component.text(format("&7Otorga el Efecto de Congelacion a los")));
-        lore.add(Component.text(format("&7mobs afectados por su filo.")));
+        lore.add(Component.text(format("&7Otorga el efecto de congelación a los")));
+        lore.add(Component.text(format("&7mobs golpeados por su filo.")));
         lore.add(Component.text(""));
         lore.add(Component.text(""));
-        lore.add(Component.text(format("&c&lEs Recomendable no usar Fire Aspect en esta Espada")));
+        lore.add(Component.text(format("&c&l(Es recomendable no usar Fire Aspect en esta Espada.)")));
 
         return new ItemBuilder(Material.NETHERITE_SWORD)
                 .setName(format("&b&lFrostbite"))
@@ -161,10 +161,10 @@ public class Items {
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("")));
         lore.add(Component.text(format("&6&lHABILIDAD: &eLifesteal")));
-        lore.add(Component.text(format("&7La Espada tiene un Chance de robar vida al")));
-        lore.add(Component.text(format("&7golpear una Entidad")));
+        lore.add(Component.text(format("&7La espada tiene un chance de robar vida al")));
+        lore.add(Component.text(format("&7golpear una entidad")));
         lore.add(Component.text(format("")));
-        lore.add(Component.text(format("&c¡Al Hacer esto la Espada se pondra en Cooldown!")));
+        lore.add(Component.text(format("&c¡Al Hacer esto la espada se pondra en cooldown!")));
 
         return new ItemBuilder(Material.NETHERITE_SWORD)
                 .setName(format("&c&lBloodstained Saber"))
@@ -177,9 +177,9 @@ public class Items {
     public static ItemStack crystalHeart(){
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("")));
-        lore.add(Component.text(format("&7Rumores dicen que los Corazones de Cristal")));
-        lore.add(Component.text(format("&7son Objetos magicos capaz de volverte mas Resistente")));
-        lore.add(Component.text(format("&7pero tienen un Limite.")));
+        lore.add(Component.text(format("&7Rumores dicen que los corazones de Cristal")));
+        lore.add(Component.text(format("&7son objetos magicos capaz de volverte mas resistente")));
+        lore.add(Component.text(format("&7pero este tiene un limite.")));
 
         return new ItemBuilder(Material.RED_DYE)
                 .setName(format("&cCrystal Heart"))
@@ -192,13 +192,13 @@ public class Items {
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("")));
         lore.add(Component.text(format("&6&lHABILIDAD: Discordia Absoluta")));
-        lore.add(Component.text(format("&7Otorga Buffs a Jugadores Alrededor tuyo")));
-        lore.add(Component.text(format("&7(y a ti Mismo)")));
+        lore.add(Component.text(format("&7Otorgara Buffs a jugadores que esten alrededor tuyo")));
+        lore.add(Component.text(format("&7(y a ti también).")));
         lore.add(Component.text(format("")));
         lore.add(Component.text(format("&6&lBUFFS:")));
         lore.add(Component.text(format("&7Fuerza III, Speed II, Regeneración II, Resistencia I")));
         lore.add(Component.text(format("&7Resistencia al Fuego y Health Boost II")));
-        lore.add(Component.text(format("&71 minuto")));
+        lore.add(Component.text(format("&71 minuto.")));
         lore.add(Component.text(format("")));
 
         return new ItemBuilder(Material.STICK)
@@ -212,8 +212,8 @@ public class Items {
     public static ItemStack celulaEnergia(){
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("")));
-        lore.add(Component.text(format("&7Celulas antiguas usadas por los Laboratorios")));
-        lore.add(Component.text(format("&7su energía proviene de algo desconocido")));
+        lore.add(Component.text(format("&7Celulas antiguas usadas por los laboratorios")));
+        lore.add(Component.text(format("&7su energía proviene de algo desconocido.")));
         lore.add(Component.text(format("")));
         return new ItemBuilder(Material.GOLD_NUGGET).setName(format("&4Celulas de Energía")).setLore(lore).setCustomModelData(4111).build();
     }
@@ -222,17 +222,17 @@ public class Items {
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("")));
         lore.add(Component.text(format("&7Metal de una fuente desconocida")));
-        lore.add(Component.text(format("&7tiene una fuerza sobrenatural")));
+        lore.add(Component.text(format("&7esta tiene una fuerza sobrenatural...")));
         lore.add(Component.text(format("")));
         return  new ItemBuilder(Material.IRON_NUGGET).setName(format("&6Metal Desconocido")).setLore(lore).setCustomModelData(5663).build();
     }
 
     public static ItemStack exoShield(){
         List<Component> lore = new ArrayList<>();
-        lore.add(Component.text(format("&6&lHABILIDAD: &eNano Proteccion")));
-        lore.add(Component.text(format("&7Si el escudo es Dañado por una Entidad")));
-        lore.add(Component.text(format("&7este es Paralizado!")));
-        lore.add(Component.text(format("&7al Tenerlo en mano eres imune al daño por Rayos")));
+        lore.add(Component.text(format("&6&lHABILIDAD: &eNano Protección")));
+        lore.add(Component.text(format("&7Si el escudo es dañado por una Entidad")));
+        lore.add(Component.text(format("&7¡este sera paralizado!")));
+        lore.add(Component.text(format("&7al tenerlo en cualquier seras inmune al daño por Rayos")));
         return new ItemBuilder(Material.SHIELD).setName(format("&6&lExo-Shield")).setLore(lore).setUnbreakable(true).setCustomModelData(5015).build();
     }
 
@@ -240,31 +240,31 @@ public class Items {
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("&6&lHABILIDAD: &eTiro Congelado")));
         lore.add(Component.text(format("&7Si una flecha impacata contra un mob")));
-        lore.add(Component.text(format("&7este es Congelado!")));
+        lore.add(Component.text(format("&7¡este sera congelado por un tiempo!")));
         return new ItemBuilder(Material.BOW).setName(format("&b&lIce-Shot")).setLore(lore).setUnbreakable(true).setCustomModelData(5080).build();
     }
 
     public static ItemStack exoDrill(){
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("&6&lHABILIDAD: &e&lExo-Scan")));
-        lore.add(Component.text(format("&7Ciertos Bloques dropearan Items Extras")));
-        lore.add(Component.text(format("&7Esos Items se añadiran a tu Inventario")));
+        lore.add(Component.text(format("&7Ciertos bloques dropearan items extras")));
+        lore.add(Component.text(format("&7Esos Items se añadiran a tu inventario.")));
         return new ItemBuilder(Material.NETHERITE_PICKAXE).setName(format("&6&lExo-Driller")).setLore(lore).setUnbreakable(true).setCustomModelData(6660).addEnchantment(Enchantment.DIG_SPEED, 5).build();
     }
 
     public static ItemStack exoTotem(){
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("&6&lHABILIDAD: &e&lNanotech")));
-        lore.add(Component.text(format("&7Al Activarse los Mobs de un radio de 15")));
-        lore.add(Component.text(format("&7bloques recibiran un debuff de Velocidad y Fuerza")));
+        lore.add(Component.text(format("&7Al activarse los Mobs alrededor de un radio de 15")));
+        lore.add(Component.text(format("&7bloques recibiran un debuff de Velocidad y Fuerza.")));
         return new ItemBuilder(Material.TOTEM_OF_UNDYING).setName(format("&7&lExo-Totem")).setLore(lore).setUnbreakable(true).setCustomModelData(6891).build();
 
     }
     public static ItemStack pyroCross(){
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("&6&lHABILIDAD: &e&lPirotecnia")));
-        lore.add(Component.text(format("&7Las Flechas que Caigan al Suelo o Golpeen Entidades")));
-        lore.add(Component.text(format("&7Explotan.")));
+        lore.add(Component.text(format("&7Las Flechas que caigan al suelo o golpeen una entidad")));
+        lore.add(Component.text(format("&7Explotarán.")));
         return new ItemBuilder(Material.CROSSBOW).setName(format("&6&lCross-pyro")).setLore(lore).setUnbreakable(true).setCustomModelData(7891).build();
     }
 
@@ -281,7 +281,7 @@ public class Items {
     public static ItemStack bloodyHelmet(){
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("")));
-        lore.add(Component.text(format("&7Una Armadura hecho de la sangre de millones.")));
+        lore.add(Component.text(format("&7Una pieza de armadura hecha de sangre de millones.")));
         lore.add(Component.text(format("&7Tener el Set Completo otorgara 6 corazones extras.")));
         lore.add(Component.text(format("")));
         return new ItemBuilder(Material.NETHERITE_HELMET).setName(format("&c&lBloodstained Helmet")).setLore(lore).setUnbreakable(true).setCustomModelData(8010).build();
@@ -289,31 +289,31 @@ public class Items {
     public static ItemStack bloodyChestplate(){
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("")));
-        lore.add(Component.text(format("&7Una Armadura hecho de la sangre de millones.")));
-        lore.add(Component.text(format("&7Tener el Set Completo otorgara 6 corazones extras.")));
+        lore.add(Component.text(format("&7Una pieza de armadura hecha con sangre de millones.")));
+        lore.add(Component.text(format("&7Tener el set completo te otorgara 6 corazones extras.")));
         lore.add(Component.text(format("")));
         return new ItemBuilder(Material.NETHERITE_CHESTPLATE).setName(format("&c&lBloodstained Chestplate")).setLore(lore).setUnbreakable(true).setCustomModelData(8010).build();
     }
     public static ItemStack bloodyLeggings(){
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("")));
-        lore.add(Component.text(format("&7Una Armadura hecho de la sangre de millones.")));
-        lore.add(Component.text(format("&7Tener el Set Completo otorgara 6 corazones extras.")));
+        lore.add(Component.text(format("&7Una pieza de armadura hecha con sangre de millones.")));
+        lore.add(Component.text(format("&7Tener el set completo te otorgara 6 corazones extras.")));
         lore.add(Component.text(format("")));
         return new ItemBuilder(Material.NETHERITE_LEGGINGS).setName(format("&c&lBloodstained Leggings")).setLore(lore).setUnbreakable(true).setCustomModelData(8010).build();
     }
     public static ItemStack bloodyBoots(){
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("")));
-        lore.add(Component.text(format("&7Una Armadura hecho de la sangre de millones.")));
-        lore.add(Component.text(format("&7Tener el Set Completo otorgara 6 corazones extras.")));
+        lore.add(Component.text(format("&7Un set de armadura hecho de la sangre de millones.")));
+        lore.add(Component.text(format("&7Tener el set completo te otorgara 6 corazones extras.")));
         lore.add(Component.text(format("")));
         return new ItemBuilder(Material.NETHERITE_BOOTS).setName(format("&c&lBloodstained Boots")).setLore(lore).setUnbreakable(true).setCustomModelData(8010).build();
     }
     public static ItemStack rareGem(){
         List<Component> lore = new ArrayList<>();
-        lore.add(Component.text(format("&7Mineral misterioso y apreciado")));
-        lore.add(Component.text(format("&7encontrado en las cuevas de Deepslate")));
+        lore.add(Component.text(format("&7Un mineral misterioso y apreciado")));
+        lore.add(Component.text(format("&7extraídos de las cuevas pronfundas de Deepslate.")));
         return new ItemBuilder(Material.DIAMOND).setName(format("&cRare Gem")).setLore(lore).setCustomModelData(5420).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setItemFlags(ItemFlag.HIDE_ENCHANTS).build();
     }
 

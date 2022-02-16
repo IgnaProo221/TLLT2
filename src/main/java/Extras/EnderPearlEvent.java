@@ -42,10 +42,10 @@ public class EnderPearlEvent implements Listener {
         if (e.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL) {
             if (enderfail < 10) {
                 e.setCancelled(true);
-                p.sendMessage(ChatColor.RED + "La Enderpearl que Tiraste no te Teletransporto Correctamente!");
+                p.sendMessage(ChatColor.RED + "La Enderpearl que lanzaste no se teletransporto correctamente.");
             } else if(enderfail < 20){
                 e.setCancelled(true);
-                p.sendMessage(Format.PREFIX, Format.format("&c&l¡Se genero un &b&lVorticé &c&len tu Posicion!"));
+                p.sendMessage(Format.PREFIX, Format.format("&c&l¡Se genero un &b&lVorticé &c&len tu posición!"));
                 var creeprr = p.getLocation().getWorld().spawn(p.getLocation(), Creeper.class);
                 Mobs.vortice(creeprr);
             }
