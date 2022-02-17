@@ -8,6 +8,7 @@ import Utilidades.Warn;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -24,6 +25,7 @@ import tlldos.tll2.TLL2;
 import java.util.*;
 
 import static Extras.Items.createFragmentoSangre;
+import static Extras.Items.exoTotem;
 import static Utilidades.Format.format;
 
 public class EntityListeners implements Listener {
@@ -148,12 +150,15 @@ public class EntityListeners implements Listener {
                         if (pa.hasCooldown(Material.NETHERITE_SWORD)) {
                             return;
                         } else {
-                            pa.setHealth(pa.getHealth() + 2);
-                            pa.sendMessage(Format.PREFIX, format("&c¡Tu Bloodstained Saber te ha curado 1 corazón!"));
+                            pa.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0,false, false, false));
+                            pa.playSound(pa.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP,5.0F,-1.0F);
                             pa.setCooldown(Material.NETHERITE_SWORD, 400);
                         }
                     }
-                    }
+                    }else if(pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 18129){
+                    Monster monster = (Monster) entity;
+                    monster.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200,1, false, false, false));
+                }
                 }
             }
             }
@@ -611,6 +616,11 @@ public class EntityListeners implements Listener {
                         }else if(block != null){
                             block.getLocation().createExplosion(p,4,false, true);
                         }
+                    }else if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 27289 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 27289){
+                        if(damaged != null){
+                            Monster monster = (Monster) damaged;
+                            monster.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200,1, false, false, false));
+                         }
                     }
                 }
                /* if(p.getInventory().getItemInMainHand() != null ||p.getInventory().getItemInOffHand() != null){
@@ -641,7 +651,7 @@ public class EntityListeners implements Listener {
     }
 
     public boolean hasCustomModelData(Player p){
-        return ((p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()) || (p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()));
+        return ((p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()) || (p.getInventory().getItemInOffHand() != null &&p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()));
     }
 
 }

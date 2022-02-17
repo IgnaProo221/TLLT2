@@ -296,6 +296,18 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     }else if(args[1].equalsIgnoreCase("HOT_FRUIT")){
                         pa.getInventory().addItem(Items.temperatureHot());
                         pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
+                    }else if(args[1].equalsIgnoreCase("EXO_SWORD")){
+                        pa.getInventory().addItem(Items.exoSword());
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
+                    }else if(args[1].equalsIgnoreCase("EXO_BOW")){
+                        pa.getInventory().addItem(Items.exoBow());
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
+                    }else if(args[1].equalsIgnoreCase("EXO_ARMOR")){
+                        pa.getInventory().addItem(Items.exoHelmet());
+                        pa.getInventory().addItem(Items.exoChestplate());
+                        pa.getInventory().addItem(Items.exoLeggings());
+                        pa.getInventory().addItem(Items.exoBoots());
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
                     }
                 default:
                     pa.sendMessage(format("&7No has asignado ningún subcomando."));
@@ -317,12 +329,15 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
         if(commandSender.isOp()) {
             if(args.length == 1){
                 String[] argsArray = {
-                        "sacrificios", "alerta", "give", "sacrificios_test", "debug", "totem_bar", "totems_clear", "vida_reset", "dimension","temperatura"
+                        "sacrificios", "alerta", "give", "sacrificios_test", "debug", "totem_bar", "totems_clear", "vida_reset", "dimension","temperatura","spawn"
                 };
 
                 commands.addAll(Arrays.asList(argsArray));
                 StringUtil.copyPartialMatches(args[0], commands, completions);
             }else if(args.length == 2){
+                if(args[0].equals("spawn")){
+                    commands.add("HOSTILE_COW");
+                }
                 if(args[0].equals("dimension")){
                     commands.add("builder_world");
                     commands.add("overworld");
@@ -340,8 +355,8 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     commands.add("clear");
                 }else if(args[0].equals("give")){
                     String[] items = {
-                      "FUNGAL_CLUMPS","WEIRD_DAGGER", "CATACLYSM_PEARL", "BLOOD_SABER", "BERSERKER_TOTEM", "CRYSTAL_HEART", "DISCORD", "CLOUDY_MARSH", "BLOOD_STONE", "BLOOD_SHARD", "TEMPERATURE_METER", "TOTEM_RESTORER", "FROSTBITE","CELULA_ENERGIA","METAL_DESC","EXO_SHIELD","ICE_SHOT","BLOOD_ARMOR","EXO_DRILL",
-                            "EXO_TOTEM","PYROCROSS","COOLER_FRUIT","HOT_FRUIT"
+                      "FUNGAL_CLUMPS","WEIRD_DAGGER", "CATACLYSM_PEARL", "BLOOD_SABER", "BERSERKER_TOTEM", "CRYSTAL_HEART", "DISCORD", "CLOUDY_MARSH", "BLOOD_STONE", "BLOOD_SHARD", "TEMPERATURE_METER", "TOTEM_RESTORER", "FROSTBITE","CELULA_ENERGIA","METAL_DESC","EXO_SHIELD","ICESHOT","BLOOD_ARMOR","EXO_DRILL",
+                            "EXO_TOTEM","PYROCROSS","COOLER_FRUIT","HOT_FRUIT","EXO_SWORD","EXO_BOW","EXO_ARMOR"
                     };
 
                     commands.addAll(Arrays.asList(items));

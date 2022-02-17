@@ -900,38 +900,7 @@ public class Mobs implements Listener{
     ///cacaplayo
 
 
-    public static void variante1Tier(Zombie self){
-        self.setCustomName(format("&6Zombi Tier I"));
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(7.0);
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
-        self.setHealth(30);
-        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 0, false, false, false));
-    }
-    public static void variante2Tier(Zombie self){
-        self.setCustomName(format("&6Zombi Tier II"));
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(11.0);
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
-        self.setHealth(30);
-        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 1, false, false, false));
 
-    }
-    public static void variante3Tier(Zombie self){
-        self.setCustomName(format("&6Zombi Tier III"));
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(7.0);
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(49.0);
-        self.setHealth(30);
-        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 1, false, false, false));
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TIER_3"), PersistentDataType.STRING, "TIER_3");
-
-    }
-    public static void tntMonster(Zombie self){
-        self.setCustomName(format("&6TNT Monster"));
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(7.0);
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
-        self.setHealth(30);
-        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 0, false, false, false));
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TNT_MONSTER"), PersistentDataType.STRING, "TNT_MONSTER");
-    }
 
 
 

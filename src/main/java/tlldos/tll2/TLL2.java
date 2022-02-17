@@ -137,22 +137,26 @@ public final class TLL2 extends JavaPlugin implements Listener{
         if (Bukkit.getOnlinePlayers().size() < 1) return;
         for (Player player : Bukkit.getOnlinePlayers()) {
             Location l = player.getLocation().clone();
-            if (r.nextInt(10) == 1) {
-                int pX = (r.nextBoolean() ? -1 : 1) * (r.nextInt(25)) + 15;
-                int pZ = (r.nextBoolean() ? -1 : 1) * (r.nextInt(25)) + 15;
+            if (r.nextInt(2) == 1) {
+                int pX = (r.nextBoolean() ? -1 : 1) * (r.nextInt(15)) + 15;
+                int pZ = (r.nextBoolean() ? -1 : 1) * (r.nextInt(15)) + 15;
                 int y = (int) l.getY();
 
                 Block block = l.getWorld().getBlockAt(l.getBlockX() + pX, y, l.getBlockZ() + pZ);
                 Block up = block.getRelative(BlockFace.UP);
 
-                if (block.getType() != Material.AIR && up.getType() == Material.AIR && block.isLiquid()) {
+                if (block.getType() != Material.AIR && up.getType() == Material.AIR && !(block.isLiquid())) {
                     spawnMobNaturally(player,block);
                 }
             }
             if(hasBloodstainedArmor(player)){
-                player.setMaxHealth(28);
+                player.setMaxHealth(32);
             }else{
                 player.setMaxHealth(20);
+            }
+            if (hasExoArmor(player)){
+                player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20,0, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE,20,0, true, false,true));
             }
 
             if(player.hasPotionEffect(PotionEffectType.UNLUCK)){
@@ -185,6 +189,28 @@ public final class TLL2 extends JavaPlugin implements Listener{
             return false;
         }
     }
+
+
+    public boolean hasExoArmor(Player p){
+        if(p.getInventory().getHelmet() != null && p.getInventory().getChestplate() != null && p.getInventory().getLeggings() != null && p.getInventory().getBoots() != null){
+            if(p.getInventory().getHelmet().hasItemMeta() && p.getInventory().getChestplate().hasItemMeta() && p.getInventory().getLeggings().hasItemMeta() && p.getInventory().getBoots().hasItemMeta()){
+                if(p.getInventory().getHelmet().getItemMeta().hasCustomModelData() && p.getInventory().getChestplate().getItemMeta().hasCustomModelData() && p.getInventory().getLeggings().getItemMeta().hasCustomModelData() && p.getInventory().getBoots().getItemMeta().hasCustomModelData()){
+                    if(p.getInventory().getHelmet().getItemMeta().getCustomModelData() == 47399 && p.getInventory().getChestplate().getItemMeta().getCustomModelData() == 47399 && p.getInventory().getLeggings().getItemMeta().getCustomModelData() == 47399 && p.getInventory().getBoots().getItemMeta().getCustomModelData() == 47399){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
     public void spawnMobNaturally(Player player, Block block){
         int mobtype = new Random().nextInt(6);
         if(mobtype == 1){
