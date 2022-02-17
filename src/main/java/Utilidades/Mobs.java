@@ -141,7 +141,7 @@ public class Mobs implements Listener{
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "MUMMY_SKELETON"), PersistentDataType.STRING, "MUMMY_SKELETON");
     }
 
-    public static void arañaArena(Spider self){
+    public static void aranaArena(Spider self){
         self.setCustomName(format("&6Sand Spider"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
         self.setHealth(20);
@@ -572,7 +572,6 @@ public class Mobs implements Listener{
         self.setCustomName(format("&6Solar Scorpion"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
         self.setHealth(40);
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(14.0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SOLAR_SCORPION"), PersistentDataType.STRING, "SOLAR_SCORPION");
     }
     public static void agileTarantule(Spider self){

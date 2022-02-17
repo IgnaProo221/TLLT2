@@ -137,19 +137,18 @@ public final class TLL2 extends JavaPlugin implements Listener{
         if (Bukkit.getOnlinePlayers().size() < 1) return;
         for (Player player : Bukkit.getOnlinePlayers()) {
             Location l = player.getLocation().clone();
-            /*if (r.nextInt(2) == 1) {
-                int pX = (r.nextBoolean() ? -1 : 1) * (r.nextInt(15)) + 15;
-                int pZ = (r.nextBoolean() ? -1 : 1) * (r.nextInt(15)) + 15;
+            if (r.nextInt(10) == 1) {
+                int pX = (r.nextBoolean() ? -1 : 1) * (r.nextInt(25)) + 15;
+                int pZ = (r.nextBoolean() ? -1 : 1) * (r.nextInt(25)) + 15;
                 int y = (int) l.getY();
 
                 Block block = l.getWorld().getBlockAt(l.getBlockX() + pX, y, l.getBlockZ() + pZ);
                 Block up = block.getRelative(BlockFace.UP);
 
-                if (block.getType() != Material.AIR && up.getType() == Material.AIR) {
-                    var vorlolxdxdxd = player.getLocation().getWorld().spawn(block.getLocation(), Creeper.class);
-                    Mobs.vortice(vorlolxdxdxd);
+                if (block.getType() != Material.AIR && up.getType() == Material.AIR && block.isLiquid()) {
+                    spawnMobNaturally(player,block);
                 }
-            }*/
+            }
             if(hasBloodstainedArmor(player)){
                 player.setMaxHealth(28);
             }else{
@@ -184,6 +183,26 @@ public final class TLL2 extends JavaPlugin implements Listener{
             }
         }else{
             return false;
+        }
+    }
+    public void spawnMobNaturally(Player player, Block block){
+        int mobtype = new Random().nextInt(6);
+        if(mobtype == 1){
+            var vorlolxdxdxd = player.getLocation().getWorld().spawn(block.getLocation(), Creeper.class);
+            Mobs.vortice(vorlolxdxdxd);
+        }else if(mobtype == 2){
+            var pillager = player.getLocation().getWorld().spawn(block.getLocation(),Pillager.class);
+        }else if(mobtype == 3){
+            var withers = player.getLocation().getWorld().spawn(block.getLocation(),WitherSkeleton.class);
+            Mobs.blightedWitherSkeleton(withers);
+        }else if(mobtype == 4){
+            var ghastlol = player.getLocation().getWorld().spawn(block.getLocation(),Ghast.class);
+            Mobs.riftedGhast(ghastlol);
+        }else if(mobtype == 5){
+            var phantomxd = player.getLocation().getWorld().spawn(block.getLocation(),Phantom.class);
+            Mobs.blightedPhantom(phantomxd);
+        }else{
+            var blazelol = player.getLocation().getWorld().spawn(block.getLocation(),Blaze.class);
         }
     }
 

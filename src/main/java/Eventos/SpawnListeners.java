@@ -1,6 +1,7 @@
 package Eventos;
 
 import CustomMobs.Argus;
+import CustomMobs.JineteZ;
 import Utilidades.Mobs;
 import Utilidades.Warn;
 import net.minecraft.server.level.WorldServer;
@@ -64,7 +65,7 @@ public class SpawnListeners implements Listener {
 
             var rocket = new ItemStack(Material.FIREWORK_ROCKET, 64);
             var rocketMeta = (FireworkMeta) rocket.getItemMeta();
-            var fireworkEffect = FireworkEffect.builder().withColor(Color.OLIVE).withFade(Color.RED).build();
+            var fireworkEffect = FireworkEffect.builder().withColor(Color.RED).withFade(Color.RED).build();
             rocketMeta.addEffect(fireworkEffect);
             rocket.setItemMeta(rocketMeta);
 
@@ -112,7 +113,11 @@ public class SpawnListeners implements Listener {
         }
 
         if (en instanceof Vex self){
-            this.spawnVexClass(self);
+            if(self.getSummoner() instanceof Evoker evoker){
+                if(evoker.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"FIRE_EVOKER"),PersistentDataType.STRING)){
+                    Mobs.cinder(self);
+                }
+            }
         }
         if (en instanceof Husk) {
             Location l = en.getLocation().clone();
@@ -331,9 +336,10 @@ public class SpawnListeners implements Listener {
             Mobs.zombObeso(iron);
         }else if(type == 5){
             Mobs.zombiJinete(self);
-            var callabo = self.getLocation().getWorld().spawn(self.getLocation(),ZombieHorse.class);
-            Mobs.caballoJinete(callabo);
-            callabo.setPassenger(self);
+            JineteZ jineteZ = new JineteZ(self.getLocation());
+            WorldServer worldServer = ((CraftWorld)self.getLocation().getWorld()).getHandle();
+            worldServer.addEntity(jineteZ, CreatureSpawnEvent.SpawnReason.CUSTOM);
+            jineteZ.getBukkitCreature().setPassenger(self);
         }else{
             Mobs.blightedZombi(self);
         }
