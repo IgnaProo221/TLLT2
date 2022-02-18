@@ -2,6 +2,7 @@ package Eventos;
 
 import Utilidades.Format;
 import Utilidades.Utils;
+import jdk.jshell.execution.Util;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -34,6 +35,7 @@ public class AlEntrar implements Listener {
         var dataTemperatura = data.get(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER);
         var dataMaestria = data.get(new NamespacedKey(plugin,"maestrialvl"),PersistentDataType.INTEGER);
         var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
+        var inmunity = data.get(new NamespacedKey(plugin,"inmunity"),PersistentDataType.INTEGER);
 
         if(dataTemperatura == null){
             data.set(Utils.key("temperatura"), PersistentDataType.INTEGER, 30);
@@ -43,6 +45,9 @@ public class AlEntrar implements Listener {
         }
         if(dataMaestriaExp == null){
             data.set(Utils.key("maestriaexp"),PersistentDataType.INTEGER,0);
+        }
+        if(inmunity == null){
+            data.set(Utils.key("inmunity"),PersistentDataType.INTEGER,0);
         }
     }
 }
