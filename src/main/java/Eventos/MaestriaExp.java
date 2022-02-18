@@ -4,6 +4,7 @@ import Utilidades.Utils;
 import net.minecraft.network.chat.ChatComponentText;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.block.TileState;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,6 +27,8 @@ public class MaestriaExp implements Listener{
         var p = e.getPlayer();
         var block = e.getBlock();
         var data = p.getPersistentDataContainer();
+        var state = block.getState();
+        var tilestate = (TileState)state;
         var dataMaestria = data.get(new NamespacedKey(plugin,"maestrialvl"), PersistentDataType.INTEGER);
         var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
 
@@ -104,7 +107,9 @@ public class MaestriaExp implements Listener{
         || block.getType() == Material.NETHER_GOLD_ORE || block.getType() == Material.DEEPSLATE_DIAMOND_ORE || block.getType() == Material.DEEPSLATE_EMERALD_ORE
         || block.getType() == Material.DEEPSLATE_LAPIS_ORE || block.getType() == Material.DEEPSLATE_REDSTONE_ORE || block.getType() == Material.DEEPSLATE_GOLD_ORE
         || block.getType() == Material.DEEPSLATE_IRON_ORE || block.getType() == Material.DEEPSLATE_COPPER_ORE || block.getType() == Material.DEEPSLATE_COAL_ORE){
-
+            TileState tileState = (TileState) state;
+            tileState.getPersistentDataContainer().set(Utils.key("no_exp"),PersistentDataType.INTEGER,1);
+            tileState.update();
         }
     }
 }
