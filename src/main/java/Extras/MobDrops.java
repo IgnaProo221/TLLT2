@@ -15,7 +15,7 @@ public class MobDrops{
         ItemMeta meta = s.getItemMeta();
         meta.setDisplayName(format("&cBlighted Flesh"));
         List<String> lore = new ArrayList<>();
-        lore.add(format("&7Carne de una bestia mutada"));
+        lore.add(format("&7Carne de una bestia mutada en un laboratorio secreto."));
         meta.setLore(lore);
         s.setItemMeta(meta);
         return s;
@@ -25,7 +25,7 @@ public class MobDrops{
         ItemMeta meta = s.getItemMeta();
         meta.setDisplayName(format("&cBlighted Bone"));
         List<String> lore = new ArrayList<>();
-        lore.add(format("&7Huesos de un terror viviente"));
+        lore.add(format("&7Huesos de un terrorrifico viviente esqueletico."));
         meta.setLore(lore);
         s.setItemMeta(meta);
         return s;
@@ -35,7 +35,7 @@ public class MobDrops{
         ItemMeta meta = s.getItemMeta();
         meta.setDisplayName(format("&cBlighted Eye"));
         List<String> lore = new ArrayList<>();
-        lore.add(format("&7Ojo de una pesadilla artrópoda"));
+        lore.add(format("&7Ojos de una pesadilla arthropoda."));
         meta.setLore(lore);
         s.setItemMeta(meta);
         return s;
@@ -45,7 +45,7 @@ public class MobDrops{
         ItemMeta meta = s.getItemMeta();
         meta.setDisplayName(format("&cBlighted Powder"));
         List<String> lore = new ArrayList<>();
-        lore.add(format("&7Pólvora de un monstruo nuclear"));
+        lore.add(format("&7Pólvora de un monstruo nuclear."));
         meta.setLore(lore);
         s.setItemMeta(meta);
         return s;
@@ -55,7 +55,7 @@ public class MobDrops{
         ItemMeta meta = s.getItemMeta();
         meta.setDisplayName(format("&cBlighted Membrane"));
         List<String> lore = new ArrayList<>();
-        lore.add(format("&7Membrana de un peligro volador"));
+        lore.add(format("&7Membrana de un peligro volador."));
         meta.setLore(lore);
         s.setItemMeta(meta);
         return s;
@@ -65,7 +65,7 @@ public class MobDrops{
         ItemMeta meta = s.getItemMeta();
         meta.setDisplayName(format("&cBlighted Dust"));
         List<String> lore = new ArrayList<>();
-        lore.add(format("&7Polvo de una Bruja Experta"));
+        lore.add(format("&7Polvo de una bruja experta."));
         meta.setLore(lore);
         s.setItemMeta(meta);
         return s;
@@ -75,7 +75,7 @@ public class MobDrops{
         ItemMeta meta = s.getItemMeta();
         meta.setDisplayName(format("&cBlighted Tear"));
         List<String> lore = new ArrayList<>();
-        lore.add(format("&7Lagrimas de un fantasma explosivo"));
+        lore.add(format("&7Lagrimas de un fantasma explosivo."));
         meta.setLore(lore);
         s.setItemMeta(meta);
         return s;
@@ -85,7 +85,7 @@ public class MobDrops{
         ItemMeta meta = s.getItemMeta();
         meta.setDisplayName(format("&cBlighted Porkchop"));
         List<String> lore = new ArrayList<>();
-        lore.add(format("&7Chuleta de un cerdo bastante raro"));
+        lore.add(format("&7Chuleta de un cerdo bastante... ¿Sobrenatural?"));
         meta.setLore(lore);
         s.setItemMeta(meta);
         return s;
@@ -97,7 +97,7 @@ public class MobDrops{
         List<String> lore = new ArrayList<>();
         lore.add(format("&7Perla de un ente misterioso"));
         lore.add(format(""));
-        lore.add(format("&cEsta Perla otorga Speed I al Caer"));
+        lore.add(format("&cEsta Perla te otorgara Speed I al lanzarla."));
         meta.setLore(lore);
         s.setItemMeta(meta);
         return s;

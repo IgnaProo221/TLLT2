@@ -35,7 +35,7 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player player)) {
-            sender.getServer().getConsoleSender().sendMessage("Eres barja o te haces");
+            sender.getServer().getConsoleSender().sendMessage("Eres jiro o te haces");
             return true;
         }
 
@@ -49,15 +49,15 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
         if (args[0].equalsIgnoreCase("info")) {
 
             TextComponent creditos = new TextComponent();
-            creditos.setText(ChatColor.YELLOW + "Creditos! (has click aqui)");
+            creditos.setText(ChatColor.YELLOW + "¡Creditos! (has click aquí)");
             creditos.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/thelastlife creditos"));
 
             TextComponent listadecmd = new TextComponent();
             listadecmd.setText(ChatColor.YELLOW + "Lista de Comandos (has click aqui)");
             listadecmd.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/thelastlife comandoslista"));
             sender.sendMessage(ChatColor.GOLD + "----- TLL T2 -----");
-            sender.sendMessage(ChatColor.YELLOW + "Plugin para THE LAST LIFE T2, hecho por MutantFm");
-            sender.sendMessage(ChatColor.YELLOW + "Prefix de Comando: /thelastlife");
+            sender.sendMessage(ChatColor.YELLOW + "Plugin para THE LAST LIFE T2, hecho por MutantFm.");
+            sender.sendMessage(ChatColor.YELLOW + "Prefix del comando: /thelastlife");
             sender.sendMessage(creditos);
             sender.sendMessage(listadecmd);
             sender.sendMessage(ChatColor.YELLOW + "Discord: https://discord.gg/PnDUcABq9m");
@@ -72,7 +72,7 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
             sender.sendMessage(ChatColor.AQUA + "MutantFm: " + ChatColor.GRAY + "Organizador de TLL.");
             sender.sendMessage(ChatColor.AQUA + "WickedDroid, ItzFel17 & LePepos: " + ChatColor.GRAY + "Desarrolladores del Plugin.");
             sender.sendMessage(ChatColor.AQUA + "JohanBigCum y Null1390: " + ChatColor.GRAY + "Hostear el Server.");
-            sender.sendMessage(ChatColor.AQUA + "Carrot, Seven, GusGus, TheSmol_T, Skarby y NovaKingdom: " + ChatColor.GRAY + "Diseños, Modelos, Texturas y Sonidos.");
+            sender.sendMessage(ChatColor.AQUA + "Carrotw, SeVeN_007, GusGus, TheSmol_T, SkarbyPalace y NovaKingdom: " + ChatColor.GRAY + "Diseños, Modelos, Texturas y Sonidos.");
             sender.sendMessage(ChatColor.AQUA + "cBaguette y wHermes: " + ChatColor.GRAY + "Estructuras del server.");
             sender.sendMessage(ChatColor.AQUA + "Storm_WaterTime, kennyelduro, 5r_i4n, Pepe_3012, Mikel, SalvaGamer, Wither y Gatin72 " + ChatColor.GRAY + "Beta Testers de TLL T2.");
             sender.sendMessage(ChatColor.AQUA + "Alex, LechugaMC, Blackstamp y Tom_" + ChatColor.GRAY + "Ayuda Principal, y Moderacion.");
@@ -88,13 +88,13 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
             sender.sendMessage(ChatColor.DARK_GRAY + "----------------------");
         }
         if(args[0].equalsIgnoreCase("tps")){
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',Format.PREFIX +"&cHay " + s.getTPS()[0] + " TPS Actuales"));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',Format.PREFIX +"&cHay " + s.getTPS()[0] + " TPS."));
         }
         if(args[0].equalsIgnoreCase("dia")){
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',Format.PREFIX + "&7Nos Encontramos en el Dia: &6" + Utils.getDay()));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',Format.PREFIX + "&7Nos encontramos en el día: &6" + Utils.getDay()));
         }
         if(args[0].equalsIgnoreCase("sacrificios")){
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Format.PREFIX + "&7Te encuentras con: &6" + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER) + "&7 sacrificios"));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Format.PREFIX + "&7Te encuentras con: &6" + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER) + "&7 sacrificios hechos."));
         }
         return false;
     }

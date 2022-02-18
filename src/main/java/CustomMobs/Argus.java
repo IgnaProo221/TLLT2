@@ -13,8 +13,7 @@ public class Argus extends EntityVex{
     public Argus(Location loc){
         super(EntityTypes.aU,((CraftWorld) loc.getWorld()).getHandle());
         this.setPosition(loc.getX(),loc.getY(),loc.getZ());
-
+        this.setHealth(10);
         this.setCustomName(new ChatComponentText(format("&2&lArgus")));
-
     }
 }

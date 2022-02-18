@@ -1,9 +1,20 @@
 package Utilidades;
 
+import net.minecraft.world.entity.EntityInsentient;
+import net.minecraft.world.entity.ai.goal.PathfinderGoal;
+import net.minecraft.world.entity.ai.goal.PathfinderGoalMeleeAttack;
+import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
+import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackableTarget;
+import net.minecraft.world.entity.animal.EntityBee;
+import net.minecraft.world.entity.animal.EntityIronGolem;
+import net.minecraft.world.entity.animal.horse.EntityHorseZombie;
+import net.minecraft.world.entity.monster.EntityEnderman;
+import net.minecraft.world.entity.player.EntityHuman;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.boss.BarColor;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftBee;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftEnderman;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftIronGolem;
 
 import org.bukkit.*;
@@ -130,7 +141,7 @@ public class Mobs implements Listener{
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "MUMMY_SKELETON"), PersistentDataType.STRING, "MUMMY_SKELETON");
     }
 
-    public static void arañaArena(Spider self){
+    public static void aranaArena(Spider self){
         self.setCustomName(format("&6Sand Spider"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
         self.setHealth(20);
@@ -151,6 +162,7 @@ public class Mobs implements Listener{
         self.setCustomName(format("&4&lBlighted Zombie"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
         self.setHealth(50);
+        self.setBaby(false);
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(30);
         self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100000, 1, false, false, false));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_ZOMBIE"), PersistentDataType.STRING, "BLIGHTED_ZOMBIE");
@@ -203,16 +215,24 @@ public class Mobs implements Listener{
         self.setHealth(75);
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(30);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_ENDERMAN"), PersistentDataType.STRING, "BLIGHTED_ENDERMAN");
-        /*CraftEnderman craft = ((CraftEnderman) self);
-        EnderMan entityEnderman = craft.getHandle();
+        CraftEnderman craft = ((CraftEnderman)self);
+        EntityEnderman entityEnderman = craft.getHandle();
+        try{
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("bP");
+            gf.setAccessible(true);
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityEnderman);
+            goal.a(0, new PathfinderGoalMeleeAttack(entityEnderman,1.0D,true));
 
-        try {
-            entityEnderman.goalSelector.addGoal(0, new NearestAttackableTargetGoal<>(entityEnderman, ServerPlayer.class,true, false));
+            Field tf = cl.getDeclaredField("bQ");
+            tf.setAccessible(true);
 
-        } catch (Exception e) {
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityEnderman);
+            target.a(0,new PathfinderGoalNearestAttackableTarget<>(entityEnderman, EntityHuman.class, 10,true,false,null));
+        }catch (Exception e){
             e.printStackTrace();
             Warn.Mutant(e);
-        }*/
+        }
 
     }
 
@@ -235,6 +255,7 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(55);
         self.setHealth(55);
         self.setSize(4);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_PHANTOM"), PersistentDataType.STRING, "BLIGHTED_PHANTOM");
     }
 
@@ -366,14 +387,23 @@ public class Mobs implements Listener{
         self.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE,Integer.MAX_VALUE,0, false, false, false));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"LAVA_GOLEM"),PersistentDataType.STRING, "LAVA_GOLEM");
         CraftIronGolem craft = ((CraftIronGolem) self);
-      /*  net.minecraft.world.entity.animal.IronGolem entityGolem = craft.getHandle();
-            try {
-                entityGolem.targetSelector.addGoal(0, new MeleeAttackGoal(entityGolem, 1.0D, true));
-                entityGolem.goalSelector.addGoal(0, new NearestAttackableTargetGoal<>(entityGolem, ServerPlayer.class,true, false));
-            } catch (Exception e) {
-                e.printStackTrace();
-                Warn.Mutant(e);
-            }*/
+        EntityIronGolem entityIronGolem = craft.getHandle();
+        try{
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("bP");
+            gf.setAccessible(true);
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityIronGolem);
+            goal.a(0, new PathfinderGoalMeleeAttack(entityIronGolem,1.0D,true));
+
+            Field tf = cl.getDeclaredField("bQ");
+            tf.setAccessible(true);
+
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityIronGolem);
+            target.a(0,new PathfinderGoalNearestAttackableTarget<>(entityIronGolem, EntityHuman.class, 10,true,false,null));
+        }catch (Exception e){
+            e.printStackTrace();
+            Warn.Mutant(e);
+        }
         self.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0, false, false, false));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "LAVA_GOLEM"), PersistentDataType.STRING, "LAVA_GOLEM");
     }
@@ -455,6 +485,12 @@ public class Mobs implements Listener{
 
 
 
+
+
+
+
+
+
     public static void hellfireCreeper(Creeper self){
         self.setCustomName(format("&6Hellfire Creeper"));
         self.setPowered(true);
@@ -469,24 +505,29 @@ public class Mobs implements Listener{
         self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 2, false, false, false));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HIVE_MIND"), PersistentDataType.STRING, "HIVE_MIND");
     }
-    public static void thePlague(Bee self){
+    public static void thePlague(Bee self) {
         self.setCustomName(format("&2Plague"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
         self.setHealth(30);
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10);
-
-
         CraftBee craft = ((CraftBee) self);
-        /*net.minecraft.world.entity.animal.Bee entityBee = craft.getHandle();
+        EntityBee entityBee = craft.getHandle();
+        try{
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("bP");
+            gf.setAccessible(true);
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityBee);
+            goal.a(0, new PathfinderGoalMeleeAttack(entityBee,1.0D,true));
 
-        try {
-            entityBee.targetSelector.addGoal(0, new MeleeAttackGoal(entityBee, 1.0D, true));
-            entityBee.goalSelector.addGoal(0, new NearestAttackableTargetGoal<>(entityBee, ServerPlayer.class,true, false));
-        } catch (Exception e) {
+            Field tf = cl.getDeclaredField("bQ");
+            tf.setAccessible(true);
+
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityBee);
+            target.a(0,new PathfinderGoalNearestAttackableTarget<>(entityBee, EntityHuman.class, 10,true,false,null));
+        }catch (Exception e){
             e.printStackTrace();
             Warn.Mutant(e);
-
-         */
+        }
         self.setAnger(Integer.MAX_VALUE);
 
     }
@@ -532,7 +573,6 @@ public class Mobs implements Listener{
         self.setCustomName(format("&6Solar Scorpion"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
         self.setHealth(40);
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(14.0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SOLAR_SCORPION"), PersistentDataType.STRING, "SOLAR_SCORPION");
     }
     public static void agileTarantule(Spider self){
@@ -573,21 +613,24 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50.0);
         self.setHealth(50);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXO_GOLEM"), PersistentDataType.STRING, "EXO_GOLEM");
-        ///pongan que el golem este enojado porfavor
-
-/*
         CraftIronGolem craft = ((CraftIronGolem) self);
-        net.minecraft.world.entity.animal.IronGolem entityGolem = craft.getHandle();
+        EntityIronGolem entityIronGolem = craft.getHandle();
+        try{
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("bP");
+            gf.setAccessible(true);
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityIronGolem);
+            goal.a(0, new PathfinderGoalMeleeAttack(entityIronGolem,1.0D,true));
 
-        try {
-            entityGolem.targetSelector.addGoal(0, new MeleeAttackGoal(entityGolem, 1.0D, true));
-            entityGolem.goalSelector.addGoal(0, new NearestAttackableTargetGoal<>(entityGolem, ServerPlayer.class,true, false));
-        } catch (Exception e) {
+            Field tf = cl.getDeclaredField("bQ");
+            tf.setAccessible(true);
+
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityIronGolem);
+            target.a(0,new PathfinderGoalNearestAttackableTarget<>(entityIronGolem, EntityHuman.class, 10,true,false,null));
+        }catch (Exception e){
             e.printStackTrace();
             Warn.Mutant(e);
         }
-        
- */
     }
 
     public static void labSilver(Silverfish self){
@@ -691,6 +734,89 @@ public class Mobs implements Listener{
     }
 
 
+    public static void zombHerrero(Zombie self){
+        self.setCustomName(format("&6Zombi Herrero"));
+        self.setShouldBurnInDay(false);
+        self.setBaby(false);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
+        self.setHealth(40);
+        ItemStack mazo = new ItemStack(Material.NETHERITE_AXE);
+        ItemMeta mazom = mazo.getItemMeta();
+        mazom.setUnbreakable(true);
+        mazom.setCustomModelData(18189);
+        mazo.setItemMeta(mazom);
+        self.getEquipment().setItemInMainHand(mazo);
+        self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+    }
+
+    public static void zombCarni(Zombie self){
+        self.setCustomName(format("&6Zombi Carnicero"));
+        self.setShouldBurnInDay(false);
+        self.setBaby(false);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
+        self.setHealth(40);
+        ItemStack machete = new ItemStack(Material.NETHERITE_SWORD);
+        ItemMeta machetem = machete.getItemMeta();
+        machetem.setUnbreakable(true);
+        machetem.setCustomModelData(5723);
+        machete.setItemMeta(machetem);
+        self.getEquipment().setItemInMainHand(machete);
+        self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+    }
+    public static void zombObeso(IronGolem self){
+        self.setCustomName(format("&6Zombi Grande"));
+        self.setRemoveWhenFarAway(true);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60.0);
+        self.setHealth(60);
+        CraftIronGolem craft = ((CraftIronGolem) self);
+        EntityIronGolem entityIronGolem = craft.getHandle();
+        try{
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("bP");
+            gf.setAccessible(true);
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityIronGolem);
+            goal.a(0, new PathfinderGoalMeleeAttack(entityIronGolem,1.0D,true));
+
+            Field tf = cl.getDeclaredField("bQ");
+            tf.setAccessible(true);
+
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityIronGolem);
+            target.a(0,new PathfinderGoalNearestAttackableTarget<>(entityIronGolem, EntityHuman.class, 10,true,false,null));
+        }catch (Exception e){
+            e.printStackTrace();
+            Warn.Mutant(e);
+        }
+    }
+
+    public static void zombiJinete(Zombie self){
+        self.setCustomName(format("&6Zombi Jinete"));
+        self.setShouldBurnInDay(false);
+        self.setBaby(false);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
+        self.setHealth(40);
+        self.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
+        self.getEquipment().setHelmet(new ItemStack(Material.IRON_HELMET));
+        self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+        self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
+    }
+    public static void caballoJinete(ZombieHorse self){
+        self.setCustomName(format("&6Caballo Zombi"));
+    }
+
+
+    public static void zombBox(Zombie self){
+        self.setCustomName(format("&6Zombi Boxxeador"));
+        self.setShouldBurnInDay(false);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
+        self.setHealth(40);
+        self.setBaby(false);
+        self.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK).setBaseValue(10.0D);
+        self.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(100.0D);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(14.0D);
+    }
+
+
+
 
     ///esqueletos randoms
     public static void ignitedSkeleton(Skeleton self){
@@ -775,38 +901,7 @@ public class Mobs implements Listener{
     ///cacaplayo
 
 
-    public static void variante1Tier(Zombie self){
-        self.setCustomName(format("&6Zombi Tier I"));
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(7.0);
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
-        self.setHealth(30);
-        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 0, false, false, false));
-    }
-    public static void variante2Tier(Zombie self){
-        self.setCustomName(format("&6Zombi Tier II"));
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(11.0);
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
-        self.setHealth(30);
-        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 1, false, false, false));
 
-    }
-    public static void variante3Tier(Zombie self){
-        self.setCustomName(format("&6Zombi Tier III"));
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(7.0);
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(49.0);
-        self.setHealth(30);
-        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 1, false, false, false));
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TIER_3"), PersistentDataType.STRING, "TIER_3");
-
-    }
-    public static void tntMonster(Zombie self){
-        self.setCustomName(format("&6TNT Monster"));
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(7.0);
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
-        self.setHealth(30);
-        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1000000, 0, false, false, false));
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TNT_MONSTER"), PersistentDataType.STRING, "TNT_MONSTER");
-    }
 
 
 

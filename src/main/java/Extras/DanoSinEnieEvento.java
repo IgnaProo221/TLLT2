@@ -65,6 +65,8 @@ public class DanoSinEnieEvento implements Listener{
     public void danoPro(EntityDamageEvent e){
         Entity entity = e.getEntity();
         if(entity instanceof Player player){
+            var data = player.getPersistentDataContainer();
+            var dataTemperatura = data.get(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER);
             if(e.getEntity().getLastDamageCause() == null){
                 return;
             }
@@ -76,33 +78,59 @@ public class DanoSinEnieEvento implements Listener{
                 if (player.getPotionEffect(PotionEffectType.UNLUCK).getAmplifier() == 1) {
                     if (e.getCause() != EntityDamageEvent.DamageCause.SUICIDE || e.getCause() != EntityDamageEvent.DamageCause.THORNS || e.getCause() != EntityDamageEvent.DamageCause.POISON || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK || e.getCause() != EntityDamageEvent.DamageCause.VOID) {
                         e.setDamage(e.getDamage() * 2);
+                    }else if(e.getCause() == EntityDamageEvent.DamageCause.FALL){
+                        e.setDamage(e.getDamage() * 5);
+                    }else if(e.getCause() == EntityDamageEvent.DamageCause.FREEZE){
+                        e.setDamage(e.getDamage() * 5);
+                    }else if(e.getCause() == EntityDamageEvent.DamageCause.LIGHTNING){
+                        e.setDamage(e.getDamage() * 5);
                     }
                 } else if (player.getPotionEffect(PotionEffectType.UNLUCK).getAmplifier() == 2) {
                     if (e.getCause() != EntityDamageEvent.DamageCause.SUICIDE || e.getCause() != EntityDamageEvent.DamageCause.THORNS || e.getCause() != EntityDamageEvent.DamageCause.POISON || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK || e.getCause() != EntityDamageEvent.DamageCause.VOID) {
                         e.setDamage(e.getDamage() * 3);
+                    }else if(e.getCause() == EntityDamageEvent.DamageCause.FALL){
+                        e.setDamage(e.getDamage() * 6);
+                    }else if(e.getCause() == EntityDamageEvent.DamageCause.FREEZE){
+                        e.setDamage(e.getDamage() * 6);
+                    }else if(e.getCause() == EntityDamageEvent.DamageCause.LIGHTNING){
+                        e.setDamage(e.getDamage() * 6);
                     }
                 } else if (player.getPotionEffect(PotionEffectType.UNLUCK).getAmplifier() == 3) {
                     if (e.getCause() != EntityDamageEvent.DamageCause.SUICIDE || e.getCause() != EntityDamageEvent.DamageCause.THORNS || e.getCause() != EntityDamageEvent.DamageCause.POISON || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK || e.getCause() != EntityDamageEvent.DamageCause.VOID) {
                         e.setDamage(e.getDamage() * 4);
+                    }else if(e.getCause() == EntityDamageEvent.DamageCause.FALL){
+                        e.setDamage(e.getDamage() * 7);
+                    }else if(e.getCause() == EntityDamageEvent.DamageCause.FREEZE){
+                        e.setDamage(e.getDamage() * 7);
+                    }else if(e.getCause() == EntityDamageEvent.DamageCause.LIGHTNING){
+                        e.setDamage(e.getDamage() * 7);
                     }
                 }
-            }else if(player.hasPotionEffect(PotionEffectType.LUCK)){
-                if(player.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 3){
-                    if(e.getCause() == EntityDamageEvent.DamageCause.FALL || e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK){
-                        e.setDamage(e.getDamage() * 2);
+            }else if(player.hasPotionEffect(PotionEffectType.LUCK)) {
+                if (player.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 3) {
+                    if (e.getCause() == EntityDamageEvent.DamageCause.FALL || e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+                        e.setDamage(e.getDamage() * 4);
                     }
-                }else if(player.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 4){
-                    if(e.getCause() == EntityDamageEvent.DamageCause.FALL || e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK){
-                        e.setDamage(e.getDamage() * 3);
+                } else if (player.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 4) {
+                    if (e.getCause() == EntityDamageEvent.DamageCause.FALL || e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+                        e.setDamage(e.getDamage() * 5);
                     }
+                }
+            }else if(dataTemperatura <= -180) {
+                if (e.getCause() == EntityDamageEvent.DamageCause.FREEZE) {
+                    e.setDamage(e.getDamage() * 10);
+                }
+            }else if(dataTemperatura >= 220){
+                if(e.getCause() == EntityDamageEvent.DamageCause.LAVA || e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK){
+                    e.setDamage(e.getDamage() * 10);
                 }
             }else{
                 if(e.getCause() == EntityDamageEvent.DamageCause.FALL){
-                    e.setDamage(e.getDamage() * 6);
+                    e.setDamage(e.getDamage() * 4);
                 }else if(e.getCause() == EntityDamageEvent.DamageCause.FREEZE){
-                    e.setDamage(e.getDamage() * 6);
+                    e.setDamage(e.getDamage() * 4);
                 }else if(e.getCause() == EntityDamageEvent.DamageCause.LIGHTNING){
-                    e.setDamage(e.getDamage() * 6);
+                    e.setDamage(e.getDamage() * 4);
                 }
             }
         }

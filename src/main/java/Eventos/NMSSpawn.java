@@ -1,8 +1,6 @@
 package Eventos;
 
-import CustomMobs.Argus;
-import CustomMobs.DreadNightmare;
-import CustomMobs.UltraSniper;
+import CustomMobs.*;
 import com.sk89q.worldedit.world.entity.EntityTypes;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.Bukkit;
@@ -28,20 +26,25 @@ public class NMSSpawn implements Listener{
     public void customGen(EntitySpawnEvent e) {
         Random random = new Random();
         int spawn = random.nextInt(100);
-        if (!(e.getEntity() instanceof Animals) || e.getLocation().getBlock().isLiquid()) return;
+        if (!(e.getEntity() instanceof Animals) || e.getLocation().getBlock().isLiquid() || !(e.getEntity() instanceof Bee  )) return;
         if (spawn < 20) {
-            int mob = random.nextInt(2);
+            e.setCancelled(true);
+            int mob = random.nextInt(3);
             if(mob == 1) {
                 DreadNightmare dreadNightmare = new DreadNightmare(e.getLocation());
                 WorldServer world = ((CraftWorld) e.getEntity().getWorld()).getHandle();
-
                 world.addEntity(dreadNightmare, CreatureSpawnEvent.SpawnReason.CUSTOM);
                 Bukkit.getServer().getConsoleSender().sendMessage("Entidad: " + dreadNightmare.getEntityType().id);
             }else if(mob == 2){
-                UltraSniper sniper = new UltraSniper(e.getLocation());
+                HostileTest hostileTest = new HostileTest(e.getLocation());
                 WorldServer worldServer = ((CraftWorld)e.getEntity().getWorld()).getHandle();
-                worldServer.addEntity(sniper, CreatureSpawnEvent.SpawnReason.CUSTOM);
-                Bukkit.getServer().getConsoleSender().sendMessage("Entidad: " + sniper.getEntityType().id);
+                worldServer.addEntity(hostileTest, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                Bukkit.getServer().getConsoleSender().sendMessage("Entidad: " + hostileTest.getEntityType().id);
+            }else{
+                AldeanoT aldeanoT = new AldeanoT(e.getLocation());
+                WorldServer worldServer = ((CraftWorld)e.getEntity().getWorld()).getHandle();
+                worldServer.addEntity(aldeanoT, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                Bukkit.getServer().getConsoleSender().sendMessage("Entidad: "+aldeanoT  .getEntityType().id);
             }
         }
     }

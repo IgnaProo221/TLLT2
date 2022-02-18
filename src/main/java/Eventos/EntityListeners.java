@@ -8,6 +8,7 @@ import Utilidades.Warn;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -24,6 +25,7 @@ import tlldos.tll2.TLL2;
 import java.util.*;
 
 import static Extras.Items.createFragmentoSangre;
+import static Extras.Items.exoTotem;
 import static Utilidades.Format.format;
 
 public class EntityListeners implements Listener {
@@ -148,12 +150,15 @@ public class EntityListeners implements Listener {
                         if (pa.hasCooldown(Material.NETHERITE_SWORD)) {
                             return;
                         } else {
-                            pa.setHealth(pa.getHealth() + 2);
-                            pa.sendMessage(Format.PREFIX, format("&c¡Tu Bloodstained Saber te a curado por 1 corazon!"));
+                            pa.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0,false, false, false));
+                            pa.playSound(pa.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP,5.0F,-1.0F);
                             pa.setCooldown(Material.NETHERITE_SWORD, 400);
                         }
                     }
-                    }
+                    }else if(pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 18129){
+                    Monster monster = (Monster) entity;
+                    monster.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200,1, false, false, false));
+                }
                 }
             }
             }
@@ -276,6 +281,13 @@ public class EntityListeners implements Listener {
                         player.getInventory().setItem(pos, null);
                         player.getWorld().dropItemNaturally(player.getLocation().add(0, 5, 0), drop);
                     }
+                }
+            }
+            if(damager instanceof Villager villager){
+                if(villager.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"VILLAGER_TERRORISTA"),PersistentDataType.STRING)){
+                    var player = (Player)entity;
+                    player.getLocation().getWorld().createExplosion(villager,8,false,true);
+                    villager.damage(1000);
                 }
             }
         }
@@ -472,7 +484,7 @@ public class EntityListeners implements Listener {
             if(silverfish.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "COSMIC_SILVERFISH"), PersistentDataType.STRING)){
                 cosmosMobs(silverfish);
                 Bukkit.getOnlinePlayers().forEach(player -> {
-                    player.sendMessage(Format.PREFIX + format("&c&l!El Cosmos a Invocado un Mob Aleatorio en X: " + e.getLocation().getBlockX() + " Y: " +e.getLocation().getBlockY() +" Z: "+ e.getLocation().getBlockZ() +"!"));
+                    player.sendMessage(Format.PREFIX + format("&c&l!El Cosmos ha invocado un mob aleatorio en X: " + e.getLocation().getBlockX() + " Y: " +e.getLocation().getBlockY() +" Z: "+ e.getLocation().getBlockZ() +"!"));
                 });
             }
         }
@@ -513,7 +525,7 @@ public class EntityListeners implements Listener {
             event.getDrops().add(dropFrag);
 
             addHash(p);
-            p.sendMessage(format("&7¡Has sacrificado a un &6&lAldeano&7, has recibido &6&l" + size + " &cFragmento(s) de Sangre&7!"));
+            p.sendMessage(format("&7¡Has sacrificado a un &6&lAldeano&7, has recibido un &6&l" + size + " &cFragmento(s) de Sangre&7!"));
         }
     }
 
@@ -593,7 +605,25 @@ public class EntityListeners implements Listener {
         if(shooter instanceof Player){
             if(projectile instanceof Arrow){
                 Player p = (Player) shooter;
-                if(p.getInventory().getItemInMainHand() != null ||p.getInventory().getItemInOffHand() != null){
+                if(hasCustomModelData(p)){
+                    if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 5080 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 5080){
+                        if(damaged != null){
+                            damaged.setFreezeTicks(1200);
+                        }
+                    }else if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 7891 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 7891){
+                        if(damaged != null){
+                            damaged.getLocation().createExplosion(p,4,false, true);
+                        }else if(block != null){
+                            block.getLocation().createExplosion(p,4,false, true);
+                        }
+                    }else if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 27289 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 27289){
+                        if(damaged != null){
+                            Monster monster = (Monster) damaged;
+                            monster.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200,1, false, false, false));
+                         }
+                    }
+                }
+               /* if(p.getInventory().getItemInMainHand() != null ||p.getInventory().getItemInOffHand() != null){
                     if(p.getInventory().getItemInMainHand().hasItemMeta() || p.getInventory().getItemInOffHand().hasItemMeta()){
                         if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()){
                             if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 5080 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 5080){
@@ -615,8 +645,13 @@ public class EntityListeners implements Listener {
                     }else{
                         return;
                     }
-                }
+                }*/
             }
         }
     }
+
+    public boolean hasCustomModelData(Player p){
+        return ((p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()) || (p.getInventory().getItemInOffHand() != null &&p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()));
+    }
+
 }
