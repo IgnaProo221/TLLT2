@@ -1,17 +1,19 @@
 package Eventos;
 
 import Extras.Items;
+import Utilidades.CustomEnchants;
 import Utilidades.Format;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
+import org.jetbrains.annotations.NotNull;
 import tlldos.tll2.TLL2;
+
+import java.util.Collection;
 
 import static Utilidades.Format.format;
 
@@ -78,6 +80,45 @@ public class BlocksListeners implements Listener{
                 }else{
                     return;
                 }
+            }
+        }
+
+        if(p.getInventory().getItemInMainHand() != null){
+            if(p.getInventory().getItemInMainHand().hasItemMeta()){
+                if(p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.TELEPHATY)){
+                    if(block.getType() == Material.CHEST || block.getType() == Material.FURNACE || block.getType() == Material.BLAST_FURNACE
+                            || block.getType() == Material.SMOKER || block.getType() == Material.BARREL)return;
+                    if(p.getInventory().firstEmpty() == -1)return;
+
+                    e.setDropItems(false);
+                    Collection<ItemStack> drop = block.getDrops(p.getInventory().getItemInMainHand());
+                    if(drop.isEmpty())return;
+                    p.getInventory().addItem(drop.iterator().next());
+                }else{
+                    return;
+                }
+            }else{
+                return;
+            }
+        }
+        if(p.getInventory().getItemInMainHand() != null){
+            if(p.getInventory().getItemInMainHand().hasItemMeta()){
+                if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
+                    if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 191203){
+                        if(block.getType() == Material.CHEST || block.getType() == Material.FURNACE || block.getType() == Material.BLAST_FURNACE
+                        || block.getType() == Material.SMOKER || block.getType() == Material.BARREL)return;
+                        if(p.getInventory().firstEmpty() == -1)return;
+
+                        e.setDropItems(false);
+                        Collection<ItemStack> drop = block.getDrops(p.getInventory().getItemInMainHand());
+                        if(drop.isEmpty())return;
+                        p.getInventory().addItem(drop.iterator().next());
+                    }
+                }else{
+                    return;
+                }
+            }else{
+                return;
             }
         }
     }

@@ -532,6 +532,7 @@ public class EntityListeners implements Listener {
     @EventHandler
     public void noZombPig(EntityTransformEvent e) {
         if (e.getTransformReason() == EntityTransformEvent.TransformReason.PIGLIN_ZOMBIFIED) {
+            Monster monster = (Monster)e.getEntity();
             e.setCancelled(true);
         }
     }

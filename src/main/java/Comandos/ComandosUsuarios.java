@@ -1,7 +1,6 @@
 package Comandos;
 
 import Utilidades.Format;
-import Utilidades.Contador;
 import Utilidades.TotemsBar;
 import Utilidades.Utils;
 import net.md_5.bungee.api.chat.ClickEvent;

@@ -366,10 +366,13 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     }else if(args[1].equalsIgnoreCase("INMUNITY_SIGIL")){
                         pa.getInventory().addItem(Items.sigilodeInmunidad());
                         pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
+                    }else if(args[1].equalsIgnoreCase("TELEPHATY")){
+                        pa.getInventory().addItem(Items.telePick());
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
+                    }else if(args[1].equalsIgnoreCase("ANCIENT_TOME_1")){
+                        pa.getInventory().addItem(Items.teleTome());
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
                     }
-                default:
-                    pa.sendMessage(format("&7No has asignado ningún subcomando."));
-                    pa.sendMessage(format("&7Si necesitas saber los comandos ejecuta el comando /tllstaff commandlist."));
                     break;
             }
         } else {
@@ -420,7 +423,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                 }else if(args[0].equals("give")){
                     String[] items = {
                       "FUNGAL_CLUMPS","WEIRD_DAGGER", "CATACLYSM_PEARL", "BLOOD_SABER", "BERSERKER_TOTEM", "CRYSTAL_HEART", "DISCORD", "CLOUDY_MARSH", "BLOOD_STONE", "BLOOD_SHARD", "TEMPERATURE_METER", "TOTEM_RESTORER", "FROSTBITE","CELULA_ENERGIA","METAL_DESC","EXO_SHIELD","ICESHOT","BLOOD_ARMOR","EXO_DRILL",
-                            "EXO_TOTEM","PYROCROSS","COOLER_FRUIT","HOT_FRUIT","EXO_SWORD","EXO_BOW","EXO_ARMOR","INMUNITY_SIGIL"
+                            "EXO_TOTEM","PYROCROSS","COOLER_FRUIT","HOT_FRUIT","EXO_SWORD","EXO_BOW","EXO_ARMOR","INMUNITY_SIGIL","TELEPHATY","ANCIENT_TOME_1"
                     };
 
                     commands.addAll(Arrays.asList(items));

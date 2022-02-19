@@ -41,6 +41,8 @@ public class MobsTeleports implements Listener {
         while (b.getY() > 0 && b.getType().isAir()) b = b.getRelative(BlockFace.DOWN);
 
         if (b.getY() <= 0) return false;
+        if(b.isSolid()) return false;
+
 
         return e.teleport(new Location(world, x, b.getY() + 1, z));
     }

@@ -3,6 +3,7 @@ package Eventos;
 import Extras.EventosItems;
 import Extras.Items;
 import Extras.Sacrificios;
+import Utilidades.CustomEnchants;
 import Utilidades.Format;
 import Utilidades.Utils;
 import Utilidades.Warn;
@@ -29,6 +30,7 @@ import tlldos.tll2.TLL2;
 import java.util.HashMap;
 import java.util.Random;
 
+import static Utilidades.Format.PREFIX;
 import static Utilidades.Format.format;
 
 public class PlayerEvents implements Listener {
@@ -137,6 +139,16 @@ public class PlayerEvents implements Listener {
                         int i = data.get(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER);
                         p.sendMessage(Format.PREFIX, format("&7&l¡Tienes &e&l" +i + "% &7&lporcentaje de Totems!"));
                     }
+                }
+            }
+
+
+            if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
+                if(p.getInventory().getItemInMainHand().equals(new ItemStack(Material.NETHERITE_PICKAXE)) && p.getInventory().getItemInOffHand().equals(Items.teleTome())){
+                    ItemStack pickaxe = p.getInventory().getItemInMainHand();
+                    pickaxe.addUnsafeEnchantment(CustomEnchants.TELEPHATY, 1);
+                    p.sendMessage(PREFIX,format("&7Has usado un Toma Ancestral"));
+                    p.getInventory().remove(Items.teleTome());
                 }
             }
         }

@@ -5,6 +5,7 @@ import Comandos.ComandosUsuarios;
 import Eventos.*;
 import Extras.*;
 import Utilidades.Configuration;
+import Utilidades.CustomEnchants;
 import Utilidades.Format;
 import Utilidades.Mobs;
 import net.md_5.bungee.api.ChatMessageType;
@@ -46,6 +47,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
             getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "THE LAST LIFE T2 >>> " + ChatColor.YELLOW + "¡TheLastLifeT2Test.jar se cargo correctamente!");
             getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "_______________________________________________________________________");
             world = Bukkit.getWorld("world");
+            CustomEnchants.register();
             new Muerte(this);
 
             cargarEventos();
@@ -72,7 +74,9 @@ public final class TLL2 extends JavaPlugin implements Listener{
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("######################################################");
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "/stop");
+            Bukkit.getScheduler().runTaskLater(this,()->{
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "stop");
+        },200L);
         }
     }
 

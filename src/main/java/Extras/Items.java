@@ -1,5 +1,6 @@
 package Extras;
 
+import Utilidades.CustomEnchants;
 import Utilidades.Format;
 import Utilidades.ItemBuilder;
 import net.kyori.adventure.text.Component;
@@ -28,6 +29,7 @@ public class Items {
     public static ItemStack brimStone(){
        return new ItemBuilder(Material.IRON_NUGGET)
                .setName(format("&cBrimstone"))
+               .setCustomModelData(15315)
                .build();
     }
 
@@ -304,6 +306,21 @@ public class Items {
         lore.add(Component.text(format("&c&l¡Tus Tótems se pondrán en cooldown de 20 segundos!")));
         return new ItemBuilder(Material.TOTEM_OF_UNDYING).setName("&e&lSigilo de Inmunidad").setUnbreakable(true).setCustomModelData(73212).setLore(lore).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setItemFlags(ItemFlag.HIDE_ENCHANTS).build();
     }
+
+    public static ItemStack telePick(){
+        return new ItemBuilder(Material.NETHERITE_PICKAXE).setName("&6Tele-Pickaxe").setUnbreakable(true).setCustomModelData(191203).addCustomEnchant(CustomEnchants.TELEPHATY,1).build();
+    }
+    public static ItemStack teleTome(){
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.TELEPHATY, 1).build();
+    }
+
+
+
+
+
+
+
+
 
 
 

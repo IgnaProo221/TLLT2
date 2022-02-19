@@ -2,6 +2,7 @@ package Utilidades;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import Utilidades.CustomEnchants;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -66,6 +67,10 @@ public class ItemBuilder {
         itemMeta.addEnchant(enchantment, level, true);
         itemStack.setItemMeta(itemMeta);
 
+        return this;
+    }
+    public ItemBuilder addCustomEnchant(Enchantment enchantment, int level){
+        itemStack.addUnsafeEnchantment(enchantment,level);
         return this;
     }
 
