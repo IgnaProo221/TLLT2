@@ -67,9 +67,16 @@ public class DanoSinEnieEvento implements Listener{
         if(entity instanceof Player player){
             var data = player.getPersistentDataContainer();
             var dataTemperatura = data.get(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER);
+            var inmunity = data.get(new NamespacedKey(plugin, "inmunity"),PersistentDataType.INTEGER);
             if(e.getEntity().getLastDamageCause() == null){
                 return;
             }
+            if(inmunity >= 1){
+                if(e.getCause() != EntityDamageEvent.DamageCause.SUICIDE){
+                    e.setCancelled(true);
+                }
+            }
+
             if(player.getGameMode() == GameMode.SPECTATOR){
                 if(e.getCause() == EntityDamageEvent.DamageCause.VOID){
                     e.setCancelled(true);

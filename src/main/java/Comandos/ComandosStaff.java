@@ -143,6 +143,29 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                 }
                 break;
 
+                case "godmode":{
+                    var data = pa.getPersistentDataContainer();
+                    var inmunity = data.get(new NamespacedKey(plugin, "inmunity"),PersistentDataType.INTEGER);
+                    if(args[1].isEmpty()){
+                        pa.sendMessage(Format.PREFIX,format("&7¡Debes colocar un subcomando valido!"));
+                    }
+                    if(args[1].equalsIgnoreCase("on")){
+                        if(inmunity >= 1){
+                            pa.sendMessage(Format.PREFIX,format("¡&7El modo &cDios &7ya esta activo!"));
+                        }else {
+                            data.set(new NamespacedKey(plugin, "inmunity"), PersistentDataType.INTEGER, 1);
+                            pa.sendMessage(Format.PREFIX,format("¡&7Se ha activo el modo &cDios!"));
+                        }
+                    }else if(args[1].equalsIgnoreCase("off")){
+                        if(inmunity <= 0){
+                            pa.sendMessage(Format.PREFIX,format("¡&7El modo &cDios &7ya esta desactivado!"));
+                        }else{
+                            pa.sendMessage(Format.PREFIX,format("¡&7Se ha desactivado el modo &cDios!"));
+                            data.set(new NamespacedKey(plugin, "inmunity"),PersistentDataType.INTEGER,0);
+                        }
+                    }
+                }
+                break;
                 case "totems_clear":
                     try {
                         pa.playSound(pa.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
@@ -216,6 +239,8 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                         pa.playEffect(EntityEffect.TOTEM_RESURRECT);
                     }else if(args[1].equalsIgnoreCase("muerteFake")){
                         EventosItems.animacion(pa,pa);
+                    }else if(args[1].equalsIgnoreCase("dementeTest")){
+                        plugin.demente(pa,pa);
                     }
                     break;
                 case "sacrificios_test":
@@ -338,6 +363,9 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                         pa.getInventory().addItem(Items.exoLeggings());
                         pa.getInventory().addItem(Items.exoBoots());
                         pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
+                    }else if(args[1].equalsIgnoreCase("INMUNITY_SIGIL")){
+                        pa.getInventory().addItem(Items.sigilodeInmunidad());
+                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
                     }
                 default:
                     pa.sendMessage(format("&7No has asignado ningún subcomando."));
@@ -381,14 +409,18 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     commands.add("blackStormStart");
                     commands.add("totemTest");
                     commands.add("muerteFake");
-                }else if(args[0].equals("temperatura")){
+                    commands.add("dementeTest");
+                }else if(args[0].equals("temperatura")) {
                     commands.add("clear");
                     commands.add("hipotermia");
                     commands.add("hipertermia");
+                }else if(args[0].equals("godmode")){
+                    commands.add("on");
+                    commands.add("off");
                 }else if(args[0].equals("give")){
                     String[] items = {
                       "FUNGAL_CLUMPS","WEIRD_DAGGER", "CATACLYSM_PEARL", "BLOOD_SABER", "BERSERKER_TOTEM", "CRYSTAL_HEART", "DISCORD", "CLOUDY_MARSH", "BLOOD_STONE", "BLOOD_SHARD", "TEMPERATURE_METER", "TOTEM_RESTORER", "FROSTBITE","CELULA_ENERGIA","METAL_DESC","EXO_SHIELD","ICESHOT","BLOOD_ARMOR","EXO_DRILL",
-                            "EXO_TOTEM","PYROCROSS","COOLER_FRUIT","HOT_FRUIT","EXO_SWORD","EXO_BOW","EXO_ARMOR"
+                            "EXO_TOTEM","PYROCROSS","COOLER_FRUIT","HOT_FRUIT","EXO_SWORD","EXO_BOW","EXO_ARMOR","INMUNITY_SIGIL"
                     };
 
                     commands.addAll(Arrays.asList(items));

@@ -146,7 +146,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
                 demente(player, player);
             }
         }
-        },0L,1200L);
+        },0L,600L);
     }
     public void pichaXd() {
         Random r = new Random();
