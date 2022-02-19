@@ -52,10 +52,10 @@ public final class TLL2 extends JavaPlugin implements Listener{
 
             cargarEventos();
             //tormentaTick();
-            sinofuncionamemato();
+            tick();
             tickTormenta();
-            pichaXd();
             dementetemperatura();
+
             getCommand("thelastlife").setExecutor(new ComandosUsuarios(this));
             getCommand("tllstaff").setExecutor(new ComandosStaff(this));
 
@@ -115,15 +115,13 @@ public final class TLL2 extends JavaPlugin implements Listener{
         }
     }
 
-    public void sinofuncionamemato(){
-        Bukkit.getScheduler().runTaskTimer(this,()->{
-            /*for (World worlds : Bukkit.getWorlds()) {
+    public void tick(){
+        /*for (World worlds : Bukkit.getWorlds()) {
                 for (LivingEntity liv : worlds.getLivingEntities()) {
                     replaceListeners.remplazoMob(liv);
                 }
             }*/
-            pichaXd();
-        },0L,20L);
+        Bukkit.getScheduler().runTaskTimer(this, this::pichaXd,0L,20L);
 
     }
 
