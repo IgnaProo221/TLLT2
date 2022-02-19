@@ -11,6 +11,7 @@ import Utilidades.Utils;
 import Utilidades.Warn;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.*;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -41,423 +42,357 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
     private final TLL2 plugin;
 
-    public ComandosStaff(TLL2 plugin){
+    public ComandosStaff(TLL2 plugin) {
         this.plugin = plugin;
     }
 
-
-
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.getServer().getConsoleSender().sendMessage("¡No se puede usar comandos en consola, pidele ayuda a un staff dentro del juego!");
-            return true;
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command alias, @NotNull String string, @NotNull String[] args) {
+        if(!(sender instanceof Player player)) {
+            Bukkit.getLogger().info("No puedes usar comandos en la consola, pidele ayuda a un staff dentro del juego!");
+            return false;
         }
-        Server s = sender.getServer();
-        Player pa = (Player) sender;
 
-        if(sender.isOp()) {
-            switch (args[0]) {
-                case "dimension":
-                    if (args[1].isEmpty()){
-                        pa.sendMessage(Format.PREFIX + "¡Debes asignar una dimensión!");
-                    }
-                    if(args[1].equalsIgnoreCase("builder_world")){
-                        Location spawnbuilder = new Location(Bukkit.getWorld("build_world"), 0 , 64, 0);
-                        pa.teleport(spawnbuilder);
-                        pa.setGameMode(GameMode.SPECTATOR);
+        if(!sender.isOp()) {
+            sender.sendMessage(Format.PREFIX + "¡No puedes usar este comando!");
+
+            return false;
+        }
+
+        if(args.length < 1) {
+            sender.sendMessage(Format.PREFIX + "Uso del comando incorrecto, usa: /tllstaff commandList");
+            return false;
+        }
+
+        var data = player.getPersistentDataContainer();
+
+        switch (args[0]) {
+            case "sacrificios" -> {
+                if (args.length < 2) {
+                    sender.sendMessage(Format.PREFIX + "Debes colocar un subcomando valido (modify, clear, reset).");
+                    return false;
+                }
+
+                if (args[1].equalsIgnoreCase("modify")) {
+                    try {
+                        if (args.length < 4) {
+                            sender.sendMessage(Format.PREFIX + "Debes colocar un argumentos validos. Uso del comando: /tllstaff sacrificios modify <player> <sacrificios>");
+                            return false;
+                        }
+
+                        Player target = Bukkit.getPlayer(args[2]);
+                        int modify = Integer.parseInt(args[3]);
+
+                        if (target == null) {
+                            sender.sendMessage(Format.PREFIX + Format.format("El usuario mencionado no se encuentra dentro del servidor."));
+                            return true;
+                        }
+
+                        if (!data.has(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER)) {
+                            sender.sendMessage(Format.PREFIX + Format.format("&cEl usuario mencionado no tiene ningún sacrificio."));
+                            return true;
+                        }
+
+                        if (modify > 5) {
+                            sender.sendMessage(Format.PREFIX + Format.format("&cTe pasaste el número de sacrificios. Revisa de nuevo."));
+                            return true;
+                        }
+
+                        data.set(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER, modify);
+
+                        sender.sendMessage(Format.PREFIX + Format.format(String.format("Se ha modificado los sacrifios de &6%s &7a &6%d.", target.getName(), modify)));
+
                         return true;
+                    } catch (NumberFormatException e) {
+                        sender.sendMessage(Format.PREFIX + "Debes colocar un número valido.");
                     }
-                    if(args[1].equalsIgnoreCase("overworld")){
-                        Location spawnover = new Location(Bukkit.getWorld("world"), 0 , 100, 0);
-                        pa.teleport(spawnover);
-                        pa.setGameMode(GameMode.SPECTATOR);
-                        return true;
+                }
+
+            }
+            case "dimension" -> {
+                if (args.length < 2) {
+                    sender.sendMessage(Format.PREFIX + "Debes asignar una dimensión.");
+                    return false;
+                }
+
+                var world = Bukkit.getWorld(args[1]);
+
+                if (world == null) {
+                    sender.sendMessage(Format.PREFIX + "El mundo no existe!");
+
+                    return false;
+                }
+
+                player.sendMessage(Format.PREFIX + String.format("Fuiste tepeado a la dimensión %s", world.getName()));
+                player.teleport(world.getSpawnLocation());
+            }
+            case "alerta" -> Bukkit.getLogger().info("Alguien hizo el coso de Alerta @Mutant te llaman xdxdxd");
+            case "totem_bar" -> {
+                var totems = data.get(new NamespacedKey(plugin, "TOTEM_BAR"), PersistentDataType.INTEGER);
+
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
+                player.sendMessage(Format.PREFIX + format("&7&l¡Tienes &e&l" + totems + "% &7&lporcentaje de Totems!"));
+
+            }
+            case "vida_reset" -> {
+                var health = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+
+                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
+                player.sendMessage(Format.PREFIX + format("&eHas reiniciado tu vida correctamente."));
+
+                if (health != null)
+                    health.setBaseValue(20.0D);
+
+            }
+            case "god_mode" -> {
+                if (args.length < 2) {
+                    player.sendMessage(Format.PREFIX + "Debes colocar un subcomando valido.");
+                    return false;
+                }
+
+                var immunityKey = new NamespacedKey(plugin, "inmunity");
+                var immunity = data.get(immunityKey, PersistentDataType.INTEGER);
+
+                if (immunity == null) {
+                    data.set(immunityKey, PersistentDataType.INTEGER, 1);
+                    player.sendMessage(Format.PREFIX + format("¡&7Se ha activo el modo &cDios!"));
+
+                    return false;
+                }
+
+                var activate = (immunity == 1);
+
+                if (args[1].equalsIgnoreCase("on")) {
+                    if (activate) {
+                        player.sendMessage(Format.PREFIX + format("¡&7El modo &cDios &7ya esta activo!"));
+                        return false;
                     }
-                    if(args[1].equalsIgnoreCase("lost_cities")){
-                    Location spawnlost = new Location(Bukkit.getWorld("lost_world"), 0 , 100, 0);
-                    pa.teleport(spawnlost);
-                    pa.setGameMode(GameMode.SPECTATOR);
+
+                    data.set(immunityKey, PersistentDataType.INTEGER, 1);
+                    player.sendMessage(Format.PREFIX + format("¡&7Se ha activo el modo &cDios!"));
+                } else if (args[1].equalsIgnoreCase("off")) {
+                    if (!activate) {
+                        player.sendMessage(Format.PREFIX + format("¡&7El modo &cDios &7ya esta desactivado!"));
+                        return false;
+                    }
+
+                    data.set(immunityKey, PersistentDataType.INTEGER, 0);
+                    player.sendMessage(Format.PREFIX + format("¡&7Se ha desactivado el modo &cDios!"));
+                }
+            }
+            case "totems_clear" -> {
+                try {
+                    player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
+                    player.sendMessage(Format.PREFIX + format("&eHas reiniciado tu porcentaje de tótems."));
+
+                    player.getPersistentDataContainer().set(new NamespacedKey(plugin, "TOTEM_BAR"), PersistentDataType.INTEGER, 100);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Warn.Mutant(e);
+
+                    player.sendMessage(Format.format(Format.PREFIX + "&7¡Ha ocurrido un &c&lerror &7al resetear los tótems."));
+                }
+            }
+            case "temperatura" -> {
+                var temperatureKey = new NamespacedKey(plugin, "temperatura");
+
+                if (args.length < 2) {
+                    player.sendMessage(Format.PREFIX + "¡Debes colocar un subcomando valido!");
                     return true;
                 }
-                    break;
-                case "sacrificios":
-                    if(args[1].isEmpty()){
-                        pa.sendMessage(Format.PREFIX + "Debes colocar un subcomando valido (modify, clear, reset).");
-                        return true;
+
+                if (args[1].equalsIgnoreCase("clear")) {
+                    player.sendMessage(Format.PREFIX + format("&7Reiniciaste tu Temperatura a 30°"));
+                    data.set(temperatureKey, PersistentDataType.INTEGER, 30);
+                } else if (args[1].equalsIgnoreCase("hipotermia")) {
+                    if (args[2].equalsIgnoreCase("1")) {
+                        player.sendMessage(Format.PREFIX + format("&7Pusisiste tu Temperatura a -70°"));
+                        data.set(temperatureKey, PersistentDataType.INTEGER, -70);
+                    } else if (args[2].equalsIgnoreCase("2")) {
+                        player.sendMessage(Format.PREFIX + format("&7Pusisiste tu Temperatura a -120°"));
+                        data.set(temperatureKey, PersistentDataType.INTEGER, -120);
+                    } else if (args[2].equalsIgnoreCase("3")) {
+                        player.sendMessage(Format.PREFIX + format("&7Pusisiste tu Temperatura a -180°"));
+                        data.set(temperatureKey, PersistentDataType.INTEGER, -180);
                     }
-
-                    if (args[1].equalsIgnoreCase("modify")) {
-                        try{
-                            Player target = Bukkit.getPlayer(args[2]);
-                            int modify = Integer.parseInt(args[3]);
-
-                            if(target == null){
-                                sender.sendMessage(Format.format("El usuario mencionado no se encuentra dentro del servidor."));
-                                return true;
-                            }
-
-                            PersistentDataContainer data = target.getPersistentDataContainer();
-
-                            if(!data.has(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER)){
-                                sender.sendMessage(Format.format("&cEl usuario mencionado no tiene ningún sacrificio."));
-                                return true;
-                            }
-
-                            if(modify > 5){
-                                sender.sendMessage(Format.format("&cTe pasaste el número de sacrificios. Revisa de nuevo."));
-                                return true;
-                            }
-
-                            data.set(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER, modify);
-
-                            sender.sendMessage(Format.PREFIX + Format.format(String.format("Se ha modificado los sacrifios de &6%s &7a &6%d.", target.getName(), modify)));
-
-                            return true;
-                        }catch(NumberFormatException e){
-                            sender.sendMessage(Format.PREFIX + "Debes colocar un número valido.");
-                        }
-                    }else if (args[1].equalsIgnoreCase("clear")) {
-                        Player target = Bukkit.getPlayer(args[1]);
-                    }else if (args[1].equalsIgnoreCase("reset")) {
-                        pa.sendMessage("debug");
-                    }
-                    break;
-                case "alerta":
-                    s.getConsoleSender().sendMessage("Alguien hizo el coso de Alerta @Mutant te llaman xdxdxd");
-                    break;
-
-                case "totem_bar": {
-                    PersistentDataContainer data = ((Player) sender).getPersistentDataContainer();
-                    int i = data.get(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER);
-
-                    pa.playSound(pa.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
-                    pa.sendMessage(Format.PREFIX, format("&7&l¡Tienes &e&l" +i + "% &7&lporcentaje de Totems!"));
-                }
-                break;
-
-                case "vida_reset": {
-                    pa.playSound(pa.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
-                    pa.sendMessage(format(Format.PREFIX + "&eHas reiniciado tu vida correctamente."));
-                    pa.setMaxHealth(20);
-                }
-                break;
-
-                case "godmode":{
-                    var data = pa.getPersistentDataContainer();
-                    var inmunity = data.get(new NamespacedKey(plugin, "inmunity"),PersistentDataType.INTEGER);
-                    if(args[1].isEmpty()){
-                        pa.sendMessage(Format.PREFIX,format("&7¡Debes colocar un subcomando valido!"));
-                    }
-                    if(args[1].equalsIgnoreCase("on")){
-                        if(inmunity >= 1){
-                            pa.sendMessage(Format.PREFIX,format("¡&7El modo &cDios &7ya esta activo!"));
-                        }else {
-                            data.set(new NamespacedKey(plugin, "inmunity"), PersistentDataType.INTEGER, 1);
-                            pa.sendMessage(Format.PREFIX,format("¡&7Se ha activo el modo &cDios!"));
-                        }
-                    }else if(args[1].equalsIgnoreCase("off")){
-                        if(inmunity <= 0){
-                            pa.sendMessage(Format.PREFIX,format("¡&7El modo &cDios &7ya esta desactivado!"));
-                        }else{
-                            pa.sendMessage(Format.PREFIX,format("¡&7Se ha desactivado el modo &cDios!"));
-                            data.set(new NamespacedKey(plugin, "inmunity"),PersistentDataType.INTEGER,0);
-                        }
+                } else if (args[1].equalsIgnoreCase("hipertermia")) {
+                    if (args[2].equalsIgnoreCase("1")) {
+                        player.sendMessage(Format.PREFIX + format("&7Pusisiste tu Temperatura a 120°"));
+                        data.set(temperatureKey, PersistentDataType.INTEGER, 120);
+                    } else if (args[2].equalsIgnoreCase("2")) {
+                        player.sendMessage(Format.PREFIX + format("&7Pusisiste tu Temperatura a 180°"));
+                        data.set(temperatureKey, PersistentDataType.INTEGER, 180);
+                    } else if (args[2].equalsIgnoreCase("3")) {
+                        player.sendMessage(Format.PREFIX + format("&7Pusisiste tu Temperatura a 220°"));
+                        data.set(temperatureKey, PersistentDataType.INTEGER, 220);
                     }
                 }
-                break;
-                case "totems_clear":
-                    try {
-                        pa.playSound(pa.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
-                        pa.sendMessage(format(Format.PREFIX + "&eHas reiniciado tu porcentaje de tótems."));
-                        pa.getPersistentDataContainer().set(new NamespacedKey(plugin, "TOTEM_BAR"), PersistentDataType.INTEGER, 100);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Warn.Mutant(e);
-                        pa.sendMessage(Format.format(Format.PREFIX + "&7¡Ha ocurrido un &c&lerror &7al resetear los tótems."));
-                    }
-                    break;
-                case "temperatura":
-                    if(args[1].isEmpty()){
-                        pa.sendMessage(Format.PREFIX + "¡Debes colocar un subcomando valido!");
-                        return true;
-                    }
-                    if(args[1].equalsIgnoreCase("clear")){
-                        var data = pa.getPersistentDataContainer();
-                        var dataTemperatura = data.get(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER);
-                        pa.sendMessage(Format.PREFIX,format("&7Reiniciaste tu Temperatura a 30°"));
-                        data.set(new NamespacedKey(plugin, "temperatura"),PersistentDataType.INTEGER, 30);
-                    }
-                    if(args[1].equalsIgnoreCase("hipotermia")){
-                        if(args[2].equalsIgnoreCase("1")){
-                            var data = pa.getPersistentDataContainer();
-                            pa.sendMessage(Format.PREFIX,format("&7Pusisiste tu Temperatura a -70°"));
-                            data.set(new NamespacedKey(plugin, "temperatura"),PersistentDataType.INTEGER, -70);
-                        }else if(args[2].equalsIgnoreCase("2")){
-                            var data = pa.getPersistentDataContainer();
-                            pa.sendMessage(Format.PREFIX,format("&7Pusisiste tu Temperatura a -120°"));
-                            data.set(new NamespacedKey(plugin, "temperatura"),PersistentDataType.INTEGER, -120);
-                        }else if(args[2].equalsIgnoreCase("3")){
-                            var data = pa.getPersistentDataContainer();
-                            pa.sendMessage(Format.PREFIX,format("&7Pusisiste tu Temperatura a -180°"));
-                            data.set(new NamespacedKey(plugin, "temperatura"),PersistentDataType.INTEGER, -180);
-                        }
-                    }
-                    if(args[1].equalsIgnoreCase("hipertermia")){
-                        if(args[2].equalsIgnoreCase("1")){
-                            var data = pa.getPersistentDataContainer();
-                            pa.sendMessage(Format.PREFIX,format("&7Pusisiste tu Temperatura a 120°"));
-                            data.set(new NamespacedKey(plugin, "temperatura"),PersistentDataType.INTEGER, 120);
-                        }else if(args[2].equalsIgnoreCase("2")){
-                            var data = pa.getPersistentDataContainer();
-                            pa.sendMessage(Format.PREFIX,format("&7Pusisiste tu Temperatura a 180°"));
-                            data.set(new NamespacedKey(plugin, "temperatura"),PersistentDataType.INTEGER, 180);
-                        }else if(args[2].equalsIgnoreCase("3")){
-                            var data = pa.getPersistentDataContainer();
-                            pa.sendMessage(Format.PREFIX,format("&7Pusisiste tu Temperatura a 220°"));
-                            data.set(new NamespacedKey(plugin, "temperatura"),PersistentDataType.INTEGER, 220);
-                        }
-                    }
-                    break;
-
-                case "debug":
-                    if(args[1].isEmpty()){
-                        pa.sendMessage(Format.PREFIX + "Debes colocar un debug valido (blastStormStart, blackStormEnd, totemTest, muerteFake).");
-                        return true;
-                    }
-
-                    if (args[1].equalsIgnoreCase("blastStormStart")) {
-                        StartBlastStormEvent start = new StartBlastStormEvent();
-                        s.getPluginManager().callEvent(start);
-                    }else if(args[1].equalsIgnoreCase("blackStormEnd")){
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "weather clear");
-
-                        StopBlastStormEvent event = new StopBlastStormEvent(StopBlastStormEvent.Cause.COMMAND);
-                        s.getPluginManager().callEvent(event);
-                    }else if (args[1].equalsIgnoreCase("totemTest")) {
-                        pa.playSound(pa.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
-                        pa.playEffect(EntityEffect.TOTEM_RESURRECT);
-                    }else if(args[1].equalsIgnoreCase("muerteFake")){
-                        EventosItems.animacion(pa,pa);
-                    }else if(args[1].equalsIgnoreCase("dementeTest")){
-                        plugin.demente(pa,pa);
-                    }
-                    break;
-                case "sacrificios_test":
-                    try {
-                        Bukkit.getLogger().info("xd");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Warn.Mutant(e);
-                        pa.sendMessage(Format.format(Format.PREFIX + "&7Ha ocurrido un &c&lerror &7al mandar la GUI."));
-                    }
-                    break;
-                case "spawn":
-                    if(args[1].isEmpty()){
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Debes colocar un mob!");
-                        return false;
-                    }
-                    if(args[1].equalsIgnoreCase("HOSTILE_COW")){
-                        try {
-                            HostileTest hostileTest = new HostileTest(pa.getLocation());
-                            WorldServer worldServer = ((CraftWorld) pa.getLocation().getWorld()).getHandle();
-                            worldServer.addEntity(hostileTest, CreatureSpawnEvent.SpawnReason.CUSTOM);
-                            pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Invocaste al mob correctamente!");
-                        }catch (Exception e){
-                            e.printStackTrace();
-                            Warn.Mutant(e);
-                        }
-                    }else{
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Debes colocar un mob valido!");
-                        return false;
-                    }
-
-                    break;
-                case "give":
-                    if(args[1].isEmpty()){
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Debes asignar un item que quieres tener.");
-                        return false;
-                    }
-
-                    if (args[1].equalsIgnoreCase("FUNGAL_CLUMPS")) {
-                        pa.getInventory().addItem(Items.fungalClumps());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    } else if (args[1].equalsIgnoreCase("WEIRD_DAGGER")) {
-                        pa.getInventory().addItem(Items.createDaga());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    } else if (args[1].equalsIgnoreCase("CATACLYSM_PEARL")) {
-                        pa.getInventory().addItem(Items.cataclysmPearl());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    } else if (args[1].equalsIgnoreCase("BLOOD_SABER")) {
-                        pa.getInventory().addItem(Items.bloodSaber());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    } else if (args[1].equalsIgnoreCase("BERSERKER_TOTEM")) {
-                        pa.getInventory().addItem(Items.totemBerserk());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    } else if (args[1].equalsIgnoreCase("CRYSTAL_HEART")) {
-                        pa.getInventory().addItem(Items.crystalHeart());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    } else if (args[1].equalsIgnoreCase("DISCORD")) {
-                        pa.getInventory().addItem(Items.varaDis());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    } else if (args[1].equalsIgnoreCase("CLOUDY_MARSH")) {
-                        pa.getInventory().addItem(Items.cloudMarsh());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    } else if (args[1].equalsIgnoreCase("BLOOD_STONE")) {
-                        pa.getInventory().addItem(Items.bloodShard());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    } else if (args[1].equalsIgnoreCase("BLOOD_SHARD")) {
-                        pa.getInventory().addItem(Items.createFragmentoSangre(1));
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    } else if (args[1].equalsIgnoreCase("TEMPERATURE_METER")) {
-                        pa.getInventory().addItem(Items.termometroItem());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    }else if (args[1].equalsIgnoreCase("TOTEM_RESTORER")) {
-                        pa.getInventory().addItem(Items.totemRestorer());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    }else if (args[1].equalsIgnoreCase("FROSTBITE")) {
-                        pa.getInventory().addItem(Items.fallenSword());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    }else if (args[1].equalsIgnoreCase("CELULA_ENERGIA")) {
-                        pa.getInventory().addItem(Items.celulaEnergia());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    }else if (args[1].equalsIgnoreCase("METAL_DESC")) {
-                        pa.getInventory().addItem(Items.metaldes());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    }else if (args[1].equalsIgnoreCase("EXO_SHIELD")) {
-                        pa.getInventory().addItem(Items.exoShield());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    }else if (args[1].equalsIgnoreCase("ICESHOT")) {
-                        pa.getInventory().addItem(Items.iceShot());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    }else if (args[1].equalsIgnoreCase("BLOOD_ARMOR")) {
-                        pa.getInventory().addItem(Items.bloodyHelmet());
-                        pa.getInventory().addItem(Items.bloodyChestplate());
-                        pa.getInventory().addItem(Items.bloodyLeggings());
-                        pa.getInventory().addItem(Items.bloodyBoots());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    }else if (args[1].equalsIgnoreCase("EXO_DRILL")) {
-                        pa.getInventory().addItem(Items.exoDrill());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    }else if(args[1].equalsIgnoreCase("EXO_TOTEM")){
-                        pa.getInventory().addItem(Items.exoTotem());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    }else if(args[1].equalsIgnoreCase("PYROCROSS")){
-                        pa.getInventory().addItem(Items.pyroCross());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    }else if(args[1].equalsIgnoreCase("COOLER_FRUIT")){
-                        pa.getInventory().addItem(Items.temperatureCooler());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    }else if(args[1].equalsIgnoreCase("HOT_FRUIT")){
-                        pa.getInventory().addItem(Items.temperatureHot());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    }else if(args[1].equalsIgnoreCase("EXO_SWORD")){
-                        pa.getInventory().addItem(Items.exoSword());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    }else if(args[1].equalsIgnoreCase("EXO_BOW")){
-                        pa.getInventory().addItem(Items.exoBow());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    }else if(args[1].equalsIgnoreCase("EXO_ARMOR")){
-                        pa.getInventory().addItem(Items.exoHelmet());
-                        pa.getInventory().addItem(Items.exoChestplate());
-                        pa.getInventory().addItem(Items.exoLeggings());
-                        pa.getInventory().addItem(Items.exoBoots());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    }else if(args[1].equalsIgnoreCase("INMUNITY_SIGIL")){
-                        pa.getInventory().addItem(Items.sigilodeInmunidad());
-                        pa.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
-                    }
-                default:
-                    pa.sendMessage(format("&7No has asignado ningún subcomando."));
-                    pa.sendMessage(format("&7Si necesitas saber los comandos ejecuta el comando /tllstaff commandlist."));
-                    break;
             }
-        } else {
-            sender.sendMessage(Format.PREFIX + ChatColor.RED + "Desafortunadamente, no tienes el poder necesario para ejecutar este comando");
+            case "debug" -> {
+                if (args.length < 2) {
+                    player.sendMessage(Format.PREFIX + "Debes colocar un debug valido (blastStormStart, blackStormEnd, totemTest, muerteFake).");
+                    return true;
+                }
+
+                if (args[1].equalsIgnoreCase("blastStormStart")) {
+                    Bukkit.getPluginManager().callEvent(new StartBlastStormEvent());
+                } else if (args[1].equalsIgnoreCase("blackStormEnd")) {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "weather clear");
+
+                    Bukkit.getPluginManager().callEvent(new StopBlastStormEvent(StopBlastStormEvent.Cause.COMMAND));
+                } else if (args[1].equalsIgnoreCase("totemTest")) {
+                    player.playSound(player.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
+                    player.playEffect(EntityEffect.TOTEM_RESURRECT);
+                } else if (args[1].equalsIgnoreCase("muerteFake")) {
+                    EventosItems.animacion(player, player);
+                } else if (args[1].equalsIgnoreCase("dementeTest")) {
+                    plugin.demente(player, player);
+                }
+            }
+            case "sacrificios_test" -> Bukkit.getLogger().info("xd");
+            case "spawn" -> {
+                if(args.length < 2){
+                    player.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Debes colocar un mob!");
+                    return false;
+                }
+
+                if(args[1].equalsIgnoreCase("HOSTILE_COW")){
+                    try {
+                        HostileTest hostileTest = new HostileTest(player.getLocation());
+                        WorldServer worldServer = ((CraftWorld) player.getLocation().getWorld()).getHandle();
+
+                        worldServer.addEntity(hostileTest, CreatureSpawnEvent.SpawnReason.CUSTOM);
+
+                        player.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Invocaste al mob correctamente!");
+                    }catch (Exception e){
+                        e.printStackTrace();
+                        Warn.Mutant(e);
+                    }
+                }else{
+                    player.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Debes colocar un mob valido!");
+                    return false;
+                }
+            }
+
+            case "give" -> {
+                if(args.length < 2){
+                    player.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Debes asignar un item que quieres tener.");
+                    return false;
+                }
+                player.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Has recibido el item! (Si no lo tienes en tu inventario es porque probablemente tengas el inventario lleno).");
+
+                if (args[1].equalsIgnoreCase("FUNGAL_CLUMPS")) {
+                    player.getInventory().addItem(Items.fungalClumps());
+                } else if (args[1].equalsIgnoreCase("WEIRD_DAGGER")) {
+                    player.getInventory().addItem(Items.createDaga());
+                } else if (args[1].equalsIgnoreCase("CATACLYSM_PEARL")) {
+                    player.getInventory().addItem(Items.cataclysmPearl());
+                } else if (args[1].equalsIgnoreCase("BLOOD_SABER")) {
+                    player.getInventory().addItem(Items.bloodSaber());
+                } else if (args[1].equalsIgnoreCase("BERSERKER_TOTEM")) {
+                    player.getInventory().addItem(Items.totemBerserk());
+                } else if (args[1].equalsIgnoreCase("CRYSTAL_HEART")) {
+                    player.getInventory().addItem(Items.crystalHeart());
+                } else if (args[1].equalsIgnoreCase("DISCORD")) {
+                    player.getInventory().addItem(Items.varaDis());
+                } else if (args[1].equalsIgnoreCase("CLOUDY_MARSH")) {
+                    player.getInventory().addItem(Items.cloudMarsh());
+                } else if (args[1].equalsIgnoreCase("BLOOD_STONE")) {
+                    player.getInventory().addItem(Items.bloodShard());
+                } else if (args[1].equalsIgnoreCase("BLOOD_SHARD")) {
+                    player.getInventory().addItem(Items.createFragmentoSangre(1));
+                } else if (args[1].equalsIgnoreCase("TEMPERATURE_METER")) {
+                    player.getInventory().addItem(Items.termometroItem());
+                }else if (args[1].equalsIgnoreCase("TOTEM_RESTORER")) {
+                    player.getInventory().addItem(Items.totemRestorer());
+                }else if (args[1].equalsIgnoreCase("FROSTBITE")) {
+                    player.getInventory().addItem(Items.fallenSword());
+                }else if (args[1].equalsIgnoreCase("CELULA_ENERGIA")) {
+                    player.getInventory().addItem(Items.celulaEnergia());
+                }else if (args[1].equalsIgnoreCase("METAL_DESC")) {
+                    player.getInventory().addItem(Items.metaldes());
+                }else if (args[1].equalsIgnoreCase("EXO_SHIELD")) {
+                    player.getInventory().addItem(Items.exoShield());
+                }else if (args[1].equalsIgnoreCase("ICESHOT")) {
+                    player.getInventory().addItem(Items.iceShot());
+                }else if (args[1].equalsIgnoreCase("BLOOD_ARMOR")) {
+                    player.getInventory().addItem(Items.bloodyHelmet());
+                    player.getInventory().addItem(Items.bloodyChestplate());
+                    player.getInventory().addItem(Items.bloodyLeggings());
+                    player.getInventory().addItem(Items.bloodyBoots());
+                }else if (args[1].equalsIgnoreCase("EXO_DRILL")) {
+                    player.getInventory().addItem(Items.exoDrill());
+                }else if(args[1].equalsIgnoreCase("EXO_TOTEM")){
+                    player.getInventory().addItem(Items.exoTotem());
+                }else if(args[1].equalsIgnoreCase("PYROCROSS")){
+                    player.getInventory().addItem(Items.pyroCross());
+                }else if(args[1].equalsIgnoreCase("COOLER_FRUIT")){
+                    player.getInventory().addItem(Items.temperatureCooler());
+                }else if(args[1].equalsIgnoreCase("HOT_FRUIT")){
+                    player.getInventory().addItem(Items.temperatureHot());
+                }else if(args[1].equalsIgnoreCase("EXO_SWORD")){
+                    player.getInventory().addItem(Items.exoSword());
+                }else if(args[1].equalsIgnoreCase("EXO_BOW")){
+                    player.getInventory().addItem(Items.exoBow());
+                }else if(args[1].equalsIgnoreCase("EXO_ARMOR")){
+                    player.getInventory().addItem(Items.exoHelmet());
+                    player.getInventory().addItem(Items.exoChestplate());
+                    player.getInventory().addItem(Items.exoLeggings());
+                    player.getInventory().addItem(Items.exoBoots());
+                }else if(args[1].equalsIgnoreCase("INMUNITY_SIGIL")){
+                    player.getInventory().addItem(Items.sigilodeInmunidad());
+                }
+            }
+
+            default -> sender.sendMessage(Format.PREFIX + "Uso del comando incorrecto, usa: /tllstaff commandList");
         }
-        return false;
+
+        return true;
     }
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
-        List<String> completions = new ArrayList<>();
-
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String string, @NotNull String[] args) {
         List<String> commands = new ArrayList<>();
 
-        if(commandSender.isOp()) {
-            if(args.length == 1){
-                String[] argsArray = {
-                        "sacrificios", "alerta", "give", "sacrificios_test", "debug", "totem_bar", "totems_clear", "vida_reset", "dimension","temperatura","spawn"
-                };
+        List<String> completions = new ArrayList<>();
+        if (args.length == 1) {
+            addToList(commands, "sacrificios", "alerta", "give", "sacrificios_test", "debug", "totem_bar", "totems_clear", "vida_reset", "dimension", "temperatura", "spawn", "god_mode" );
 
-                commands.addAll(Arrays.asList(argsArray));
-                StringUtil.copyPartialMatches(args[0], commands, completions);
-            }else if(args.length == 2){
-                if(args[0].equals("spawn")){
-                    commands.add("HOSTILE_COW");
-                }
-                if(args[0].equals("dimension")){
-                    commands.add("builder_world");
-                    commands.add("overworld");
-                    commands.add("lost_cities");
-                }else if(args[0].equals("sacrificios")){
-                    commands.add("modify");
-                    commands.add("clear");
-                    commands.add("reset");
-                }else if(args[0].equals("debug")) {
-                    commands.add("blastStormStart");
-                    commands.add("blackStormStart");
-                    commands.add("totemTest");
-                    commands.add("muerteFake");
-                    commands.add("dementeTest");
-                }else if(args[0].equals("temperatura")) {
-                    commands.add("clear");
-                    commands.add("hipotermia");
-                    commands.add("hipertermia");
-                }else if(args[0].equals("godmode")){
-                    commands.add("on");
-                    commands.add("off");
-                }else if(args[0].equals("give")){
-                    String[] items = {
-                      "FUNGAL_CLUMPS","WEIRD_DAGGER", "CATACLYSM_PEARL", "BLOOD_SABER", "BERSERKER_TOTEM", "CRYSTAL_HEART", "DISCORD", "CLOUDY_MARSH", "BLOOD_STONE", "BLOOD_SHARD", "TEMPERATURE_METER", "TOTEM_RESTORER", "FROSTBITE","CELULA_ENERGIA","METAL_DESC","EXO_SHIELD","ICESHOT","BLOOD_ARMOR","EXO_DRILL",
-                            "EXO_TOTEM","PYROCROSS","COOLER_FRUIT","HOT_FRUIT","EXO_SWORD","EXO_BOW","EXO_ARMOR","INMUNITY_SIGIL"
-                    };
-
-                    commands.addAll(Arrays.asList(items));
-                }
-                StringUtil.copyPartialMatches(args[1], commands, completions);
-            }else if(args.length == 3){
-                if(args[1].equals("modify") || args[1].equals("clear") || args[1].equals("reset")){
-                   Bukkit.getOnlinePlayers().forEach(player -> commands.add(player.getName()));
-                }
-                if(args[1].equals("hipertermia")){
-                    commands.add("1");
-                    commands.add("2");
-                    commands.add("3");
-                }
-                if(args[1].equals("hipotermia")){
-                    commands.add("1");
-                    commands.add("2");
-                    commands.add("3");
-                }
-                StringUtil.copyPartialMatches(args[2], commands, completions);
-            }else if(args.length == 4){
-                for(Player player : Bukkit.getOnlinePlayers()){
-                    if(args[2].equals(player.getName())){
-                        String[] ints = {
-                                "1", "2", "3", "4", "5"
-                        };
-
-                        commands.addAll(Arrays.asList(ints));
-                    }
-                }
-                StringUtil.copyPartialMatches(args[3], commands, completions);
+            StringUtil.copyPartialMatches(args[0], commands, completions);
+        } else if (args.length == 2) {
+            switch (args[0]) {
+                case "dimension" -> Bukkit.getWorlds().forEach(world -> commands.add(world.getName()));
+                case "sacrificios" -> addToList(commands, "modify", "clear", "reset");
+                case "god_mode" -> addToList(commands, "on", "off");
+                case "debug" -> addToList(commands, "blastStormStart", "blackStormEnd", "totemTest", "muerteFake", "dementeTest");
+                case "temperatura" -> addToList(commands, "clear", "hipotermia", "hipertermia");
+                case "give" -> addToList(commands, "FUNGAL_CLUMPS","WEIRD_DAGGER", "CATACLYSM_PEARL", "BLOOD_SABER", "BERSERKER_TOTEM", "CRYSTAL_HEART", "DISCORD", "CLOUDY_MARSH", "BLOOD_STONE", "BLOOD_SHARD", "TEMPERATURE_METER", "TOTEM_RESTORER", "FROSTBITE","CELULA_ENERGIA","METAL_DESC","EXO_SHIELD","ICESHOT","BLOOD_ARMOR","EXO_DRILL",
+                        "EXO_TOTEM","PYROCROSS","COOLER_FRUIT","HOT_FRUIT","EXO_SWORD","EXO_BOW","EXO_ARMOR","INMUNITY_SIGIL");
             }
-        }
 
+            StringUtil.copyPartialMatches(args[1], commands, completions);
+        }else if(args.length == 3){
+            switch (args[1]) {
+                case "modify", "clear", "reset" -> Bukkit.getOnlinePlayers().forEach(player -> commands.add(player.getName()));
+                case "hipertermia", "hipotermia" -> {
+                    addToList(commands, "1", "2", "3");
+                }
+            }
+            StringUtil.copyPartialMatches(args[2], commands, completions);
+        }else if(args.length == 4){
+            for(Player player : Bukkit.getOnlinePlayers())
+                if(args[2].equals(player.getName()))
+                    addToList(commands,"1", "2", "3", "4", "5");
+
+            StringUtil.copyPartialMatches(args[3], commands, completions);
+        }
 
         Collections.sort(completions);
 
         return completions;
+    }
+
+    private void addToList(List<String> list, String... commands) {
+        list.addAll(Arrays.asList(commands));
     }
 }

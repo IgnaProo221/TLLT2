@@ -11,6 +11,6 @@ commands:
     permissions:
       thelastlife.thelastlifeusers
   tllstaff:
-    description: Comandos para Staff TLL
-    permissions:
+    description: Comando para el staff
+    permission:
       thelastlife.thelastlifestaff

@@ -41,7 +41,7 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
 
         Server s = sender.getServer();
 
-        if(args[0].isEmpty()){
+        if(args.length < 1){
             player.sendMessage(Format.PREFIX + "Debes colocar un comando valido.");
             return false;
         }
