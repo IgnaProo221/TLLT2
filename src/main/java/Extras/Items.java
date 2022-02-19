@@ -295,6 +295,15 @@ public class Items {
     public static ItemStack temperatureHot(){
         return new ItemBuilder(Material.GOLDEN_APPLE).setName("&6Hot Fruit").setCustomModelData(8993).build();
     }
+    public static ItemStack sigilodeInmunidad(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Al usar el Tótem, conseguirás &eInmunidad")));
+        lore.add(Component.text(format("&7por 10 segundos.")));
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&c&l¡Tus Tótems se pondrán en cooldown de 20 segundos!")));
+        return new ItemBuilder(Material.TOTEM_OF_UNDYING).setName("&e&lSigilo de Inmunidad").setUnbreakable(true).setCustomModelData(73212).setLore(lore).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setItemFlags(ItemFlag.HIDE_ENCHANTS).build();
+    }
 
 
 

@@ -20,9 +20,11 @@ import static Utilidades.Format.format;
 
 public class MobsRaids extends BukkitRunnable{
     private final TLL2 plugin;
+
     public MobsRaids(TLL2 plugin){
         this.plugin = plugin;
     }
+
     @Override
     public void run(){
         for(Player player : Bukkit.getOnlinePlayers()){

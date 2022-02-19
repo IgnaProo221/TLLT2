@@ -37,11 +37,12 @@ public class alUsarTotem implements Listener {
 
                 Player p = (Player) e.getEntity();
 
+
                 if (p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING || p.getInventory().getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING) {
 
                     int TotemCara = new Random().nextInt(6) + 1;
                     PersistentDataContainer data = p.getPersistentDataContainer();
-
+                    var inmunity = data.get(new NamespacedKey(plugin, "inmunity"),PersistentDataType.INTEGER);
                     //TotemsBar.anadirTC(p);
                     /*if(TotemsBar.getPorcentaje(p) == 200){
                         e.setCancelled(true);
@@ -51,6 +52,11 @@ public class alUsarTotem implements Listener {
                         });
                         return;
                     }*/
+
+                    if (!data.has(Utils.key("inmunity"), PersistentDataType.INTEGER)) {
+                        data.set(Utils.key("inmunity"),PersistentDataType.INTEGER, 0);
+                    }
+
                     if (!data.has(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER)) {
                         data.set(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER, 100);
                     } else {
@@ -80,11 +86,8 @@ public class alUsarTotem implements Listener {
 
                     if (p.getInventory().getItemInMainHand().equals(Items.totemBerserk()) || p.getInventory().getItemInOffHand().equals(Items.totemBerserk())) {
 
-                        if (p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING && !p.getInventory().getItemInMainHand().equals(Items.totemBerserk())) return;
-
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
                         p.setCooldown(Material.TOTEM_OF_UNDYING, 200);
-
                         for (Player players : Bukkit.getOnlinePlayers()) {
 
                             players.sendMessage(ChatColor.DARK_GRAY + "¡El jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.YELLOW + "tótem!" + ChatColor.WHITE + "♦" + ChatColor.GRAY + "(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
@@ -97,6 +100,28 @@ public class alUsarTotem implements Listener {
                         }
                         return;
                     }
+
+                    if (p.getInventory().getItemInOffHand().equals(Items.sigilodeInmunidad()) || p.getInventory().getItemInOffHand().equals(Items.sigilodeInmunidad())&& !(p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING)){
+
+
+                        p.playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, 10.0F, 2.0F);
+                        p.setCooldown(Material.TOTEM_OF_UNDYING, 400);
+                        data.set(new NamespacedKey(plugin,"inmunity"),PersistentDataType.INTEGER, 1);
+                        for (Player players : Bukkit.getOnlinePlayers()) {
+
+                            players.sendMessage(ChatColor.DARK_GRAY + "¡El jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.YELLOW + "Sigilo de Inmunidad!" + ChatColor.WHITE + "♦" + ChatColor.GRAY + "(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
+                            players.sendMessage(ChatColor.RED + "¡Los tótems de " + ChatColor.YELLOW + "" + ChatColor.BOLD + p.getName() + ChatColor.RED + " entraron en un cooldown de 20 segundos! ");
+
+                            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                                data.set(new NamespacedKey(plugin,"inmunity"),PersistentDataType.INTEGER, 0);
+                            }, 200);
+                        }
+                        return;
+                    }
+
+
+
+
 
                     if (p.getInventory().getItemInMainHand().equals(Items.exoTotem()) || p.getInventory().getItemInOffHand().equals(Items.exoTotem())) {
 
