@@ -162,8 +162,38 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     if(args[1].equalsIgnoreCase("clear")){
                         var data = pa.getPersistentDataContainer();
                         var dataTemperatura = data.get(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER);
-                        pa.sendMessage(Format.PREFIX + "&7¡Reiniciaste tu Temperatura a 30°!");
+                        pa.sendMessage(Format.PREFIX,format("&7Reiniciaste tu Temperatura a 30°"));
                         data.set(new NamespacedKey(plugin, "temperatura"),PersistentDataType.INTEGER, 30);
+                    }
+                    if(args[1].equalsIgnoreCase("hipotermia")){
+                        if(args[2].equalsIgnoreCase("1")){
+                            var data = pa.getPersistentDataContainer();
+                            pa.sendMessage(Format.PREFIX,format("&7Pusisiste tu Temperatura a -70°"));
+                            data.set(new NamespacedKey(plugin, "temperatura"),PersistentDataType.INTEGER, -70);
+                        }else if(args[2].equalsIgnoreCase("2")){
+                            var data = pa.getPersistentDataContainer();
+                            pa.sendMessage(Format.PREFIX,format("&7Pusisiste tu Temperatura a -120°"));
+                            data.set(new NamespacedKey(plugin, "temperatura"),PersistentDataType.INTEGER, -120);
+                        }else if(args[2].equalsIgnoreCase("3")){
+                            var data = pa.getPersistentDataContainer();
+                            pa.sendMessage(Format.PREFIX,format("&7Pusisiste tu Temperatura a -180°"));
+                            data.set(new NamespacedKey(plugin, "temperatura"),PersistentDataType.INTEGER, -180);
+                        }
+                    }
+                    if(args[1].equalsIgnoreCase("hipertermia")){
+                        if(args[2].equalsIgnoreCase("1")){
+                            var data = pa.getPersistentDataContainer();
+                            pa.sendMessage(Format.PREFIX,format("&7Pusisiste tu Temperatura a 120°"));
+                            data.set(new NamespacedKey(plugin, "temperatura"),PersistentDataType.INTEGER, 120);
+                        }else if(args[2].equalsIgnoreCase("2")){
+                            var data = pa.getPersistentDataContainer();
+                            pa.sendMessage(Format.PREFIX,format("&7Pusisiste tu Temperatura a 180°"));
+                            data.set(new NamespacedKey(plugin, "temperatura"),PersistentDataType.INTEGER, 180);
+                        }else if(args[2].equalsIgnoreCase("3")){
+                            var data = pa.getPersistentDataContainer();
+                            pa.sendMessage(Format.PREFIX,format("&7Pusisiste tu Temperatura a 220°"));
+                            data.set(new NamespacedKey(plugin, "temperatura"),PersistentDataType.INTEGER, 220);
+                        }
                     }
                     break;
 
@@ -353,6 +383,8 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     commands.add("muerteFake");
                 }else if(args[0].equals("temperatura")){
                     commands.add("clear");
+                    commands.add("hipotermia");
+                    commands.add("hipertermia");
                 }else if(args[0].equals("give")){
                     String[] items = {
                       "FUNGAL_CLUMPS","WEIRD_DAGGER", "CATACLYSM_PEARL", "BLOOD_SABER", "BERSERKER_TOTEM", "CRYSTAL_HEART", "DISCORD", "CLOUDY_MARSH", "BLOOD_STONE", "BLOOD_SHARD", "TEMPERATURE_METER", "TOTEM_RESTORER", "FROSTBITE","CELULA_ENERGIA","METAL_DESC","EXO_SHIELD","ICESHOT","BLOOD_ARMOR","EXO_DRILL",
@@ -365,6 +397,16 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
             }else if(args.length == 3){
                 if(args[1].equals("modify") || args[1].equals("clear") || args[1].equals("reset")){
                    Bukkit.getOnlinePlayers().forEach(player -> commands.add(player.getName()));
+                }
+                if(args[1].equals("hipertermia")){
+                    commands.add("1");
+                    commands.add("2");
+                    commands.add("3");
+                }
+                if(args[1].equals("hipotermia")){
+                    commands.add("1");
+                    commands.add("2");
+                    commands.add("3");
                 }
                 StringUtil.copyPartialMatches(args[2], commands, completions);
             }else if(args.length == 4){

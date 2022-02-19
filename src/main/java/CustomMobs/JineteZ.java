@@ -20,6 +20,7 @@ public class JineteZ extends EntityHorseZombie{
         super(EntityTypes.bf,((CraftWorld)loc.getWorld()).getHandle());
         this.setPosition(loc.getX(),loc.getY(),loc.getZ());
         this.setCustomName(new ChatComponentText(Format.format("&6Jinete Zombi")));
+        this.getBukkitCreature().setRemoveWhenFarAway(true);
         this.getBukkitCreature().addPotionEffect(new PotionEffect(PotionEffectType.SPEED,Integer.MAX_VALUE, 1,false, false, false));
     }
 }

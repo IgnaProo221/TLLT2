@@ -8,6 +8,8 @@ import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import tlldos.tll2.TLL2;
 
@@ -51,18 +53,6 @@ public class TemperatureTask extends BukkitRunnable {
                 }else if(biomes == Biome.BEACH ||biomes == Biome.DARK_FOREST || biomes == Biome.DARK_FOREST_HILLS || biomes == Biome.END_BARRENS || biomes == Biome.END_HIGHLANDS || biomes == Biome.END_MIDLANDS || biomes == Biome.MUSHROOM_FIELD_SHORE || biomes == Biome.MUSHROOM_FIELDS
                 || biomes == Biome.OCEAN || biomes == Biome.RIVER || biomes == Biome.STONE_SHORE || biomes == Biome.SWAMP || biomes == Biome.WOODED_MOUNTAINS){
                     data.set(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER, temperature - 5);
-                }
-
-
-
-                if (temperature >= 120) {
-                    player.sendMessage(Format.PREFIX, Format.format("&7¡Estas recibiendo daño por estar en temperaturas altas!"));
-                    player.damage(1000);
-                    player.setFireTicks(203);
-                }else if(temperature <= -70){
-                    player.sendMessage(Format.PREFIX, "&7¡Estas recibiendo daño por estar en temperaturas bajas!");
-                    player.damage(1000);
-                    player.setFreezeTicks(204);
                 }
             }
         }
