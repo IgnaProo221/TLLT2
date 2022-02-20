@@ -74,6 +74,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("######################################################");
+            //esta cosa no funciona xd xd xd xd xd xd xd
             Bukkit.getScheduler().runTaskLater(this,()->{
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "stop");
         },200L);

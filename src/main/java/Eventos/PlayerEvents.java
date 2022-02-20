@@ -144,7 +144,7 @@ public class PlayerEvents implements Listener {
 
 
             if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
-                if(p.getInventory().getItemInMainHand().equals(new ItemStack(Material.NETHERITE_PICKAXE)) && p.getInventory().getItemInOffHand().equals(Items.teleTome())){
+                if(p.getInventory().getItemInMainHand().equals(Material.NETHERITE_PICKAXE) && p.getInventory().getItemInOffHand().equals(Items.teleTome())){
                     ItemStack pickaxe = p.getInventory().getItemInMainHand();
                     pickaxe.addUnsafeEnchantment(CustomEnchants.TELEPHATY, 1);
                     p.sendMessage(PREFIX,format("&7Has usado un Toma Ancestral"));
