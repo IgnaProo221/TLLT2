@@ -1,44 +1,39 @@
 package Extras;
 
+import org.apache.commons.lang.IllegalClassException;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Teams {
     static List<Team> teams = new ArrayList<>();
 
-    public static Team TEST_TEAM = new Team("Nombre del Team", "Lider", Arrays.asList("Miembro1", "Test2"));
-    public static Team STAFF_TEAM = new Team("Staff Chat","Mutant17", Arrays.asList("Itz_Antonio_PvP", "Carrotw"
-    ,"JohanBigCum","FoquitaLover","cPepos","ItzFel17","cBaguette17","wHermes17","Pepe3012","xAlexPlayx","LechugaMC17","Blackstamp","Gus_Gus19"
-            ,"THESMOL_T","SkarbyPalace","Tom_555","NovaKingdom"));
+    public static Team TEST_TEAM = new Team("Nombre del Team", "Lider", Arrays.asList(
+            "Miembro1",
+            "Miembro2",
+            "Miembro3",
+            "Miembro4"));
 
     public Teams() {
         TEST_TEAM.joinMember("lepepo", false);
-        STAFF_TEAM.joinMember("Mutant17",true);
-        STAFF_TEAM.joinMember("Itz_Antonio_PvP",false);
-        STAFF_TEAM.joinMember("Carrotw",false);
-        STAFF_TEAM.joinMember("JohanBigCum",false);
-        STAFF_TEAM.joinMember("FoquitaLover",false);
-        STAFF_TEAM.joinMember("cPepos",false);
-        STAFF_TEAM.joinMember("ItzFel17",false);
-        STAFF_TEAM.joinMember("cBaguette17",false);
-        STAFF_TEAM.joinMember("wHermes17",false);
-        STAFF_TEAM.joinMember("Pepe3012",false);
-        STAFF_TEAM.joinMember("xAlexPlayx",false);
-        STAFF_TEAM.joinMember("LechugaMC17",false);
-        STAFF_TEAM.joinMember("Blackstamp",false);
-        STAFF_TEAM.joinMember("Gus_Gus19",false);
-        STAFF_TEAM.joinMember("THESMOL_T",false);
-        STAFF_TEAM.joinMember("SkarbyPalace",false);
-        STAFF_TEAM.joinMember("Tom_555",false);
-        STAFF_TEAM.joinMember("NovaKingdom",false);
 
-
+        //Si creas un team añadelo a este ArrayList.
         teams.add(TEST_TEAM);
-        teams.add(STAFF_TEAM);
+    }
+
+    public static boolean isInTeam(Player p) {
+        return Teams.get(Teams.getTeamName(p)) != null;
+    }
+
+
+    public static String getTeamName(Player p) {
+        Team d = forPlayer(p);
+
+        return d.getName();
     }
 
 
@@ -54,9 +49,11 @@ public class Teams {
     }
     
     public static List<String> allTeams() {
+        //Y tambien a este array
         List<String> a = new ArrayList<>();
+
         a.add("TEST_TEAM");
-        a.add("STAFF_TEAM");
+
         return a;
     }
 
@@ -83,6 +80,8 @@ public class Teams {
 
             this.owner = Bukkit.getPlayer(owner);
             this.memberss = members;
+
+            this.memberss.add(owner);
         }
         
         
@@ -122,8 +121,37 @@ public class Teams {
             }
         }
 
+        public void setOwner(String newOwner) {
+            if (isInTeam(Bukkit.getPlayer(newOwner)) && Teams.get(Teams.getTeamName(Bukkit.getPlayer(newOwner))) == Teams.get(teamName)) {
+                this.owner = Bukkit.getPlayer(newOwner);
+            } else {
+                throw new NullPointerException("El jugador no se encuentra en el team");
+            }
+        }
+
         public void changeName(String newName) {
             this.teamName = newName;
+        }
+
+        public void loosePlayer(String playerName) {
+            Player p = Bukkit.getPlayer(playerName);
+
+            if (Teams.forPlayer(p) != null) {
+
+                Team team = Teams.get(Teams.getTeamName(p));
+
+                Random random = new Random();
+
+                int d = memberss.size();
+
+                if (team.getOwner() == p) {
+
+                    setOwner(memberss.get(random.nextInt(d)));
+
+                }
+
+                memberss.remove(p.getName());
+            }
         }
 
     }
