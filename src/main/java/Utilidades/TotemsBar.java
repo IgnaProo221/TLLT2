@@ -44,6 +44,12 @@ public class TotemsBar implements Listener {
             return 5;
         } else if (day > 6 && day < 12) {
             return 10;
+        } else if (day > 12 && day < 18) {
+            return 10;
+        } else if (day > 18 && day < 24) {
+            return 15;
+        } else if (day > 24 && day < 30) {
+            return 15;
         } else {
             return 5;
         }

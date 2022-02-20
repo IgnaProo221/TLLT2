@@ -5,10 +5,7 @@ import Utilidades.Format;
 import Utilidades.Mobs;
 import Utilidades.Utils;
 import Utilidades.Warn;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -532,7 +529,17 @@ public class EntityListeners implements Listener {
     @EventHandler
     public void noZombPig(EntityTransformEvent e) {
         if (e.getTransformReason() == EntityTransformEvent.TransformReason.PIGLIN_ZOMBIFIED) {
-            Monster monster = (Monster)e.getEntity();
+            try {
+                var piglin = (Piglin) e.getEntity();
+
+                ItemStack[] contents = piglin.getEquipment().getArmorContents().clone();
+
+                Bukkit.getScheduler().runTaskLater(plugin, () -> piglin.getEquipment().setArmorContents(contents)
+                        , 10L);
+            } catch (NullPointerException x) {
+                x.printStackTrace();
+                Warn.Mutant(x);
+            }
             e.setCancelled(true);
         }
     }

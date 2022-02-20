@@ -1,6 +1,7 @@
 package tasks;
 
 import Utilidades.Format;
+import Utilidades.GameEvents;
 import Utilidades.Mobs;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -32,10 +33,15 @@ public class MobsRaids extends BukkitRunnable{
                 Random r = new Random();
                 int chancelol = r.nextInt(100000);
                 Location l = player.getLocation().clone();
-                if(chancelol == 1) {
+                if (chancelol == 1 && !GameEvents.BlightedRage.isStarted()) {
+
                     player.sendTitle(format("&6&l¡Blighted Rage!"), format("&7&lEVENTO"), 0, 100, 0);
                     player.sendMessage(PREFIX, format("&c¡Se aproxima un evento de mobs en todos los Jugadores, ¡Afilen sus armas!"));
+
+                    GameEvents.BlightedRage.startEvent(3);
+
                     //nose como hacer esto xd lol, Buena suerte. (CARROT)
+
                 }
             }
         }
