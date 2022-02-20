@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.block.TileState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,8 +31,12 @@ public class MaestriaExp implements Listener{
     public void expLol(BlockBreakEvent e){
         var p = e.getPlayer();
         var block = e.getBlock();
-        var data = p.getPersistentDataContainer();
 
+        TileState a = (TileState)block.getState();
+
+        if (a.getPersistentDataContainer().has(Utils.key("no_exp"), PersistentDataType.INTEGER)) {
+            return;
+        }
         if (!block.getType().name().toLowerCase().contains("ore")) {
             return;
         }
@@ -75,6 +80,10 @@ public class MaestriaExp implements Listener{
         || block.getType() == Material.DEEPSLATE_LAPIS_ORE || block.getType() == Material.DEEPSLATE_REDSTONE_ORE || block.getType() == Material.DEEPSLATE_GOLD_ORE
         || block.getType() == Material.DEEPSLATE_IRON_ORE || block.getType() == Material.DEEPSLATE_COPPER_ORE || block.getType() == Material.DEEPSLATE_COAL_ORE) {
 
+            TileState data = (TileState)state;
+
+            data.getPersistentDataContainer().set(Utils.key("no_exp"), PersistentDataType.INTEGER, 1);
+            data.update();
         }
     }
 

@@ -5,9 +5,8 @@ import Eventos.StartBlastStormEvent;
 import Eventos.StopBlastStormEvent;
 import Extras.EventosItems;
 import Extras.Items;
+import Extras.Teams;
 import Utilidades.Format;
-import Utilidades.TotemsBar;
-import Utilidades.Utils;
 import Utilidades.Warn;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.*;
@@ -17,10 +16,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
@@ -32,9 +29,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static Utilidades.Format.format;
 
@@ -228,6 +222,54 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     }
                 }
             }
+            case "teams" -> {
+                if (args.length < 2) {
+                    player.sendMessage(Format.PREFIX + format("&cHas indicado un subcomando invalido."));
+                    return true;
+                }
+
+                if (args[1].equalsIgnoreCase("chat")) {
+                    for (Player a : Bukkit.getOnlinePlayers()) {
+                        if (Teams.forPlayer(player).getMembers().contains(a)) {
+                            StringBuilder msg = new StringBuilder();
+
+                            for (String arg : args) {
+                                if (!arg.equalsIgnoreCase(args[0]) && !arg.equalsIgnoreCase(args[1])) {
+
+                                    msg.append(" ").append(arg);
+                                }
+                            }
+
+                            a.sendMessage(format("&8[&b&lTEAM&8] &7" + player.getName() + "&8>&d" + msg));
+                        }
+                    }
+                }
+
+                if (args[1].equalsIgnoreCase("join")) {
+                    Player a = Bukkit.getPlayer(args[2]);
+
+                    Teams.Team selected = Teams.get(args[3]);
+
+                    if (selected == null) {
+
+                        player.sendMessage(Format.PREFIX + format("&7El team que has seleccionado no es valido."));
+
+                        return false;
+                    }
+
+                    if (a != null) {
+                        selected.joinMember(a.getName(), false);
+
+                        player.sendMessage(Format.PREFIX + format("&eHas cambiado al jugador &b" + a.getName() + "&e al Team: &7" + selected.getName()));
+                    } else {
+
+                        player.sendMessage(Format.PREFIX + format("&7El jugador indicado es invalido."));
+                        return false;
+                    }
+                }
+
+
+            }
             case "debug" -> {
                 if (args.length < 2) {
                     player.sendMessage(Format.PREFIX + "Debes colocar un debug valido (blastStormStart, blackStormEnd, totemTest, muerteFake).");
@@ -358,7 +400,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
         List<String> completions = new ArrayList<>();
         if (args.length == 1) {
-            addToList(commands, "sacrificios", "alerta", "give", "sacrificios_test", "debug", "totem_bar", "totems_clear", "vida_reset", "dimension", "temperatura", "spawn", "god_mode" );
+            addToList(commands, "sacrificios", "alerta", "give", "sacrificios_test", "debug", "totem_bar", "totems_clear", "vida_reset", "dimension", "temperatura", "spawn", "teams", "god_mode" );
 
             StringUtil.copyPartialMatches(args[0], commands, completions);
         } else if (args.length == 2) {
@@ -366,6 +408,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                 case "dimension" -> Bukkit.getWorlds().forEach(world -> commands.add(world.getName()));
                 case "sacrificios" -> addToList(commands, "modify", "clear", "reset");
                 case "god_mode" -> addToList(commands, "on", "off");
+                case "teams" -> addToList(commands, "chat", "join");
                 case "debug" -> addToList(commands, "blastStormStart", "blackStormEnd", "totemTest", "muerteFake", "dementeTest");
                 case "temperatura" -> addToList(commands, "clear", "hipotermia", "hipertermia");
                 case "give" -> addToList(commands, "FUNGAL_CLUMPS","WEIRD_DAGGER", "CATACLYSM_PEARL", "BLOOD_SABER", "BERSERKER_TOTEM", "CRYSTAL_HEART", "DISCORD", "CLOUDY_MARSH", "BLOOD_STONE", "BLOOD_SHARD", "TEMPERATURE_METER", "TOTEM_RESTORER", "FROSTBITE","CELULA_ENERGIA","METAL_DESC","EXO_SHIELD","ICESHOT","BLOOD_ARMOR","EXO_DRILL",
@@ -375,17 +418,16 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
             StringUtil.copyPartialMatches(args[1], commands, completions);
         }else if(args.length == 3){
             switch (args[1]) {
-                case "modify", "clear", "reset" -> Bukkit.getOnlinePlayers().forEach(player -> commands.add(player.getName()));
-                case "hipertermia", "hipotermia" -> {
-                    addToList(commands, "1", "2", "3");
-                }
+                case "modify", "clear", "reset", "join" -> Bukkit.getOnlinePlayers().forEach(player -> commands.add(player.getName()));
+                case "hipertermia", "hipotermia" -> addToList(commands, "1", "2", "3");
             }
             StringUtil.copyPartialMatches(args[2], commands, completions);
         }else if(args.length == 4){
-            for(Player player : Bukkit.getOnlinePlayers())
-                if(args[2].equals(player.getName()))
-                    addToList(commands,"1", "2", "3", "4", "5");
-
+            for(Player player : Bukkit.getOnlinePlayers()) {
+                if (args[2].equals(player.getName()) && args[1].equalsIgnoreCase("join")) addToList(commands, Teams.allTeams().toString());
+                if (args[2].equals(player.getName()))
+                    addToList(commands, "1", "2", "3", "4", "5");
+            }
             StringUtil.copyPartialMatches(args[3], commands, completions);
         }
 

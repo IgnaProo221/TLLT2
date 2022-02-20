@@ -25,7 +25,7 @@ public class EnchantmentWrapper extends Enchantment{
 
     @Override
     public @NotNull String getName() {
-        return null;
+        return name;
     }
 
     @Override
