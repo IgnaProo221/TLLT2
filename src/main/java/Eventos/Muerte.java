@@ -274,7 +274,13 @@ public class Muerte extends ListenerAdapter implements Listener {
                 double Z = data.get(Utils.key("Z"), PersistentDataType.DOUBLE);
                 World w = Bukkit.getWorld(Objects.requireNonNull(data.get(Utils.key("WORLD"), PersistentDataType.STRING)));
 
-                Bukkit.getScheduler().runTaskLater(plugin, () -> p.teleport(new Location(w, X, Y, Z)), 1L);
+                Location saved = new Location(w, X, Y, Z);
+
+                if (Y < -64) {
+                    saved.setY(0.0D);
+                }
+
+                Bukkit.getScheduler().runTaskLater(plugin, () -> p.teleport(saved), 1L);
             } catch (NullPointerException ex) {
                 Bukkit.getConsoleSender().sendMessage("RESPAWN EVENT ERROR:" + ex);
             }

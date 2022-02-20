@@ -240,9 +240,37 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                                 }
                             }
 
-                            a.sendMessage(format("&8[&b&lTEAM&8] &7" + player.getName() + "&8>&d" + msg));
+                            a.sendMessage(format("&8[&6&lTEAM&8] &7" + player.getName() + "&8>&d" + msg));
                         }
                     }
+                }
+
+                if (args[1].equalsIgnoreCase("info")) {
+
+                    if (!Teams.isInTeam(player)) {
+                        player.sendMessage(Format.PREFIX + format("&7Actualmente no conformas ningún team."));
+                        return false;
+                    }
+
+                    Teams.Team team = Teams.get(Teams.getTeamName(player));
+
+                    StringBuilder members = new StringBuilder();
+
+                    for (Player var1 : Bukkit.getOnlinePlayers()) {
+
+                        if (members.length() > 0) {
+                            members.append('\n');
+                        }
+
+                        members.append(format("&7- &a" + var1.getName()));
+                    }
+
+                    player.sendMessage(format("&aEstas viendo la información de tu Team actual."));
+                    player.sendMessage(format("&8- &7Nombre del Team: &6" + team.getName()));
+                    player.sendMessage(format("&8- &7Owner del Team: &6" + team.getOwner()));
+                    player.sendMessage(format("&8- &7Numero de miembros: &6" + team.getSize()));
+                    player.sendMessage(format("&8- &7Miembros:"));
+                    player.sendMessage(format(members.toString()));
                 }
 
                 if (args[1].equalsIgnoreCase("join")) {
@@ -250,7 +278,15 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
                     Teams.Team selected = Teams.get(args[3]);
 
-                    if (selected == null) {
+                    boolean isValid = false;
+
+                    for (String t : Teams.allTeams()) {
+                        if (Teams.get(t) != null) {
+                            isValid = true;
+                        }
+                    }
+
+                    if (isValid) {
 
                         player.sendMessage(Format.PREFIX + format("&7El team que has seleccionado no es valido."));
 
@@ -265,6 +301,20 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
                         player.sendMessage(Format.PREFIX + format("&7El jugador indicado es invalido."));
                         return false;
+                    }
+                }
+
+                if (args[1].equalsIgnoreCase("remove")) {
+
+                    Player b = Bukkit.getPlayer(args[2]);
+
+                    if (b != null && Teams.isInTeam(b)) {
+
+                        Teams.Team g = Teams.get(Teams.getTeamName(b));
+
+                        g.loosePlayer(b.getName());
+
+                        player.sendMessage(format("&7Has eliminado al jugador &e" + b.getName() + "&7 de su Team. &8(&5" + g.getName() + "&8)"));
                     }
                 }
 
