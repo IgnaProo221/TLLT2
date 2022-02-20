@@ -94,9 +94,9 @@ public class EntityListeners implements Listener {
     public void interEffects(Player p) {
         int effect = new Random().nextInt(3);
         if (effect == 1) {
-            p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 400, 4, true, true, true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 200, 4, true, true, true));
         } else if (effect == 2) {
-            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 400, 1, true, true, true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 2, true, true, true));
         } else {
             p.setFireTicks(1200);
         }
@@ -220,12 +220,13 @@ public class EntityListeners implements Listener {
                 if(ironGolem.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"LAVA_GOLEM"),PersistentDataType.STRING)){
                     p.setFireTicks(1200);
                     p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,200,0, true, false, true));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,200,0, true, false, true));
                 }
             }
             if(damager instanceof Spider){
                 var spider = (Spider)damager;
                 if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "AGILE_SPIDER"), PersistentDataType.STRING)){
-                    p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 600, 2,true, true, true));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 200, 2,true, true, true));
                 }
                 if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "INTER_SPIDER"), PersistentDataType.STRING)){
                     interEffects(p);
@@ -245,9 +246,6 @@ public class EntityListeners implements Listener {
             }
             if(damager instanceof Zombie){
                 var zombie = (Zombie)damager;
-                if(zombie.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TIER_3"), PersistentDataType.STRING)){
-                    p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 400, 2, true, true, true));
-                }
                 if(zombie.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_ZOMBIE"), PersistentDataType.STRING)){
                     blightedZombieffects(p);
                 }
@@ -261,9 +259,7 @@ public class EntityListeners implements Listener {
             if(damager instanceof Phantom){
                 var phantom = (Phantom)damager;
                 if(phantom.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_PHANTOM"), PersistentDataType.STRING)){
-                    p.setFreezeTicks(1200);
-                    p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 1200, 4,true, true, true));
-                    p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 1200, 4, true, true, true));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 100,9, true,false,true));
                     }
             }
             if(damager instanceof Vindicator vindicator){

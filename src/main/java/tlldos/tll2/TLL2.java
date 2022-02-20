@@ -62,7 +62,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
             getCommand("thelastlife").setTabCompleter(new ComandosUsuarios(this));
             getCommand("tllstaff").setTabCompleter(new ComandosStaff(this));
 
-            new TemperatureTask(this).runTaskTimer(this, 0L, 400L);
+            new TemperatureTask(this).runTaskTimer(this, 0L, 600L);
             new TemperatureBlocks(this).runTaskTimer(this,0L,200L);
         } catch (Error e){
             getServer().getConsoleSender().sendMessage("######################################################");
@@ -106,7 +106,8 @@ public final class TLL2 extends JavaPlugin implements Listener{
                 new NMSSpawn(this),
                 new ReplaceListeners(this),
                 new WorldEventsListeners(this),
-                new AlEntrar(this)
+                new AlEntrar(this),
+                new AsegurarRp(this)
         );
     }
 
@@ -183,53 +184,53 @@ public final class TLL2 extends JavaPlugin implements Listener{
             //Hipertermia
             if(dataTemperatura >= 120 && dataTemperatura <= 180) {
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &6&l" + dataTemperatura + "° &7|| &4¡Hipertermia I!")));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 300, 0, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 300, 4, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 300, 2, true, false, true));
-                player.setFireTicks(200);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 0, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 4, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 2, true, false, true));
+                player.setFireTicks(20);
             }else if(dataTemperatura >= 180 && dataTemperatura <= 220) {
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &6&l" + dataTemperatura + "° &7|| &4¡Hipertermia II!")));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 300, 3, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 300, 9, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 300, 4, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 2, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 300, 2, true, false, true));
-                player.setFireTicks(200);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 3, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 9, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 4, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 2, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, 2, true, false, true));
+                player.setFireTicks(20);
             }else if(dataTemperatura >= 220) {
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &6&l" + dataTemperatura + "° &7|| &4¡Hipertermia III! &7|| &4&l¡Demente!")));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 300, 9, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 300, 9, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 300, 9, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 3, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 300, 2, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 300, 9, true, false, true));
-                player.setFireTicks(200);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 9, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 9, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 9, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 3, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 100, 2, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, 9, true, false, true));
+                player.setFireTicks(20);
 
 
 
                 //Hipotermia
             }else if(dataTemperatura <= -70 && dataTemperatura >= -120) {
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &b&l" + dataTemperatura + "° &7|| &b¡Hipotermia I!")));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 300, 4, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 300, 0, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 300, 2, true, false, true));
-                player.setFreezeTicks(204);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, 4, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 0, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 2, true, false, true));
+                player.setFreezeTicks(20);
             }else if(dataTemperatura <= -120 && dataTemperatura >= -180) {
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &b&l" + dataTemperatura + "° &7|| &b¡Hipotermia II!")));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 300, 9, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 300, 2, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 300, 4, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 2, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 300, 7, true, false, true));
-                player.setFreezeTicks(204);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, 9, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 2, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 4, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 2, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 7, true, false, true));
+                player.setFreezeTicks(20);
             }else if(dataTemperatura <= -180){
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &b&l" + dataTemperatura + "° &7|| &b¡Hipotermia III! &7|| &4&l¡Demente!")));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,300,9, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 300, 2, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 300, 4, true,false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 300, 2, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 300, 7, true, false, true));
-                player.setFreezeTicks(204);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,100,9, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 2, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 4, true,false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 2, true, false, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 7, true, false, true));
+                player.setFreezeTicks(20);
             }else{
                 player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &c" + dataTemperatura + "°")));
             }
@@ -238,7 +239,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
 
 
     public void demente(Player p, Player players){
-        int clase = new Random().nextInt(12);
+        int clase = new Random().nextInt(18);
         if(clase == 1){
             EventosItems.animacion(p,players);
         }else if(clase == 2){
@@ -246,7 +247,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
         }else if(clase == 3){
             p.sendMessage(Format.format("&7&o??? te susurra: ¿Hola?"));
         }else if(clase == 4){
-            p.playEffect(EntityEffect.GUARDIAN_TARGET);
+            p.playEffect(EntityEffect.HURT_EXPLOSION );
         }else if(clase == 5){
             p.playSound(p.getLocation(),Sound.ENTITY_CREEPER_PRIMED,SoundCategory.MASTER,10.0F,1.0F);
         }else if(clase == 6){
@@ -261,9 +262,22 @@ public final class TLL2 extends JavaPlugin implements Listener{
             p.playSound(p.getLocation(),Sound.ENTITY_BLAZE_AMBIENT,SoundCategory.MASTER,10.0F,1.0F);
         }else if(clase == 11){
             p.playSound(p.getLocation(),Sound.ENTITY_ENDERMAN_TELEPORT,SoundCategory.MASTER,10.0F,1.0F);
-        }else{
+        }else if(clase == 12){
             p.sendMessage(Format.format("&7&o??? te susurra: ¿Me pasas las Coordenadas de tu Base?"));
+        }else if(clase == 13){
+            p.sendMessage(Format.format("&7&o??? te susurra: ¿Ya viste los nuevos Cambios de Dificultad?"));
+        }else if(clase == 14){
+            p.playSound(p.getLocation(),Sound.ENTITY_ELDER_GUARDIAN_CURSE,SoundCategory.MASTER,10.0F,1.0F);
+        }else if(clase == 15){
+            p.playSound(p.getLocation(),Sound.ENTITY_WITHER_SPAWN,SoundCategory.MASTER,10.0F,1.0F);
+        }else if(clase == 16){
+            p.playSound(p.getLocation(),Sound.ENTITY_ENDER_DRAGON_GROWL,SoundCategory.MASTER,10.0F,1.0F);
+        }else if(clase == 17){
+            p.playSound(p.getLocation(),Sound.ENTITY_SPIDER_AMBIENT,SoundCategory.MASTER,10.0F,1.0F);
+        }else{
+            p.playSound(p.getLocation(),Sound.ENTITY_EVOKER_PREPARE_SUMMON,SoundCategory.MASTER,10.0F,1.0F);
         }
+
         }
 
 

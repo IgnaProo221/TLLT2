@@ -255,7 +255,7 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(55);
         self.setHealth(55);
         self.setSize(4);
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(40);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_PHANTOM"), PersistentDataType.STRING, "BLIGHTED_PHANTOM");
     }
 
@@ -430,9 +430,8 @@ public class Mobs implements Listener{
     }
 
     public static void tyranyWither(Wither self){
-        self.setCustomName(format("&6&k||| &c&lTyrant Wither &6&k|||"));
+        self.setCustomName(format("&6&lAdvanced Wither"));
         self.setInvulnerableTicks(500);
-        self.getBossBar().setColor(BarColor.RED);
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(500);
         self.setHealth(500);
         self.setRemoveWhenFarAway(true);
