@@ -313,6 +313,15 @@ public class Items {
     public static ItemStack teleTome(){
         return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.TELEPHATY, 1).build();
     }
+    public static ItemStack smeltTome(){
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.SMELTING_TOUCH, 1).build();
+    }
+    public static ItemStack lucktreeTome(){
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.LUCKY_TREE, 1).build();
+    }
+    public static ItemStack revengeTome(){
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.REVENGE, 1).build();
+    }
 
 
 

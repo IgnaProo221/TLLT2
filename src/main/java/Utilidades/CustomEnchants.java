@@ -15,11 +15,26 @@ import java.util.stream.Collectors;
 
 public class CustomEnchants implements Listener {
     public static final Enchantment TELEPHATY = new EnchantmentWrapper("telephaty","telephaty", 1);
+    public static final Enchantment REVENGE = new EnchantmentWrapper("revenge","revenge",1);
+    public static final Enchantment SMELTING_TOUCH = new EnchantmentWrapper("smelting_touch","smelting_touch",1);
+    public static final Enchantment LUCKY_TREE = new EnchantmentWrapper("luckytree","luckytree",1);
 
     public static void register() {
         boolean registered = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(TELEPHATY);
+        boolean getvenganza = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(REVENGE);
+        boolean getsmelting = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(SMELTING_TOUCH);
+        boolean getlucktree = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(LUCKY_TREE);
         if (!registered) {
             registerEnchantment(TELEPHATY);
+        }
+        if(!getvenganza){
+            registerEnchantment(REVENGE);
+        }
+        if(!getsmelting){
+            registerEnchantment(SMELTING_TOUCH);
+        }
+        if(!getlucktree){
+            registerEnchantment(LUCKY_TREE);
         }
     }
 
@@ -27,6 +42,9 @@ public class CustomEnchants implements Listener {
         List<Enchantment> list = new ArrayList<>();
 
         list.add(CustomEnchants.TELEPHATY);
+        list.add(CustomEnchants.REVENGE);
+        list.add(CustomEnchants.SMELTING_TOUCH);
+        list.add(CustomEnchants.LUCKY_TREE);
 
         return list;
 

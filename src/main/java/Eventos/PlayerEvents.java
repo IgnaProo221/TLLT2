@@ -144,10 +144,19 @@ public class PlayerEvents implements Listener {
 
 
             if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
-                if(p.getInventory().getItemInMainHand().equals(Material.NETHERITE_PICKAXE) && p.getInventory().getItemInOffHand().equals(Items.teleTome())){
+                if(p.getInventory().getItemInMainHand().getType().toString().endsWith("_pickaxe") && p.getInventory().getItemInOffHand().equals(Items.teleTome())){
                     ItemStack pickaxe = p.getInventory().getItemInMainHand();
                     pickaxe.addUnsafeEnchantment(CustomEnchants.TELEPHATY, 1);
-                    p.sendMessage(PREFIX,format("&7Has usado un Toma Ancestral"));
+                    pickaxe.getLore().add(format("&6Encantamiento Ancestral: &eTelephaty"));
+                    p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
+                    p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
+                    p.getInventory().remove(Items.teleTome());
+                }else if(p.getInventory().getItemInMainHand().getType().toString().endsWith("_pickaxe") && p.getInventory().getItemInOffHand().equals(Items.smeltTome())){
+                    ItemStack pickaxe = p.getInventory().getItemInMainHand();
+                    pickaxe.addUnsafeEnchantment(CustomEnchants.SMELTING_TOUCH, 1);
+                    pickaxe.getLore().add(format("&6Encantamiento Ancestral: &eSmelting Touch"));
+                    p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
+                    p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
                     p.getInventory().remove(Items.teleTome());
                 }
             }

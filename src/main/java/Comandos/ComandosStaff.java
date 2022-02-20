@@ -435,6 +435,12 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     player.getInventory().addItem(Items.sigilodeInmunidad());
                 }else if(args[1].equalsIgnoreCase("ANCIENT_TOME_1")){
                     player.getInventory().addItem(Items.teleTome());
+                }else if(args[1].equalsIgnoreCase("ANCIENT_TOME_2")){
+                    player.getInventory().addItem(Items.smeltTome());
+                }else if(args[1].equalsIgnoreCase("ANCIENT_TOME_3")){
+                    player.getInventory().addItem(Items.lucktreeTome());
+                }else if(args[1].equalsIgnoreCase("ANCIENT_TOME_4")){
+                    player.getInventory().addItem(Items.revengeTome());
                 }
             }
 
