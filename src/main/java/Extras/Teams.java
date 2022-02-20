@@ -29,6 +29,12 @@ public class Teams {
 
         return b;
     }
+    
+    public static List<String> allTeams() {
+        List<String> a = new ArrayList<>();
+        a.add("TEST_TEAM");
+        return a;
+    }
 
     public static Team forPlayer(Player p) {
         Team t = null;

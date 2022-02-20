@@ -236,11 +236,11 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                             for (String arg : args) {
                                 if (!arg.equalsIgnoreCase(args[0]) && !arg.equalsIgnoreCase(args[1])) {
 
-                                    msg.append(arg);
+                                    msg.append(" ").append(arg);
                                 }
                             }
 
-                            a.sendMessage(format("&8[&b&lTEAM&8] &7" + player.getName() + "&8> &d" + msg));
+                            a.sendMessage(format("&8[&b&lTEAM&8] &7" + player.getName() + "&8>&d" + msg));
                         }
                     }
                 }
@@ -398,7 +398,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
         List<String> completions = new ArrayList<>();
         if (args.length == 1) {
-            addToList(commands, "sacrificios", "alerta", "give", "sacrificios_test", "debug", "totem_bar", "totems_clear", "vida_reset", "dimension", "temperatura", "spawn", "god_mode" );
+            addToList(commands, "sacrificios", "alerta", "give", "sacrificios_test", "debug", "totem_bar", "totems_clear", "vida_reset", "dimension", "temperatura", "spawn", "teams", "god_mode" );
 
             StringUtil.copyPartialMatches(args[0], commands, completions);
         } else if (args.length == 2) {
@@ -416,17 +416,16 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
             StringUtil.copyPartialMatches(args[1], commands, completions);
         }else if(args.length == 3){
             switch (args[1]) {
-                case "modify", "clear", "reset" -> Bukkit.getOnlinePlayers().forEach(player -> commands.add(player.getName()));
-                case "hipertermia", "hipotermia" -> {
-                    addToList(commands, "1", "2", "3");
-                }
+                case "modify", "clear", "reset", "join" -> Bukkit.getOnlinePlayers().forEach(player -> commands.add(player.getName()));
+                case "hipertermia", "hipotermia" -> addToList(commands, "1", "2", "3");
             }
             StringUtil.copyPartialMatches(args[2], commands, completions);
         }else if(args.length == 4){
-            for(Player player : Bukkit.getOnlinePlayers())
-                if(args[2].equals(player.getName()))
-                    addToList(commands,"1", "2", "3", "4", "5");
-
+            for(Player player : Bukkit.getOnlinePlayers()) {
+                if (args[2].equals(player.getName()) && args[1].equalsIgnoreCase("join")) addToList(commands, Teams.allTeams().toString());
+                if (args[2].equals(player.getName()))
+                    addToList(commands, "1", "2", "3", "4", "5");
+            }
             StringUtil.copyPartialMatches(args[3], commands, completions);
         }
 
