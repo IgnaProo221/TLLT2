@@ -1,13 +1,12 @@
 package CustomMobs;
 
-import net.kyori.adventure.text.TextComponent;
 import net.minecraft.network.chat.ChatComponentText;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.monster.EntityVex;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 
-import static Utilidades.Format.format;
+import static Utilities.Format.format;
 
 public class Argus extends EntityVex{
     public Argus(Location loc){

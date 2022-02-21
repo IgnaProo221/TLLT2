@@ -1,19 +1,13 @@
 package tasks;
 
-import Utilidades.Format;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import tlldos.tll2.TLL2;
-
-import static org.bukkit.event.entity.EntityDamageEvent.DamageCause.MELTING;
 
 public class TemperatureTask extends BukkitRunnable {
 

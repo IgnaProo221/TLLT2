@@ -1,9 +1,8 @@
 package Extras;
 
-import Utilidades.Format;
-import Utilidades.TotemsBar;
-import Utilidades.Utils;
-import Utilidades.Warn;
+import Utilities.Format;
+import Utilities.Utils;
+import Utilities.Warn;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
@@ -11,7 +10,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import tlldos.tll2.TLL2;
 
-import static Utilidades.Format.format;
+import static Utilities.Format.format;
 
 public class EventosItems {
 

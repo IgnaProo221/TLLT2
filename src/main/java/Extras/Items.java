@@ -1,22 +1,19 @@
 package Extras;
 
-import Utilidades.CustomEnchants;
-import Utilidades.Format;
-import Utilidades.ItemBuilder;
+import Utilities.CustomEnchants;
+import Utilities.Format;
+import Utilities.ItemBuilder;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import static Utilidades.Format.format;
+import static Utilities.Format.format;
 
 public class Items {
 

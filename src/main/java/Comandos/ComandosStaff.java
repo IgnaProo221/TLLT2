@@ -1,13 +1,13 @@
 package Comandos;
 
 import CustomMobs.HostileTest;
-import Eventos.StartBlastStormEvent;
-import Eventos.StopBlastStormEvent;
+import Listeners.StartBlastStormEvent;
+import Listeners.StopBlastStormEvent;
 import Extras.EventosItems;
 import Extras.Items;
 import Extras.Teams;
-import Utilidades.Format;
-import Utilidades.Warn;
+import Utilities.Format;
+import Utilities.Warn;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -30,7 +30,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static Utilidades.Format.format;
+import static Utilities.Format.format;
 
 public class ComandosStaff  implements CommandExecutor, TabCompleter {
 

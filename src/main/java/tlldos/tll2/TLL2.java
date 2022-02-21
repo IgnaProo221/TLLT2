@@ -2,12 +2,12 @@ package tlldos.tll2;
 
 import Comandos.ComandosStaff;
 import Comandos.ComandosUsuarios;
-import Eventos.*;
+import Listeners.*;
 import Extras.*;
-import Utilidades.Configuration;
-import Utilidades.CustomEnchants;
-import Utilidades.Format;
-import Utilidades.Mobs;
+import Utilities.Configuration;
+import Utilities.CustomEnchants;
+import Utilities.Format;
+import Utilities.Mobs;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
@@ -22,7 +22,6 @@ import org.bukkit.potion.PotionEffectType;
 import tasks.TemperatureBlocks;
 import tasks.TemperatureTask;
 
-import javax.swing.plaf.LabelUI;
 import java.util.Random;
 
 public final class TLL2 extends JavaPlugin implements Listener{
@@ -48,7 +47,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
             getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "_______________________________________________________________________");
             world = Bukkit.getWorld("world");
             CustomEnchants.register();
-            new Muerte(this);
+            new DeathListeners(this);
 
             cargarEventos();
             //tormentaTick();
@@ -88,13 +87,13 @@ public final class TLL2 extends JavaPlugin implements Listener{
 
     public void cargarEventos(){
         registerListeners(
-                new alUsarTotem(this),
-                new Comer(this),
-                new EnderPearlEvent(this),
-                new Dormir(this),
-                new GhastExplosion(this),
-                new DanoSinEnieEvento(this),
-                new PlayerEvents(this),
+                new TotemListeners(this),
+                new EatListeners(this),
+                new EnderPearlListeners(this),
+                new SleepListeners(this),
+                new ExplosionListeners(this),
+                new DamageListeners(this),
+                new PlayerEventsListeners(this),
                 new SpawnerListeners(this),
                 new SpawnListeners(this),
                 new EntityListeners(this),
@@ -106,8 +105,8 @@ public final class TLL2 extends JavaPlugin implements Listener{
                 new NMSSpawn(this),
                 new ReplaceListeners(this),
                 new WorldEventsListeners(this),
-                new AlEntrar(this),
-                new AsegurarRp(this)
+                new JoinListeners(this),
+                new RPListeners(this)
         );
     }
 

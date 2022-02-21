@@ -1,6 +1,6 @@
 package Extras;
 
-import Utilidades.Warn;
+import Utilities.Warn;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 

@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.EntityHuman;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 
-import static Utilidades.Format.format;
+import static Utilities.Format.format;
 
 public class HostileTest extends EntityCow{
     public HostileTest(Location loc){

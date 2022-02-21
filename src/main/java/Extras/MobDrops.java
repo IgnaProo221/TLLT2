@@ -7,7 +7,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-import static Utilidades.Format.format;
+import static Utilities.Format.format;
 
 public class MobDrops{
     public static ItemStack blighdrop1(){

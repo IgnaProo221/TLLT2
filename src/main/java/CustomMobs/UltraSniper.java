@@ -1,13 +1,11 @@
 package CustomMobs;
 
-import Utilidades.Format;
-import net.minecraft.sounds.SoundEffect;
+import Utilities.Format;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.ai.attributes.GenericAttributes;
 import net.minecraft.world.entity.monster.EntitySkeleton;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
-import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 import org.bukkit.persistence.PersistentDataType;
 import tlldos.tll2.TLL2;

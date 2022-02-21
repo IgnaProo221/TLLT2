@@ -1,8 +1,8 @@
 package Comandos;
 
-import Utilidades.Format;
-import Utilidades.TotemsBar;
-import Utilidades.Utils;
+import Utilities.Format;
+import Utilities.TotemsBar;
+import Utilities.Utils;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
