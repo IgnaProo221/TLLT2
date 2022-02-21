@@ -18,12 +18,16 @@ public class CustomEnchants implements Listener {
     public static final Enchantment REVENGE = new EnchantmentWrapper("revenge","revenge",1);
     public static final Enchantment SMELTING_TOUCH = new EnchantmentWrapper("smelting_touch","smelting_touch",1);
     public static final Enchantment LUCKY_TREE = new EnchantmentWrapper("luckytree","luckytree",1);
+    public static final Enchantment CRITICAL_HIT = new EnchantmentWrapper("critical_hit","critical_hit",1);
+    public static final Enchantment HUNTER = new EnchantmentWrapper("hunter","hunter",1);
 
     public static void register() {
         boolean registered = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(TELEPHATY);
         boolean getvenganza = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(REVENGE);
         boolean getsmelting = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(SMELTING_TOUCH);
         boolean getlucktree = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(LUCKY_TREE);
+        boolean getcriticalhit = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(CRITICAL_HIT);
+        boolean gethunter = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(HUNTER);
         if (!registered) {
             registerEnchantment(TELEPHATY);
         }
@@ -35,6 +39,12 @@ public class CustomEnchants implements Listener {
         }
         if(!getlucktree){
             registerEnchantment(LUCKY_TREE);
+        }
+        if(!getcriticalhit){
+            registerEnchantment(CRITICAL_HIT);
+        }
+        if(!gethunter){
+            registerEnchantment(HUNTER);
         }
     }
 

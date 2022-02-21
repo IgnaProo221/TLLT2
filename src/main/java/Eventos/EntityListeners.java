@@ -1,10 +1,7 @@
 package Eventos;
 
 import Extras.Items;
-import Utilidades.Format;
-import Utilidades.Mobs;
-import Utilidades.Utils;
-import Utilidades.Warn;
+import Utilidades.*;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.*;
@@ -139,6 +136,11 @@ public class EntityListeners implements Listener {
             //if(!(pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()))return;
             if(pa.getInventory().getItemInMainHand() != null){
                 if(pa.getInventory().getItemInMainHand().hasItemMeta()){
+                    if (pa.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.REVENGE)) {
+                        if(entity instanceof Pillager || entity instanceof Vindicator || entity instanceof Evoker || entity instanceof Illusioner){
+                            event.setDamage(event.getDamage() * 2);
+                        }
+                    }
             if(pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()) {
                 if (pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4006) {
                     entity.setFreezeTicks(400);

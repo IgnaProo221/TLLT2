@@ -3,6 +3,8 @@ package Eventos;
 import Extras.Items;
 import Utilidades.CustomEnchants;
 import Utilidades.Format;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
@@ -95,17 +97,6 @@ public class BlocksListeners implements Listener{
                     Collection<ItemStack> drop = block.getDrops(p.getInventory().getItemInMainHand());
                     if (drop.isEmpty()) return;
                     p.getInventory().addItem(drop.iterator().next());
-                }else  if(p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.SMELTING_TOUCH)){
-                    if(block.getType() == Material.IRON_ORE || block.getType() == Material.DEEPSLATE_IRON_ORE){
-                        e.setDropItems(false);
-                        block.getDrops().add(new ItemStack(Material.IRON_INGOT));
-                    }else if(block.getType() == Material.GOLD_ORE || block.getType() == Material.DEEPSLATE_GOLD_ORE){
-                        e.setDropItems(false);
-                        block.getDrops().add(new ItemStack(Material.GOLD_INGOT));
-                    }else if(block.getType() == Material.ANCIENT_DEBRIS){
-                        e.setDropItems(false);
-                        block.getDrops().add(new ItemStack(Material.NETHERITE_SCRAP));
-                    }
                 }else{
                     return;
                 }
@@ -113,18 +104,20 @@ public class BlocksListeners implements Listener{
                 return;
             }
         }
+
         if(p.getInventory().getItemInMainHand() != null){
             if(p.getInventory().getItemInMainHand().hasItemMeta()){
-                if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
-                    if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 191203){
-                        if(block.getType() == Material.CHEST || block.getType() == Material.FURNACE || block.getType() == Material.BLAST_FURNACE
-                        || block.getType() == Material.SMOKER || block.getType() == Material.BARREL)return;
-                        if(p.getInventory().firstEmpty() == -1)return;
-
+                if(p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.SMELTING_TOUCH)){
+                    Location location = block.getLocation();
+                    if(block.getType() == Material.IRON_ORE || block.getType() == Material.DEEPSLATE_IRON_ORE){
                         e.setDropItems(false);
-                        Collection<ItemStack> drop = block.getDrops(p.getInventory().getItemInMainHand());
-                        if(drop.isEmpty())return;
-                        p.getInventory().addItem(drop.iterator().next());
+                        location.getWorld().dropItemNaturally(location,new ItemStack(Material.IRON_INGOT));
+                    }else if(block.getType() == Material.GOLD_ORE || block.getType() == Material.DEEPSLATE_GOLD_ORE){
+                        e.setDropItems(false);
+                        location.getWorld().dropItemNaturally(location,new ItemStack(Material.GOLD_INGOT));
+                    }else if(block.getType() == Material.ANCIENT_DEBRIS){
+                        e.setDropItems(false);
+                        location.getWorld().dropItemNaturally(location,new ItemStack(Material.NETHERITE_SCRAP));
                     }
                 }else{
                     return;

@@ -307,20 +307,29 @@ public class Items {
         return new ItemBuilder(Material.TOTEM_OF_UNDYING).setName("&e&lSigilo de Inmunidad").setUnbreakable(true).setCustomModelData(73212).setLore(lore).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setItemFlags(ItemFlag.HIDE_ENCHANTS).build();
     }
 
-    public static ItemStack telePick(){
-        return new ItemBuilder(Material.NETHERITE_PICKAXE).setName("&6Tele-Pickaxe").setUnbreakable(true).setCustomModelData(191203).addCustomEnchant(CustomEnchants.TELEPHATY,1).build();
-    }
     public static ItemStack teleTome(){
-        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.TELEPHATY, 1).build();
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lTelephaty")));
+        lore.add(Component.text(format("&7Los Bloques que piques iran a tu inventario")));
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.TELEPHATY, 1).setLore(lore).build();
     }
     public static ItemStack smeltTome(){
-        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.SMELTING_TOUCH, 1).build();
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lSmelting Touch")));
+        lore.add(Component.text(format("&7Algunos ores dropean su mineral cocinado")));
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.SMELTING_TOUCH, 1).setLore(lore).build();
     }
     public static ItemStack lucktreeTome(){
-        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.LUCKY_TREE, 1).build();
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lLucky Tree")));
+        lore.add(Component.text(format("&7Tienes chance de dropear mas de 1 tronco")));
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.LUCKY_TREE, 1).setLore(lore).build();
     }
     public static ItemStack revengeTome(){
-        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.REVENGE, 1).build();
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lRevenge")));
+        lore.add(Component.text(format("&7Haces un 20% mas de daño a los Illagers")));
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.REVENGE, 1).setLore(lore).build();
     }
 
 
