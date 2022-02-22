@@ -248,7 +248,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     }
                 }
 
-                if (args[1].equalsIgnoreCase("allTeams")) {
+                if (args[1].equalsIgnoreCase("all_teams")) {
 
                     List<String> t = new ArrayList<>();
 
@@ -492,7 +492,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                 case "dimension" -> Bukkit.getWorlds().forEach(world -> commands.add(world.getName()));
                 case "sacrificios" -> addToList(commands, "modify", "clear", "reset");
                 case "god_mode" -> addToList(commands, "on", "off");
-                case "teams" -> addToList(commands, "chat", "join");
+                case "teams" -> addToList(commands, "chat", "join", "all_teams", "info");
                 case "debug" -> addToList(commands, "blastStormStart", "blackStormEnd", "totemTest", "muerteFake", "dementeTest");
                 case "temperatura" -> addToList(commands, "clear", "hipotermia", "hipertermia");
                 case "give" -> addToList(commands, "FUNGAL_CLUMPS","WEIRD_DAGGER", "CATACLYSM_PEARL", "BLOOD_SABER", "BERSERKER_TOTEM", "CRYSTAL_HEART", "DISCORD", "CLOUDY_MARSH", "BLOOD_STONE", "BLOOD_SHARD", "TEMPERATURE_METER", "TOTEM_RESTORER", "FROSTBITE","CELULA_ENERGIA","METAL_DESC","EXO_SHIELD","ICESHOT","BLOOD_ARMOR","EXO_DRILL",
