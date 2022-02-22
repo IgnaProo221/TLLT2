@@ -5,17 +5,23 @@ import Utilities.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.TileState;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import tlldos.tll2.TLL2;
 
+import static Utilities.Format.PREFIX;
 import static Utilities.Format.format;
 
 public class MaestriaExp implements Listener{
@@ -24,6 +30,9 @@ public class MaestriaExp implements Listener{
         this.plugin = plugin;
     }
 
+    static public String hp_plus = format("&3MAESTRIA &8> Tu Vida Maxima a aumentado!");
+    static public String att_plus = format("&3MAESTRIA &8> Tu Daño Base a aumentado!");
+    static public String def_plus = format("&3MAESTRIA &8> Tu Defensa Base a aumentado!");
 
     @EventHandler
     public void expLol(BlockBreakEvent e){
@@ -31,8 +40,9 @@ public class MaestriaExp implements Listener{
         var block = e.getBlock();
 
         TileState a = (TileState)block.getState();
+        BlockState c = (BlockState)block.getState();
 
-        if (a.getPersistentDataContainer().has(Utils.key("no_exp"), PersistentDataType.INTEGER)) {
+        if (c.getMetadata(p.getName()).contains("no_exp")) {
             return;
         }
         if (!block.getType().name().toLowerCase().contains("ore")) {
@@ -58,6 +68,19 @@ public class MaestriaExp implements Listener{
             Bukkit.getOnlinePlayers().forEach(player -> {
                 player.sendMessage(format("&3MAESTRIA &8> &c&l" + p.getName() + "&7 ha aumentado su nivel. &e" + asd + "&8 >> &6" + level));
             });
+            if(getMasteryLevel(p) == 1){
+                p.sendMessage(hp_plus);
+                p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() + 2);
+            }else if(getMasteryLevel(p) == 2){
+                p.sendMessage(att_plus);
+                p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
+            }else if(getMasteryLevel(p) == 3){
+                p.sendMessage(def_plus);
+                p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue() + 1);
+            }else if(getMasteryLevel(p) == 4){
+                p.sendMessage(hp_plus);
+                p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() + 2);
+            }
             return;
         }
 
@@ -78,10 +101,9 @@ public class MaestriaExp implements Listener{
         || block.getType() == Material.DEEPSLATE_LAPIS_ORE || block.getType() == Material.DEEPSLATE_REDSTONE_ORE || block.getType() == Material.DEEPSLATE_GOLD_ORE
         || block.getType() == Material.DEEPSLATE_IRON_ORE || block.getType() == Material.DEEPSLATE_COPPER_ORE || block.getType() == Material.DEEPSLATE_COAL_ORE) {
 
-            TileState data = (TileState)state;
-
-            data.getPersistentDataContainer().set(Utils.key("no_exp"), PersistentDataType.INTEGER, 1);
-            data.update();
+            //TileState data = (TileState)state;
+            BlockState mecago = state;
+            mecago.setMetadata("no_exp", new FixedMetadataValue(plugin,"true"));
         }
     }
 

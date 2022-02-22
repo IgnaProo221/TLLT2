@@ -310,7 +310,7 @@ public class Items {
         lore.add(Component.text(format("&7Los Bloques que piques iran a tu inventario")));
         return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.TELEPHATY, 1).setLore(lore).build();
     }
-    public static ItemStack smeltTome(){
+    public static ItemStack pichaTome(){
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lSmelting Touch")));
         lore.add(Component.text(format("&7Algunos ores dropean su mineral cocinado")));
@@ -327,6 +327,12 @@ public class Items {
         lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lRevenge")));
         lore.add(Component.text(format("&7Haces un 20% mas de daño a los Illagers")));
         return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.REVENGE, 1).setLore(lore).build();
+    }
+    public static ItemStack critihitTome(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lCritical Hit")));
+        lore.add(Component.text(format("&7Chance de que hagas un Ataque Critico al Mob")));
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.CRITICAL_HIT, 1).setLore(lore).build();
     }
 
 

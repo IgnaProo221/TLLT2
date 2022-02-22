@@ -144,7 +144,7 @@ public class PlayerEventsListeners implements Listener {
 
 
             if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
-                if(p.getInventory().getItemInMainHand().equals(new ItemStack(Material.NETHERITE_PICKAXE)) || p.getInventory().getItemInMainHand().equals(new ItemStack(Material.NETHERITE_AXE)) && p.getInventory().getItemInOffHand().equals(Items.teleTome())){
+                if((p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_PICKAXE) || p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_AXE)) && p.getInventory().getItemInOffHand().equals(Items.teleTome())){
                     List<String> lore = new ArrayList<>();
                     lore.add(format("&6Encantamiento Ancestral: &eTelephaty"));
                     ItemStack pickaxe = p.getInventory().getItemInMainHand();
@@ -152,25 +152,34 @@ public class PlayerEventsListeners implements Listener {
                     pickaxe.setLore(lore);
                     p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
                     p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
-                    p.getInventory().removeItem(Items.teleTome());
-                }else if(p.getInventory().getItemInMainHand().equals(new ItemStack(Material.NETHERITE_PICKAXE)) && p.getInventory().getItemInOffHand().equals(Items.smeltTome())){
-                    List<String> lore = new ArrayList<>();
-                    lore.add(format("&6Encantamiento Ancestral: &eSmelting Touch"));
-                    ItemStack pickaxe = p.getInventory().getItemInMainHand();
-                    pickaxe.addUnsafeEnchantment(CustomEnchants.SMELTING_TOUCH, 1);
-                    pickaxe.setLore(lore);
+                    p.getInventory().getItemInOffHand().setType(Material.AIR);
+                }else if(p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_PICKAXE)  && p.getInventory().getItemInOffHand().equals(Items.pichaTome())){
+                    List<String> lorez = new ArrayList<>();
+                    lorez.add(format("&6Encantamiento Ancestral: &eSmelting Touch"));
+                    ItemStack pickaxx = p.getInventory().getItemInMainHand();
+                    pickaxx.addUnsafeEnchantment(CustomEnchants.SMELTING_TOUCH, 1);
+                    pickaxx.setLore(lorez);
                     p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
                     p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
-                    p.getInventory().removeItem(Items.smeltTome());
-                }else if(p.getInventory().getItemInMainHand().equals(new ItemStack(Material.NETHERITE_SWORD)) && p.getInventory().getItemInOffHand().equals(Items.revengeTome())){
-                    List<String> lore = new ArrayList<>();
-                    lore.add(format("&6Encantamiento Ancestral: &eRevenge"));
-                    ItemStack pickaxe = p.getInventory().getItemInMainHand();
-                    pickaxe.addUnsafeEnchantment(CustomEnchants.REVENGE, 1);
-                    pickaxe.setLore(lore);
+                    p.getInventory().getItemInOffHand().setType(Material.AIR);
+                }else if(p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_SWORD)  && p.getInventory().getItemInOffHand().equals(Items.revengeTome())){
+                    List<String> lorve = new ArrayList<>();
+                    lorve.add(format("&6Encantamiento Ancestral: &eRevenge"));
+                    ItemStack pickaxe3 = p.getInventory().getItemInMainHand();
+                    pickaxe3.addUnsafeEnchantment(CustomEnchants.REVENGE, 1);
+                    pickaxe3.setLore(lorve);
                     p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
                     p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
-                    p.getInventory().removeItem(Items.revengeTome());
+                    p.getInventory().getItemInOffHand().setType(Material.AIR);
+                }else if(p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_SWORD)  && p.getInventory().getItemInOffHand().equals(Items.critihitTome())){
+                    List<String> lorvez = new ArrayList<>();
+                    lorvez.add(format("&6Encantamiento Ancestral: &eCritical Hit"));
+                    ItemStack pickax43 = p.getInventory().getItemInMainHand();
+                    pickax43.addUnsafeEnchantment(CustomEnchants.CRITICAL_HIT, 1);
+                    pickax43.setLore(lorvez);
+                    p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
+                    p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
+                    p.getInventory().getItemInOffHand().setType(Material.AIR);
                 }
             }
         }

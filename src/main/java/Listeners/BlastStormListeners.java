@@ -123,7 +123,7 @@ public class BlastStormListeners implements Listener {
 
 
 
-    @EventHandler //no entiendo para que es esto pero ok
+   /* @EventHandler //no entiendo para que es esto pero ok
     public void setBlastStorm(WeatherChangeEvent e) {
         Bukkit.getLogger().info("asd");
 
@@ -147,7 +147,7 @@ public class BlastStormListeners implements Listener {
                 e.setCancelled(true);
             }
         }
-    }
+    }*/
 
     @EventHandler
     public void onThunderChange(ThunderChangeEvent e){

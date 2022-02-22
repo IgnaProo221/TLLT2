@@ -18,6 +18,7 @@ import tlldos.tll2.TLL2;
 import java.util.*;
 
 import static Extras.Items.createFragmentoSangre;
+import static Utilities.Format.PREFIX;
 import static Utilities.Format.format;
 
 public class EntityListeners implements Listener {
@@ -136,7 +137,14 @@ public class EntityListeners implements Listener {
                 if(pa.getInventory().getItemInMainHand().hasItemMeta()){
                     if (pa.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.REVENGE)) {
                         if(entity instanceof Pillager || entity instanceof Vindicator || entity instanceof Evoker || entity instanceof Illusioner){
+                            event.setDamage(event.getDamage() * 1.25 - ((Illager) entity).getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
+                        }
+                    } else if (pa.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.CRITICAL_HIT)){
+                        int criticalchance = new Random().nextInt(100);
+                        if(criticalchance >= 95){
                             event.setDamage(event.getDamage() * 2);
+                            pa.playSound(pa.getLocation(),Sound.ITEM_TRIDENT_THROW, 10.0F, 2.0F);
+                            pa.sendMessage(PREFIX,format("&c¡Tu Espada a hecho un Critico! &7(Total de " + event.getDamage() + " de Daño)"));
                         }
                     }
             if(pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()) {

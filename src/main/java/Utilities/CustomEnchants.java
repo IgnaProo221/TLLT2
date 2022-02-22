@@ -55,6 +55,7 @@ public class CustomEnchants implements Listener {
         list.add(CustomEnchants.REVENGE);
         list.add(CustomEnchants.SMELTING_TOUCH);
         list.add(CustomEnchants.LUCKY_TREE);
+        list.add(CRITICAL_HIT);
 
         return list;
 

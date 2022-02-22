@@ -106,7 +106,8 @@ public final class TLL2 extends JavaPlugin implements Listener{
                 new ReplaceListeners(this),
                 new WorldEventsListeners(this),
                 new JoinListeners(this),
-                new RPListeners(this)
+                new RPListeners(this),
+                new MaestriaExp(this)
         );
     }
 

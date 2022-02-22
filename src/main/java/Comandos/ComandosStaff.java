@@ -436,11 +436,13 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                 }else if(args[1].equalsIgnoreCase("ANCIENT_TOME_1")){
                     player.getInventory().addItem(Items.teleTome());
                 }else if(args[1].equalsIgnoreCase("ANCIENT_TOME_2")){
-                    player.getInventory().addItem(Items.smeltTome());
+                    player.getInventory().addItem(Items.pichaTome());
                 }else if(args[1].equalsIgnoreCase("ANCIENT_TOME_3")){
                     player.getInventory().addItem(Items.lucktreeTome());
                 }else if(args[1].equalsIgnoreCase("ANCIENT_TOME_4")){
                     player.getInventory().addItem(Items.revengeTome());
+                }else if(args[1].equalsIgnoreCase("ANCIENT_TOME_5")){
+                    player.getInventory().addItem(Items.critihitTome());
                 }
             }
 
@@ -468,7 +470,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                 case "debug" -> addToList(commands, "blastStormStart", "blackStormEnd", "totemTest", "muerteFake", "dementeTest");
                 case "temperatura" -> addToList(commands, "clear", "hipotermia", "hipertermia");
                 case "give" -> addToList(commands, "FUNGAL_CLUMPS","WEIRD_DAGGER", "CATACLYSM_PEARL", "BLOOD_SABER", "BERSERKER_TOTEM", "CRYSTAL_HEART", "DISCORD", "CLOUDY_MARSH", "BLOOD_STONE", "BLOOD_SHARD", "TEMPERATURE_METER", "TOTEM_RESTORER", "FROSTBITE","CELULA_ENERGIA","METAL_DESC","EXO_SHIELD","ICESHOT","BLOOD_ARMOR","EXO_DRILL",
-                        "EXO_TOTEM","PYROCROSS","COOLER_FRUIT","HOT_FRUIT","EXO_SWORD","EXO_BOW","EXO_ARMOR","INMUNITY_SIGIL","ANCIENT_TOME_1","ANCIENT_TOME_2","ANCIENT_TOME_3","ANCIENT_TOME_4");
+                        "EXO_TOTEM","PYROCROSS","COOLER_FRUIT","HOT_FRUIT","EXO_SWORD","EXO_BOW","EXO_ARMOR","INMUNITY_SIGIL","ANCIENT_TOME_1","ANCIENT_TOME_2","ANCIENT_TOME_3","ANCIENT_TOME_4","ANCIENT_TOME_5");
             }
 
             StringUtil.copyPartialMatches(args[1], commands, completions);
