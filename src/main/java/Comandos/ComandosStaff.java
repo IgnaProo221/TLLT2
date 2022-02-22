@@ -230,7 +230,10 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
                 if (args[1].equalsIgnoreCase("chat")) {
                     for (Player a : Bukkit.getOnlinePlayers()) {
-                        if (Teams.forPlayer(player).getMembers().contains(a)) {
+
+                        Teams.Team team = Teams.get(Teams.getTeamName(player));
+
+                        if (team.getMembers().contains(a)) {
                             StringBuilder msg = new StringBuilder();
 
                             for (String arg : args) {
@@ -245,6 +248,28 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     }
                 }
 
+                if (args[1].equalsIgnoreCase("allTeams")) {
+
+                    List<String> t = new ArrayList<>();
+
+                    StringBuilder builder = new StringBuilder();
+
+                    for (String var1 : Teams.allTeams()) {
+
+                        if (builder.length() > 0) {
+                            builder.append('\n');
+                        }
+
+                        Teams.Team current = Teams.get(var1);
+
+                        builder.append(format("&d-> &7" + var1 + " &b - &7" + current.getSize() + " Miembros."));
+
+                    }
+
+                    player.sendMessage("&6Lista de Equipos:");
+                    player.sendMessage(builder.toString());
+                }
+
                 if (args[1].equalsIgnoreCase("info")) {
 
                     if (!Teams.isInTeam(player)) {
@@ -256,13 +281,14 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
                     StringBuilder members = new StringBuilder();
 
-                    for (Player var1 : Bukkit.getOnlinePlayers()) {
+                    for (Player var1 : team.getMembers()) {
 
                         if (members.length() > 0) {
                             members.append('\n');
                         }
 
                         members.append(format("&7- &a" + var1.getName()));
+
                     }
 
                     player.sendMessage(format("&aEstas viendo la información de tu Team actual."));

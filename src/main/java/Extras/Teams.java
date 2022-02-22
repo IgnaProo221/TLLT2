@@ -137,6 +137,11 @@ public class Teams {
         }
 
         public void joinMember(String name, boolean convertOwner) {
+            for (Player d : getMembers()) {
+                if (d == Bukkit.getPlayer(name)) {
+                    return;
+                }
+            }
             if (convertOwner) {
                 owner = Bukkit.getPlayer(name);
             } else {

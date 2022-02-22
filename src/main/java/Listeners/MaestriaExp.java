@@ -52,14 +52,16 @@ public class MaestriaExp implements Listener{
         int level = getMasteryLevel(p);
         int exp = getMasteryExp(p);
 
-        int asd = level - 1;
+        setMasteryEXP(p, getMasteryExp(p) + getGiveExp(block));
 
-        p.sendActionBar(format("&bMineria: " + exp + " / "));
+        p.sendActionBar(format("&bMineria: " + exp + " / " + maxExpNecesary(p)));
         p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10.0F, 2.0F);
 
         if (exp >= maxExpNecesary(p)) {
             setMasteryEXP(p, -maxExpNecesary(p));
             giveLevel(p, 1);
+
+            int asd = getMasteryLevel(p) - 1;
 
             p.playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 10.0F, 2.0F);
 
@@ -83,8 +85,6 @@ public class MaestriaExp implements Listener{
             }
             return;
         }
-
-        setMasteryEXP(p, getMasteryExp(p) + getGiveExp(block));
 
     }
 
@@ -183,14 +183,6 @@ public class MaestriaExp implements Listener{
 
     public void setMasteryEXP(Player p, int exp) {
         PersistentDataContainer data = Data.get(p);
-
-        int required = 1000;
-
-        if (exp >= required) {
-            int source = exp / required;
-
-            giveLevel(p, getMasteryExp(p) + source);
-        }
 
         data.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, exp);
     }
