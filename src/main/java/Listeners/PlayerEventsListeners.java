@@ -14,6 +14,7 @@ import org.bukkit.entity.AreaEffectCloud;
 import org.bukkit.entity.EntityType;
 import io.papermc.paper.event.entity.ElderGuardianAppearanceEvent;
 import org.bukkit.Material;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -119,8 +120,7 @@ public class PlayerEventsListeners implements Listener {
                 }
             }
             if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                if(hasCustomModelData(p)){
-                    if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 4455){
+                if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455){
                         if (p.hasCooldown(Material.PRISMARINE_CRYSTALS)) {
                             event.setCancelled(true);
                         } else {
@@ -129,17 +129,14 @@ public class PlayerEventsListeners implements Listener {
                             //alguien puede hacer que al usar esto se saque 1 totem restorer si es que esta stackeado? gracias
                             p.getInventory().removeItem(new ItemStack(Material.PRISMARINE_CRYSTALS, 1));
                         }
-                    }
                 }
             }
             if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
-                if(hasCustomModelData(p)){
-                    if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 4455){
+                if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455){
                         PersistentDataContainer data = p.getPersistentDataContainer();
                         int i = data.get(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER);
                         p.sendMessage(Format.PREFIX, format("&7&l¡Tienes &e&l" +i + "% &7&lporcentaje de Totems!"));
                     }
-                }
             }
 
 

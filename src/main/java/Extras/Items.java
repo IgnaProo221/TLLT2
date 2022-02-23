@@ -335,6 +335,11 @@ public class Items {
         return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.CRITICAL_HIT, 1).setLore(lore).build();
     }
 
+    public static ItemStack testEnchant(){
+        //TODO usen este item si hay algun enchant bug para probarlo
+        return new ItemBuilder(Material.NETHERITE_PICKAXE).setName("&6Test Pickaxe").setUnbreakable(true).addCustomEnchant(CustomEnchants.SMELTING_TOUCH, 1).build();
+    }
+
 
 
 

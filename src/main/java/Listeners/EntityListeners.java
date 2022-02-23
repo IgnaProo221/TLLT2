@@ -136,8 +136,8 @@ public class EntityListeners implements Listener {
             if(pa.getInventory().getItemInMainHand() != null){
                 if(pa.getInventory().getItemInMainHand().hasItemMeta()){
                     if (pa.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.REVENGE)) {
-                        if(entity instanceof Pillager || entity instanceof Vindicator || entity instanceof Evoker || entity instanceof Illusioner){
-                            event.setDamage(event.getDamage() * 1.25 - ((Illager) entity).getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
+                        if(entity instanceof Pillager || entity instanceof Vindicator || entity instanceof Evoker || entity instanceof Illusioner || entity instanceof Witch || entity instanceof Vex || entity instanceof Ravager){
+                            event.setDamage(event.getDamage() * 1.25);
                         }
                     } else if (pa.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.CRITICAL_HIT)){
                         int criticalchance = new Random().nextInt(100);

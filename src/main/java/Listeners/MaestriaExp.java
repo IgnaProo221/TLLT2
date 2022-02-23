@@ -39,10 +39,9 @@ public class MaestriaExp implements Listener{
         var p = e.getPlayer();
         var block = e.getBlock();
 
-        TileState a = (TileState)block.getState();
-        BlockState c = (BlockState)block.getState();
+        BlockState c = block.getState();
 
-        if (c.getMetadata(p.getName()).contains("no_exp")) {
+        if (e.getBlock().getState().hasMetadata("no_exp")) {
             return;
         }
         if (!block.getType().name().toLowerCase().contains("ore")) {
@@ -64,6 +63,7 @@ public class MaestriaExp implements Listener{
             int asd = getMasteryLevel(p) - 1;
 
             p.playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 10.0F, 2.0F);
+            p.playSound(p.getLocation(),Sound.ENTITY_PLAYER_LEVELUP, 10.0F,-1.0F);
 
             p.sendTitle(format("&b¡NUEVO NIVEL!"), format("&8" + asd + "&c -> &7" + level));
 
@@ -178,7 +178,7 @@ public class MaestriaExp implements Listener{
     public int getMasteryLevel(Player p) {
         PersistentDataContainer data = Data.get(p);
 
-        return data.has(Utils.key("maestrialvl"), PersistentDataType.INTEGER) ? data.get(Utils.key("maestrialvl"), PersistentDataType.INTEGER) : 0;
+        return data.has(Utils.key("maestrialvl"), PersistentDataType.INTEGER) ? data.get(Utils.key("maestrialvl"), PersistentDataType.INTEGER) : 1;
     }
 
     public void setMasteryEXP(Player p, int exp) {

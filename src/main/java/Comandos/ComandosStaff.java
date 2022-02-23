@@ -6,6 +6,7 @@ import Listeners.StopBlastStormEvent;
 import Extras.EventosItems;
 import Extras.Items;
 import Extras.Teams;
+import Utilities.CustomEnchants;
 import Utilities.Format;
 import Utilities.Warn;
 import net.minecraft.server.level.WorldServer;
@@ -18,6 +19,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
@@ -30,6 +32,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static Utilities.Format.PREFIX;
 import static Utilities.Format.format;
 
 public class ComandosStaff  implements CommandExecutor, TabCompleter {
@@ -392,6 +395,45 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                 }
             }
 
+            case "enchant" ->{
+                if (args[1].isEmpty()){
+                    player.sendMessage(PREFIX,format("&7Tienes que ingresar un encantamiento!"));
+                }
+
+                ItemStack item = player.getInventory().getItemInMainHand();
+
+                if(args[1].equalsIgnoreCase("IMPACT")) {
+                    if (item.getType().equals(Material.BOW)) {
+                        List<String> lore = new ArrayList<>();
+                        lore.add(format("&6Encantamiento Ancestral: &eImpact"));
+                        item.addUnsafeEnchantment(CustomEnchants.IMPACT, 1);
+                        item.setLore(lore);
+                    } else {
+                        player.sendMessage(PREFIX, format("&7El Encantamiento solo se puede aplicar en Arcos!"));
+                    }
+                }else if(args[1].equalsIgnoreCase("BULLSEYE")){
+                    if (item.getType().equals(Material.BOW)) {
+                        List<String> lore = new ArrayList<>();
+                        lore.add(format("&6Encantamiento Ancestral: &eBullseye"));
+                        item.addUnsafeEnchantment(CustomEnchants.BULLSEYE, 1);
+                        item.setLore(lore);
+                    } else {
+                        player.sendMessage(PREFIX, format("&7El Encantamiento solo se puede aplicar en Arcos!"));
+                    }
+                }else if(args[1].equalsIgnoreCase("GRAVITY")){
+                    if (item.getType().equals(Material.BOW)) {
+                        List<String> lore = new ArrayList<>();
+                        lore.add(format("&6Encantamiento Ancestral: &eGravity"));
+                        item.addUnsafeEnchantment(CustomEnchants.GRAVITY, 1);
+                        item.setLore(lore);
+                    } else {
+                        player.sendMessage(PREFIX, format("&7El Encantamiento solo se puede aplicar en Arcos!"));
+                    }
+                }else{
+                    player.sendMessage(PREFIX,format("&7El encantamiento es Invalido o no Existe!"));
+                }
+            }
+
             case "give" -> {
                 if(args.length < 2){
                     player.sendMessage(Format.PREFIX + ChatColor.YELLOW + "Debes asignar un item que quieres tener.");
@@ -459,6 +501,8 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     player.getInventory().addItem(Items.exoBoots());
                 }else if(args[1].equalsIgnoreCase("INMUNITY_SIGIL")){
                     player.getInventory().addItem(Items.sigilodeInmunidad());
+                }else if(args[1].equalsIgnoreCase("TEST_PICKAXE")){
+                    player.getInventory().addItem(Items.testEnchant());
                 }else if(args[1].equalsIgnoreCase("ANCIENT_TOME_1")){
                     player.getInventory().addItem(Items.teleTome());
                 }else if(args[1].equalsIgnoreCase("ANCIENT_TOME_2")){
@@ -484,11 +528,12 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
         List<String> completions = new ArrayList<>();
         if (args.length == 1) {
-            addToList(commands, "sacrificios", "alerta", "give", "sacrificios_test", "debug", "totem_bar", "totems_clear", "vida_reset", "dimension", "temperatura", "spawn", "teams", "god_mode" );
+            addToList(commands, "sacrificios", "alerta", "give", "sacrificios_test", "debug", "totem_bar", "totems_clear", "vida_reset", "dimension", "temperatura", "spawn", "teams", "god_mode","enchant" );
 
             StringUtil.copyPartialMatches(args[0], commands, completions);
         } else if (args.length == 2) {
             switch (args[0]) {
+                case "enchant" -> addToList(commands,"IMPACT","GRAVITY","BULLSEYE");
                 case "dimension" -> Bukkit.getWorlds().forEach(world -> commands.add(world.getName()));
                 case "sacrificios" -> addToList(commands, "modify", "clear", "reset");
                 case "god_mode" -> addToList(commands, "on", "off");

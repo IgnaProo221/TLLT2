@@ -3,6 +3,7 @@ package Listeners;
 import Extras.Items;
 import Utilities.CustomEnchants;
 import Utilities.Format;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -103,16 +104,22 @@ public class BlocksListeners implements Listener{
         }
 
         if(p.getInventory().getItemInMainHand() != null){
+            Bukkit.getConsoleSender().sendMessage("Item no es Null");
             if(p.getInventory().getItemInMainHand().hasItemMeta()){
+                Bukkit.getConsoleSender().sendMessage("Meta no es Null");
                 if(p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.SMELTING_TOUCH)){
+                    Bukkit.getConsoleSender().sendMessage("Tiene Smelting Touch");
                     Location location = block.getLocation();
                     if(block.getType() == Material.IRON_ORE || block.getType() == Material.DEEPSLATE_IRON_ORE){
+                        Bukkit.getConsoleSender().sendMessage("Es un bloque valido");
                         e.setDropItems(false);
                         location.getWorld().dropItemNaturally(location,new ItemStack(Material.IRON_INGOT));
                     }else if(block.getType() == Material.GOLD_ORE || block.getType() == Material.DEEPSLATE_GOLD_ORE){
+                        Bukkit.getConsoleSender().sendMessage("Es un bloque valido");
                         e.setDropItems(false);
                         location.getWorld().dropItemNaturally(location,new ItemStack(Material.GOLD_INGOT));
                     }else if(block.getType() == Material.ANCIENT_DEBRIS){
+                        Bukkit.getConsoleSender().sendMessage("Es un bloque valido");
                         e.setDropItems(false);
                         location.getWorld().dropItemNaturally(location,new ItemStack(Material.NETHERITE_SCRAP));
                     }

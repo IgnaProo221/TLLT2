@@ -20,6 +20,11 @@ public class CustomEnchants implements Listener {
     public static final Enchantment LUCKY_TREE = new EnchantmentWrapper("luckytree","luckytree",1);
     public static final Enchantment CRITICAL_HIT = new EnchantmentWrapper("critical_hit","critical_hit",1);
     public static final Enchantment HUNTER = new EnchantmentWrapper("hunter","hunter",1);
+    public static final Enchantment ECHO = new EnchantmentWrapper("echo","echo",1);
+    public static final Enchantment LIFESTEAL = new EnchantmentWrapper("lifesteal","lifesteal",1);
+    public static final Enchantment GRAVITY = new EnchantmentWrapper("gravity","gravity",1);
+    public static final Enchantment IMPACT = new EnchantmentWrapper("impact","impact",1);
+    public static final Enchantment BULLSEYE = new EnchantmentWrapper("bullseye","bullseye", 1);
 
     public static void register() {
         boolean registered = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(TELEPHATY);
@@ -28,6 +33,9 @@ public class CustomEnchants implements Listener {
         boolean getlucktree = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(LUCKY_TREE);
         boolean getcriticalhit = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(CRITICAL_HIT);
         boolean gethunter = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(HUNTER);
+        boolean getgravity = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(GRAVITY);
+        boolean getimpact = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(IMPACT);
+        boolean getbullseye = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(BULLSEYE);
         if (!registered) {
             registerEnchantment(TELEPHATY);
         }
@@ -46,6 +54,15 @@ public class CustomEnchants implements Listener {
         if(!gethunter){
             registerEnchantment(HUNTER);
         }
+        if(!getgravity){
+            registerEnchantment(GRAVITY);
+        }
+        if(!getimpact){
+            registerEnchantment(IMPACT);
+        }
+        if(!getbullseye){
+            registerEnchantment(BULLSEYE);
+        }
     }
 
     public List<Enchantment> allCustomEnchants() {
@@ -55,7 +72,10 @@ public class CustomEnchants implements Listener {
         list.add(CustomEnchants.REVENGE);
         list.add(CustomEnchants.SMELTING_TOUCH);
         list.add(CustomEnchants.LUCKY_TREE);
-        list.add(CRITICAL_HIT);
+        list.add(CustomEnchants.CRITICAL_HIT);
+        list.add(CustomEnchants.GRAVITY);
+        list.add(CustomEnchants.IMPACT);
+        list.add(CustomEnchants.BULLSEYE);
 
         return list;
 
