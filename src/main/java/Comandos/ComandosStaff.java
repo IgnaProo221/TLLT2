@@ -17,6 +17,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
@@ -368,6 +369,12 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     EventosItems.animacion(player, player);
                 } else if (args[1].equalsIgnoreCase("dementeTest")) {
                     plugin.demente(player, player);
+                }else if(args[1].equalsIgnoreCase("impactTest")){
+                    player.getWorld().getNearbyEntities(player.getLocation(), 10, 10, 10, entity -> entity instanceof Monster).forEach(entity -> {
+                        Monster monster = (Monster) entity;
+                        monster.damage(10);
+                        player.sendMessage("DEBUG LLOL");
+                    });
                 }
             }
             case "sacrificios_test" -> Bukkit.getLogger().info("xd");

@@ -59,7 +59,7 @@ public class BowListeners implements Listener{
             if(projectile instanceof Arrow arrow){
                 if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.IMPACT)){
                     int cacapepe = new Random().nextInt(100);
-                    if(cacapepe >= 95) {
+                    if(cacapepe >= 90) {
                         damaged.getWorld().getNearbyEntities(p.getLocation(), 10, 10, 10, entity -> entity instanceof Monster).forEach(entity -> {
                             Monster monster = (Monster) damaged;
                             monster.damage(5);
