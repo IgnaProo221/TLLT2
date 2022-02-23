@@ -99,9 +99,7 @@ public class TotemListeners implements Listener {
                         return;
                     }
 
-                    if (p.getInventory().getItemInOffHand().equals(Items.sigilodeInmunidad()) || p.getInventory().getItemInOffHand().equals(Items.sigilodeInmunidad())&& !(p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING)){
-
-
+                    if ((p.getInventory().getItemInMainHand().equals(Items.sigilodeInmunidad()) || p.getInventory().getItemInOffHand().equals(Items.sigilodeInmunidad())) && !(p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING)){
                         p.playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_CHARGE, 10.0F, 2.0F);
                         p.setCooldown(Material.TOTEM_OF_UNDYING, 400);
                         data.set(new NamespacedKey(plugin,"inmunity"),PersistentDataType.INTEGER, 1);

@@ -3,12 +3,14 @@ package Extras;
 import Utilities.CustomEnchants;
 import Utilities.Format;
 import Utilities.ItemBuilder;
+import Utilities.NBTEditor;
 import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -297,11 +299,11 @@ public class Items {
     public static ItemStack sigilodeInmunidad(){
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("")));
-        lore.add(Component.text(format("&7Al usar el Tótem, conseguirás &eInmunidad")));
+        lore.add(Component.text(format("&7Al usar el Tótem, conseguirás &eInvulnerabilidad")));
         lore.add(Component.text(format("&7por 10 segundos.")));
-        lore.add(Component.text(format("")));
+        lore.add(Component.text(""));
         lore.add(Component.text(format("&c&l¡Tus Tótems se pondrán en cooldown de 20 segundos!")));
-        return new ItemBuilder(Material.TOTEM_OF_UNDYING).setName("&e&lSigilo de Inmunidad").setUnbreakable(true).setCustomModelData(73212).setLore(lore).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setItemFlags(ItemFlag.HIDE_ENCHANTS).build();
+        return new ItemBuilder(Material.TOTEM_OF_UNDYING).setName(format("&e&lSigilo de Inmortalidad")).setLore(lore).setCustomModelData(6389).build();
     }
 
     public static ItemStack teleTome(){
@@ -337,7 +339,9 @@ public class Items {
 
     public static ItemStack testEnchant(){
         //TODO usen este item si hay algun enchant bug para probarlo
-        return new ItemBuilder(Material.NETHERITE_PICKAXE).setName("&6Test Pickaxe").setUnbreakable(true).addCustomEnchant(CustomEnchants.SMELTING_TOUCH, 1).build();
+        ItemStack dou = new ItemBuilder(Material.NETHERITE_PICKAXE).setName("&6Test Pickaxe").setUnbreakable(true).addCustomEnchant(CustomEnchants.SMELTING_TOUCH, 1).build();
+        dou = NBTEditor.set(dou,1,"holafelipe");
+        return dou;
     }
 
 

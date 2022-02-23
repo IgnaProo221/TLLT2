@@ -3,8 +3,12 @@ package Listeners;
 import Utilities.CustomEnchants;
 import Utilities.Format;
 import io.papermc.paper.event.entity.EntityMoveEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.EntityEffect;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,6 +49,7 @@ public class BowListeners implements Listener{
             if(arrow.getShooter() instanceof Player p){
                 if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.BULLSEYE)){
                     arrow.setDamage(arrow.getDamage() + 1);
+                    Bukkit.getServer().getConsoleSender().sendMessage("Daño de Flecha " + arrow.getDamage());
                 }
             }
         }
@@ -56,15 +61,18 @@ public class BowListeners implements Listener{
         var shooter = e.getEntity().getShooter();
         var damaged = e.getHitEntity();
         if(shooter instanceof Player p){
-            if(projectile instanceof Arrow arrow){
-                if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.IMPACT)){
-                    int cacapepe = new Random().nextInt(100);
-                    if(cacapepe >= 90) {
-                        damaged.getWorld().getNearbyEntities(p.getLocation(), 10, 10, 10, entity -> entity instanceof Monster).forEach(entity -> {
-                            Monster monster = (Monster) damaged;
-                            monster.damage(5);
-                            damaged.playEffect(EntityEffect.FIREWORK_EXPLODE);
-                        });
+            if(projectile instanceof Arrow arrow) {
+                if (p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.IMPACT)) {
+                    if (damaged != null) {
+                        int cacapepe = new Random().nextInt(100);
+                        if (cacapepe >= 90) {
+                            damaged.getWorld().playSound(damaged.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10.0F, 1.0F);
+                            damaged.getWorld().getNearbyEntities(p.getLocation(), 10, 10, 10, entity -> entity instanceof LivingEntity).forEach(entity -> {
+                                LivingEntity livingEntity = (LivingEntity) entity;
+                                livingEntity.damage(5);
+                                livingEntity.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, livingEntity.getLocation(), 1);
+                            });
+                        }
                     }
                 }
             }
