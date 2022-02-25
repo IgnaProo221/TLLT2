@@ -15,6 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import tlldos.tll2.TLL2;
 
 import java.util.Random;
@@ -43,13 +44,12 @@ public class BowListeners implements Listener{
     }
 
     @EventHandler
-    public void adjasaslasjbow(EntityMoveEvent e){
+    public void adjasaslasjbow(ProjectileLaunchEvent e){
         var entity = e.getEntity();
         if(entity instanceof Arrow arrow){
             if(arrow.getShooter() instanceof Player p){
-                if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.BULLSEYE)){
+                if(p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.BULLSEYE)){
                     arrow.setDamage(arrow.getDamage() + 1);
-                    Bukkit.getServer().getConsoleSender().sendMessage("Daño de Flecha " + arrow.getDamage());
                 }
             }
         }

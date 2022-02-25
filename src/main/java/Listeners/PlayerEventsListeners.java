@@ -26,10 +26,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import tlldos.tll2.TLL2;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static Utilities.Format.PREFIX;
 import static Utilities.Format.format;
@@ -173,6 +170,15 @@ public class PlayerEventsListeners implements Listener {
                     lorvez.add(format("&6Encantamiento Ancestral: &eCritical Hit"));
                     ItemStack pickax43 = p.getInventory().getItemInMainHand();
                     pickax43.addUnsafeEnchantment(CustomEnchants.CRITICAL_HIT, 1);
+                    pickax43.setLore(lorvez);
+                    p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
+                    p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
+                    p.getInventory().getItemInOffHand().setType(Material.AIR);
+                } else if (p.getInventory().getItemInMainHand().getType().equals(Material.BOW) && p.getInventory().getItemInOffHand().equals(Items.bullsEyeTome())) {
+                    List<String> lorvez = new ArrayList<>();
+                    lorvez.add(format("&6Encantamiento Ancestral: &eBullsEye"));
+                    ItemStack pickax43 = p.getInventory().getItemInMainHand();
+                    pickax43.addUnsafeEnchantment(CustomEnchants.BULLSEYE, 1);
                     pickax43.setLore(lorvez);
                     p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
                     p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
