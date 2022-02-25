@@ -84,103 +84,80 @@ public class PlayerEventsListeners implements Listener {
         }
 
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if(p.getInventory().getItemInMainHand().equals(Items.crystalHeart())) {
-                if (p.hasCooldown(Material.RED_DYE)) {
-                    event.setCancelled(true);
-                } else {
-                    EventosItems.crystalHealthup(p);
-                    p.getInventory().removeItem(Items.crystalHeart());
-                    p.getInventory().remove(Material.RED_DYE);
-                }
-            }
-        }
-        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if(p.getInventory().getItemInMainHand().equals(Items.varaDis())){
                 if(p.hasCooldown(Material.STICK)){
                     event.setCancelled(true);
                 }else{
                     EventosItems.discordxd(p);
-                    p.setCooldown(Material.STICK, 12000);
+                    p.setCooldown(Material.STICK, 1200);
                 }
             }
         }
 
-        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (p.getInventory().getItemInMainHand().equals(Items.termometroItem())) {
-                try {
-                    if (p.hasCooldown(Material.AMETHYST_SHARD)) {
+        if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
+            if(!p.getInventory().getItemInMainHand().hasItemMeta() || !p.getInventory().getItemInOffHand().hasItemMeta())return;
+            if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
+                if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455){
+                    if (p.hasCooldown(Material.PRISMARINE_CRYSTALS)) {
                         event.setCancelled(true);
                     } else {
-                        EventosItems.temperatura(p);
-                        p.setCooldown(Material.AMETHYST_SHARD, 60);
+                        EventosItems.totemrestorerEvent(p, plugin);
+                        p.setCooldown(Material.PRISMARINE_CRYSTALS, 400);
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Warn.Mutant(e);
                 }
             }
-            if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455){
-                        if (p.hasCooldown(Material.PRISMARINE_CRYSTALS)) {
-                            event.setCancelled(true);
-                        } else {
-                            EventosItems.totemrestorerEvent(p, plugin);
-                            p.setCooldown(Material.PRISMARINE_CRYSTALS, 400);
-                            //alguien puede hacer que al usar esto se saque 1 totem restorer si es que esta stackeado? gracias
-                            p.getInventory().removeItem(new ItemStack(Material.PRISMARINE_CRYSTALS, 1));
-                        }
-                }
+            
+            if((p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_PICKAXE) || p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_AXE)) && p.getInventory().getItemInOffHand().equals(Items.teleTome())){
+                List<String> lore = p.getInventory().getItemInMainHand().getItemMeta().hasLore() ? p.getInventory().getItemInMainHand().getItemMeta().getLore() : new ArrayList<>();
+                lore.add(format("&6Encantamiento Ancestral: &eTelephaty"));
+                ItemStack pickaxe = p.getInventory().getItemInMainHand();
+                pickaxe.addUnsafeEnchantment(CustomEnchants.TELEPHATY, 1);
+                pickaxe.setLore(lore);
+                p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
+                p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
+                p.getInventory().getItemInOffHand().setType(Material.AIR);
+            }else if(p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_PICKAXE)  && p.getInventory().getItemInOffHand().equals(Items.pichaTome())){
+                List<String> lore = p.getInventory().getItemInMainHand().getItemMeta().hasLore() ? p.getInventory().getItemInMainHand().getItemMeta().getLore() : new ArrayList<>();
+                lore.add(format("&6Encantamiento Ancestral: &eSmelting Touch"));
+                ItemStack pickaxe = p.getInventory().getItemInMainHand();
+                pickaxe.addUnsafeEnchantment(CustomEnchants.SMELTING_TOUCH, 1);
+                pickaxe.setLore(lore);
+                p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
+                p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
+                p.getInventory().getItemInOffHand().setType(Material.AIR);
+            }else if(p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_SWORD)  && p.getInventory().getItemInOffHand().equals(Items.revengeTome())){
+                List<String> lore = p.getInventory().getItemInMainHand().getItemMeta().hasLore() ? p.getInventory().getItemInMainHand().getItemMeta().getLore() : new ArrayList<>();
+                lore.add(format("&6Encantamiento Ancestral: &eRevenge"));
+                ItemStack pickaxe = p.getInventory().getItemInMainHand();
+                pickaxe.addUnsafeEnchantment(CustomEnchants.TELEPHATY, 1);
+                pickaxe.setLore(lore);
+                p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
+                p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
+                p.getInventory().getItemInOffHand().setType(Material.AIR);
+            }else if(p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_SWORD)  && p.getInventory().getItemInOffHand().equals(Items.critihitTome())){
+                List<String> lore = p.getInventory().getItemInMainHand().getItemMeta().hasLore() ? p.getInventory().getItemInMainHand().getItemMeta().getLore() : new ArrayList<>();
+                lore.add(format("&6Encantamiento Ancestral: &eCritical Hit"));
+                ItemStack pickaxe = p.getInventory().getItemInMainHand();
+                pickaxe.addUnsafeEnchantment(CustomEnchants.CRITICAL_HIT, 1);
+                pickaxe.setLore(lore);
+                p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
+                p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
+                p.getInventory().getItemInOffHand().setType(Material.AIR);
             }
-            if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
-                if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455){
-                        PersistentDataContainer data = p.getPersistentDataContainer();
-                        int i = data.get(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER);
-                        p.sendMessage(Format.PREFIX, format("&7&l¡Tienes &e&l" +i + "% &7&lporcentaje de Totems!"));
+        }else if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
+            if(!p.getInventory().getItemInMainHand().hasItemMeta() || !p.getInventory().getItemInOffHand().hasItemMeta())return;
+            if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
+                if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455){
+                    if (p.hasCooldown(Material.PRISMARINE_CRYSTALS)) {
+                        event.setCancelled(true);
+                    } else {
+                        var totempercentage = p.getPersistentDataContainer().get(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER);
+                        p.sendMessage(PREFIX,format("&7Tu porcentaje de totems esta en &e&l" + totempercentage));
                     }
-            }
-
-
-            if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
-                if((p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_PICKAXE) || p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_AXE)) && p.getInventory().getItemInOffHand().equals(Items.teleTome())){
-                    List<String> lore = new ArrayList<>();
-                    lore.add(format("&6Encantamiento Ancestral: &eTelephaty"));
-                    ItemStack pickaxe = p.getInventory().getItemInMainHand();
-                    pickaxe.addUnsafeEnchantment(CustomEnchants.TELEPHATY, 1);
-                    pickaxe.setLore(lore);
-                    p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
-                    p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
-                    p.getInventory().getItemInOffHand().setType(Material.AIR);
-                }else if(p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_PICKAXE)  && p.getInventory().getItemInOffHand().equals(Items.pichaTome())){
-                    List<String> lorez = new ArrayList<>();
-                    lorez.add(format("&6Encantamiento Ancestral: &eSmelting Touch"));
-                    ItemStack pickaxx = p.getInventory().getItemInMainHand();
-                    pickaxx.addUnsafeEnchantment(CustomEnchants.SMELTING_TOUCH, 1);
-                    pickaxx.setLore(lorez);
-                    p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
-                    p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
-                    p.getInventory().getItemInOffHand().setType(Material.AIR);
-                }else if(p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_SWORD)  && p.getInventory().getItemInOffHand().equals(Items.revengeTome())){
-                    List<String> lorve = new ArrayList<>();
-                    lorve.add(format("&6Encantamiento Ancestral: &eRevenge"));
-                    ItemStack pickaxe3 = p.getInventory().getItemInMainHand();
-                    pickaxe3.addUnsafeEnchantment(CustomEnchants.REVENGE, 1);
-                    pickaxe3.setLore(lorve);
-                    p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
-                    p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
-                    p.getInventory().getItemInOffHand().setType(Material.AIR);
-                }else if(p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_SWORD)  && p.getInventory().getItemInOffHand().equals(Items.critihitTome())){
-                    List<String> lorvez = new ArrayList<>();
-                    lorvez.add(format("&6Encantamiento Ancestral: &eCritical Hit"));
-                    ItemStack pickax43 = p.getInventory().getItemInMainHand();
-                    pickax43.addUnsafeEnchantment(CustomEnchants.CRITICAL_HIT, 1);
-                    pickax43.setLore(lorvez);
-                    p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
-                    p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
-                    p.getInventory().getItemInOffHand().setType(Material.AIR);
                 }
             }
         }
-    }
+        }
 
 
     private void giveReward(Player player){
@@ -245,28 +222,6 @@ public class PlayerEventsListeners implements Listener {
     }
 
 
-    public boolean isATotemRestorer(Player p){
-        if(p.getInventory().getItemInMainHand() != null || p.getInventory().getItemInOffHand() != null){
-            if(p.getInventory().getItemInMainHand().hasItemMeta() || p.getInventory().getItemInOffHand().hasItemMeta()){
-                if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
-                    if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 4455){
-                        return true;
-                    }else{
-                        return false;
-                    }
-                }else{
-                    return false;
-                }
-            }else{
-                return false;
-            }
-        }else{
-            return false;
-        }
-    }
 
-    public boolean hasCustomModelData(Player p){
-        return ((p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()) || (p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()));
-    }
 
 }

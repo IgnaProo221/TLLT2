@@ -151,15 +151,7 @@ public class EntityListeners implements Listener {
                 if (pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4006) {
                     entity.setFreezeTicks(400);
                 } else if (pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4010) {
-                    if (lifestealpercentage < 90) {
-                        if (pa.hasCooldown(Material.NETHERITE_SWORD)) {
-                            return;
-                        } else {
-                            pa.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1, 0,false, false, false));
-                            pa.playSound(pa.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP,5.0F,-1.0F);
-                            pa.setCooldown(Material.NETHERITE_SWORD, 400);
-                        }
-                    }
+                    pa.setHealth(pa.getHealth() / 0.5);
                     }else if(pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 18129){
                     Monster monster = (Monster) entity;
                     monster.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200,1, false, false, false));
@@ -186,25 +178,7 @@ public class EntityListeners implements Listener {
                 }
             }
             if (damager instanceof Vex vex) {
-                if (vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_EXPLOSIVE"), PersistentDataType.STRING)) {
-                    try {
-                        //p.getLocation().getWorld().createExplosion(vex, 5, false, true);
-                        p.sendMessage("HOLA");
-                    }catch (StackOverflowError stack){
-                        stack.printStackTrace();
-                        p.sendMessage(format("SI VES ESTE MENSAJE EL MOB ESTA BUGEADO Y PUES EL VEX ES UNA PUTA MIERDA JODER LO ODIO XD"));
-                        vex.remove();
-                        event.setCancelled(true);
-                    }
-                }
-                if (vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_SCIENTIST"), PersistentDataType.STRING)) {
-                    p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 800, 0, true, false, true));
-                    p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 800, 0, true, false, true));
-                    p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 800, 0, true, false, true));
-                }
-                if (vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_MECHA"), PersistentDataType.STRING)) {
-                    p.getLocation().getWorld().strikeLightning(p.getLocation());
-                }
+                if(p.isBlocking())return;
                 if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"CINDER"), PersistentDataType.STRING)){
                     p.setFireTicks(1200);
                 }
@@ -219,12 +193,14 @@ public class EntityListeners implements Listener {
                 }
             }
             if(damager instanceof WitherSkeleton){
+                if(p.isBlocking())return;
                 var witherskeleton = (WitherSkeleton)damager;
                 if(witherskeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SHATTER_GUARDIAN"), PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 2400, 3,true, true, true));
                 }
             }
             if(damager instanceof IronGolem ironGolem){
+                if(p.isBlocking())return;
                 if(ironGolem.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"LAVA_GOLEM"),PersistentDataType.STRING)){
                     p.setFireTicks(1200);
                     p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,200,0, true, false, true));
@@ -233,6 +209,7 @@ public class EntityListeners implements Listener {
             }
             if(damager instanceof Spider){
                 var spider = (Spider)damager;
+                if(p.isBlocking())return;
                 if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "AGILE_SPIDER"), PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 200, 2,true, true, true));
                 }
@@ -248,18 +225,21 @@ public class EntityListeners implements Listener {
             }
             if(damager instanceof Slime){
                 var slime = (Slime)damager;
+                if(p.isBlocking())return;
                 if(slime.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "FREEZING_SLIME"), PersistentDataType.STRING)){
                     p.setFreezeTicks(1200);
                 }
             }
             if(damager instanceof Zombie){
                 var zombie = (Zombie)damager;
+                if(p.isBlocking())return;
                 if(zombie.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_ZOMBIE"), PersistentDataType.STRING)){
                     blightedZombieffects(p);
                 }
             }
             if(damager instanceof Enderman){
                 var enderman = (Enderman)damager;
+                if(p.isBlocking())return;
                 if(enderman.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_ENDERMAN"), PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 400, 0, true, true, true));
                 }
@@ -267,6 +247,7 @@ public class EntityListeners implements Listener {
             if(damager instanceof Phantom){
                 var phantom = (Phantom)damager;
                 if(phantom.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_PHANTOM"), PersistentDataType.STRING)){
+                    if(p.isBlocking())return;
                     p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 100,9, true,false,true));
                     }
             }
@@ -609,61 +590,47 @@ public class EntityListeners implements Listener {
     }
 
     @EventHandler
-    public void arcoHabilidaddes(ProjectileHitEvent event){
-        var projectile = event.getEntity();
-        var damaged = event.getHitEntity();
-        var block = event.getHitBlock();
-        var shooter = event.getEntity().getShooter();
-        if(shooter instanceof Player){
-            if(projectile instanceof Arrow){
-                Player p = (Player) shooter;
-                if(hasCustomModelData(p)){
-                    if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 5080 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 5080){
-                        if(damaged != null){
-                            damaged.setFreezeTicks(1200);
-                        }
-                    }else if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 7891 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 7891){
-                        if(damaged != null){
-                            damaged.getLocation().createExplosion(p,4,false, true);
-                        }else if(block != null){
-                            block.getLocation().createExplosion(p,4,false, true);
-                        }
-                    }else if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 27289 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 27289){
-                        if(damaged != null){
-                            Monster monster = (Monster) damaged;
-                            monster.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200,1, false, false, false));
-                         }
-                    }
-                }
-               /* if(p.getInventory().getItemInMainHand() != null ||p.getInventory().getItemInOffHand() != null){
-                    if(p.getInventory().getItemInMainHand().hasItemMeta() || p.getInventory().getItemInOffHand().hasItemMeta()){
-                        if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()){
-                            if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 5080 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 5080){
-                                if(damaged != null){
-                                    damaged.setFreezeTicks(1200);
-                                }
-                            }else if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 7891 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 7891){
-                             if(damaged != null){
-                                 damaged.getLocation().createExplosion(p,4,false, true);
-                             }else if(block != null){
-                                 block.getLocation().createExplosion(p,4,false, true);
-                             }
-                            }else{
-                                return;
-                            }
-                        }else{
-                            return;
-                        }
-                    }else{
-                        return;
-                    }
-                }*/
-            }
+    public void arcoscustoms1(EntityShootBowEvent e){
+        var bow = e.getBow().getItemMeta();
+        if(!bow.hasCustomModelData()){
+            return;
+        }
+        if(bow.getCustomModelData() == 389909){
+            e.getProjectile().setCustomName("explosive");
+        }else if(bow.getCustomModelData() == 5080){
+            e.getProjectile().setCustomName("ice");
+        }else if(bow.getCustomModelData() == 27289){
+            e.getProjectile().setCustomName("exo_proj");
         }
     }
 
-    public boolean hasCustomModelData(Player p){
-        return ((p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()) || (p.getInventory().getItemInOffHand() != null &&p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()));
+    @EventHandler
+    public void arcoAaaamemuero(ProjectileHitEvent e){
+        var block = e.getHitBlock();
+        var damaged = e.getHitEntity();
+        var shooter = e.getEntity().getShooter();
+        var projectile = e.getEntity();
+        if(shooter instanceof Player){
+            if(projectile instanceof Arrow){
+                if(projectile.getCustomName() != null){
+                    if(projectile.getCustomName().contains("explosive")){
+                        if(damaged != null){
+                            damaged.getLocation().createExplosion(projectile,3,false, true);
+                        }else if(block != null){
+                            block.getLocation().createExplosion(projectile,3,false,true);
+                        }
+                    }else if(projectile.getCustomName().contains("ice")){
+                        if(damaged != null){
+                            damaged.setFreezeTicks(1200);
+                        }
+                    }else if(projectile.getCustomName().contains("exp_proj")){
+                        if(damaged != null){
+                            LivingEntity livingEntity = (LivingEntity) damaged;
+                            livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,300,1,false, true, false));
+                        }
+                    }
+                }
+            }
+        }
     }
-
 }

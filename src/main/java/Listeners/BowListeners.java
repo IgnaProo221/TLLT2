@@ -4,17 +4,15 @@ import Utilities.CustomEnchants;
 import Utilities.Format;
 import io.papermc.paper.event.entity.EntityMoveEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.EntityEffect;
 import org.bukkit.Particle;
-import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 import tlldos.tll2.TLL2;
 
 import java.util.Random;
@@ -66,12 +64,9 @@ public class BowListeners implements Listener{
                     if (damaged != null) {
                         int cacapepe = new Random().nextInt(100);
                         if (cacapepe >= 90) {
-                            damaged.getWorld().playSound(damaged.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10.0F, 1.0F);
-                            damaged.getWorld().getNearbyEntities(p.getLocation(), 10, 10, 10, entity -> entity instanceof LivingEntity).forEach(entity -> {
-                                LivingEntity livingEntity = (LivingEntity) entity;
-                                livingEntity.damage(5);
-                                livingEntity.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, livingEntity.getLocation(), 1);
-                            });
+                            @NotNull Vector v = damaged.getLocation().toVector().subtract(damaged.getLocation().toVector()).normalize();
+                            damaged.setVelocity(v);
+                            damaged.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, damaged.getLocation(),1);
                         }
                     }
                 }

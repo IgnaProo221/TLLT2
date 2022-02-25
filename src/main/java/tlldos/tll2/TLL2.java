@@ -61,7 +61,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
             getCommand("thelastlife").setTabCompleter(new ComandosUsuarios(this));
             getCommand("tllstaff").setTabCompleter(new ComandosStaff(this));
 
-            new TemperatureTask(this).runTaskTimer(this, 0L, 600L);
+            new TemperatureTask(this).runTaskTimer(this, 0L, 1200L);
             new TemperatureBlocks(this).runTaskTimer(this,0L,200L);
         } catch (Error e){
             getServer().getConsoleSender().sendMessage("######################################################");
@@ -145,10 +145,12 @@ public final class TLL2 extends JavaPlugin implements Listener{
         Bukkit.getScheduler().runTaskTimer(this,()->{
         if(Bukkit.getOnlinePlayers().size() < 1)return;
         for(Player player : Bukkit.getOnlinePlayers()){
-            var data = player.getPersistentDataContainer();
-            var dataTemperatura = data.get(new NamespacedKey(this, "temperatura"), PersistentDataType.INTEGER);
-            if(dataTemperatura >= 220 || dataTemperatura <= -180){
-                demente(player, player);
+            if(player.getGameMode() == GameMode.SURVIVAL) {
+                var data = player.getPersistentDataContainer();
+                var dataTemperatura = data.get(new NamespacedKey(this, "temperatura"), PersistentDataType.INTEGER);
+                if (dataTemperatura >= 220 || dataTemperatura <= -180) {
+                    demente(player, player);
+                }
             }
         }
         },0L,600L);
@@ -157,86 +159,88 @@ public final class TLL2 extends JavaPlugin implements Listener{
         Random r = new Random();
         if (Bukkit.getOnlinePlayers().size() < 1) return;
         for (Player player : Bukkit.getOnlinePlayers()) {
-            Location l = player.getLocation().clone();
-            if (r.nextInt(2) == 1) {
-                int pX = (r.nextBoolean() ? -1 : 1) * (r.nextInt(25)) + 15;
-                int pZ = (r.nextBoolean() ? -1 : 1) * (r.nextInt(25)) + 15;
-                int y = (int) l.getY();
+            if (player.getGameMode() == GameMode.SURVIVAL) {
+                Location l = player.getLocation().clone();
+                if (r.nextInt(2) == 1) {
+                    int pX = (r.nextBoolean() ? -1 : 1) * (r.nextInt(25)) + 15;
+                    int pZ = (r.nextBoolean() ? -1 : 1) * (r.nextInt(25)) + 15;
+                    int y = (int) l.getY();
 
-                Block block = l.getWorld().getBlockAt(l.getBlockX() + pX, y, l.getBlockZ() + pZ);
-                Block up = block.getRelative(BlockFace.UP);
+                    Block block = l.getWorld().getBlockAt(l.getBlockX() + pX, y, l.getBlockZ() + pZ);
+                    Block up = block.getRelative(BlockFace.UP);
 
-                if (block.getType() != Material.AIR && up.getType() == Material.AIR && !(block.isLiquid())) {
-                    spawnMobNaturally(player,block);
+                    if (block.getType() != Material.AIR && up.getType() == Material.AIR && !(block.isLiquid() && !(block.isSolid()) && player.getWorld().getEnvironment() == World.Environment.NORMAL)) {
+                        spawnMobNaturally(player, block);
+                    }
                 }
-            }
-            if(hasBloodstainedArmor(player)){
-                player.setMaxHealth(32);
-            }else{
-                player.setMaxHealth(20);
-            }
-            if (hasExoArmor(player)){
-                player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100,0, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE,100,0, true, false,true));
-            }
+                if (hasBloodstainedArmor(player)) {
+                    player.setMaxHealth(32);
+                } else {
+                    player.setMaxHealth(20);
+                }
+                if (hasExoArmor(player)) {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, true, false, true));
+                }
 
-            var data = player.getPersistentDataContainer();
-            var dataTemperatura = data.get(new NamespacedKey(this, "temperatura"), PersistentDataType.INTEGER);
-            //Hipertermia
-            if(dataTemperatura >= 120 && dataTemperatura <= 180) {
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &6&l" + dataTemperatura + "° &7|| &4¡Hipertermia I!")));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 0, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 4, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 2, true, false, true));
-                player.setFireTicks(20);
-            }else if(dataTemperatura >= 180 && dataTemperatura <= 220) {
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &6&l" + dataTemperatura + "° &7|| &4¡Hipertermia II!")));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 3, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 9, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 4, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 2, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, 2, true, false, true));
-                player.setFireTicks(20);
-            }else if(dataTemperatura >= 220) {
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &6&l" + dataTemperatura + "° &7|| &4¡Hipertermia III! &7|| &4&l¡Demente!")));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 9, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 9, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 9, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 3, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 100, 2, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, 9, true, false, true));
-                player.setFireTicks(20);
-
+                var data = player.getPersistentDataContainer();
+                var dataTemperatura = data.get(new NamespacedKey(this, "temperatura"), PersistentDataType.INTEGER);
+                //Hipertermia
+                if (dataTemperatura >= 120 && dataTemperatura <= 180) {
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &6&l" + dataTemperatura + "° &7|| &4¡Hipertermia I!")));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 0, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 4, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 2, true, false, true));
+                    player.setFireTicks(20);
+                } else if (dataTemperatura >= 180 && dataTemperatura <= 220) {
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &6&l" + dataTemperatura + "° &7|| &4¡Hipertermia II!")));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 3, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 9, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 4, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 2, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, 2, true, false, true));
+                    player.setFireTicks(20);
+                } else if (dataTemperatura >= 220) {
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &6&l" + dataTemperatura + "° &7|| &4¡Hipertermia III! &7|| &4&l¡Demente!")));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 9, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 9, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 9, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 3, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 100, 2, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, 9, true, false, true));
+                    player.setFireTicks(20);
 
 
-                //Hipotermia
-            }else if(dataTemperatura <= -70 && dataTemperatura >= -120) {
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &b&l" + dataTemperatura + "° &7|| &b¡Hipotermia I!")));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, 4, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 0, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 2, true, false, true));
-                player.setFreezeTicks(20);
-            }else if(dataTemperatura <= -120 && dataTemperatura >= -180) {
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &b&l" + dataTemperatura + "° &7|| &b¡Hipotermia II!")));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, 9, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 2, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 4, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 2, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 7, true, false, true));
-                player.setFreezeTicks(20);
-            }else if(dataTemperatura <= -180){
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &b&l" + dataTemperatura + "° &7|| &b¡Hipotermia III! &7|| &4&l¡Demente!")));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,100,9, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 2, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 4, true,false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 2, true, false, true));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 7, true, false, true));
-                player.setFreezeTicks(20);
-            }else{
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &c" + dataTemperatura + "°")));
+                    //Hipotermia
+                } else if (dataTemperatura <= -70 && dataTemperatura >= -120) {
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &b&l" + dataTemperatura + "° &7|| &b¡Hipotermia I!")));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, 4, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 0, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 2, true, false, true));
+                    player.setFreezeTicks(20);
+                } else if (dataTemperatura <= -120 && dataTemperatura >= -180) {
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &b&l" + dataTemperatura + "° &7|| &b¡Hipotermia II!")));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, 9, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 2, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 4, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 2, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 7, true, false, true));
+                    player.setFreezeTicks(20);
+                } else if (dataTemperatura <= -180) {
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &b&l" + dataTemperatura + "° &7|| &b¡Hipotermia III! &7|| &4&l¡Demente!")));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, 9, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 2, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 4, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 2, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 7, true, false, true));
+                    player.setFreezeTicks(20);
+                } else {
+                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &c" + dataTemperatura + "°")));
+                }
             }
         }
     }
+
 
 
     public void demente(Player p, Player players){

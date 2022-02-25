@@ -287,7 +287,7 @@ public class Items {
         lore.add(Component.text(format("&6&lHABILIDAD: &e&lPirotecnia")));
         lore.add(Component.text(format("&7Las Flechas que caigan al suelo o golpeen una entidad")));
         lore.add(Component.text(format("&7Explotarán.")));
-        return new ItemBuilder(Material.CROSSBOW).setName(format("&6&lCross-pyro")).setLore(lore).setUnbreakable(true).setCustomModelData(7891).build();
+        return new ItemBuilder(Material.CROSSBOW).setName(format("&6&lCross-pyro")).setLore(lore).setUnbreakable(true).setCustomModelData(389909).build();
     }
 
     public static ItemStack temperatureCooler(){

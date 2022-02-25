@@ -65,9 +65,6 @@ public class BlocksListeners implements Listener{
     public void picoHabilidad(BlockBreakEvent e){
         var p = e.getPlayer();
         var block = e.getBlock();
-        if(NBTEditor.contains(p.getInventory().getItemInMainHand(),1,"holafelipe")){
-            p.sendMessage("debUG LOL");
-        }
         if(block.getType() == Material.DEEPSLATE_DIAMOND_ORE){
             if(p.getInventory().getItemInMainHand() != null){
                 if(p.getInventory().getItemInMainHand().hasItemMeta()){
