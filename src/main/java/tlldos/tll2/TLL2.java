@@ -79,7 +79,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
             getCommand("thelastlife").setTabCompleter(new ComandosUsuarios(this));
             getCommand("tllstaff").setTabCompleter(new ComandosStaff(this));
 
-            new TemperatureTask(this).runTaskTimer(this, 0L, 1200L);
+            new TemperatureTask(this).runTaskTimer(this, 0L, 1400L);
             new TemperatureBlocks(this).runTaskTimer(this,0L,200L);
         } catch (Error e){
             getServer().getConsoleSender().sendMessage("######################################################");
