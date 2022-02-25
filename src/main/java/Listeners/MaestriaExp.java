@@ -3,6 +3,7 @@ package Listeners;
 import Utilities.Data;
 import Utilities.Utils;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
@@ -15,8 +16,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.inventory.meta.BlockDataMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
+import org.bukkit.metadata.Metadatable;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import tlldos.tll2.TLL2;
@@ -42,11 +45,13 @@ public class MaestriaExp implements Listener{
         BlockState c = block.getState();
 
         if (e.getBlock().getState().hasMetadata("no_exp")) {
+            plugin.getLocations().remove(block.getLocation());
+
             return;
         }
-        if (!block.getType().name().toLowerCase().contains("ore")) {
+
+        if (!block.getType().name().toLowerCase().contains("ore"))
             return;
-        }
 
         int level = getMasteryLevel(p);
         int exp = getMasteryExp(p);
@@ -57,19 +62,20 @@ public class MaestriaExp implements Listener{
         p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10.0F, 2.0F);
 
         if (exp >= maxExpNecesary(p)) {
-            setMasteryEXP(p, -maxExpNecesary(p));
+            setMasteryEXP(p, 0);
             giveLevel(p, 1);
 
-            int asd = getMasteryLevel(p) - 1;
+            int newLevel = getMasteryLevel(p);
 
             p.playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 10.0F, 2.0F);
             p.playSound(p.getLocation(),Sound.ENTITY_PLAYER_LEVELUP, 10.0F,-1.0F);
 
-            p.sendTitle(format("&b¡NUEVO NIVEL!"), format("&8" + asd + "&c -> &7" + level));
+            p.sendTitle(format("&b¡NUEVO NIVEL!"), format("&8" + level + "&c -> &7" + newLevel));
 
             Bukkit.getOnlinePlayers().forEach(player -> {
-                player.sendMessage(format("&3MAESTRIA &8> &c&l" + p.getName() + "&7 ha aumentado su nivel. &e" + asd + "&8 >> &6" + level));
+                player.sendMessage(format("&3MAESTRIA &8> &c&l" + p.getName() + "&7 ha aumentado su nivel. &e" + level + "&8 >> &6" + newLevel));
             });
+
             if(getMasteryLevel(p) == 1){
                 p.sendMessage(hp_plus);
                 p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() + 2);
@@ -94,6 +100,7 @@ public class MaestriaExp implements Listener{
         var p = e.getPlayer();
         var block = e.getBlockPlaced();
         var state = block.getState();
+
         if(block.getType() == Material.COAL_ORE || block.getType() == Material.COPPER_ORE || block.getType() == Material.IRON_ORE
         || block.getType() == Material.GOLD_ORE || block.getType() == Material.LAPIS_ORE || block.getType() == Material.REDSTONE_ORE
         || block.getType() == Material.EMERALD_ORE || block.getType() == Material.DIAMOND_ORE || block.getType() == Material.NETHER_QUARTZ_ORE
@@ -102,8 +109,9 @@ public class MaestriaExp implements Listener{
         || block.getType() == Material.DEEPSLATE_IRON_ORE || block.getType() == Material.DEEPSLATE_COPPER_ORE || block.getType() == Material.DEEPSLATE_COAL_ORE) {
 
             //TileState data = (TileState)state;
-            BlockState mecago = state;
-            mecago.setMetadata("no_exp", new FixedMetadataValue(plugin,"true"));
+            state.setMetadata("no_exp", new FixedMetadataValue(plugin,"true"));
+
+            plugin.getLocations().add(block.getLocation());
         }
     }
 
@@ -152,23 +160,10 @@ public class MaestriaExp implements Listener{
 
 
     public int maxExpNecesary(Player p) {
-        return 1000 * getMasteryLevel(p);
+        return 100 * getMasteryLevel(p);
     }
 
-
-
-
-
-
-
-
-
-
-
-
     //Mastery Level Desing
-
-
     public int getMasteryExp(Player p) {
         PersistentDataContainer data = Data.get(p);
 
@@ -199,11 +194,11 @@ public class MaestriaExp implements Listener{
         data.set(Utils.key("maestrialvl"), PersistentDataType.INTEGER, level);
     }
 
-    public void giveLevel(Player p, int var1) {
+    public void giveLevel(Player p, int levelAdd) {
         PersistentDataContainer data = Data.get(p);
 
-        int level = data.get(Utils.key("maestriaexp"), PersistentDataType.INTEGER) + var1;
+        int level = data.get(Utils.key("maestrialvl"), PersistentDataType.INTEGER);
 
-        data.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, level);
+        data.set(Utils.key("maestrialvl"), PersistentDataType.INTEGER, level + levelAdd);
     }
 }

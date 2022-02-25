@@ -4,15 +4,18 @@ import Utilities.CustomEnchants;
 import Utilities.Format;
 import io.papermc.paper.event.entity.EntityMoveEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.EntityEffect;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.util.Vector;
-import org.jetbrains.annotations.NotNull;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import tlldos.tll2.TLL2;
 
 import java.util.Random;
@@ -41,13 +44,12 @@ public class BowListeners implements Listener{
     }
 
     @EventHandler
-    public void adjasaslasjbow(EntityMoveEvent e){
+    public void adjasaslasjbow(ProjectileLaunchEvent e){
         var entity = e.getEntity();
         if(entity instanceof Arrow arrow){
             if(arrow.getShooter() instanceof Player p){
-                if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.BULLSEYE)){
+                if(p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.BULLSEYE)){
                     arrow.setDamage(arrow.getDamage() + 1);
-                    Bukkit.getServer().getConsoleSender().sendMessage("Daño de Flecha " + arrow.getDamage());
                 }
             }
         }
@@ -64,9 +66,12 @@ public class BowListeners implements Listener{
                     if (damaged != null) {
                         int cacapepe = new Random().nextInt(100);
                         if (cacapepe >= 90) {
-                            @NotNull Vector v = damaged.getLocation().toVector().subtract(damaged.getLocation().toVector()).normalize();
-                            damaged.setVelocity(v);
-                            damaged.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, damaged.getLocation(),1);
+                            damaged.getWorld().playSound(damaged.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10.0F, 1.0F);
+                            damaged.getWorld().getNearbyEntities(p.getLocation(), 10, 10, 10, entity -> entity instanceof LivingEntity).forEach(entity -> {
+                                LivingEntity livingEntity = (LivingEntity) entity;
+                                livingEntity.damage(5);
+                                livingEntity.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, livingEntity.getLocation(), 1);
+                            });
                         }
                     }
                 }

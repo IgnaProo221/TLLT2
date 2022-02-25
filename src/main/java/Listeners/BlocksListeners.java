@@ -65,6 +65,11 @@ public class BlocksListeners implements Listener{
     public void picoHabilidad(BlockBreakEvent e){
         var p = e.getPlayer();
         var block = e.getBlock();
+
+        /* if(NBTEditor.contains(p.getInventory().getItemInMainHand(),1,"holafelipe")){
+            p.sendMessage("debUG LOL");
+        } */
+
         if(block.getType() == Material.DEEPSLATE_DIAMOND_ORE){
             if(p.getInventory().getItemInMainHand() != null){
                 if(p.getInventory().getItemInMainHand().hasItemMeta()){
@@ -76,11 +81,7 @@ public class BlocksListeners implements Listener{
                                 p.getInventory().addItem(Items.rareGem());
                             }
                         }
-                    }else{
-                        return;
                     }
-                }else{
-                    return;
                 }
             }
         }
@@ -96,11 +97,7 @@ public class BlocksListeners implements Listener{
                     Collection<ItemStack> drop = block.getDrops(p.getInventory().getItemInMainHand());
                     if (drop.isEmpty()) return;
                     p.getInventory().addItem(drop.iterator().next());
-                }else{
-                    return;
                 }
-            }else{
-                return;
             }
         }
 
@@ -124,11 +121,7 @@ public class BlocksListeners implements Listener{
                         e.setDropItems(false);
                         location.getWorld().dropItemNaturally(location,new ItemStack(Material.NETHERITE_SCRAP));
                     }
-                }else{
-                    return;
                 }
-            }else{
-                return;
             }
         }
     }

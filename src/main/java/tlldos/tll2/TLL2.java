@@ -22,14 +22,20 @@ import org.bukkit.potion.PotionEffectType;
 import tasks.TemperatureBlocks;
 import tasks.TemperatureTask;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public final class TLL2 extends JavaPlugin implements Listener{
+
+    private ArrayList<Location> locations;
+
     public World world;
-    private Configuration config;
-    ReplaceListeners replaceListeners;
-
-
+    private Configuration blockConfig;
+    private ReplaceListeners replaceListeners;
 
     @Override
     public void onEnable() {
@@ -46,6 +52,18 @@ public final class TLL2 extends JavaPlugin implements Listener{
             getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "THE LAST LIFE T2 >>> " + ChatColor.YELLOW + "¡TheLastLifeT2Test.jar se cargo correctamente!");
             getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "_______________________________________________________________________");
             world = Bukkit.getWorld("world");
+
+            locations = new ArrayList<>();
+
+            if(!new File(getDataFolder() + "/blocks.yml").exists())
+                blockConfig = new Configuration(this, "blocks", ".yml");
+
+            if(blockConfig.getConfigurationSection("blocks") != null) {
+                for (String location : blockConfig.getConfigurationSection("blocks").getKeys(false)) {
+                    Bukkit.getLogger().info(location);
+                }
+            }
+
             CustomEnchants.register();
             new DeathListeners(this);
 
@@ -82,6 +100,14 @@ public final class TLL2 extends JavaPlugin implements Listener{
 
     @Override
     public void onDisable() {
+        getBlockConfig().set("blocks", locations);
+
+        try {
+            getBlockConfig().save();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "¡El Plugin se deshabilito correctamente!");
     }
 
@@ -139,6 +165,10 @@ public final class TLL2 extends JavaPlugin implements Listener{
             },0L, 20L);
 
         }
+    }
+
+    public List<Location> getLocations() {
+        return locations;
     }
 
     public void dementetemperatura(){
@@ -306,6 +336,9 @@ public final class TLL2 extends JavaPlugin implements Listener{
         }
     }
 
+    public Configuration getBlockConfig() {
+        return blockConfig;
+    }
 
     public boolean hasExoArmor(Player p){
         if(p.getInventory().getHelmet() != null && p.getInventory().getChestplate() != null && p.getInventory().getLeggings() != null && p.getInventory().getBoots() != null){

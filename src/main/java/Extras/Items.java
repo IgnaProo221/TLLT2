@@ -337,6 +337,13 @@ public class Items {
         return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.CRITICAL_HIT, 1).setLore(lore).build();
     }
 
+    public static ItemStack bullsEyeTome() {
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lBullsEye")));
+        lore.add(Component.text(format("&7ola mutnat")));
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.BULLSEYE, 1).setLore(lore).build();
+    }
+
     public static ItemStack testEnchant(){
         //TODO usen este item si hay algun enchant bug para probarlo
         ItemStack dou = new ItemBuilder(Material.NETHERITE_PICKAXE).setName("&6Test Pickaxe").setUnbreakable(true).addCustomEnchant(CustomEnchants.SMELTING_TOUCH, 1).build();
