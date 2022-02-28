@@ -55,7 +55,7 @@ public class TotemListeners implements Listener {
                         data.set(Utils.key("inmunity"),PersistentDataType.INTEGER, 0);
                     }
 
-                    if (!data.has(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER)) {
+                    /*if (!data.has(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER)) {
                         data.set(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER, 100);
                     } else {
                         int i = data.get(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER);
@@ -68,7 +68,7 @@ public class TotemListeners implements Listener {
                             players.sendMessage(Format.PREFIX + format("&8&l¡Los tótems del jugador " + p.getName() + " se han desactivado y ha muerto! &c&l(Su porcentaje de tótems esta en 0%)."));
                         }
                         return;
-                    }
+                    }*/
 
                     if (p.hasCooldown(Material.TOTEM_OF_UNDYING)) {
 
@@ -253,14 +253,16 @@ public class TotemListeners implements Listener {
                         }
                     } else if (TotemCara == 6) {
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
-                        p.removePotionEffect(PotionEffectType.ABSORPTION);
-                        p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
-                        p.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
                         for (Player players : Bukkit.getOnlinePlayers()) {
                             players.sendMessage(ChatColor.DARK_GRAY + "El jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.YELLOW + "tótem!" + ChatColor.WHITE + "♦" + ChatColor.GRAY + "(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
                             players.sendMessage(ChatColor.RED + "El Tótem ha caído en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "número 6!");
-                            players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Ninguno.");
+                            players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "No se aplican los efectos positivos");
                         }
+                        Bukkit.getScheduler().runTaskLater(plugin,()->{
+                            p.removePotionEffect(PotionEffectType.ABSORPTION);
+                            p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+                            p.removePotionEffect(PotionEffectType.REGENERATION);
+                        },5L);
                     }
                 }
             }

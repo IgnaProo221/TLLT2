@@ -68,19 +68,18 @@ public final class TLL2 extends JavaPlugin implements Listener{
             new DeathListeners(this);
 
             cargarEventos();
-            //tormentaTick();
             tick();
-            tickTormenta();
-            dementetemperatura();
-
+            //tickTormenta();
+            //dementetemperatura();
+            maestriaLol();
             getCommand("thelastlife").setExecutor(new ComandosUsuarios(this));
             getCommand("tllstaff").setExecutor(new ComandosStaff(this));
 
             getCommand("thelastlife").setTabCompleter(new ComandosUsuarios(this));
             getCommand("tllstaff").setTabCompleter(new ComandosStaff(this));
 
-            new TemperatureTask(this).runTaskTimer(this, 0L, 1400L);
-            new TemperatureBlocks(this).runTaskTimer(this,0L,200L);
+            //new TemperatureTask(this).runTaskTimer(this, 0L, 1400L);
+            //new TemperatureBlocks(this).runTaskTimer(this,0L,200L);
         } catch (Error e){
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("######################################################");
@@ -115,22 +114,22 @@ public final class TLL2 extends JavaPlugin implements Listener{
         registerListeners(
                 new TotemListeners(this),
                 new EatListeners(this),
-                new EnderPearlListeners(this),
+                //new EnderPearlListeners(this),
                 new SleepListeners(this),
-                new ExplosionListeners(this),
-                new DamageListeners(this),
+                //new ExplosionListeners(this),
+                //new DamageListeners(this),
                 new PlayerEventsListeners(this),
                 new SpawnerListeners(this),
                 new SpawnListeners(this),
                 new EntityListeners(this),
                 new BlastStormListeners(),
                 new BlocksListeners(this),
-                new MobsTeleports(this),
+                //new MobsTeleports(this),
                 new DropsListeners(this),
                 new ChatListeners(this),
-                new NMSSpawn(this),
-                new ReplaceListeners(this),
-                new WorldEventsListeners(this),
+                //new NMSSpawn(this),
+                //new ReplaceListeners(this),
+                //new WorldEventsListeners(this),
                 new JoinListeners(this),
                 new RPListeners(this),
                 new MaestriaExp(this),
@@ -152,6 +151,27 @@ public final class TLL2 extends JavaPlugin implements Listener{
             }*/
         Bukkit.getScheduler().runTaskTimer(this, this::pichaXd,0L,20L);
 
+    }
+
+    public void maestriaLol(){
+        Bukkit.getScheduler().runTaskTimer(this,()->{
+        if(Bukkit.getOnlinePlayers().size() < 1)return;
+        for(Player p : Bukkit.getOnlinePlayers()){
+            var data = p.getPersistentDataContainer();
+            var level10 = data.get(new NamespacedKey(this,"reachedlvl10"),PersistentDataType.INTEGER);
+            var level20 = data.get(new NamespacedKey(this,"reachedlvl20"),PersistentDataType.INTEGER);
+            var level30 = data.get(new NamespacedKey(this,"reachedlvl30"),PersistentDataType.INTEGER);
+            if(level10 >= 1){
+                p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION,400,0,true,false,true));
+            }
+            if(level20 >= 1 && level30 <= 0){
+                p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING,200,0,true,false,true));
+            }
+            if(level30 >= 1 && level20 <= 0){
+                p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING,200,0,true,false,true));
+            }
+        }
+        },0L,20L);
     }
 
     public void tickTormenta(){
@@ -187,11 +207,12 @@ public final class TLL2 extends JavaPlugin implements Listener{
     }
     public void pichaXd() {
         Random r = new Random();
+        double health = 20;
         if (Bukkit.getOnlinePlayers().size() < 1) return;
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (player.getGameMode() == GameMode.SURVIVAL) {
                 Location l = player.getLocation().clone();
-                if (r.nextInt(2) == 1) {
+                /*if (r.nextInt(2) == 1) {
                     int pX = (r.nextBoolean() ? -1 : 1) * (r.nextInt(25)) + 15;
                     int pZ = (r.nextBoolean() ? -1 : 1) * (r.nextInt(25)) + 15;
                     int y = (int) l.getY();
@@ -202,18 +223,16 @@ public final class TLL2 extends JavaPlugin implements Listener{
                     if (block.getType() != Material.AIR && up.getType() == Material.AIR && !(block.isLiquid() && !(block.isSolid()) && player.getWorld().getEnvironment() == World.Environment.NORMAL)) {
                         spawnMobNaturally(player, block);
                     }
-                }
+                }*/
                 if (hasBloodstainedArmor(player)) {
-                    player.setMaxHealth(32);
-                } else {
-                    player.setMaxHealth(20);
+                    health += 6;
                 }
                 if (hasExoArmor(player)) {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, true, false, true));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, true, false, true));
                 }
 
-                var data = player.getPersistentDataContainer();
+                /*var data = player.getPersistentDataContainer();
                 var dataTemperatura = data.get(new NamespacedKey(this, "temperatura"), PersistentDataType.INTEGER);
                 //Hipertermia
                 if (dataTemperatura >= 120 && dataTemperatura <= 180) {
@@ -266,7 +285,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
                     player.setFreezeTicks(20);
                 } else {
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &c" + dataTemperatura + "°")));
-                }
+                }*/
             }
         }
     }

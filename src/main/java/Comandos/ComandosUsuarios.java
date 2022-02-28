@@ -8,6 +8,8 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Server;
+import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,6 +24,8 @@ import tlldos.tll2.TLL2;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static Utilities.Format.format;
 
 public class ComandosUsuarios implements CommandExecutor, TabCompleter {
 
@@ -44,6 +48,7 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
             player.sendMessage(Format.PREFIX + "Debes colocar un comando valido.");
             return false;
         }
+        var data = player.getPersistentDataContainer();
 
         if (args[0].equalsIgnoreCase("info")) {
 
@@ -62,9 +67,12 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
             sender.sendMessage(ChatColor.YELLOW + "Discord: https://discord.gg/PnDUcABq9m");
             sender.sendMessage(ChatColor.GOLD + "----- Version del Plugin: v1.1 -----");
         }
-        if (args[0].equalsIgnoreCase("totems")) {
-            sender.sendMessage(ChatColor.GOLD + "----- " + TotemsBar.percentage + " -----");
-        }
+        /*if (args[0].equalsIgnoreCase("totems")) {
+            var totems = data.get(new NamespacedKey(plugin, "TOTEM_BAR"), PersistentDataType.INTEGER);
+
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
+            player.sendMessage(Format.PREFIX + format("&7&l¡Tienes &e&l" + totems + "% &7&lporcentaje de Totems!"));
+        }*/
 
         if(args[0].equalsIgnoreCase("creditos")){
             sender.sendMessage(ChatColor.DARK_GRAY + "------ CREDITOS ------");
@@ -73,17 +81,18 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
             sender.sendMessage(ChatColor.AQUA + "JohanBigCum y Null1390: " + ChatColor.GRAY + "Hostear el Server.");
             sender.sendMessage(ChatColor.AQUA + "Carrotw, SeVeN_007, GusGus, TheSmol_T, SkarbyPalace y NovaKingdom: " + ChatColor.GRAY + "Diseños, Modelos, Texturas y Sonidos.");
             sender.sendMessage(ChatColor.AQUA + "cBaguette y wHermes: " + ChatColor.GRAY + "Estructuras del server.");
-            sender.sendMessage(ChatColor.AQUA + "Storm_WaterTime, kennyelduro, 5r_i4n, Pepe_3012, Mikel, SalvaGamer, Wither y Gatin72 " + ChatColor.GRAY + "Beta Testers de TLL T2.");
-            sender.sendMessage(ChatColor.AQUA + "Alex, LechugaMC, Blackstamp y Tom_" + ChatColor.GRAY + "Ayuda Principal, y Moderacion.");
+            sender.sendMessage(ChatColor.AQUA + "Storm_WaterTime, kennyelduro, 5r_i4n, Pepe_3012, Mikel, SalvaGamer, Wither y Gatin72: " + ChatColor.GRAY + "Beta Testers de TLL T2.");
+            sender.sendMessage(ChatColor.AQUA + "Alex, LechugaMC, Blackstamp y Tom_: " + ChatColor.GRAY + "Ayuda Principal, y Moderacion.");
+            sender.sendMessage(ChatColor.AQUA + "Fabo, Diegot y OmkSpar: " + ChatColor.GRAY + "Ideas.");
             sender.sendMessage(ChatColor.DARK_GRAY + "----------------------");
         }
         if(args[0].equalsIgnoreCase("comandoslista")) {
             sender.sendMessage(ChatColor.DARK_GRAY + "------ COMANDOS ------");
             sender.sendMessage(ChatColor.GOLD + "creditos: " + ChatColor.GRAY + "Muestra los creditos de TLL");
-            sender.sendMessage(ChatColor.GOLD + "receta <ITEM>: " + ChatColor.GRAY + "Muestra la receta del item seleccionado");
             sender.sendMessage(ChatColor.GOLD + "dia: " + ChatColor.GRAY + "Muestra el dia donde nos encontramos");
             sender.sendMessage(ChatColor.GOLD + "tps: " + ChatColor.GRAY + "Muestra los TPS del servidor");
             sender.sendMessage(ChatColor.GOLD + "sacrificios: " + ChatColor.GRAY + "Muestra Info sobre los Sacrificios");
+            sender.sendMessage(ChatColor.GOLD + "maestria: " + ChatColor.GRAY + "Muestra tu nivel de maestria");
             sender.sendMessage(ChatColor.DARK_GRAY + "----------------------");
         }
         if(args[0].equalsIgnoreCase("tps")){
@@ -95,6 +104,17 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
         if(args[0].equalsIgnoreCase("sacrificios")){
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Format.PREFIX + "&7Te encuentras con: &6" + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER) + "&7 sacrificios hechos."));
         }
+        if(args[0].equalsIgnoreCase("maestria")){
+            var dataMaestria = data.get(new NamespacedKey(plugin,"maestrialvl"),PersistentDataType.INTEGER);
+            var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
+            sender.sendMessage(format("&7-------------&b&lMAESTRIA&7-------------"));
+            sender.sendMessage(format("&cNivel de Maestria: &e&l" + dataMaestria));
+            sender.sendMessage(format("&cEXP de Maestria: &e&l" + dataMaestriaExp));
+            sender.sendMessage(format("&7&lDaño: " + player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue()));
+            sender.sendMessage(format("&7&lDefensa: " + player.getAttribute(Attribute.GENERIC_ARMOR).getAttribute()));
+            sender.sendMessage(format("&7&lVida: " + player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getAttribute()));
+            sender.sendMessage(format("&7----------------------------------"));
+        }
         return false;
     }
 
@@ -103,7 +123,7 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
         List<String> complements = new ArrayList<>();
 
         String[] commands = {
-                "totems", "creditos", "comandoslista", "tps", "dia", "sacrificios", "info"
+                "creditos", "comandoslista", "tps", "dia", "sacrificios", "info","maestria"
         };
 
         StringUtil.copyPartialMatches(args[0], List.of(commands), complements);

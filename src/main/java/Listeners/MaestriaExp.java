@@ -1,17 +1,18 @@
 package Listeners;
 
 import Utilities.Data;
+import Utilities.Mobs;
 import Utilities.Utils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.TileState;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.entity.Drowned;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Silverfish;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -23,6 +24,8 @@ import org.bukkit.metadata.Metadatable;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import tlldos.tll2.TLL2;
+
+import java.util.Random;
 
 import static Utilities.Format.PREFIX;
 import static Utilities.Format.format;
@@ -41,7 +44,7 @@ public class MaestriaExp implements Listener{
     public void expLol(BlockBreakEvent e){
         var p = e.getPlayer();
         var block = e.getBlock();
-
+        PersistentDataContainer data = Data.get(p);
         BlockState c = block.getState();
 
         if (e.getBlock().getState().hasMetadata("no_exp")) {
@@ -75,19 +78,62 @@ public class MaestriaExp implements Listener{
             Bukkit.getOnlinePlayers().forEach(player -> {
                 player.sendMessage(format("&3MAESTRIA &8> &c&l" + p.getName() + "&7 ha aumentado su nivel. &e" + level + "&8 >> &6" + newLevel));
             });
-
             if(getMasteryLevel(p) == 1){
                 p.sendMessage(hp_plus);
                 p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() + 2);
-            }else if(getMasteryLevel(p) == 2){
-                p.sendMessage(att_plus);
-                p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
-            }else if(getMasteryLevel(p) == 3){
-                p.sendMessage(def_plus);
-                p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue() + 1);
-            }else if(getMasteryLevel(p) == 4){
+            }
+            if(getMasteryLevel(p) == 2){
                 p.sendMessage(hp_plus);
                 p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() + 2);
+            }else if(getMasteryLevel(p) == 3){
+                p.sendMessage(att_plus);
+                p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
+            }else if(getMasteryLevel(p) == 4){
+                p.sendMessage(def_plus);
+                p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue() + 0.50);
+            }else if(getMasteryLevel(p) == 5){
+                p.sendMessage(hp_plus);
+                p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() + 2);
+            }else if(getMasteryLevel(p) == 6){
+                p.sendMessage(att_plus);
+                p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
+            }else if(getMasteryLevel(p) == 7){
+                p.sendMessage(def_plus);
+                p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue() +0.50);
+            }else if(getMasteryLevel(p) == 8){
+                p.sendMessage(hp_plus);
+                p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() + 2);
+            }else if(getMasteryLevel(p) == 9){
+                p.sendMessage(att_plus);
+                p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
+            }else if(getMasteryLevel(p) == 10){
+                p.sendMessage(format("&3MAESTRIA &8> Has recibido un Buff de Vision Nocturna Permanente!"));
+                p.sendMessage(format("&3MAESTRIA &8> &e&l¡PELIGRO! Ahora picar puede llamar la atencion de criaturas hostiles"));
+                data.set(Utils.key("reachedlvl10"),PersistentDataType.INTEGER, 1);
+            }else if(getMasteryLevel(p) == 11){
+                p.sendMessage(hp_plus);
+                p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() + 2);
+            }else if(getMasteryLevel(p) == 12){
+                p.sendMessage(att_plus);
+                p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
+            }else if(getMasteryLevel(p) == 13){
+                p.sendMessage(def_plus);
+                p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue() + 0.50);
+            }else if(getMasteryLevel(p) == 14){
+                p.sendMessage(hp_plus);
+                p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() + 2);
+            }else if(getMasteryLevel(p) == 15){
+                p.sendMessage(format("&3MAESTRIA &8> Llegaste al Nivel 15, &el¡Felicidades! &c&lAhora afronta tu destino sin mas recompensas"));
+            }else if(getMasteryLevel(p) == 20){
+                p.sendMessage(format("&3MAESTRIA &8> Has recibido un Buff de Haste I Permanente!"));
+                p.sendMessage(format("&3MAESTRIA &8> &e&l¡PELIGRO! Ahora hay muchas mas criaturas dispuestas a acabar contigo!"));
+                data.set(Utils.key("reachedlvl20"),PersistentDataType.INTEGER, 1);
+            }else if(getMasteryLevel(p) == 30){
+                p.sendMessage(format("&3MAESTRIA &8> Has recibido un Buff de Haste II Permanente!"));
+                p.sendMessage(format("&3MAESTRIA &8> &e&l¡PELIGRO! El Cosmos esta enfadado contigo!"));
+                p.sendMessage(PREFIX,format("&e&lFelicidades por llegar al Nivel 30, no hay mas camino para tu trabajo de Mineria, ¡Buen Trabajo!"));
+                data.set(Utils.key("reachedlvl20"),PersistentDataType.INTEGER, 0);
+                data.set(Utils.key("reachedlvl30"),PersistentDataType.INTEGER, 1);
             }
             return;
         }
@@ -114,6 +160,43 @@ public class MaestriaExp implements Listener{
             plugin.getLocations().add(block.getLocation());
         }
     }
+
+
+    @EventHandler
+    public void apareciolacreatura(BlockBreakEvent event){
+        var p = event.getPlayer();
+        var data = p.getPersistentDataContainer();
+        var level10 = data.get(new NamespacedKey(plugin,"reachedlvl10"),PersistentDataType.INTEGER);
+        var level20 = data.get(new NamespacedKey(plugin,"reachedlvl20"),PersistentDataType.INTEGER);
+        var level30 = data.get(new NamespacedKey(plugin,"reachedlvl30"),PersistentDataType.INTEGER);
+        int minerspawn = new Random().nextInt(100);
+        if (!event.getBlock().getType().name().toLowerCase().contains("ore"))
+            return;
+        if (event.getBlock().getState().hasMetadata("no_exp")) {
+            plugin.getLocations().remove(event.getBlock().getLocation());
+            return;
+        }
+        if(minerspawn >= 95){
+            if(level10 >= 1){
+                p.sendTitle(format("&c&l¡PELIGRO!"),format("&cUn mob va a spawnear"),0,200,0);
+                p.playSound(p.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 10.0F, -1.0F);
+                Bukkit.getScheduler().runTaskLater(plugin,()->{
+                    int randommob = new Random().nextInt(3);
+                    if(randommob == 1){
+                        var gogblinn = event.getBlock().getLocation().getWorld().spawn(event.getBlock().getLocation(), Drowned.class);
+                        Mobs.goblin(gogblinn);
+                    }else if(randommob == 2){
+                        var stonelolxd = event.getBlock().getLocation().getWorld().spawn(event.getBlock().getLocation(), Zombie.class);
+                        Mobs.stoneSoldier(stonelolxd);
+                    }else{
+                        var escarabajolol = event.getBlock().getLocation().getWorld().spawn(event.getBlock().getLocation(), Silverfish.class);
+                        Mobs.escarabajoGoliath(escarabajolol);
+                    }
+                },240L);
+            }
+        }
+    }
+
 
 
     public int getGiveExp(Block block) {
@@ -160,7 +243,7 @@ public class MaestriaExp implements Listener{
 
 
     public int maxExpNecesary(Player p) {
-        return 100 * getMasteryLevel(p);
+        return 1500 * getMasteryLevel(p);
     }
 
     //Mastery Level Desing
@@ -185,7 +268,7 @@ public class MaestriaExp implements Listener{
     public void setMasteryLevel(Player p, int level) {
         PersistentDataContainer data = Data.get(p);
 
-        int max = 20;
+        int max = 30;
 
         if (level >= max) {
             return;

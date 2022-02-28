@@ -39,17 +39,6 @@ public class Mobs implements Listener{
         this.plugin = plugin;
     }
 
-    public static void zombiTest(Zombie self) {
-
-        self.setCustomName("Zombi Renegado");
-        self.getEquipment().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
-        self.getEquipment().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
-        self.getEquipment().setItemInMainHand(new ItemStack(Material.NETHERITE_SWORD));
-        self.getEquipment().setItemInOffHand(new ItemStack(Material.SHIELD));
-        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 10000,2));
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TESTZOMBIE"), PersistentDataType.STRING, "TESTZOMBIE");
-    }
-
     public static void tntZomb(TNTPrimed self) {
         self.setYield(5);
         self.setFuseTicks(60);
@@ -60,61 +49,47 @@ public class Mobs implements Listener{
 
     public static  void zombiCongelado(Zombie self){
         self.setCustomName(ChatColor.AQUA + "Zombi Congelado");
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
-        self.setHealth(30);
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(6.0);
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ZOMBI_CONGELADO"), PersistentDataType.STRING, "ZOMBI_CONGELADO");
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ICE_MOB"), PersistentDataType.STRING, "ICE_MOB");
     }
 
     public static void esqueletoNieve(Skeleton self){
         self.setCustomName(ChatColor.AQUA + "Snow Skeleton");
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
-        self.setHealth(30);
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ESQUELETO_NIEVE"), PersistentDataType.STRING, "ESQUELETO_NIEVE");
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ICE_SKELETON"), PersistentDataType.STRING, "ICE_SKELETON");
     }
 
-    public static void aranaNieve(Spider self){
+    public static void spiderNieve(Spider self){
         self.setCustomName(ChatColor.AQUA + "Snow Spider");
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
-        self.setHealth(30);
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(7.0);
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SNOW_SPIDER"), PersistentDataType.STRING, "SNOW_SPIDER");
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ICE_MOB"), PersistentDataType.STRING, "ICE_MOB");
     }
 
 
     public static void creeperCongelado(Creeper self){
         self.setCustomName(format("&bCreeper Congelado"));
-        self.setExplosionRadius(3);
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "CREEPER_CONGELADO"), PersistentDataType.STRING, "CREEPER_CONGELADO");
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ICE_CREEPER"), PersistentDataType.STRING, "ICE_CREEPER");
     }
 
 
     ///mobs de Jungla
-    public static void arañaJungla(Spider self){
+    public static void spiderJungla(Spider self){
         self.setCustomName(format("&2Jungle Spider"));
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
-        self.setHealth(30);
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(6.0);
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "JUNGLE_SPIDER"), PersistentDataType.STRING, "JUNGLE_SPIDER");
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "JUNGLE_MOB"), PersistentDataType.STRING, "JUNGLE_MOB");
     }
     public static void mossZombie(Zombie self){
         self.setCustomName(format("&2Moss Zombie"));
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
-        self.setHealth(20);
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4.0);
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "MOSS_ZOMBIE"), PersistentDataType.STRING, "MOSS_ZOMBIE");
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "JUNGLE_MOB"), PersistentDataType.STRING, "JUNGLE_MOB");
     }
     public static void esqueletoMilitar(Skeleton self){
-        self.setCustomName(format("&2Esqueleto Militar"));
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
-        self.setHealth(20);
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4.0);
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "MILITAR_SKELETON"), PersistentDataType.STRING, "MILITAR_SKELETON");
+        self.setCustomName(format("&2Vines Skeleton"));
+        ItemStack flecha1 = new ItemStack(Material.TIPPED_ARROW, 64);
+        PotionMeta flecha1efect = (PotionMeta) flecha1.getItemMeta();
+        flecha1efect.setBasePotionData(new PotionData(PotionType.POISON));
+        flecha1efect.addCustomEffect(new PotionEffect(PotionEffectType.POISON, 400, 0), true);
+        flecha1.setItemMeta(flecha1efect);
+        self.getEquipment().setItemInOffHand(flecha1);
+        self.getEquipment().setDropChance(EquipmentSlot.OFF_HAND,0);
     }
     public static void mossCreeper(Creeper self){
         self.setCustomName(format("&2Moss Creeper"));
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
-        self.setHealth(20);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "MOSS_CREEPER"), PersistentDataType.STRING, "MOSS_CREEPER");
     }
 
@@ -123,32 +98,29 @@ public class Mobs implements Listener{
 
     public static void zombiMomia(Zombie self){
         self.setCustomName(format("&6Mummy"));
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
-        self.setHealth(20);
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "MUMMY_ZOMBIE"), PersistentDataType.STRING, "MUMMY_ZOMBIE");
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SAND_MOB"), PersistentDataType.STRING, "SAND_MOB");
     }
     public static void esqueletoMomia(Skeleton self){
         self.setCustomName(format("&6Mummy Skeleton"));
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
-        self.setHealth(20);
         self.getEquipment().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "MUMMY_SKELETON"), PersistentDataType.STRING, "MUMMY_SKELETON");
+        self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SAND_MOB"), PersistentDataType.STRING, "SAND_MOB");
     }
 
-    public static void aranaArena(Spider self){
+    public static void spiderArena(Spider self){
         self.setCustomName(format("&6Sand Spider"));
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
-        self.setHealth(20);
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SAND_SPIDER"), PersistentDataType.STRING, "SAND_SPIDER");
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SAND_MOB"), PersistentDataType.STRING, "SAND_MOB");
     }
 
     public static void creeperSandstone(Creeper self){
         self.setCustomName(format("&6Sandstone Creeper"));
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
-        self.setHealth(20);
         self.setFuseTicks(25);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SANDSTONE_CREEPER"), PersistentDataType.STRING, "SANDSTONE_CREEPER");
     }
+
+
+
+
 
     ///Mobs Blighted
 
@@ -462,6 +434,44 @@ public class Mobs implements Listener{
 
 
 
+    public static void escarabajoGoliath(Silverfish self){
+        self.setCustomName(format("&8Escarabajo Goliath"));
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(14);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
+        self.setHealth(30);
+        self.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK).setBaseValue(100);
+    }
+    public static void stoneSoldier(Zombie self){
+        self.setCustomName(format("&7Stone Soldier"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10);
+        self.setHealth(40);
+        self.getEquipment().setHelmet(new ItemStack(Material.STONE));
+        self.getEquipment().setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
+        self.getEquipment().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
+        self.getEquipment().setBoots(new ItemStack(Material.IRON_BOOTS));
+        self.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
+        self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+        self.getEquipment().setDropChance(EquipmentSlot.HEAD,0);
+        self.getEquipment().setDropChance(EquipmentSlot.CHEST,0);
+        self.getEquipment().setDropChance(EquipmentSlot.LEGS,0);
+        self.getEquipment().setDropChance(EquipmentSlot.FEET,0);
+    }
+    public static void goblin(Drowned self){
+        self.setCustomName(format("&1Goblin"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10);
+        self.setHealth(40);
+        self.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
+        self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+    }
+
+
+
+
+
+
+
 
 
 
@@ -593,19 +603,17 @@ public class Mobs implements Listener{
 
     ///mobs del laboratorio
     public static void mechaZombie(Zombie self){
-        self.setCustomName(format("&6Mecha Undead"));
+        self.setCustomName(format("&6Undead Scientist"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
         self.setHealth(30);
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
-        self.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK).setBaseValue(5.0);
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "MECHA_ZOMBIE"), PersistentDataType.STRING, "MECHA_ZOMBIE");
     }
 
     public static void exoGolem(IronGolem self){
-        self.setCustomName(format("&6Exo Golem"));
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50.0);
-        self.setHealth(50);
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXO_GOLEM"), PersistentDataType.STRING, "EXO_GOLEM");
+        self.setCustomName(format("&c&lEExperiment JD78K"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(150.0);
+        self.setHealth(150);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(25.0);
         CraftIronGolem craft = ((CraftIronGolem) self);
         EntityIronGolem entityIronGolem = craft.getHandle();
         try{
@@ -627,11 +635,10 @@ public class Mobs implements Listener{
     }
 
     public static void labSilver(Silverfish self){
-        self.setCustomName(format("&4Lab Silverfish"));
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(10.0);
-        self.setHealth(10);
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(5.0);
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "LAB_SILVERFISH"), PersistentDataType.STRING, "LAB_SILVERFISH");
+        self.setCustomName(format("&4Labrat"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20.0);
+        self.setHealth(20);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(7.0);
     }
 
     public static void plagueEntity(AreaEffectCloud self){
@@ -670,61 +677,10 @@ public class Mobs implements Listener{
         self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
         self.getEquipment().setDropChance(EquipmentSlot.OFF_HAND, 0);
 
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "MAD_SCIENTIST"), PersistentDataType.STRING, "MAD_SCIENTIST");
 
     }
 
 
-    ///vexes que se me ocurrieron
-    public static void vexExplosive(Vex self){
-        self.setCustomName(format("&cExplosive Vex"));
-        self.getEquipment().setItemInMainHand(new ItemStack(Material.TNT));
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_EXPLOSIVE"), PersistentDataType.STRING, "VEX_EXPLOSIVE");
-        self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
-        self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
-    }
-
-    public static void vexScientist(Vex self){
-
-        ItemStack caca = new ItemStack(Material.BLAZE_ROD);
-        ItemMeta meta = caca.getItemMeta();
-        meta.addEnchant(Enchantment.DAMAGE_ALL,5,true);
-        caca.setItemMeta(meta);
-
-        self.setCustomName(format("&cScientist Vex"));
-        self.getEquipment().setItemInMainHand(caca);
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_SCIENTIST"), PersistentDataType.STRING, "VEX_SCIENTIST");
-        self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
-        self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
-    }
-
-    public static void vexMecha(Vex self){
-
-        ItemStack caca = new ItemStack(Material.DIAMOND_HOE);
-        ItemMeta meta = caca.getItemMeta();
-        meta.addEnchant(Enchantment.DAMAGE_ALL,10,true);
-        caca.setItemMeta(meta);
-
-        self.setCustomName(format("&cMecha Vex"));
-        self.getEquipment().setItemInMainHand(caca);
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_MECHA"), PersistentDataType.STRING, "VEX_MECHA");
-        self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
-        self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
-    }
-
-    public static void vexExecution(Vex self){
-
-        ItemStack caca = new ItemStack(Material.NETHERITE_SWORD);
-        ItemMeta meta = caca.getItemMeta();
-        meta.addEnchant(Enchantment.DAMAGE_ALL,15,true);
-        caca.setItemMeta(meta);
-
-        self.setCustomName(format("&cExecutioner Vex"));
-        self.getEquipment().setItemInMainHand(caca);
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "VEX_EXECUTION"), PersistentDataType.STRING, "VEX_EXECUTION");
-        self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
-        self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
-    }
 
 
     public static void zombHerrero(Zombie self){

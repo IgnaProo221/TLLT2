@@ -32,9 +32,9 @@ public class TemperatureBlocks extends BukkitRunnable{
                     data.set(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER, temperature - 10);
                 }else if(block == Material.MAGMA_BLOCK || block == Material.TORCH || block == Material.CAMPFIRE){
                     data.set(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER, temperature + 10);
-                }else if(block == Material.SOUL_CAMPFIRE || block == Material.SOUL_TORCH || block == Material.WATER || player.getFreezeTicks() != 0){
+                }else if(block == Material.SOUL_CAMPFIRE || block == Material.SOUL_TORCH || block == Material.WATER){
                     data.set(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER, temperature - 5);
-                }else if(block == Material.LAVA || player.getFireTicks() != 0){
+                }else if(block == Material.LAVA){
                     data.set(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER, temperature + 5);
                 }
             }

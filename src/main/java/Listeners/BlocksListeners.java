@@ -102,24 +102,21 @@ public class BlocksListeners implements Listener{
         }
 
         if(p.getInventory().getItemInMainHand() != null){
-            Bukkit.getConsoleSender().sendMessage("Item no es Null");
             if(p.getInventory().getItemInMainHand().hasItemMeta()){
-                Bukkit.getConsoleSender().sendMessage("Meta no es Null");
                 if(p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.SMELTING_TOUCH)){
-                    Bukkit.getConsoleSender().sendMessage("Tiene Smelting Touch");
                     Location location = block.getLocation();
                     if(block.getType() == Material.IRON_ORE || block.getType() == Material.DEEPSLATE_IRON_ORE){
-                        Bukkit.getConsoleSender().sendMessage("Es un bloque valido");
                         e.setDropItems(false);
                         location.getWorld().dropItemNaturally(location,new ItemStack(Material.IRON_INGOT));
                     }else if(block.getType() == Material.GOLD_ORE || block.getType() == Material.DEEPSLATE_GOLD_ORE){
-                        Bukkit.getConsoleSender().sendMessage("Es un bloque valido");
                         e.setDropItems(false);
                         location.getWorld().dropItemNaturally(location,new ItemStack(Material.GOLD_INGOT));
                     }else if(block.getType() == Material.ANCIENT_DEBRIS){
-                        Bukkit.getConsoleSender().sendMessage("Es un bloque valido");
                         e.setDropItems(false);
                         location.getWorld().dropItemNaturally(location,new ItemStack(Material.NETHERITE_SCRAP));
+                    }else if(block.getType() == Material.COPPER_ORE || block.getType() == Material.DEEPSLATE_COPPER_ORE){
+                        e.setDropItems(false);
+                        location.getWorld().dropItemNaturally(location,new ItemStack(Material.COPPER_INGOT));
                     }
                 }
             }

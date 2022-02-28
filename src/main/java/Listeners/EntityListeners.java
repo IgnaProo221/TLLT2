@@ -1,5 +1,6 @@
 package Listeners;
 
+import Extras.Items;
 import Utilities.*;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -210,6 +211,15 @@ public class EntityListeners implements Listener {
             if(damager instanceof Spider){
                 var spider = (Spider)damager;
                 if(p.isBlocking())return;
+                if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"ICE_MOB"),PersistentDataType.STRING)){
+                    p.setFreezeTicks(400);
+                }
+                if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"JUNGLE_MOB"),PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 200,0));
+                }
+                if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"SAND_MOB"),PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,400,0));
+                }
                 if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "AGILE_SPIDER"), PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 200, 2,true, true, true));
                 }
@@ -233,6 +243,15 @@ public class EntityListeners implements Listener {
             if(damager instanceof Zombie){
                 var zombie = (Zombie)damager;
                 if(p.isBlocking())return;
+                if(zombie.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"SAND_MOB"),PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,400,0));
+                }
+                if(zombie.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"ICE_MOB"),PersistentDataType.STRING)){
+                    p.setFreezeTicks(400);
+                }
+                if(zombie.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"JUNGLE_MOB"),PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 200,0));
+                }
                 if(zombie.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_ZOMBIE"), PersistentDataType.STRING)){
                     blightedZombieffects(p);
                 }
@@ -242,6 +261,12 @@ public class EntityListeners implements Listener {
                 if(p.isBlocking())return;
                 if(enderman.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_ENDERMAN"), PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 400, 0, true, true, true));
+                }
+            }
+            if(damager instanceof Skeleton skeleton){
+                if(p.isBlocking())return;
+                if(skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"SAND_MOB"),PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,400,0));
                 }
             }
             if(damager instanceof Phantom){
@@ -373,6 +398,12 @@ public class EntityListeners implements Listener {
                 }
             }
 
+            if(skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"ICE_SKELETON"),PersistentDataType.STRING)){
+                if(entity != null){
+                    entity.setFreezeTicks(400);
+                }
+            }
+
             if (skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "COPPER_SKELETON"), PersistentDataType.STRING)) {
                 if (hitblock != null) {
                     hitblock.getLocation().getWorld().strikeLightning(hitblock.getLocation());
@@ -423,6 +454,15 @@ public class EntityListeners implements Listener {
                 nearby2.sendMessage(format("TEST"));
                 nearby2.setFireTicks(1200);
  */
+            }
+            if (creeper.getPersistentDataContainer().has(new NamespacedKey(Utils.getPlugin(), "ICE_CREEPER"), PersistentDataType.STRING)) {
+                entity.getLocation().getNearbyPlayers( 5, 5, 5).forEach(player -> player.setFreezeTicks(1200));
+            }
+            if(creeper.getPersistentDataContainer().has(new NamespacedKey(Utils.getPlugin(),"MOSS_CREEPER"),PersistentDataType.STRING)){
+                entity.getLocation().getNearbyPlayers( 5, 5, 5).forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.POISON,200,0)));
+            }
+            if(creeper.getPersistentDataContainer().has(new NamespacedKey(Utils.getPlugin(),"SANDSTONE_CREEPER"),PersistentDataType.STRING)){
+                entity.getLocation().getNearbyPlayers( 5, 5, 5).forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,400,0)));
             }
             if(creeper.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HIVE_MIND"), PersistentDataType.STRING)){
                 Bukkit.getScheduler().runTaskLater(plugin, () ->{
@@ -501,6 +541,25 @@ public class EntityListeners implements Listener {
 
         int size = random.nextInt(2);
         ItemStack dropFrag = createFragmentoSangre(size);
+        
+        int bookchance = random.nextInt(100);
+        if(entity instanceof Evoker && killer instanceof Player playo){
+            if(bookchance >= 95) {
+                playo.sendMessage(PREFIX, format("&e&lEnhorabuena! &ehas conseguido una &c&lToma Ancestral &epor asesinar a un Evoker."));
+                int bookslol = random.nextInt(5);
+                if(bookslol == 1){
+                    event.getDrops().add(Items.pichaTome());
+                }else if(bookslol == 2){
+                    event.getDrops().add(Items.critihitTome());
+                }else if(bookslol == 3){
+                    event.getDrops().add(Items.revengeTome());
+                }else if(bookslol == 4){
+                    event.getDrops().add(Items.bullsEyeTome());
+                }else{
+                    event.getDrops().add(Items.teleTome());
+                }
+            }
+        }
 
         if (entity instanceof Villager && killer instanceof Player p) {
 
@@ -619,6 +678,7 @@ public class EntityListeners implements Listener {
                         }else if(block != null){
                             block.getLocation().createExplosion(projectile,3,false,true);
                         }
+                        projectile.remove();
                     }else if(projectile.getCustomName().contains("ice")){
                         if(damaged != null){
                             damaged.setFreezeTicks(1200);

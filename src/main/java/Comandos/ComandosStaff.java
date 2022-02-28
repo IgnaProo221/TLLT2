@@ -1,14 +1,13 @@
 package Comandos;
 
 import CustomMobs.HostileTest;
+import Listeners.MaestriaExp;
 import Listeners.StartBlastStormEvent;
 import Listeners.StopBlastStormEvent;
 import Extras.EventosItems;
 import Extras.Items;
 import Extras.Teams;
-import Utilities.CustomEnchants;
-import Utilities.Format;
-import Utilities.Warn;
+import Utilities.*;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -21,6 +20,7 @@ import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
@@ -190,6 +190,53 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
                     player.sendMessage(Format.format(Format.PREFIX + "&7¡Ha ocurrido un &c&lerror &7al resetear los tótems."));
                 }
+            }
+            case "maestria" ->{
+                if (args.length < 2) {
+                    player.sendMessage(Format.PREFIX + "Debes colocar un subcomando valido.");
+                    return false;
+                }
+                if(args[1].equalsIgnoreCase("reset")){
+                    PersistentDataContainer caca = Data.get(player);
+                    player.sendMessage(PREFIX,format("&7Reiniciaste tu Nivel de Maestria."));
+                    caca.set(Utils.key("maestrialvl"), PersistentDataType.INTEGER, 1);
+                }
+                if(args[1].equalsIgnoreCase("resetattributes")){
+                    player.sendMessage(PREFIX,format("&7Reiniciaste tus Atributos de Vida, Daño y Defensa."));
+                    player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
+                    player.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(0);
+                    player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(1);
+                }
+                if(args[1].equalsIgnoreCase("levelup")){
+                    player.sendMessage(PREFIX,format("&7Se aumento el EXP de la Maestria"));
+                    data.set(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER, 999999);
+                }
+
+                if(args[1].equalsIgnoreCase("resetbuffs")){
+
+                    var level10 = data.get(new NamespacedKey(plugin,"reachedlvl10"),PersistentDataType.INTEGER);
+                    var level20 = data.get(new NamespacedKey(plugin,"reachedlvl20"),PersistentDataType.INTEGER);
+                    var level30 = data.get(new NamespacedKey(plugin,"reachedlvl30"),PersistentDataType.INTEGER);
+                    if(args[2].equalsIgnoreCase("lvl10")){
+                        if(level10 != null) {
+                            data.set(new NamespacedKey(plugin, "reachedlvl10"), PersistentDataType.INTEGER, 0);
+                            player.sendMessage(PREFIX, format("&7Reiniciaste tus Buffs de Maestria."));
+                        }
+                    }
+                    if(args[2].equalsIgnoreCase("lvl20")){
+                        if(level20 != null) {
+                            data.set(new NamespacedKey(plugin, "reachedlvl20"), PersistentDataType.INTEGER, 0);
+                            player.sendMessage(PREFIX, format("&7Reiniciaste tus Buffs de Maestria."));
+                        }
+                    }
+                    if(args[2].equalsIgnoreCase("lvl30")){
+                        if(level30 != null) {
+                            data.set(new NamespacedKey(plugin, "reachedlvl30"), PersistentDataType.INTEGER, 0);
+                            player.sendMessage(PREFIX, format("&7Reiniciaste tus Buffs de Maestria."));
+                        }
+                    }
+                }
+
             }
             case "temperatura" -> {
                 var temperatureKey = new NamespacedKey(plugin, "temperatura");
@@ -537,13 +584,14 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
         List<String> completions = new ArrayList<>();
         if (args.length == 1) {
-            addToList(commands, "sacrificios", "alerta", "give", "sacrificios_test", "debug", "totem_bar", "totems_clear", "vida_reset", "dimension", "temperatura", "spawn", "teams", "god_mode","enchant" );
+            addToList(commands, "sacrificios", "alerta", "give", "sacrificios_test", "debug", "totem_bar", "totems_clear", "vida_reset", "dimension", "temperatura", "spawn", "teams", "god_mode","enchant","maestria" );
 
             StringUtil.copyPartialMatches(args[0], commands, completions);
         } else if (args.length == 2) {
             switch (args[0]) {
                 case "enchant" -> addToList(commands,"IMPACT","GRAVITY","BULLSEYE");
                 case "dimension" -> Bukkit.getWorlds().forEach(world -> commands.add(world.getName()));
+                case "maestria"->addToList(commands,"reset","resetattributes","resetbuffs");
                 case "sacrificios" -> addToList(commands, "modify", "clear", "reset");
                 case "god_mode" -> addToList(commands, "on", "off");
                 case "teams" -> addToList(commands, "chat", "join", "all_teams", "info");
@@ -558,6 +606,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
             switch (args[1]) {
                 case "modify", "clear", "reset", "join" -> Bukkit.getOnlinePlayers().forEach(player -> commands.add(player.getName()));
                 case "hipertermia", "hipotermia" -> addToList(commands, "1", "2", "3");
+                case "resetbuffs"->addToList(commands,"lvl10","lvl20","lvl30 ");
             }
             StringUtil.copyPartialMatches(args[2], commands, completions);
         }else if(args.length == 4){
