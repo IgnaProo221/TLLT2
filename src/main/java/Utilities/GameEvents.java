@@ -77,6 +77,7 @@ public class GameEvents {
                     bar.setVisible(false);
                 }
 
+                //deberian borrar la bossbar CREO
                 current.sendMessage(format("&6&lBLIGHTED RAGE &8> &eEl evento ha sido terminado."));
             }
         }

@@ -78,7 +78,7 @@ public class MaestriaExp implements Listener{
             Bukkit.getOnlinePlayers().forEach(player -> {
                 player.sendMessage(format("&3MAESTRIA &8> &c&l" + p.getName() + "&7 ha aumentado su nivel. &e" + level + "&8 >> &6" + newLevel));
             });
-            switch (getMasteryExp(p)){
+            /*switch (getMasteryExp(p)){
                 case 1, 2, 5, 8, 11, 14 -> {
                     p.sendMessage(hp_plus);
                     int ehp = data.has(Utils.key("maestry_health"), PersistentDataType.INTEGER) ? data.get(Utils.key("maestry_health"), PersistentDataType.INTEGER) : 0;
@@ -111,12 +111,15 @@ public class MaestriaExp implements Listener{
                     data.set(Utils.key("reachedlvl30"),PersistentDataType.INTEGER, 1);
                 }
             }
-            /*if(getMasteryLevel(p) == 1){ TODO esto es un test podria salir muy mal lo de arriba si lo pueden revisar con cuidado gracias
+
+             */
+            int ehp = data.has(Utils.key("maestry_health"), PersistentDataType.INTEGER) ? data.get(Utils.key("maestry_health"), PersistentDataType.INTEGER) : 0;
+            if(getMasteryLevel(p) == 1){ //TODO esto es un test podria salir muy mal lo de arriba si lo pueden revisar con cuidado gracias
                 p.sendMessage(hp_plus);
-                p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() + 2);
+                data.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, ehp + 2);
             }else if(getMasteryLevel(p) == 2){
                 p.sendMessage(hp_plus);
-                p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() + 2);
+                data.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, ehp + 2);
             }else if(getMasteryLevel(p) == 3){
                 p.sendMessage(att_plus);
                 p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
@@ -125,7 +128,7 @@ public class MaestriaExp implements Listener{
                 p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue() + 0.50);
             }else if(getMasteryLevel(p) == 5){
                 p.sendMessage(hp_plus);
-                p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() + 2);
+                data.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, ehp + 2);
             }else if(getMasteryLevel(p) == 6){
                 p.sendMessage(att_plus);
                 p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
@@ -134,7 +137,7 @@ public class MaestriaExp implements Listener{
                 p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue() +0.50);
             }else if(getMasteryLevel(p) == 8){
                 p.sendMessage(hp_plus);
-                p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() + 2);
+                data.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, ehp + 2);
             }else if(getMasteryLevel(p) == 9){
                 p.sendMessage(att_plus);
                 p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
@@ -144,7 +147,7 @@ public class MaestriaExp implements Listener{
                 data.set(Utils.key("reachedlvl10"),PersistentDataType.INTEGER, 1);
             }else if(getMasteryLevel(p) == 11){
                 p.sendMessage(hp_plus);
-                p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() + 2);
+                data.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, ehp + 2);
             }else if(getMasteryLevel(p) == 12){
                 p.sendMessage(att_plus);
                 p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
@@ -153,7 +156,7 @@ public class MaestriaExp implements Listener{
                 p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue() + 0.50);
             }else if(getMasteryLevel(p) == 14){
                 p.sendMessage(hp_plus);
-                p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() + 2);
+                data.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, ehp + 2);
             }else if(getMasteryLevel(p) == 15){
                 p.sendMessage(format("&3MAESTRIA &8> Llegaste al Nivel 15, &el¡Felicidades! &c&lAhora afronta tu destino sin mas recompensas"));
             }else if(getMasteryLevel(p) == 20){
@@ -166,7 +169,7 @@ public class MaestriaExp implements Listener{
                 p.sendMessage(PREFIX,format("&e&lFelicidades por llegar al Nivel 30, no hay mas camino para tu trabajo de Mineria, ¡Buen Trabajo!"));
                 data.set(Utils.key("reachedlvl20"),PersistentDataType.INTEGER, 0);
                 data.set(Utils.key("reachedlvl30"),PersistentDataType.INTEGER, 1);
-            }*/
+            }
 
         }
 

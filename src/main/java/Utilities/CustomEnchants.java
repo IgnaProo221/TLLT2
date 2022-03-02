@@ -37,7 +37,7 @@ public class CustomEnchants implements Listener {
     public static final Enchantment BULLSEYE = new EnchantmentWrapper("bullseye", "bullseye", 1);
 
     public static void register() {
-        boolean registered = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(TELEPHATY);
+        /*boolean registered = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(TELEPHATY);
         boolean getvenganza = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(REVENGE);
         boolean getsmelting = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(SMELTING_TOUCH);
         boolean getlucktree = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(LUCKY_TREE);
@@ -72,10 +72,16 @@ public class CustomEnchants implements Listener {
         }
         if (!getbullseye) {
             registerEnchantment(BULLSEYE);
+        }*/
+        for(Enchantment enchantment : allCustomEnchants()){
+            if(!Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(enchantment)){
+                registerEnchantment(enchantment);
+            }
+             //TODO PROBAR
         }
     }
 
-    public List<Enchantment> allCustomEnchants() {
+    public static List<Enchantment> allCustomEnchants() {
         List<Enchantment> list = new ArrayList<>();
 
         list.add(CustomEnchants.TELEPHATY);
