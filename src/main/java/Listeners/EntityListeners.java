@@ -152,7 +152,7 @@ public class EntityListeners implements Listener {
                 if (pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4006) {
                     entity.setFreezeTicks(400);
                 } else if (pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4010) {
-                    pa.setHealth(pa.getHealth() / 0.5);
+                    pa.setHealth(0.5 / pa.getMaxHealth());
                     }else if(pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 18129){
                     Monster monster = (Monster) entity;
                     monster.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200,1, false, false, false));
@@ -399,7 +399,7 @@ public class EntityListeners implements Listener {
             }
 
             if(skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"ICE_SKELETON"),PersistentDataType.STRING)){
-                if(entity != null){
+                if(entity != null){ 
                     entity.setFreezeTicks(400);
                 }
             }

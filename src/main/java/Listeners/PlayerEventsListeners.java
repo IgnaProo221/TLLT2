@@ -137,7 +137,7 @@ public class PlayerEventsListeners implements Listener {
             }
 
 
-            if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
+            /*if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
                 if((p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_PICKAXE) || p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_AXE)) && (p.getInventory().getItemInOffHand().getType().equals(Material.ENCHANTED_BOOK) && p.getInventory().getItemInOffHand().getItemMeta().hasEnchant(CustomEnchants.TELEPHATY))){
                     ItemStack pickaxe = p.getInventory().getItemInMainHand();
                     List<String> lore;
@@ -209,7 +209,7 @@ public class PlayerEventsListeners implements Listener {
                     p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
                     p.getInventory().getItemInOffHand().setType(Material.AIR);
                 }
-            }
+            }*/
         }
     }
 

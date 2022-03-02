@@ -465,6 +465,49 @@ public class Mobs implements Listener{
         self.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
         self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
     }
+    public static void oreCreeper(Creeper self){
+        self.setCustomName(format("&7Ore Creeper"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
+        self.setHealth(30);
+        self.setExplosionRadius(5);
+    }
+    public static void spectreAssasin(Skeleton self){
+        self.setCustomName(format("&7&lSpectre Assassin"));
+        self.setShouldBurnInDay(false);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
+        self.setHealth(60);
+        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1,false,false,false));
+        self.getEquipment().setChestplate(new ItemBuilder(Material.IRON_CHESTPLATE).setUnbreakable(true).build());
+        self.getEquipment().setLeggings(new ItemBuilder(Material.IRON_LEGGINGS).setUnbreakable(true).build());
+        self.getEquipment().setBoots(new ItemBuilder(Material.IRON_BOOTS).setUnbreakable(true).build());
+        self.getEquipment().setItemInMainHand(new ItemBuilder(Material.NETHERITE_SWORD).addEnchantment(Enchantment.DAMAGE_ALL, 20).build());
+        self.getEquipment().setDropChance(EquipmentSlot.CHEST,0);
+        self.getEquipment().setDropChance(EquipmentSlot.LEGS,0);
+        self.getEquipment().setDropChance(EquipmentSlot.FEET,0);
+        self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+    }
+    public static void lostGolem(IronGolem self){
+        self.setCustomName(format("&8&lLost Golem"));
+        CraftIronGolem craft = ((CraftIronGolem) self);
+        EntityIronGolem entityIronGolem = craft.getHandle();
+        try{
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("bP");
+            gf.setAccessible(true);
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityIronGolem);
+            goal.a(0, new PathfinderGoalMeleeAttack(entityIronGolem,1.0D,true));
+
+            Field tf = cl.getDeclaredField("bQ");
+            tf.setAccessible(true);
+
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityIronGolem);
+            target.a(0,new PathfinderGoalNearestAttackableTarget<>(entityIronGolem, EntityHuman.class, 10,true,false,null));
+        }catch (Exception e){
+            e.printStackTrace();
+            Warn.Mutant(e);
+        }
+    }
+    
 
 
 

@@ -133,7 +133,8 @@ public final class TLL2 extends JavaPlugin implements Listener{
                 new JoinListeners(this),
                 new RPListeners(this),
                 new MaestriaExp(this),
-                new BowListeners(this)
+                new BowListeners(this),
+                new CustomEnchants()
         );
     }
 

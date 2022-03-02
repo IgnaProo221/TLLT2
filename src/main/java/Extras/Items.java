@@ -340,7 +340,7 @@ public class Items {
     public static ItemStack bullsEyeTome() {
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lBullsEye")));
-        lore.add(Component.text(format("&7ola mutnat")));
+        lore.add(Component.text(format("&7La Flecha hace mas Daño mientras mas bloques recorre")));
         return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.BULLSEYE, 1).setLore(lore).build();
     }
 
