@@ -4,13 +4,11 @@ import Comandos.ComandosStaff;
 import Comandos.ComandosUsuarios;
 import Listeners.*;
 import Extras.*;
-import Utilities.Configuration;
-import Utilities.CustomEnchants;
-import Utilities.Format;
-import Utilities.Mobs;
+import Utilities.*;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.*;
@@ -232,6 +230,10 @@ public final class TLL2 extends JavaPlugin implements Listener{
                     player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, true, false, true));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, true, false, true));
                 }
+                if(Data.get(player).has(Utils.key("maestry_health"), PersistentDataType.INTEGER)){
+                    health += Data.get(player).get(Utils.key("maestry_health"), PersistentDataType.INTEGER); //Todo sin testear por favor revisarlo gracias
+                }
+                player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
 
                 /*var data = player.getPersistentDataContainer();
                 var dataTemperatura = data.get(new NamespacedKey(this, "temperatura"), PersistentDataType.INTEGER);
