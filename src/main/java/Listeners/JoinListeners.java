@@ -11,7 +11,7 @@ import org.bukkit.persistence.PersistentDataType;
 import tlldos.tll2.TLL2;
 
 public class JoinListeners implements Listener {
-    TLL2 plugin;
+     TLL2 plugin;
     public static BossBar tormenta;
     public JoinListeners(TLL2 plugin){
         this.plugin = plugin;
@@ -28,7 +28,12 @@ public class JoinListeners implements Listener {
         var level10 = data.get(new NamespacedKey(plugin,"reachedlvl10"),PersistentDataType.INTEGER);
         var level20 = data.get(new NamespacedKey(plugin,"reachedlvl20"),PersistentDataType.INTEGER);
         var level30 = data.get(new NamespacedKey(plugin,"reachedlvl30"),PersistentDataType.INTEGER);
+        var extra_health =  data.get(Utils.key("maestry_health"), PersistentDataType.INTEGER);
 
+
+        if(extra_health == null){
+            data.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, 0);
+        }
         if(dataTemperatura == null){
             data.set(Utils.key("temperatura"), PersistentDataType.INTEGER, 30);
         }

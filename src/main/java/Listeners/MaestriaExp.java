@@ -78,7 +78,7 @@ public class MaestriaExp implements Listener{
             Bukkit.getOnlinePlayers().forEach(player -> {
                 player.sendMessage(format("&3MAESTRIA &8> &c&l" + p.getName() + "&7 ha aumentado su nivel. &e" + level + "&8 >> &6" + newLevel));
             });
-            switch (this.getMasteryExp(p)){
+            switch (getMasteryExp(p)){
                 case 1, 2, 5, 8, 11, 14 -> {
                     p.sendMessage(hp_plus);
                     int ehp = data.has(Utils.key("maestry_health"), PersistentDataType.INTEGER) ? data.get(Utils.key("maestry_health"), PersistentDataType.INTEGER) : 0;
@@ -109,9 +109,6 @@ public class MaestriaExp implements Listener{
                     p.sendMessage(PREFIX,format("&e&lFelicidades por llegar al Nivel 30, no hay mas camino para tu trabajo de Mineria, ¡Buen Trabajo!"));
                     data.set(Utils.key("reachedlvl20"),PersistentDataType.INTEGER, 0);
                     data.set(Utils.key("reachedlvl30"),PersistentDataType.INTEGER, 1);
-                }
-                default -> {
-                    //Hola
                 }
             }
             /*if(getMasteryLevel(p) == 1){ TODO esto es un test podria salir muy mal lo de arriba si lo pueden revisar con cuidado gracias

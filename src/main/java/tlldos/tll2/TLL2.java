@@ -206,11 +206,11 @@ public final class TLL2 extends JavaPlugin implements Listener{
     }
     public void pichaXd() {
         Random r = new Random();
-        double health = 20;
         if (Bukkit.getOnlinePlayers().size() < 1) return;
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (player.getGameMode() == GameMode.SURVIVAL) {
                 Location l = player.getLocation().clone();
+                double health = 20;
                 /*if (r.nextInt(2) == 1) {
                     int pX = (r.nextBoolean() ? -1 : 1) * (r.nextInt(25)) + 15;
                     int pZ = (r.nextBoolean() ? -1 : 1) * (r.nextInt(25)) + 15;
@@ -230,9 +230,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
                     player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, true, false, true));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, true, false, true));
                 }
-                if(Data.get(player).has(Utils.key("maestry_health"), PersistentDataType.INTEGER)){
-                    health += Data.get(player).get(Utils.key("maestry_health"), PersistentDataType.INTEGER); //Todo sin testear por favor revisarlo gracias
-                }
+                health += Data.get(player).get(Utils.key("maestry_health"), PersistentDataType.INTEGER); //Todo sin testear por favor revisarlo gracias
                 player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
 
                 /*var data = player.getPersistentDataContainer();
@@ -322,7 +320,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
         }else if(clase == 12){
             p.sendMessage(Format.format("&7&o??? te susurra: ¿Me pasas las Coordenadas de tu Base?"));
         }else if(clase == 13){
-            p.sendMessage(Format.format("&7&o??? te susurra: ¿Ya viste los nuevos Cambios de Dificultad?"));
+            p.sendMessage(Format.format("&7&o??? te susurra: ¿Ya viste los nuevos Cambios de Dificultad?")); //XD
         }else if(clase == 14){
             p.playSound(p.getLocation(),Sound.ENTITY_ELDER_GUARDIAN_CURSE,SoundCategory.MASTER,10.0F,1.0F);
         }else if(clase == 15){
@@ -342,20 +340,11 @@ public final class TLL2 extends JavaPlugin implements Listener{
         if(p.getInventory().getHelmet() != null && p.getInventory().getChestplate() != null && p.getInventory().getLeggings() != null && p.getInventory().getBoots() != null){
             if(p.getInventory().getHelmet().hasItemMeta() && p.getInventory().getChestplate().hasItemMeta() && p.getInventory().getLeggings().hasItemMeta() && p.getInventory().getBoots().hasItemMeta()){
                 if(p.getInventory().getHelmet().getItemMeta().hasCustomModelData() && p.getInventory().getChestplate().getItemMeta().hasCustomModelData() && p.getInventory().getLeggings().getItemMeta().hasCustomModelData() && p.getInventory().getBoots().getItemMeta().hasCustomModelData()){
-                    if(p.getInventory().getHelmet().getItemMeta().getCustomModelData() == 8010 && p.getInventory().getChestplate().getItemMeta().getCustomModelData() == 8010 && p.getInventory().getLeggings().getItemMeta().getCustomModelData() == 8010 && p.getInventory().getBoots().getItemMeta().getCustomModelData() == 8010){
-                        return true;
-                    }else{
-                        return false;
-                    }
-                }else{
-                    return false;
+                    return p.getInventory().getHelmet().getItemMeta().getCustomModelData() == 8010 && p.getInventory().getChestplate().getItemMeta().getCustomModelData() == 8010 && p.getInventory().getLeggings().getItemMeta().getCustomModelData() == 8010 && p.getInventory().getBoots().getItemMeta().getCustomModelData() == 8010;
                 }
-            }else{
-                return false;
             }
-        }else{
-            return false;
         }
+        return false;
     }
 
     public Configuration getBlockConfig() {
@@ -366,20 +355,12 @@ public final class TLL2 extends JavaPlugin implements Listener{
         if(p.getInventory().getHelmet() != null && p.getInventory().getChestplate() != null && p.getInventory().getLeggings() != null && p.getInventory().getBoots() != null){
             if(p.getInventory().getHelmet().hasItemMeta() && p.getInventory().getChestplate().hasItemMeta() && p.getInventory().getLeggings().hasItemMeta() && p.getInventory().getBoots().hasItemMeta()){
                 if(p.getInventory().getHelmet().getItemMeta().hasCustomModelData() && p.getInventory().getChestplate().getItemMeta().hasCustomModelData() && p.getInventory().getLeggings().getItemMeta().hasCustomModelData() && p.getInventory().getBoots().getItemMeta().hasCustomModelData()){
-                    if(p.getInventory().getHelmet().getItemMeta().getCustomModelData() == 47399 && p.getInventory().getChestplate().getItemMeta().getCustomModelData() == 47399 && p.getInventory().getLeggings().getItemMeta().getCustomModelData() == 47399 && p.getInventory().getBoots().getItemMeta().getCustomModelData() == 47399){
-                        return true;
-                    }else{
-                        return false;
-                    }
-                }else{
-                    return false;
+                    return p.getInventory().getHelmet().getItemMeta().getCustomModelData() == 47399 && p.getInventory().getChestplate().getItemMeta().getCustomModelData() == 47399 && p.getInventory().getLeggings().getItemMeta().getCustomModelData() == 47399 && p.getInventory().getBoots().getItemMeta().getCustomModelData() == 47399;
                 }
-            }else{
-                return false;
             }
-        }else{
-            return false;
         }
+        return false;
+
     }
 
     public void spawnMobNaturally(Player player, Block block){
