@@ -158,7 +158,7 @@ public class CustomEnchants implements Listener {
         var p = event.getPlayer();
         if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
             if((p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_PICKAXE) || p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_AXE)) && (p.getInventory().getItemInOffHand().getType().equals(Material.ENCHANTED_BOOK) && p.getInventory().getItemInOffHand().getItemMeta().hasEnchant(CustomEnchants.TELEPHATY))){
-
+                if(p.getInventory().getItemInMainHand().getItemMeta().hasLore() &&p.getInventory().getItemInMainHand().getItemMeta().getLore().contains("Encantamiento Ancestral"))return;
                 ItemStack pickaxe = p.getInventory().getItemInMainHand();
                 List<String> lore;
                 if(pickaxe.getItemMeta().hasLore()){
@@ -173,6 +173,7 @@ public class CustomEnchants implements Listener {
                 p.playSound(p.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
                 p.getInventory().getItemInOffHand().setType(Material.AIR);
             }else if(p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_PICKAXE)  && (p.getInventory().getItemInOffHand().getType().equals(Material.ENCHANTED_BOOK) && p.getInventory().getItemInOffHand().getItemMeta().hasEnchant(CustomEnchants.SMELTING_TOUCH))){
+                if(p.getInventory().getItemInMainHand().getItemMeta().hasLore() &&p.getInventory().getItemInMainHand().getItemMeta().getLore().contains("Encantamiento Ancestral"))return;
                 ItemStack pickaxx = p.getInventory().getItemInMainHand();
                 List<String> lorez;
                 if(pickaxx.getItemMeta().hasLore()){
@@ -187,6 +188,7 @@ public class CustomEnchants implements Listener {
                 p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
                 p.getInventory().getItemInOffHand().setType(Material.AIR);
             }else if(p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_SWORD)  && (p.getInventory().getItemInOffHand().getType().equals(Material.ENCHANTED_BOOK) && p.getInventory().getItemInOffHand().getItemMeta().hasEnchant(CustomEnchants.REVENGE))){
+                if(p.getInventory().getItemInMainHand().getItemMeta().hasLore() &&p.getInventory().getItemInMainHand().getItemMeta().getLore().contains("Encantamiento Ancestral"))return;
                 ItemStack pickaxe3 = p.getInventory().getItemInMainHand();
                 List<String> lorve;
                 if(pickaxe3.getItemMeta().hasLore()){
@@ -201,6 +203,7 @@ public class CustomEnchants implements Listener {
                 p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
                 p.getInventory().getItemInOffHand().setType(Material.AIR);
             }else if(p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_SWORD)  && (p.getInventory().getItemInOffHand().getType().equals(Material.ENCHANTED_BOOK) && p.getInventory().getItemInOffHand().getItemMeta().hasEnchant(CustomEnchants.CRITICAL_HIT))) {
+                if(p.getInventory().getItemInMainHand().getItemMeta().hasLore() &&p.getInventory().getItemInMainHand().getItemMeta().getLore().contains("Encantamiento Ancestral"))return;
                 ItemStack pickax43 = p.getInventory().getItemInMainHand();
                 List<String> lorvez;
                 if(pickax43.getItemMeta().hasLore()){
@@ -215,6 +218,7 @@ public class CustomEnchants implements Listener {
                 p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
                 p.getInventory().getItemInOffHand().setType(Material.AIR);
             } else if (p.getInventory().getItemInMainHand().getType().equals(Material.BOW) && (p.getInventory().getItemInOffHand().getType().equals(Material.ENCHANTED_BOOK) && p.getInventory().getItemInOffHand().getItemMeta().hasEnchant(CustomEnchants.BULLSEYE))) {
+                if(p.getInventory().getItemInMainHand().getItemMeta().hasLore() && p.getInventory().getItemInMainHand().getItemMeta().getLore().contains("Encantamiento Ancestral"))return;
                 List<String> lorvez;
                 ItemStack pickax43 = p.getInventory().getItemInMainHand();
                 if(pickax43.getItemMeta().hasLore()){
