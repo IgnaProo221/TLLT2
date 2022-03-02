@@ -78,11 +78,46 @@ public class MaestriaExp implements Listener{
             Bukkit.getOnlinePlayers().forEach(player -> {
                 player.sendMessage(format("&3MAESTRIA &8> &c&l" + p.getName() + "&7 ha aumentado su nivel. &e" + level + "&8 >> &6" + newLevel));
             });
-            if(getMasteryLevel(p) == 1){
+            switch (this.getMasteryExp(p)){
+                case 1, 2, 5, 8, 11, 14 -> {
+                    p.sendMessage(hp_plus);
+                    int ehp = data.has(Utils.key("maestry_health"), PersistentDataType.INTEGER) ? data.get(Utils.key("maestry_health"), PersistentDataType.INTEGER) : 0;
+                    data.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, ehp + 2);
+                }
+                case 3, 6, 9, 12 -> {
+                    p.sendMessage(att_plus);
+                    p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
+                }
+                case 4, 7, 13 -> {
+                    p.sendMessage(def_plus);
+                    p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue() +0.50);
+                }
+                case 10 -> {
+                    p.sendMessage(format("&3MAESTRIA &8> Has recibido un Buff de Vision Nocturna Permanente!"));
+                    p.sendMessage(format("&3MAESTRIA &8> &e&l¡PELIGRO! Ahora picar puede llamar la atencion de criaturas hostiles"));
+                    data.set(Utils.key("reachedlvl10"),PersistentDataType.INTEGER, 1);
+                }
+                case 15 -> p.sendMessage(format("&3MAESTRIA &8> Llegaste al Nivel 15, &el¡Felicidades! &c&lAhora afronta tu destino sin mas recompensas"));
+                case 20 -> {
+                    p.sendMessage(format("&3MAESTRIA &8> Has recibido un Buff de Haste I Permanente!"));
+                    p.sendMessage(format("&3MAESTRIA &8> &e&l¡PELIGRO! Ahora hay muchas mas criaturas dispuestas a acabar contigo!"));
+                    data.set(Utils.key("reachedlvl20"),PersistentDataType.INTEGER, 1);
+                }
+                case 30 -> {
+                    p.sendMessage(format("&3MAESTRIA &8> Has recibido un Buff de Haste II Permanente!"));
+                    p.sendMessage(format("&3MAESTRIA &8> &e&l¡PELIGRO! El Cosmos esta enfadado contigo!"));
+                    p.sendMessage(PREFIX,format("&e&lFelicidades por llegar al Nivel 30, no hay mas camino para tu trabajo de Mineria, ¡Buen Trabajo!"));
+                    data.set(Utils.key("reachedlvl20"),PersistentDataType.INTEGER, 0);
+                    data.set(Utils.key("reachedlvl30"),PersistentDataType.INTEGER, 1);
+                }
+                default -> {
+                    //Hola
+                }
+            }
+            /*if(getMasteryLevel(p) == 1){ TODO esto es un test podria salir muy mal lo de arriba si lo pueden revisar con cuidado gracias
                 p.sendMessage(hp_plus);
                 p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() + 2);
-            }
-            if(getMasteryLevel(p) == 2){
+            }else if(getMasteryLevel(p) == 2){
                 p.sendMessage(hp_plus);
                 p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue() + 2);
             }else if(getMasteryLevel(p) == 3){
@@ -134,8 +169,8 @@ public class MaestriaExp implements Listener{
                 p.sendMessage(PREFIX,format("&e&lFelicidades por llegar al Nivel 30, no hay mas camino para tu trabajo de Mineria, ¡Buen Trabajo!"));
                 data.set(Utils.key("reachedlvl20"),PersistentDataType.INTEGER, 0);
                 data.set(Utils.key("reachedlvl30"),PersistentDataType.INTEGER, 1);
-            }
-            return;
+            }*/
+
         }
 
     }
@@ -147,12 +182,12 @@ public class MaestriaExp implements Listener{
         var block = e.getBlockPlaced();
         var state = block.getState();
 
-        if(block.getType() == Material.COAL_ORE || block.getType() == Material.COPPER_ORE || block.getType() == Material.IRON_ORE
+        if(block.getType().name().toLowerCase().contains("ore") || (block.getType() == Material.COAL_ORE || block.getType() == Material.COPPER_ORE || block.getType() == Material.IRON_ORE
         || block.getType() == Material.GOLD_ORE || block.getType() == Material.LAPIS_ORE || block.getType() == Material.REDSTONE_ORE
         || block.getType() == Material.EMERALD_ORE || block.getType() == Material.DIAMOND_ORE || block.getType() == Material.NETHER_QUARTZ_ORE
         || block.getType() == Material.NETHER_GOLD_ORE || block.getType() == Material.DEEPSLATE_DIAMOND_ORE || block.getType() == Material.DEEPSLATE_EMERALD_ORE
         || block.getType() == Material.DEEPSLATE_LAPIS_ORE || block.getType() == Material.DEEPSLATE_REDSTONE_ORE || block.getType() == Material.DEEPSLATE_GOLD_ORE
-        || block.getType() == Material.DEEPSLATE_IRON_ORE || block.getType() == Material.DEEPSLATE_COPPER_ORE || block.getType() == Material.DEEPSLATE_COAL_ORE) {
+        || block.getType() == Material.DEEPSLATE_IRON_ORE || block.getType() == Material.DEEPSLATE_COPPER_ORE || block.getType() == Material.DEEPSLATE_COAL_ORE)) {
 
             //TileState data = (TileState)state;
             state.setMetadata("no_exp", new FixedMetadataValue(plugin,"true"));
@@ -200,7 +235,17 @@ public class MaestriaExp implements Listener{
 
 
     public int getGiveExp(Block block) {
-        if(block.getType() == Material.COAL_ORE){
+        return switch (block.getType()){
+            case COAL_ORE, COPPER_ORE, NETHER_QUARTZ_ORE, NETHER_GOLD_ORE -> 1;
+            case IRON_ORE, GOLD_ORE, LAPIS_ORE -> 5;
+            case REDSTONE_ORE, DEEPSLATE_COAL_ORE, DEEPSLATE_COPPER_ORE, DEEPSLATE_REDSTONE_ORE, DEEPSLATE_LAPIS_ORE, DIAMOND_ORE -> 3;
+            case EMERALD_ORE, DEEPSLATE_DIAMOND_ORE -> 10;
+            case DEEPSLATE_IRON_ORE, DEEPSLATE_GOLD_ORE -> 7;
+            case DEEPSLATE_EMERALD_ORE -> 15;
+            default -> 0;
+            //Todo lo mismo que arriba revisar bien porfavor
+        };
+        /*if(block.getType() == Material.COAL_ORE){
             return 1;
         }else if(block.getType() == Material.IRON_ORE){
             return 5;
@@ -238,7 +283,7 @@ public class MaestriaExp implements Listener{
             return 15;
         } else {
             return 0;
-        }
+        }*/
     }
 
 
