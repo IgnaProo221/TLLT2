@@ -64,11 +64,12 @@ public class DeathListeners extends ListenerAdapter implements Listener {
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
         Message msg = event.getMessage();
-        if (msg.getContentRaw().equals("tll!test")) {
+        //Ya no me dio risa perdon
+        /*if (msg.getContentRaw().equals("tll!test")) {
             MessageChannel channel = event.getChannel();
             channel.sendMessage("☠️\uD83D\uDC80 Server mutanteado por mutant \uD83D\uDC80☠️ \n" +
                     "☠️\uD83D\uDC80 https://www.youtube.com/watch?v=sOvyNa9-39c \uD83D\uDC80☠️").queue();
-        }
+        }*/
         if (msg.getContentRaw().equals("tll!players")) {
             EmbedBuilder eb = new EmbedBuilder();
             eb.setFooter("TheLastLifeT2.jar", "https://cdn.discordapp.com/attachments/906642578013843526/943284426442436679/hardcorehearth-export.png");
@@ -76,10 +77,12 @@ public class DeathListeners extends ListenerAdapter implements Listener {
             eb.setTitle("Jugadores conectados en estos momentos:");
             StringBuilder jugadores = new StringBuilder();
             for (Player players : Bukkit.getOnlinePlayers()) {
+                String hp = "" + players.getHealth();
+                String result = hp.substring(0,4);
                 if (jugadores.length() > 0) {
                     jugadores.append('\n');
                 }
-                jugadores.append(players.getName() +" :heart: : "+players.getHealth());
+                jugadores.append(players.getName() +" :heart: : " + result);
             }
             eb.setDescription(jugadores.length() > 0 ? jugadores : "No hay jugadores conectados en estos momentos.");
             eb.setColor(new Color(252, 186, 3));
@@ -113,7 +116,6 @@ public class DeathListeners extends ListenerAdapter implements Listener {
     public void muerteEvento(PlayerDeathEvent e){
         Player p = e.getEntity();
         Location location = p.getLocation().clone();
-        p.sendActionBar(format("&4&lGame Over " + p.getName()));
         Bukkit.getScoreboardManager().getMainScoreboard().getTeam("11-Muerto").addEntry(p.getName());
         World world = Bukkit.getWorld("world");
         Location loc = p.getLocation();
@@ -163,7 +165,7 @@ public class DeathListeners extends ListenerAdapter implements Listener {
             }else{
                 p.sendMessage(format("&6no se detecto el mundo y la estructura no se genero, rip bozo XD #packwatch"));
             }
-        },3L);
+        },6L);
         for (Player players : Bukkit.getOnlinePlayers()){
 
             players.sendTitle(format("&c&l&k|||  &6&l&kThe Last Life  &c&l&k|||"), format("&7¡El jugador " + p.getName() + " ha muerto!"), 0,80,0);
@@ -232,8 +234,6 @@ public class DeathListeners extends ListenerAdapter implements Listener {
             }, 60);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 players.sendTitle(format("&c&l&k|||  &6&lThe Last Life  &c&l&k|||"), format("&7¡El jugador " + p.getName() + " ha muerto!"), 0,80,20);
-                players.sendActionBar(ChatColor.GOLD + "" + ChatColor.BOLD + e.getDeathMessage());
-
             }, 65);
         }
 

@@ -66,6 +66,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
             new DeathListeners(this);
 
             cargarEventos();
+            registrarCrafteos();
             tick();
             //tickTormenta();
             //dementetemperatura();
@@ -106,6 +107,11 @@ public final class TLL2 extends JavaPlugin implements Listener{
         }
 
         getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "¡El Plugin se deshabilito correctamente!");
+    }
+
+    public void registrarCrafteos(){
+        Crafteos.craftDaga();
+        Crafteos.craftBloodsaber();
     }
 
     public void cargarEventos(){

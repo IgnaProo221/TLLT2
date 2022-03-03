@@ -9,10 +9,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.TileState;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.entity.Drowned;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Silverfish;
-import org.bukkit.entity.Zombie;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -204,17 +201,20 @@ public class MaestriaExp implements Listener{
         var level10 = data.get(new NamespacedKey(plugin,"reachedlvl10"),PersistentDataType.INTEGER);
         var level20 = data.get(new NamespacedKey(plugin,"reachedlvl20"),PersistentDataType.INTEGER);
         var level30 = data.get(new NamespacedKey(plugin,"reachedlvl30"),PersistentDataType.INTEGER);
-        int minerspawn = new Random().nextInt(100);
+        int minerspawn = new Random().nextInt(10000);
         if (!event.getBlock().getType().name().toLowerCase().contains("ore"))
             return;
         if (event.getBlock().getState().hasMetadata("no_exp")) {
             plugin.getLocations().remove(event.getBlock().getLocation());
             return;
         }
-        if(minerspawn >= 95){
+        if(minerspawn == 1){
             if(level10 >= 1){
-                p.sendTitle(format("&c&l¡PELIGRO!"),format("&cUn mob va a spawnear"),0,200,0);
+                p.sendTitle(format("&c&l¡PELIGRO!"),format("&cUn mob va a spawnear"),0,180,0);
                 p.playSound(p.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 10.0F, -1.0F);
+                Bukkit.getScheduler().runTaskLater(plugin,()->{
+                    event.getBlock().getLocation().createExplosion(5,false,true);
+                },175);
                 Bukkit.getScheduler().runTaskLater(plugin,()->{
                     int randommob = new Random().nextInt(3);
                     if(randommob == 1){
@@ -227,7 +227,37 @@ public class MaestriaExp implements Listener{
                         var escarabajolol = event.getBlock().getLocation().getWorld().spawn(event.getBlock().getLocation(), Silverfish.class);
                         Mobs.escarabajoGoliath(escarabajolol);
                     }
-                },240L);
+                },180L);
+            }
+        }else if(minerspawn == 2){
+            if(level20 >= 1){
+                p.sendTitle(format("&c&l¡PELIGRO!"),format("&cUn mob va a spawnear"),0,180,0);
+                p.playSound(p.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 10.0F, -1.0F);
+                Bukkit.getScheduler().runTaskLater(plugin,()->{
+                    event.getBlock().getLocation().createExplosion(5,false,true);
+                },175);
+                Bukkit.getScheduler().runTaskLater(plugin,()->{
+                    int randommob = new Random().nextInt(2);
+                    if(randommob == 1){
+                        var creeperore = event.getBlock().getLocation().getWorld().spawn(event.getBlock().getLocation(), Creeper.class);
+                        Mobs.oreCreeper(creeperore);
+                    }else {
+                        var spectreass = event.getBlock().getLocation().getWorld().spawn(event.getBlock().getLocation(),Skeleton.class);
+                        Mobs.spectreAssasin(spectreass);
+                    }
+                },180L);
+            }
+        }else if(minerspawn == 3){
+            if(level30 >= 1){
+                p.sendTitle(format("&c&l¡PELIGRO!"),format("&cUn mob va a spawnear"),0,180,0);
+                p.playSound(p.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 10.0F, -1.0F);
+                Bukkit.getScheduler().runTaskLater(plugin,()->{
+                    event.getBlock().getLocation().createExplosion(5,false,true);
+                },175);
+                Bukkit.getScheduler().runTaskLater(plugin,()->{
+                    var irongollol = event.getBlock().getLocation().getWorld().spawn(event.getBlock().getLocation(),IronGolem.class);
+                    Mobs.lostGolem(irongollol);
+                },180L);
             }
         }
     }
