@@ -653,10 +653,11 @@ public class Mobs implements Listener{
     }
 
     public static void exoGolem(IronGolem self){
-        self.setCustomName(format("&c&lEExperiment JD78K"));
+        self.setCustomName(format("&c&lExperiment JD78K"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(150.0);
         self.setHealth(150);
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(25.0);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXPERIMENT_1"), PersistentDataType.STRING, "EXPERIMENT_1");
         CraftIronGolem craft = ((CraftIronGolem) self);
         EntityIronGolem entityIronGolem = craft.getHandle();
         try{
@@ -700,7 +701,7 @@ public class Mobs implements Listener{
         flecha1efect.setBasePotionData(new PotionData(PotionType.SLOWNESS));
         flecha1efect.addCustomEffect(new PotionEffect(PotionEffectType.SLOW, 400, 1), true);
         flecha1efect.addCustomEffect(new PotionEffect(PotionEffectType.POISON, 400, 1), true);
-        flecha1efect.addCustomEffect(new PotionEffect(PotionEffectType.CONFUSION, 400, 1), true);
+        flecha1efect.addCustomEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 400, 1), true);
         flecha1.setItemMeta(flecha1efect);
 
         ItemStack ballesta1 = new ItemStack(Material.CROSSBOW);

@@ -62,6 +62,12 @@ public class DropsListeners implements Listener{
                 e.getDrops().clear();
                 e.getDrops().add(MobDrops.blighdrop9());
             }
+        }else if(entity instanceof IronGolem ironGolem){
+            if(ironGolem.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXPERIMENT_1"),PersistentDataType.STRING)){
+                e.getDrops().clear();
+                e.getDrops().add(Items.metaldes());
+                e.getDrops().add(Items.celulaEnergia());
+            }
         }
     }
 
