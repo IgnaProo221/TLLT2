@@ -353,6 +353,108 @@ public class DeathListeners extends ListenerAdapter implements Listener {
                 return "Desconocida";
         }
     }
+    public void muerteMessage(Player player, Player players) {
+        switch (player.getName()) {
+            case "Mutant17":
+                players.sendMessage(format("&7" +player.getName() + ". But se suicida:"));
+                break;
+            case "Itz_Antonio_PvP":
+                players.sendMessage(format("&7" +player.getName() + ". Darkness 3 esta a la vuelta de la esquina"));
+                break;
+
+            case "Carrotw":
+                players.sendMessage(format("&7" +player.getName() + ". El cliente si llevaba virus"));
+                break;
+            case "JohanBigCum":
+                players.sendMessage(format("&7" +player.getName() + ". Has el 5to trailer de tu muerte"));
+                break;
+            case "cPepos":
+                players.sendMessage(format("&7" +player.getName() + ". Dios a muerte y se mato solo"));
+                break;
+            case "FoquitaLover":
+                players.sendMessage(format("&7" +player.getName() + ". El Dev numero #47 no te sirvio"));
+                break;
+            case "ItzFel17":
+                players.sendMessage(format("&7" +player.getName() + ". Muerte por no hacer el plugin (Jugar SB es mas importante)"));
+                break;
+            case "xAlexPlaysx":
+                players.sendMessage(format("&7" +player.getName() + ". Tu muerte consumio mas tu alma que el LoL"));
+                break;
+            case "LechugaMC17":
+                players.sendMessage(format("&7" +player.getName() + ". 500+ horas en muerte"));
+                break;
+            case "SeVen_007":
+                players.sendMessage(format("&7" +player.getName() + ". Literalmente modelo lo que lo mato"));
+                break;
+            case "cBaguette17":
+                players.sendMessage(format("&7" +player.getName() + ". BananaSlip.mp4"));
+                break;
+            case "wHermes17":
+                players.sendMessage(format("&7" +player.getName() + ". Intenta Respirar"));
+                break;
+            case "Pepe3012":
+                players.sendMessage(format("&7" +player.getName() + ". POV MUERTO POV PIP"));
+                break;
+            case "SkarbyPalace":
+                players.sendMessage(format("&7" +player.getName() + ". Dedicale el Cover de tu muerte"));
+                break;
+            case "NovaKingdom":
+                players.sendMessage(format("&7" +player.getName() + ". Hacer modelos 3d hasta la muerte"));
+                break;
+            case "THESMOL_T":
+                players.sendMessage(format("&7" +player.getName() + ". Esta vez la armor stand no te salvara"));
+                break;
+            case "Gus_Gus19":
+                players.sendMessage(format("&7" +player.getName() + ". SQUID GAMES!!"));
+                break;
+            case "Blackstamp":
+                players.sendMessage(format("&7" +player.getName() + ". Volaste hasta la galaxia Sussy"));
+                break;
+            case "Tom_555":
+                players.sendMessage(format("&7" +player.getName() + ". Si no murio por internet gano el servidor"));
+                break;
+            case "1r_7an":
+                players.sendMessage(format("&7" +player.getName() + ". Tremendo oso polar"));
+                break;
+            case "kennyelsuave":
+                players.sendMessage(format("&7" +player.getName() + ". Ha muerto por el quien lloraban"));
+                break;
+            case "Mikel_Craft":
+                players.sendMessage(format("&7" +player.getName() + ". Desde hacer builds hasta morirse en TLL 2"));
+                break;
+            case "SalvaGamerVZ":
+                players.sendMessage(format("&7" +player.getName() + ". Intenta tener buen Internet"));
+                break;
+            case "Gatin72":
+                players.sendMessage(format("&7" +player.getName() + ". Eres un pendej0 ramirez"));
+                break;
+            case "Yisusxdd123":
+                players.sendMessage(format("&7" +player.getName() + ". Cambiar de canciones rapido no te salvara"));
+                break;
+            case "Storm_WaterTime":
+                players.sendMessage(format("&7" +player.getName() + ". Intenta no ser imbecil"));
+                break;
+            case "The_whiterOvo":
+                players.sendMessage(format("&7" +player.getName() + ". Las End Crystals sirvieron de poco"));
+                break;
+            case "Diegot_Manc":
+                players.sendMessage(format("&7" +player.getName() + ". Dios a muerto y se murio solo"));
+                break;
+            case "OmkSpar_":
+                players.sendMessage(format("&7" +player.getName() + ". Cambiarte de cuenta no servira de nada"));
+                break;
+            case "FaboXVII":
+                players.sendMessage(format("&7" +player.getName() + ". Eres igual de manco que Yair17"));
+                break;
+            case "Rodrigoley":
+                players.sendMessage(format("&7" +player.getName() + ". La uwunu no gano..."));
+                break;
+            case "FantaDeMole":
+                players.sendMessage(format("&7" +player.getName() + ". "));
+                break;
+
+        }
+    }
 
 
 }
