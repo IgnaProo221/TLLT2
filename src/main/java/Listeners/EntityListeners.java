@@ -137,7 +137,7 @@ public class EntityListeners implements Listener {
             if(pa.getInventory().getItemInMainHand() != null){
                 if(pa.getInventory().getItemInMainHand().hasItemMeta()){
                     if (pa.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.REVENGE)) {
-                        if(entity instanceof Pillager || entity instanceof Vindicator || entity instanceof Evoker || entity instanceof Illusioner || entity instanceof Witch || entity instanceof Vex || entity instanceof Ravager){
+                        if (entity instanceof Raider || ( entity instanceof Vex || entity instanceof Pillager || entity instanceof Vindicator || entity instanceof Evoker || entity instanceof Illusioner || entity instanceof Witch || entity instanceof Ravager)){
                             event.setDamage(event.getDamage() * 1.25);
                         }
                     } else if (pa.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.CRITICAL_HIT)){
@@ -152,7 +152,8 @@ public class EntityListeners implements Listener {
                 if (pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4006) {
                     entity.setFreezeTicks(400);
                 } else if (pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4010) {
-                    pa.setHealth(0.5 / pa.getMaxHealth());
+                    //pa.setHealth(0.5 / pa.getMaxHealth());
+                    pa.setHealth(pa.getHealth() + (0.5 / pa.getMaxHealth()));
                     }else if(pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 18129){
                     Monster monster = (Monster) entity;
                     monster.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200,1, false, false, false));

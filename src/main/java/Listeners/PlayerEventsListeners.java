@@ -3,10 +3,7 @@ package Listeners;
 import Extras.EventosItems;
 import Extras.Items;
 import Extras.Sacrificios;
-import Utilities.CustomEnchants;
-import Utilities.Format;
-import Utilities.Utils;
-import Utilities.Warn;
+import Utilities.*;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -23,6 +20,7 @@ import org.bukkit.event.entity.EntityExhaustionEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
 import tlldos.tll2.TLL2;
 
@@ -75,7 +73,8 @@ public class PlayerEventsListeners implements Listener {
                 p.damage(0.2D);
                 Sacrificios.start(p);
                 p.sendMessage(Format.format(String.format("&cHaz hecho un sacrificio #%s", totalSacrifices)));
-                p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()-2.0D);
+                //p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()-2.0D);
+                p.getPersistentDataContainer().set(Utils.key("NEGATIVE_HEALTH"), PersistentDataType.INTEGER, p.getPersistentDataContainer().get(Utils.key("NEGATIVE_HEALTH"), PersistentDataType.INTEGER) + 2);
                 giveReward(p);
             }
         }

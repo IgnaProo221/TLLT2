@@ -1,5 +1,6 @@
 package Listeners;
 
+import Utilities.Data;
 import Utilities.Utils;
 import org.bukkit.NamespacedKey;
 import org.bukkit.boss.BossBar;
@@ -29,7 +30,11 @@ public class JoinListeners implements Listener {
         var level20 = data.get(new NamespacedKey(plugin,"reachedlvl20"),PersistentDataType.INTEGER);
         var level30 = data.get(new NamespacedKey(plugin,"reachedlvl30"),PersistentDataType.INTEGER);
         var extra_health =  data.get(Utils.key("maestry_health"), PersistentDataType.INTEGER);
+        var negative_health = data.get(Utils.key("negative_health"), PersistentDataType.INTEGER);
 
+        if(negative_health == null){
+            data.set(Utils.key("negative_health"), PersistentDataType.INTEGER, 0);
+        }
 
         if(extra_health == null){
             data.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, 0);

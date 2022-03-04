@@ -151,6 +151,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                 var immunityKey = new NamespacedKey(plugin, "inmunity");
                 var immunity = data.get(immunityKey, PersistentDataType.INTEGER);
 
+
                 if (immunity == null) {
                     data.set(immunityKey, PersistentDataType.INTEGER, 1);
                     player.sendMessage(Format.PREFIX + format("¡&7Se ha activo el modo &cDios!"));

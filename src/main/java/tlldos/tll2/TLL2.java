@@ -237,6 +237,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
                     player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, true, false, true));
                 }
                 health += Data.get(player).get(Utils.key("maestry_health"), PersistentDataType.INTEGER); //Todo sin testear por favor revisarlo gracias
+                health -= Data.get(player).get(Utils.key("negative_health"), PersistentDataType.INTEGER); //probar
                 player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
 
                 /*var data = player.getPersistentDataContainer();
