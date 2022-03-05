@@ -172,13 +172,6 @@ public class TotemListeners implements Listener {
 
                     if (TotemCara == 1) {
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
-
-                        for (Player players : Bukkit.getOnlinePlayers()) {
-                            players.sendMessage(ChatColor.DARK_GRAY + "¡El jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.YELLOW + "tótem!" + ChatColor.GRAY + "(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
-                            players.sendMessage(ChatColor.RED + "¡El tótem ha caído en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "número 1!");
-                            players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Ningún efecto.");
-                        }
-
                         EmbedBuilder eb = new EmbedBuilder();
                         TextChannel channel = DeathListeners.getJda().getTextChannelById("949669572179533854");
 
@@ -194,34 +187,54 @@ public class TotemListeners implements Listener {
                         if (channel != null) {
                             channel.sendMessage(eb.build()).queue();
                         }
+                        for (Player players : Bukkit.getOnlinePlayers()) {
+                            players.sendMessage(ChatColor.DARK_GRAY + "¡El jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.YELLOW + "tótem!" + ChatColor.GRAY + "(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
+                            players.sendMessage(ChatColor.RED + "¡El tótem ha caído en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "número 1!");
+                            players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Ningún efecto.");
+                        }
+
+
                     } else if (TotemCara == 2) {
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
+                        EmbedBuilder eb = new EmbedBuilder();
+                        TextChannel channel = DeathListeners.getJda().getTextChannelById("949669572179533854");
 
+                        eb.setFooter("TheLastLifeT2.jar", "https://cdn.discordapp.com/attachments/906642578013843526/943284426442436679/hardcorehearth-export.png");
+                        eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
+                        eb.setTitle("**¡El jugador " + p.getName() + " ha usado un Tótem!**");
+                        eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
+                        eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
+                        eb.addField(":map: **Coordenadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
+                        eb.addField(":game_die: **Numero**","2.- Speed II por 10 segundos",true);
+                        eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674197188214824/dado2.png");
+                        eb.setColor(new Color(252, 186, 3));
+                        if (channel != null) {
+                            channel.sendMessage(eb.build()).queue();
+                        }
                         for (Player players : Bukkit.getOnlinePlayers()) {
                             players.sendMessage(ChatColor.DARK_GRAY + "¡El jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.YELLOW + "tótem!" + ChatColor.GRAY + "(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
                             players.sendMessage(ChatColor.RED + "¡El tótem ha caído en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "número 2!");
                             players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Speed II por 10 segundos.");
 
                             Bukkit.getScheduler().runTaskLater(plugin, () -> p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 1)), 10);
-                            EmbedBuilder eb = new EmbedBuilder();
-                            TextChannel channel = DeathListeners.getJda().getTextChannelById("949669572179533854");
-
-                            eb.setFooter("TheLastLifeT2.jar", "https://cdn.discordapp.com/attachments/906642578013843526/943284426442436679/hardcorehearth-export.png");
-                            eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
-                            eb.setTitle("**¡El jugador " + p.getName() + " ha usado un Tótem!**");
-                            eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
-                            eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
-                            eb.addField(":map: **Coordenadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-                            eb.addField(":game_die: **Numero**","2.- Speed II por 10 segundos",true);
-                            eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674197188214824/dado2.png");
-                            eb.setColor(new Color(252, 186, 3));
-                            if (channel != null) {
-                                channel.sendMessage(eb.build()).queue();
-                            }
                         }
                     } else if (TotemCara == 3) {
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
+                        EmbedBuilder eb = new EmbedBuilder();
+                        TextChannel channel = DeathListeners.getJda().getTextChannelById("949669572179533854");
 
+                        eb.setFooter("TheLastLifeT2.jar", "https://cdn.discordapp.com/attachments/906642578013843526/943284426442436679/hardcorehearth-export.png");
+                        eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
+                        eb.setTitle("**¡El jugador " + p.getName() + " ha usado un Tótem!**");
+                        eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
+                        eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
+                        eb.addField(":map: **Coordenadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
+                        eb.addField(":game_die: **Numero**","3.- Fuerza y Haste II por 5 segundos",true);
+                        eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674264490045480/dado3.png");
+                        eb.setColor(new Color(252, 186, 3));
+                        if (channel != null) {
+                            channel.sendMessage(eb.build()).queue();
+                        }
                         for (Player players : Bukkit.getOnlinePlayers()) {
                             players.sendMessage(ChatColor.DARK_GRAY + "¡El jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.YELLOW + "tótem!" + ChatColor.GRAY + "(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
                             players.sendMessage(ChatColor.RED + "¡El tótem ha caído en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "número 3!");
@@ -231,25 +244,24 @@ public class TotemListeners implements Listener {
                                 p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 1));
                                 p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 100, 1));
                             }, 10);
-                            EmbedBuilder eb = new EmbedBuilder();
-                            TextChannel channel = DeathListeners.getJda().getTextChannelById("949669572179533854");
-
-                            eb.setFooter("TheLastLifeT2.jar", "https://cdn.discordapp.com/attachments/906642578013843526/943284426442436679/hardcorehearth-export.png");
-                            eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
-                            eb.setTitle("**¡El jugador " + p.getName() + " ha usado un Tótem!**");
-                            eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
-                            eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
-                            eb.addField(":map: **Coordenadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-                            eb.addField(":game_die: **Numero**","3.- Fuerza y Haste II por 5 segundos",true);
-                            eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674264490045480/dado3.png");
-                            eb.setColor(new Color(252, 186, 3));
-                            if (channel != null) {
-                                channel.sendMessage(eb.build()).queue();
-                            }
                         }
                     } else if (TotemCara == 4) {
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
+                        EmbedBuilder eb = new EmbedBuilder();
+                        TextChannel channel = DeathListeners.getJda().getTextChannelById("949669572179533854");
 
+                        eb.setFooter("TheLastLifeT2.jar", "https://cdn.discordapp.com/attachments/906642578013843526/943284426442436679/hardcorehearth-export.png");
+                        eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
+                        eb.setTitle("**¡El jugador " + p.getName() + " ha usado un Tótem!**");
+                        eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
+                        eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
+                        eb.addField(":map: **Coordenadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
+                        eb.addField(":game_die: **Numero**","4.- Wither, Slowness y Veneno II por 10 segundos",true);
+                        eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674332517441586/dado4.png");
+                        eb.setColor(new Color(252, 186, 3));
+                        if (channel != null) {
+                            channel.sendMessage(eb.build()).queue();
+                        }
                         for (Player players : Bukkit.getOnlinePlayers()) {
                             players.sendMessage(ChatColor.DARK_GRAY + "¡El jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.YELLOW + "tótem!" + ChatColor.GRAY + "(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
                             players.sendMessage(ChatColor.RED + "¡El tótem ha caído en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "número 4!");
@@ -260,21 +272,6 @@ public class TotemListeners implements Listener {
                                 p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 1));
                                 p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 200, 1));
                             }, 10);
-                            EmbedBuilder eb = new EmbedBuilder();
-                            TextChannel channel = DeathListeners.getJda().getTextChannelById("949669572179533854");
-
-                            eb.setFooter("TheLastLifeT2.jar", "https://cdn.discordapp.com/attachments/906642578013843526/943284426442436679/hardcorehearth-export.png");
-                            eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
-                            eb.setTitle("**¡El jugador " + p.getName() + " ha usado un Tótem!**");
-                            eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
-                            eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
-                            eb.addField(":map: **Coordenadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-                            eb.addField(":game_die: **Numero**","4.- Wither, Slowness y Veneno II por 10 segundos",true);
-                            eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674332517441586/dado4.png");
-                            eb.setColor(new Color(252, 186, 3));
-                            if (channel != null) {
-                                channel.sendMessage(eb.build()).queue();
-                            }
                         }
                     } else if (TotemCara == 5) {
 
