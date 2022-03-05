@@ -27,11 +27,11 @@ public class BlastStormListeners implements Listener {
 
     public static void createBossBar() {
         if (bossBar == null) {
-            bossBar = Bukkit.createBossBar(Format.format("&f♥         &6&lBlast Storm: " + getTime() +  "         &f♥"), BarColor.YELLOW, BarStyle.SEGMENTED_6);
+            bossBar = Bukkit.createBossBar(Format.format("&f马         &6&lBlast Storm: " + getTime() +  "         &f马"), BarColor.YELLOW, BarStyle.SEGMENTED_6);
         }
 
         TaskBossBarID = Bukkit.getScheduler().scheduleSyncRepeatingTask(Utils.getPlugin(), () -> {
-            bossBar.setTitle(Format.format("&f♥         &6&lBlast Storm: " + getTime() +  "         &f♥"));
+            bossBar.setTitle(Format.format("&f马         &6&lBlast Storm: " + getTime() +  "         &f马"));
         }, 0L, 20L);
     }
     @EventHandler

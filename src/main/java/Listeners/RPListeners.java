@@ -15,7 +15,7 @@ public class RPListeners implements Listener{
             ChatColor.RED + "1. Descarga el texture pack. \n" +
             ChatColor.GOLD + "Este esta en el canal de Recursos del Discord. \n" +
             ChatColor.RED + "2. Pega el archivo en resourcepack en la carpeta de .minecraft. \n" +
-            ChatColor.GOLD + "Una vez hecho: \n" +
+            ChatColor.GREEN + "Una vez hecho: \n" +
             ChatColor.RED + "3. Activa el texture pack y\n" + // mensaje de arriba
             ChatColor.GOLD + "después selecciona el lenguaje custom: 'The Last Life' ";
 
@@ -27,7 +27,7 @@ public class RPListeners implements Listener{
     public void onResourcePackChange(PlayerLocaleChangeEvent e){
         var player = e.getPlayer();
         var locale = e.getLocale().toString();
-        if(locale.contains("TLL01_en_us") || locale.contains("TLL01_es_ar") || locale.contains("TLL01_es_cl") ||locale.contains("TLL01_es_es") || locale.contains("TLL01_es_mx")){ // el número uno es la versión del IDIOMA rp, si se cambia, debes cambiar lo demas (Incluye pack.mcmeta) y actualizar el rp
+        if(locale.contains("TLL001_en_us") || locale.contains("TLL001_es_ar") || locale.contains("TLL001_es_cl") ||locale.contains("TLL001_es_es") || locale.contains("TLL001_es_mx")){ // el número uno es la versión del IDIOMA rp, si se cambia, debes cambiar lo demas (Incluye pack.mcmeta) y actualizar el rp
             player.sendMessage("");
         } else player.kickPlayer(NO_TXT);
     }

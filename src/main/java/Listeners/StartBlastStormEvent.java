@@ -25,13 +25,13 @@ public class StartBlastStormEvent extends Event {
     public String getTitleStorm(int tierLevel) {
 
         if (tierLevel == 1) {
-            return format("&f♥    &6&lBlast Storm &6Tier &7I    &f♥");
+            return format("&f娜    &6&lBlast Storm &6Tier &7I    &f娜");
         } else if (tierLevel == 2) {
 
-            return format("&f♥    &6&lBlast Storm &6Tier &7II    &f♥");
+            return format("&f艾    &6&lBlast Storm &6Tier &7II    &f艾");
         } else if (tierLevel == 3) {
 
-            return format("&f♥    &6&lBLAST STORM &6TIER &c&lIII    &f♥");
+            return format("&f卡    &6&lBLAST STORM &6TIER &c&lIII    &f卡");
 
         } else {
             return "&6&lBlast Storm";
@@ -55,7 +55,7 @@ public class StartBlastStormEvent extends Event {
 
         } else if (tierLevel == 2) {
 
-            return format("&8¡Que comience el Fin!");
+            return format("&8¡Que comience el fin!");
         } else if (tierLevel == 3) {
 
             return format("&8¡Sobrevive y prueba el &7SUFRIMIENTO!");
