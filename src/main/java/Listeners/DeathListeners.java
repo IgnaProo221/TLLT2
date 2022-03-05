@@ -188,6 +188,7 @@ public class DeathListeners extends ListenerAdapter implements Listener {
             players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Fatum tuum non potes effugere, &c&lsuperesse vel perit"));
             players.sendMessage(ChatColor.GRAY + "Coordenadas: X: " + p.getLocation().getBlockX() + ", Y: " + p.getLocation().getBlockY() + ", Z: " + p.getLocation().getBlockZ());
             players.sendMessage(ChatColor.GRAY + "Dimensión: " +  dimension(p.getLocation()));
+            muerteMessage(p,players);
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 players.sendTitle(format("&c&l&k|||  &6&l&kThe Last Life  &c&l&k|||"), format("&7¡El jugador " + p.getName() + " ha muerto!"), 0,80,0);
 
@@ -250,7 +251,7 @@ public class DeathListeners extends ListenerAdapter implements Listener {
         }
 
         EmbedBuilder eb = new EmbedBuilder();
-        TextChannel channel = jda.getTextChannelById("907663173144969278");
+        TextChannel channel = jda.getTextChannelById("949668384394604605");
 
         LocalDate Fecha = LocalDate.now();
 
@@ -405,7 +406,7 @@ public class DeathListeners extends ListenerAdapter implements Listener {
                 players.sendMessage(format("&7" +player.getName() + ". Intenta Respirar"));
                 break;
             case "Pepe3012":
-                players.sendMessage(format("&7" +player.getName() + ". POV MUERTO POV PIP"));
+                players.sendMessage(format("&7" +player.getName() + ". https://media.discordapp.net/attachments/911782286607908886/949439071007166554/pepedospuntos.gif"));
                 break;
             case "SkarbyPalace":
                 players.sendMessage(format("&7" +player.getName() + ". Dedicale el Cover de tu muerte"));
@@ -462,7 +463,7 @@ public class DeathListeners extends ListenerAdapter implements Listener {
                 players.sendMessage(format("&7" +player.getName() + ". La uwunu no gano..."));
                 break;
             case "FantaDeMole":
-                players.sendMessage(format("&7" +player.getName() + ". "));
+                players.sendMessage(format("&7" +player.getName() + ". goalselector.b()"));
                 break;
 
         }

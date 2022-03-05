@@ -2,6 +2,9 @@ package Listeners;
 
 import Extras.Items;
 import Utilities.*;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.TextChannel;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -17,6 +20,9 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import tlldos.tll2.TLL2;
 
+import java.awt.Color;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Objects;
 import java.util.Random;
 import static Utilities.Format.format;
@@ -136,6 +142,7 @@ public class TotemListeners implements Listener {
                                 players.sendMessage(ChatColor.RED + "¡Los tótems de " + ChatColor.YELLOW + "" + ChatColor.BOLD + p.getName() + ChatColor.RED + " entraron en cooldown de 10 segundos! ");
 
                         }
+
                         return;
                     }
 
@@ -171,6 +178,22 @@ public class TotemListeners implements Listener {
                             players.sendMessage(ChatColor.RED + "¡El tótem ha caído en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "número 1!");
                             players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Ningún efecto.");
                         }
+
+                        EmbedBuilder eb = new EmbedBuilder();
+                        TextChannel channel = DeathListeners.getJda().getTextChannelById("949669572179533854");
+
+                        eb.setFooter("TheLastLifeT2.jar", "https://cdn.discordapp.com/attachments/906642578013843526/943284426442436679/hardcorehearth-export.png");
+                        eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
+                        eb.setTitle("**¡El jugador " + p.getName() + " ha usado un Tótem!**");
+                        eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
+                        eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
+                        eb.addField(":map: **Coordenadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
+                        eb.addField(":game_die: **Numero**","1.- Sin Efectos",true);
+                        eb.setThumbnail("https://media.discordapp.net/attachments/906642578013843526/949674113314738236/dado1.png");
+                        eb.setColor(new Color(252, 186, 3));
+                        if (channel != null) {
+                            channel.sendMessage(eb.build()).queue();
+                        }
                     } else if (TotemCara == 2) {
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
 
@@ -180,6 +203,21 @@ public class TotemListeners implements Listener {
                             players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Speed II por 10 segundos.");
 
                             Bukkit.getScheduler().runTaskLater(plugin, () -> p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 1)), 10);
+                            EmbedBuilder eb = new EmbedBuilder();
+                            TextChannel channel = DeathListeners.getJda().getTextChannelById("949669572179533854");
+
+                            eb.setFooter("TheLastLifeT2.jar", "https://cdn.discordapp.com/attachments/906642578013843526/943284426442436679/hardcorehearth-export.png");
+                            eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
+                            eb.setTitle("**¡El jugador " + p.getName() + " ha usado un Tótem!**");
+                            eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
+                            eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
+                            eb.addField(":map: **Coordenadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
+                            eb.addField(":game_die: **Numero**","2.- Speed II por 10 segundos",true);
+                            eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674197188214824/dado2.png");
+                            eb.setColor(new Color(252, 186, 3));
+                            if (channel != null) {
+                                channel.sendMessage(eb.build()).queue();
+                            }
                         }
                     } else if (TotemCara == 3) {
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
@@ -193,6 +231,21 @@ public class TotemListeners implements Listener {
                                 p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 1));
                                 p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 100, 1));
                             }, 10);
+                            EmbedBuilder eb = new EmbedBuilder();
+                            TextChannel channel = DeathListeners.getJda().getTextChannelById("949669572179533854");
+
+                            eb.setFooter("TheLastLifeT2.jar", "https://cdn.discordapp.com/attachments/906642578013843526/943284426442436679/hardcorehearth-export.png");
+                            eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
+                            eb.setTitle("**¡El jugador " + p.getName() + " ha usado un Tótem!**");
+                            eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
+                            eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
+                            eb.addField(":map: **Coordenadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
+                            eb.addField(":game_die: **Numero**","3.- Fuerza y Haste II por 5 segundos",true);
+                            eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674264490045480/dado3.png");
+                            eb.setColor(new Color(252, 186, 3));
+                            if (channel != null) {
+                                channel.sendMessage(eb.build()).queue();
+                            }
                         }
                     } else if (TotemCara == 4) {
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
@@ -207,6 +260,21 @@ public class TotemListeners implements Listener {
                                 p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 1));
                                 p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 200, 1));
                             }, 10);
+                            EmbedBuilder eb = new EmbedBuilder();
+                            TextChannel channel = DeathListeners.getJda().getTextChannelById("949669572179533854");
+
+                            eb.setFooter("TheLastLifeT2.jar", "https://cdn.discordapp.com/attachments/906642578013843526/943284426442436679/hardcorehearth-export.png");
+                            eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
+                            eb.setTitle("**¡El jugador " + p.getName() + " ha usado un Tótem!**");
+                            eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
+                            eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
+                            eb.addField(":map: **Coordenadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
+                            eb.addField(":game_die: **Numero**","4.- Wither, Slowness y Veneno II por 10 segundos",true);
+                            eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674332517441586/dado4.png");
+                            eb.setColor(new Color(252, 186, 3));
+                            if (channel != null) {
+                                channel.sendMessage(eb.build()).queue();
+                            }
                         }
                     } else if (TotemCara == 5) {
 
@@ -251,6 +319,21 @@ public class TotemListeners implements Listener {
                             players.sendMessage(ChatColor.RED + "El tótem ha caído en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "número 5!");
                             players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Usar otro tótem en tu inventario.");
                         }
+                        EmbedBuilder eb = new EmbedBuilder();
+                        TextChannel channel = DeathListeners.getJda().getTextChannelById("949669572179533854");
+
+                        eb.setFooter("TheLastLifeT2.jar", "https://cdn.discordapp.com/attachments/906642578013843526/943284426442436679/hardcorehearth-export.png");
+                        eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
+                        eb.setTitle("**¡El jugador " + p.getName() + " ha usado un Tótem!**");
+                        eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
+                        eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
+                        eb.addField(":map: **Coordenadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
+                        eb.addField(":game_die: **Numero**","5.- Usar otro totem en tu Inventario",true);
+                        eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674389157326908/dado5.png");
+                        eb.setColor(new Color(252, 186, 3));
+                        if (channel != null) {
+                            channel.sendMessage(eb.build()).queue();
+                        }
                     } else if (TotemCara == 6) {
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
                         for (Player players : Bukkit.getOnlinePlayers()) {
@@ -263,6 +346,21 @@ public class TotemListeners implements Listener {
                             p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
                             p.removePotionEffect(PotionEffectType.REGENERATION);
                         },5L);
+                        EmbedBuilder eb = new EmbedBuilder();
+                        TextChannel channel = DeathListeners.getJda().getTextChannelById("949669572179533854");
+
+                        eb.setFooter("TheLastLifeT2.jar", "https://cdn.discordapp.com/attachments/906642578013843526/943284426442436679/hardcorehearth-export.png");
+                        eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
+                        eb.setTitle("**¡El jugador " + p.getName() + " ha usado un Tótem!**");
+                        eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
+                        eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
+                        eb.addField(":map: **Coordenadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
+                        eb.addField(":game_die: **Numero**","6.- Sin efectos del Totem",true);
+                        eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674451472097310/dado6.pn");
+                        eb.setColor(new Color(252, 186, 3));
+                        if (channel != null) {
+                            channel.sendMessage(eb.build()).queue();
+                        }
                     }
                 }
             }
