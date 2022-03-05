@@ -11,6 +11,7 @@ import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.*;
 import org.bukkit.event.Listener;
 import org.bukkit.persistence.PersistentDataType;
@@ -57,10 +58,15 @@ public final class TLL2 extends JavaPlugin implements Listener{
 
             if(!new File(getDataFolder() + "/blocks.yml").exists())
                 blockConfig = new Configuration(this, "blocks", ".yml");
+            if(!new File(getDataFolder() + "/blocks.yml").exists()){
+                YamlConfiguration blocksConf = new YamlConfiguration();
+                blocksConf.options().copyDefaults(true);
+
+            }
 
             if(blockConfig.getConfigurationSection("blocks") != null) {
                 for (String location : blockConfig.getConfigurationSection("blocks").getKeys(false)) {
-                    Bukkit.getLogger().info(location);
+                    //Bukkit.getLogger().info(location);
                 }
             }
 
