@@ -34,10 +34,12 @@ public final class TLL2 extends JavaPlugin implements Listener{
     public World world;
     private Configuration blockConfig;
     private ReplaceListeners replaceListeners;
+    public static TLL2 instance;
 
     @Override
     public void onEnable() {
         try {
+            instance = this; //Testeen por favor
             saveDefaultConfig();
             getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "_______________________________________________________________________");
             getServer().getConsoleSender().sendMessage(ChatColor.GOLD +
@@ -114,6 +116,10 @@ public final class TLL2 extends JavaPlugin implements Listener{
     public void registrarCrafteos(){
         Crafteos.craftDaga();
         Crafteos.craftBloodsaber();
+    }
+
+    public static TLL2 getInstance() {
+        return instance;
     }
 
     public void cargarEventos(){
@@ -372,7 +378,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
 
     }
 
-    public void spawnMobNaturally(Player player, Block block){
+    public void spawnMobNaturally(Player player, Block block) {
         int mobtype = new Random().nextInt(6);
         if(mobtype == 1){
             var vorlolxdxdxd = player.getLocation().getWorld().spawn(block.getLocation(), Creeper.class);

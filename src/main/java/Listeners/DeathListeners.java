@@ -38,7 +38,7 @@ import static Utilities.Format.format;
 public class DeathListeners extends ListenerAdapter implements Listener {
     private final World world;
     private final TLL2 plugin;
-    private JDA jda;
+    private static JDA jda;
 
     public DeathListeners(TLL2 plugin){
         this.plugin = plugin;
@@ -48,14 +48,26 @@ public class DeathListeners extends ListenerAdapter implements Listener {
         long hours = segundos  / 1800L;
         long minutes = segundos % 1800L / 60L;
         long seconds = segundos % 60L;
-        String time = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-
+        String time = String.format("%02d:%02d:%02d", hours, minutes, seconds); //p
+        Utils.getPlugin().getServer().getPluginManager().registerEvents(this, plugin);
         //tormenta = Bukkit.createBossBar(ChatColor.translateAlternateColorCodes('&', "&f♥        &6&lBlast Storm: " + time +  "        &f♥"), BarColor.YELLOW , BarStyle.SEGMENTED_6);
+    }
+    public DeathListeners(){
+        this.world = Bukkit.getWorld("world");
+        plugin = TLL2.getInstance();
+        assert world != null;
+
+    }
+
+    public static JDA getJda(){
+        return jda;
+    }
+
+    static {
         try {
-            this.plugin.getServer().getPluginManager().registerEvents(this, plugin);
             jda = JDABuilder.createDefault("ODM0MTI1Mjg3NDUyNzA0Nzc5.YH8VtQ.353ChgCa7fFCqi3rq-vIOWimrMg").build();
             jda.getPresence().setActivity(Activity.watching("⚡ The Last Life SMP T2 Server ⚡"));
-            jda.addEventListener(this);
+            jda.addEventListener(new DeathListeners());
         } catch (LoginException e) {
             e.printStackTrace();
         }
