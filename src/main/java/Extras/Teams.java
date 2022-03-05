@@ -1,6 +1,7 @@
 package Extras;
 
 import org.apache.commons.lang.IllegalClassException;
+import org.apache.logging.log4j.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -12,19 +13,24 @@ import java.util.Random;
 public class Teams {
     static List<Team> teams = new ArrayList<>();
 
-    public static Team TEST_TEAM = new Team("Nombre del Team", "Lider", Arrays.asList(
-            "Miembro1",
-            "Miembro2",
-            "Miembro3",
-            "Miembro4"));
-    public static Team STAFF_TEAM = new Team("Staff Chat","Mutant17", Arrays.asList("Itz_Antonio_PvP", "Carrotw"
-            ,"JohanBigCum","FoquitaLover","cPepos","ItzFel17","cBaguette17","wHermes17","Pepe3012","xAlexPlayx","LechugaMC17","Blackstamp","Gus_Gus19"
-            ,"THESMOL_T","SkarbyPalace","Tom_555","NovaKingdom"));
+    Team STAFF_TEAM;
 
     public Teams() {
-        TEST_TEAM.joinMember("lepepo", false);
 
+        try {
+            STAFF_TEAM = new Team("Staff Chat", "Mutant17", Arrays.asList("Itz_Antonio_PvP", "Carrotw"
+                    , "JohanBigCum", "FoquitaLover", "cPepos", "ItzFel17", "cBaguette17", "wHermes17", "Pepe3012", "xAlexPlayx", "LechugaMC17", "Blackstamp", "Gus_Gus19"
+                    , "THESMOL_T", "SkarbyPalace", "Tom_555", "NovaKingdom"));
+
+            Bukkit.getLogger().info("Staff Team creado.");
+
+        } catch (Exception x) {
+            x.printStackTrace();
+
+            Bukkit.getLogger().info("Se ha causado un error al crear el team STAFF_TEAM");
+        }
         //Si creas un team añadelo a este ArrayList.
+        /*
         STAFF_TEAM.joinMember("Mutant17",true);
         STAFF_TEAM.joinMember("Itz_Antonio_PvP",false);
         STAFF_TEAM.joinMember("Carrotw",false);
@@ -43,8 +49,10 @@ public class Teams {
         STAFF_TEAM.joinMember("SkarbyPalace",false);
         STAFF_TEAM.joinMember("Tom_555",false);
         STAFF_TEAM.joinMember("NovaKingdom",false);
-        teams.add(TEST_TEAM);
+        */
+
         teams.add(STAFF_TEAM);
+
     }
 
     public static boolean isInTeam(Player p) {
@@ -74,7 +82,6 @@ public class Teams {
         //Y tambien a este array
         List<String> a = new ArrayList<>();
 
-        a.add("TEST_TEAM");
         a.add("STAFF_CHAT");
 
         return a;
