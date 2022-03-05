@@ -166,13 +166,13 @@ public final class TLL2 extends JavaPlugin implements Listener{
             var level10 = data.get(new NamespacedKey(this,"reachedlvl10"),PersistentDataType.INTEGER);
             var level20 = data.get(new NamespacedKey(this,"reachedlvl20"),PersistentDataType.INTEGER);
             var level30 = data.get(new NamespacedKey(this,"reachedlvl30"),PersistentDataType.INTEGER);
-            if(level10 >= 1){
+            if(level10 >= 1 && level10 != null){
                 p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION,400,0,true,false,true));
             }
-            if(level20 >= 1 && level30 <= 0){
+            if(level20 >= 1 && level30 <= 0 && level20 != null && level30 != null){
                 p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING,200,0,true,false,true));
             }
-            if(level30 >= 1 && level20 <= 0){
+            if(level30 >= 1 && level20 <= 0 && level20 != null && level30 != null){
                 p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING,200,0,true,false,true));
             }
         }
