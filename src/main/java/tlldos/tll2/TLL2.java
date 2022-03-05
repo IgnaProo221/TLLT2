@@ -102,12 +102,15 @@ public final class TLL2 extends JavaPlugin implements Listener{
 
     @Override
     public void onDisable() {
-        getBlockConfig().set("blocks", locations);
+        if(getBlockConfig() != null) {
+            getBlockConfig().set("blocks", locations);
 
-        try {
-            getBlockConfig().save();
-        } catch (IOException e) {
-            e.printStackTrace();
+
+            try {
+                getBlockConfig().save();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "¡El Plugin se deshabilito correctamente!");
