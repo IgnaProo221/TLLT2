@@ -33,7 +33,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
     private ArrayList<Location> locations;
 
     public World world;
-    private Configuration blockConfig;
+    //private Configuration blockConfig;
     private ReplaceListeners replaceListeners;
     public static TLL2 instance;
 
@@ -56,7 +56,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
 
             locations = new ArrayList<>();
 
-            if(!new File(getDataFolder() + "/blocks.yml").exists())
+           /* if(!new File(getDataFolder() + "/blocks.yml").exists())
                 blockConfig = new Configuration(this, "blocks", ".yml");
             if(!new File(getDataFolder() + "/blocks.yml").exists()){
                 YamlConfiguration blocksConf = new YamlConfiguration();
@@ -69,6 +69,8 @@ public final class TLL2 extends JavaPlugin implements Listener{
                     //Bukkit.getLogger().info(location);
                 }
             }
+
+            */
 
             CustomEnchants.register();
             new DeathListeners(this);
@@ -108,7 +110,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
 
     @Override
     public void onDisable() {
-        if(getBlockConfig() != null) {
+        /*if(getBlockConfig() != null) {
             getBlockConfig().set("blocks", locations);
 
 
@@ -118,6 +120,8 @@ public final class TLL2 extends JavaPlugin implements Listener{
                 e.printStackTrace();
             }
         }
+
+         */
 
         getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "¡El Plugin se deshabilito correctamente!");
     }
@@ -371,9 +375,11 @@ public final class TLL2 extends JavaPlugin implements Listener{
         return false;
     }
 
-    public Configuration getBlockConfig() {
+    /*public Configuration getBlockConfig() {
         return blockConfig;
     }
+
+     */
 
     public boolean hasExoArmor(Player p){
         if(p.getInventory().getHelmet() != null && p.getInventory().getChestplate() != null && p.getInventory().getLeggings() != null && p.getInventory().getBoots() != null){
