@@ -11,6 +11,7 @@ import org.bukkit.event.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -545,7 +546,7 @@ public class EntityListeners implements Listener {
 
         Random random = new Random();
 
-        int size = random.nextInt(2);
+        int size = random.nextInt(5) + 1;
         ItemStack dropFrag = createFragmentoSangre(size);
         
         int bookchance = random.nextInt(100);
@@ -573,6 +574,54 @@ public class EntityListeners implements Listener {
 
             addHash(p);
             p.sendMessage(format("&7¡Has sacrificado a un &6&lAldeano&7, has recibido un &6&l" + size + " &cFragmento(s) de Sangre&7!"));
+        }
+        if(entity instanceof Silverfish silverfish && killer instanceof Player p){
+            if(silverfish.getPersistentDataContainer().has(Utils.key("MINER_LEVEL_1"),PersistentDataType.STRING)){
+            PersistentDataContainer data = Data.get(p);
+            var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
+            if(dataMaestriaExp == null)return;
+            data.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, dataMaestriaExp + 350);
+            }
+        }
+        if(entity instanceof Zombie zombie && killer instanceof Player p){
+            if(zombie.getPersistentDataContainer().has(Utils.key("MINER_LEVEL_1"),PersistentDataType.STRING)){
+                PersistentDataContainer data = Data.get(p);
+                var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
+                if(dataMaestriaExp == null)return;
+                data.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, dataMaestriaExp + 350);
+            }
+        }
+        if(entity instanceof Drowned drowned && killer instanceof Player p){
+            if(drowned.getPersistentDataContainer().has(Utils.key("MINER_LEVEL_1"),PersistentDataType.STRING)){
+                PersistentDataContainer data = Data.get(p);
+                var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
+                if(dataMaestriaExp == null)return;
+                data.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, dataMaestriaExp + 350);
+            }
+        }
+        if(entity instanceof Creeper creeper && killer instanceof Player p){
+            if(creeper.getPersistentDataContainer().has(Utils.key("MINER_LEVEL_2"),PersistentDataType.STRING)){
+                PersistentDataContainer data = Data.get(p);
+                var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
+                if(dataMaestriaExp == null)return;
+                data.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, dataMaestriaExp + 750);
+            }
+        }
+        if(entity instanceof Skeleton skeleton && killer instanceof Player p){
+            if(skeleton.getPersistentDataContainer().has(Utils.key("MINER_LEVEL_2"),PersistentDataType.STRING)){
+                PersistentDataContainer data = Data.get(p);
+                var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
+                if(dataMaestriaExp == null)return;
+                data.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, dataMaestriaExp + 750);
+            }
+        }
+        if(entity instanceof IronGolem ironGolem&& killer instanceof Player p){
+            if(ironGolem.getPersistentDataContainer().has(Utils.key("MINER_LEVEL_3"),PersistentDataType.STRING)){
+                PersistentDataContainer data = Data.get(p);
+                var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
+                if(dataMaestriaExp == null)return;
+                data.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, dataMaestriaExp + 1500);
+            }
         }
     }
 
