@@ -1,8 +1,10 @@
 package Listeners;
 
 import Utilities.Format;
+import Utilities.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -70,6 +72,16 @@ public class EatListeners implements Listener {
         if(e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(format("&6Hot Fruit"))){
             data.set(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER, temperature + 10);
             p.sendMessage(PREFIX, format("&6¡Tu temperatura subió 10°!"));
+        }
+        if(e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(format("&cBrimstone"))){
+            p.sendMessage(PREFIX,format("&c&lHas Aumentado tu Daño y Vida Maxima!"));
+            int ehp = data.has(Utils.key("maestry_health"), PersistentDataType.INTEGER) ? data.get(Utils.key("maestry_health"), PersistentDataType.INTEGER) : 0;
+            data.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, ehp + 2);
+            p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
+        }
+        if(e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(format("&7Crystal Apple"))){
+            p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,200,2,true,false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,300,0,true,false,true));
         }
 }
 }

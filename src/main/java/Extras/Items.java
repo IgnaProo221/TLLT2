@@ -26,7 +26,7 @@ public class Items {
     }
 
     public static ItemStack brimStone(){
-       return new ItemBuilder(Material.IRON_NUGGET)
+       return new ItemBuilder(Material.GOLDEN_APPLE)
                .setName(format("&cBrimstone"))
                .setCustomModelData(15315)
                .build();
@@ -83,12 +83,9 @@ public class Items {
 
     public static ItemStack crystalApple(int amount) {
         List<Component> lore = new ArrayList<>();
-        lore.add(Component.text(ChatColor.GRAY + "Regeneración III y Resistencia"));
-        lore.add(Component.text(ChatColor.GRAY + "Pero tu habilidad de Minar y Golpear"));
-        lore.add(Component.text(ChatColor.GRAY + "seran debilitadas."));
-
+        lore.add(Component.text(ChatColor.GRAY + "Otorga Regeneración III y Resistencia"));
         return new ItemBuilder(Material.GOLDEN_APPLE, amount)
-                .setName(ChatColor.GRAY + "Crystal Apple")
+                .setName(format("&7Crystal Apple"))
                 .setLore(lore)
                 .setCustomModelData(4033) // No se cual es el custom model data de la manzanita
                 .build();

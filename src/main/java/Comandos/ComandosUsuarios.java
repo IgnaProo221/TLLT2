@@ -111,8 +111,8 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
             sender.sendMessage(format("&cNivel de Maestria: &e&l" + dataMaestria));
             sender.sendMessage(format("&cEXP de Maestria: &e&l" + dataMaestriaExp));
             sender.sendMessage(format("&7&lDaño: " + player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue()));
-            sender.sendMessage(format("&7&lDefensa: " + player.getAttribute(Attribute.GENERIC_ARMOR).getAttribute()));
-            sender.sendMessage(format("&7&lVida: " + player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getAttribute()));
+            sender.sendMessage(format("&7&lDefensa: " + player.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue()));
+            sender.sendMessage(format("&7&lVida: " + player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()));
             sender.sendMessage(format("&7----------------------------------"));
         }
         return false;

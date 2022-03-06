@@ -131,7 +131,12 @@ public class EntityListeners implements Listener {
         var entity = event.getEntity();
         var damager = event.getDamager();
         if(damager instanceof Player pa){
-
+            if(pa.getInventory().contains(Items.ringOfAbaddon())){
+                if(lifestealpercentage > 95){
+                    pa.sendMessage(PREFIX,format("&cTu Ring of Abaddon te otorgo Fuerza II por 3 segundos"));
+                    pa.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE,60,1,true,false,true));
+                }
+            }
             //if(!(pa.getInventory().getItemInMainHand().getItemMeta() == null))return;
             //if(!(pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()))return;
             if(pa.getInventory().getItemInMainHand() != null){
@@ -153,7 +158,7 @@ public class EntityListeners implements Listener {
                     entity.setFreezeTicks(400);
                 } else if (pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4010) {
                     //pa.setHealth(0.5 / pa.getMaxHealth());
-                    pa.setHealth(pa.getHealth() + (0.5 / pa.getMaxHealth()));
+                    pa.setHealth(pa.getHealth() + (0.40 / pa.getMaxHealth()));
                     }else if(pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 18129){
                     Monster monster = (Monster) entity;
                     monster.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200,1, false, false, false));
@@ -346,7 +351,7 @@ public class EntityListeners implements Listener {
         var shooter = event.getEntity().getShooter();
         var projectile = event.getEntity();
 
-        if(shooter instanceof Wither wither) {
+        /*if(shooter instanceof Wither wither) {
             if (projectile instanceof WitherSkull) {
                 if (hitblock != null) {
                     hitblock.getLocation().createExplosion(wither, 3, false, true);
@@ -362,7 +367,7 @@ public class EntityListeners implements Listener {
                     entity.getLocation().createExplosion(witherSkull, 2, false, true);
                 }
             }
-        }
+        }*/
 
         if(shooter instanceof Shulker){
             var shulker = (Entity)shooter;

@@ -117,6 +117,9 @@ public class BlocksListeners implements Listener{
                     }else if(block.getType() == Material.COPPER_ORE || block.getType() == Material.DEEPSLATE_COPPER_ORE){
                         e.setDropItems(false);
                         location.getWorld().dropItemNaturally(location,new ItemStack(Material.COPPER_INGOT));
+                    }else if(block.getType() == Material.SAND){
+                        e.setDropItems(false);
+                        location.getWorld().dropItemNaturally(location,new ItemStack(Material.GLASS));
                     }
                 }
             }
