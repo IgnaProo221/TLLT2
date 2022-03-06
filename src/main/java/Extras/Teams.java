@@ -1,7 +1,5 @@
 package Extras;
 
-import org.apache.commons.lang.IllegalClassException;
-import org.apache.logging.log4j.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -27,7 +25,7 @@ public class Teams {
         } catch (Exception x) {
             x.printStackTrace();
 
-            Bukkit.getLogger().info("Se ha causado un error al crear el team STAFF_TEAM");
+            Bukkit.getLogger().info("Se ha causado un error al crear el team STAFF_TEAM. Error: " + x);
         }
         //Si creas un team añadelo a este ArrayList.
         /*

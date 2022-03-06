@@ -188,9 +188,9 @@ public class TotemListeners implements Listener {
                             channel.sendMessage(eb.build()).queue();
                         }
                         for (Player players : Bukkit.getOnlinePlayers()) {
-                            players.sendMessage(ChatColor.DARK_GRAY + "¡El jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.YELLOW + "tótem!" + ChatColor.GRAY + "(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
-                            players.sendMessage(ChatColor.RED + "¡El tótem ha caído en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "número 1!");
-                            players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Ningún efecto.");
+                            players.sendMessage(ChatColor.DARK_GRAY + "¡El jugador " + ChatColor.RED + "" + ChatColor.BOLD + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.RED + "tótem!" + ChatColor.GRAY + "(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
+                            players.sendMessage(ChatColor.GRAY + "¡El tótem ha caído en la cara " + ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "número 1!");
+                            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Ningún efecto.");
                         }
 
 
@@ -212,9 +212,9 @@ public class TotemListeners implements Listener {
                             channel.sendMessage(eb.build()).queue();
                         }
                         for (Player players : Bukkit.getOnlinePlayers()) {
-                            players.sendMessage(ChatColor.DARK_GRAY + "¡El jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.YELLOW + "tótem!" + ChatColor.GRAY + "(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
-                            players.sendMessage(ChatColor.RED + "¡El tótem ha caído en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "número 2!");
-                            players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Speed II por 10 segundos.");
+                            players.sendMessage(ChatColor.DARK_GRAY + "¡El jugador " + ChatColor.RED + "" + ChatColor.BOLD + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.RED + "tótem!" + ChatColor.GRAY + "(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
+                            players.sendMessage(ChatColor.GRAY + "¡El tótem ha caído en la cara " + ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "número 2!");
+                            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Speed II por 10 segundos.");
 
                             Bukkit.getScheduler().runTaskLater(plugin, () -> p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 1)), 10);
                         }
@@ -236,9 +236,9 @@ public class TotemListeners implements Listener {
                             channel.sendMessage(eb.build()).queue();
                         }
                         for (Player players : Bukkit.getOnlinePlayers()) {
-                            players.sendMessage(ChatColor.DARK_GRAY + "¡El jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.YELLOW + "tótem!" + ChatColor.GRAY + "(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
-                            players.sendMessage(ChatColor.RED + "¡El tótem ha caído en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "número 3!");
-                            players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Fuerza y Haste II por 5 segundos.");
+                            players.sendMessage(ChatColor.DARK_GRAY + "¡El jugador " + ChatColor.RED + "" + ChatColor.BOLD + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.RED + "tótem!" + ChatColor.GRAY + "(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
+                            players.sendMessage(ChatColor.GRAY + "¡El tótem ha caído en la cara " + ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "número 3!");
+                            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Fuerza y Haste II por 5 segundos.");
 
                             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                                 p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 1));
@@ -263,9 +263,9 @@ public class TotemListeners implements Listener {
                             channel.sendMessage(eb.build()).queue();
                         }
                         for (Player players : Bukkit.getOnlinePlayers()) {
-                            players.sendMessage(ChatColor.DARK_GRAY + "¡El jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.YELLOW + "tótem!" + ChatColor.GRAY + "(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
-                            players.sendMessage(ChatColor.RED + "¡El tótem ha caído en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "número 4!");
-                            players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Wither, Slowness y Veneno II por 10 segundos.");
+                            players.sendMessage(ChatColor.DARK_GRAY + "¡El jugador " + ChatColor.RED + "" + ChatColor.BOLD + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.RED + "tótem!" + ChatColor.GRAY + "(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
+                            players.sendMessage(ChatColor.GRAY + "¡El tótem ha caído en la cara " + ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "número 4!");
+                            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Wither, Slowness y Veneno II por 10 segundos.");
 
                             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                                 p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 200, 1));
@@ -295,7 +295,7 @@ public class TotemListeners implements Listener {
 
                         if (needTotems > size) {
                             e.setCancelled(true);
-                            totemMessage = ChatColor.DARK_GRAY + "El jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " no tenia suficientes " + ChatColor.YELLOW + "tótems " + ChatColor.DARK_GRAY + "en su inventario. (" + needTotems + "/" + size + ")!" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")";
+                            totemMessage = ChatColor.DARK_GRAY + "El jugador " + ChatColor.RED + "" + ChatColor.BOLD + p.getName() + ChatColor.DARK_GRAY + " no tenia suficientes " + ChatColor.RED + "tótems " + ChatColor.DARK_GRAY + "en su inventario. (" + needTotems + "/" + size + ")!" + ChatColor.GRAY + "  (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")";
                         } else {
 
                             new BukkitRunnable() {
@@ -308,13 +308,13 @@ public class TotemListeners implements Listener {
 
                             p.getInventory().removeItem(new ItemStack(Material.TOTEM_OF_UNDYING, 1));
 
-                            totemMessage = ChatColor.DARK_GRAY + "El jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.YELLOW + "tótem!" + ChatColor.GRAY + "(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")";
+                            totemMessage = ChatColor.DARK_GRAY + "El jugador " + ChatColor.RED + "" + ChatColor.BOLD + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.RED + "tótem!" + ChatColor.GRAY + "(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")";
                         }
                         for (Player players : Bukkit.getOnlinePlayers()) {
                             players.sendMessage(totemMessage);
 
-                            players.sendMessage(ChatColor.RED + "El tótem ha caído en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "número 5!");
-                            players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "Usar otro tótem en tu inventario.");
+                            players.sendMessage(ChatColor.GRAY + "El tótem ha caído en la cara " + ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "número 5!");
+                            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Usar otro tótem en tu inventario.");
                         }
                         EmbedBuilder eb = new EmbedBuilder();
                         TextChannel channel = DeathListeners.getJda().getTextChannelById("949669572179533854");
@@ -334,9 +334,9 @@ public class TotemListeners implements Listener {
                     } else if (TotemCara == 6) {
                         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
                         for (Player players : Bukkit.getOnlinePlayers()) {
-                            players.sendMessage(ChatColor.DARK_GRAY + "El jugador " + ChatColor.RED + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.YELLOW + "tótem!" + ChatColor.GRAY + "(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
-                            players.sendMessage(ChatColor.RED + "El Tótem ha caído en la cara " + ChatColor.YELLOW + "" + ChatColor.BOLD + "número 6!");
-                            players.sendMessage(ChatColor.GRAY + "Efecto: " + ChatColor.RED + "No se aplican los efectos positivos");
+                            players.sendMessage(ChatColor.DARK_GRAY + "El jugador " + ChatColor.RED + "" + ChatColor.BOLD + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.YELLOW + "tótem!" + ChatColor.GRAY + "(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
+                            players.sendMessage(ChatColor.GRAY + "El Tótem ha caído en la cara " + ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "número 6!");
+                            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "No se aplican los efectos positivos");
                         }
                         Bukkit.getScheduler().runTaskLater(plugin,()->{
                             p.removePotionEffect(PotionEffectType.ABSORPTION);

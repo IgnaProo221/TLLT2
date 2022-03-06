@@ -58,7 +58,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
 
            /* if(!new File(getDataFolder() + "/blocks.yml").exists())
                 blockConfig = new Configuration(this, "blocks", ".yml");
-            if(!new File(getDataFolder() + "/blocks.yml").exists()){
+              if(!new File(getDataFolder() + "/blocks.yml").exists()){
                 YamlConfiguration blocksConf = new YamlConfiguration();
                 blocksConf.options().copyDefaults(true);
 

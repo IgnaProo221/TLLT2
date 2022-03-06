@@ -85,6 +85,8 @@ public class CustomEnchants implements Listener {
 
         if (firstItem == null || secondItem == null) return;
 
+        if (!firstItem.getItemMeta().hasLore() || !secondItem.getItemMeta().hasLore()) return;
+
         List<String> oneItemLore = firstItem.getItemMeta().getLore();
         List<String> twoItemLore = secondItem.getItemMeta().getLore();
 

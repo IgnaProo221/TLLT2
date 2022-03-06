@@ -14,6 +14,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import static Utilities.Format.format;
+
 public class SleepListeners implements Listener{
     private TLL2 plugin;
 
@@ -30,7 +32,7 @@ public class SleepListeners implements Listener{
         World world = Bukkit.getWorld("world");
         Player p = e.getPlayer();
         if(world.isDayTime() || world.isThundering()){
-            p.sendMessage( prefix + "¡No puedes dormir de día o en tormenta!");
+            p.sendMessage( prefix + format("&7¡No puedes dormir de&6&l día&7 o en&6&l tormenta!"));
             e.setCancelled(true);
             return;
         } else {
@@ -43,7 +45,7 @@ public class SleepListeners implements Listener{
                         if(jugadores.isSleeping()){
                             jugadores.setStatistic(Statistic.TIME_SINCE_REST, 0);
                         }
-                        jugadores.sendMessage(ChatColor.translateAlternateColorCodes('&'," " + prefix +  "&6El jugador &4" + p.getName()+ " &6ha dormido!"));
+                        jugadores.sendMessage(ChatColor.translateAlternateColorCodes('&'," " + prefix +  "&7¡El jugador &3&l" + p.getName()+ " &7ha dormido!"));
                         players.clear();
                     }
                 }

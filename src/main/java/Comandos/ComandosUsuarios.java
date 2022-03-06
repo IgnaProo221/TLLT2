@@ -48,6 +48,7 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
             player.sendMessage(Format.PREFIX + "Debes colocar un comando valido.");
             return false;
         }
+
         var data = player.getPersistentDataContainer();
 
         if (args[0].equalsIgnoreCase("info")) {
@@ -95,14 +96,24 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
             sender.sendMessage(ChatColor.GOLD + "maestria: " + ChatColor.GRAY + "Muestra tu nivel de maestria");
             sender.sendMessage(ChatColor.DARK_GRAY + "----------------------");
         }
-        if(args[0].equalsIgnoreCase("tps")){
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',Format.PREFIX +"&cHay " + s.getTPS()[0] + " TPS."));
+        if(args[0].equalsIgnoreCase("tps")) {
+            String tps = "" + s.getTPS()[0];
+
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',Format.PREFIX +"&cHay " + tps.substring(0, 5) + " TPS."));
         }
         if(args[0].equalsIgnoreCase("dia")){
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',Format.PREFIX + "&7Nos encontramos en el día: &6" + Utils.getDay()));
         }
-        if(args[0].equalsIgnoreCase("sacrificios")){
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Format.PREFIX + "&7Te encuentras con: &6" + player.getPersistentDataContainer().get(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER) + "&7 sacrificios hechos."));
+        if(args[0].equalsIgnoreCase("sacrificios")) {
+            int amount;
+
+            if (player.getPersistentDataContainer().has(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER)) {
+                amount = player.getPersistentDataContainer().get(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER);
+            } else {
+                amount = 0;
+            }
+
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Format.PREFIX + "&7Te encuentras con: &6" + amount + "&7 sacrificios hechos."));
         }
         if(args[0].equalsIgnoreCase("maestria")){
             var dataMaestria = data.get(new NamespacedKey(plugin,"maestrialvl"),PersistentDataType.INTEGER);
