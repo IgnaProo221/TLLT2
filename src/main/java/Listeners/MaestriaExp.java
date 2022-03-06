@@ -7,17 +7,14 @@ import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
-import org.bukkit.block.TileState;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPistonEvent;
+import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.inventory.meta.BlockDataMeta;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.metadata.Metadatable;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import tlldos.tll2.TLL2;
@@ -28,9 +25,14 @@ import static Utilities.Format.PREFIX;
 import static Utilities.Format.format;
 
 public class MaestriaExp implements Listener{
+    private static MaestriaExp instance;
     TLL2 plugin;
     public MaestriaExp(TLL2 plugin){
         this.plugin = plugin;
+        instance = this;
+    }
+    public static MaestriaExp getInstance(){
+        return instance;
     }
 
     static public String hp_plus = format("&3MAESTRIA &8> Tu Vida Maxima a aumentado!");
@@ -75,92 +77,57 @@ public class MaestriaExp implements Listener{
             Bukkit.getOnlinePlayers().forEach(player -> {
                 player.sendMessage(format("&3MAESTRIA &8> &c&l" + p.getName() + "&7 ha aumentado su nivel. &e" + level + "&8 >> &6" + newLevel));
             });
-            /*switch (getMasteryExp(p)){
-                case 1, 2, 5, 8, 11, 14 -> {
-                    p.sendMessage(hp_plus);
-                    int ehp = data.has(Utils.key("maestry_health"), PersistentDataType.INTEGER) ? data.get(Utils.key("maestry_health"), PersistentDataType.INTEGER) : 0;
-                    data.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, ehp + 2);
-                }
-                case 3, 6, 9, 12 -> {
-                    p.sendMessage(att_plus);
-                    p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
-                }
-                case 4, 7, 13 -> {
-                    p.sendMessage(def_plus);
-                    p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue() +0.50);
-                }
-                case 10 -> {
-                    p.sendMessage(format("&3MAESTRIA &8> Has recibido un Buff de Vision Nocturna Permanente!"));
-                    p.sendMessage(format("&3MAESTRIA &8> &e&l¡PELIGRO! Ahora picar puede llamar la atencion de criaturas hostiles"));
-                    data.set(Utils.key("reachedlvl10"),PersistentDataType.INTEGER, 1);
-                }
-                case 15 -> p.sendMessage(format("&3MAESTRIA &8> Llegaste al Nivel 15, &el¡Felicidades! &c&lAhora afronta tu destino sin mas recompensas"));
-                case 20 -> {
-                    p.sendMessage(format("&3MAESTRIA &8> Has recibido un Buff de Haste I Permanente!"));
-                    p.sendMessage(format("&3MAESTRIA &8> &e&l¡PELIGRO! Ahora hay muchas mas criaturas dispuestas a acabar contigo!"));
-                    data.set(Utils.key("reachedlvl20"),PersistentDataType.INTEGER, 1);
-                }
-                case 30 -> {
-                    p.sendMessage(format("&3MAESTRIA &8> Has recibido un Buff de Haste II Permanente!"));
-                    p.sendMessage(format("&3MAESTRIA &8> &e&l¡PELIGRO! El Cosmos esta enfadado contigo!"));
-                    p.sendMessage(PREFIX,format("&e&lFelicidades por llegar al Nivel 30, no hay mas camino para tu trabajo de Mineria, ¡Buen Trabajo!"));
-                    data.set(Utils.key("reachedlvl20"),PersistentDataType.INTEGER, 0);
-                    data.set(Utils.key("reachedlvl30"),PersistentDataType.INTEGER, 1);
-                }
-            }
-
-             */
             int ehp = data.has(Utils.key("maestry_health"), PersistentDataType.INTEGER) ? data.get(Utils.key("maestry_health"), PersistentDataType.INTEGER) : 0;
-            if(getMasteryLevel(p) == 1){ //TODO esto es un test podria salir muy mal lo de arriba si lo pueden revisar con cuidado gracias
+            if(getMasteryLevel(p) == 1) {
                 p.sendMessage(hp_plus);
                 data.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, ehp + 2);
-            }else if(getMasteryLevel(p) == 2){
+            }else if(getMasteryLevel(p) == 2) {
                 p.sendMessage(hp_plus);
                 data.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, ehp + 2);
-            }else if(getMasteryLevel(p) == 3){
+            }else if(getMasteryLevel(p) == 3) {
                 p.sendMessage(att_plus);
                 p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
-            }else if(getMasteryLevel(p) == 4){
+            }else if(getMasteryLevel(p) == 4) {
                 p.sendMessage(def_plus);
                 p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue() + 0.50);
-            }else if(getMasteryLevel(p) == 5){
+            }else if(getMasteryLevel(p) == 5) {
                 p.sendMessage(hp_plus);
                 data.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, ehp + 2);
-            }else if(getMasteryLevel(p) == 6){
+            }else if(getMasteryLevel(p) == 6) {
                 p.sendMessage(att_plus);
                 p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
-            }else if(getMasteryLevel(p) == 7){
+            }else if(getMasteryLevel(p) == 7) {
                 p.sendMessage(def_plus);
                 p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue() +0.50);
-            }else if(getMasteryLevel(p) == 8){
+            }else if(getMasteryLevel(p) == 8) {
                 p.sendMessage(hp_plus);
                 data.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, ehp + 2);
-            }else if(getMasteryLevel(p) == 9){
+            }else if(getMasteryLevel(p) == 9) {
                 p.sendMessage(att_plus);
                 p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
-            }else if(getMasteryLevel(p) == 10){
+            }else if(getMasteryLevel(p) == 10) {
                 p.sendMessage(format("&3MAESTRIA &8> Has recibido un Buff de Vision Nocturna Permanente!"));
                 p.sendMessage(format("&3MAESTRIA &8> &e&l¡PELIGRO! Ahora picar puede llamar la atencion de criaturas hostiles"));
                 data.set(Utils.key("reachedlvl10"),PersistentDataType.INTEGER, 1);
-            }else if(getMasteryLevel(p) == 11){
+            }else if(getMasteryLevel(p) == 11) {
                 p.sendMessage(hp_plus);
                 data.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, ehp + 2);
-            }else if(getMasteryLevel(p) == 12){
+            }else if(getMasteryLevel(p) == 12) {
                 p.sendMessage(att_plus);
                 p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
-            }else if(getMasteryLevel(p) == 13){
+            }else if(getMasteryLevel(p) == 13) {
                 p.sendMessage(def_plus);
                 p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue() + 0.50);
-            }else if(getMasteryLevel(p) == 14){
+            }else if(getMasteryLevel(p) == 14) {
                 p.sendMessage(hp_plus);
                 data.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, ehp + 2);
-            }else if(getMasteryLevel(p) == 15){
+            }else if(getMasteryLevel(p) == 15) {
                 p.sendMessage(format("&3MAESTRIA &8> Llegaste al Nivel 15, &el¡Felicidades! &c&lAhora afronta tu destino sin mas recompensas"));
-            }else if(getMasteryLevel(p) == 20){
+            }else if(getMasteryLevel(p) == 20) {
                 p.sendMessage(format("&3MAESTRIA &8> Has recibido un Buff de Haste I Permanente!"));
                 p.sendMessage(format("&3MAESTRIA &8> &e&l¡PELIGRO! Ahora hay muchas mas criaturas dispuestas a acabar contigo!"));
                 data.set(Utils.key("reachedlvl20"),PersistentDataType.INTEGER, 1);
-            }else if(getMasteryLevel(p) == 30){
+            }else if(getMasteryLevel(p) == 30) {
                 p.sendMessage(format("&3MAESTRIA &8> Has recibido un Buff de Haste II Permanente!"));
                 p.sendMessage(format("&3MAESTRIA &8> &e&l¡PELIGRO! El Cosmos esta enfadado contigo!"));
                 p.sendMessage(PREFIX,format("&e&lFelicidades por llegar al Nivel 30, no hay mas camino para tu trabajo de Mineria, ¡Buen Trabajo!"));
@@ -174,7 +141,7 @@ public class MaestriaExp implements Listener{
 
 
     @EventHandler
-    public void evitarDupeexp(BlockPlaceEvent e){
+    public void aVoidDupeXP(BlockPlaceEvent e){
         var p = e.getPlayer();
         var block = e.getBlockPlaced();
         var state = block.getState();
@@ -186,10 +153,25 @@ public class MaestriaExp implements Listener{
         || block.getType() == Material.DEEPSLATE_LAPIS_ORE || block.getType() == Material.DEEPSLATE_REDSTONE_ORE || block.getType() == Material.DEEPSLATE_GOLD_ORE
         || block.getType() == Material.DEEPSLATE_IRON_ORE || block.getType() == Material.DEEPSLATE_COPPER_ORE || block.getType() == Material.DEEPSLATE_COAL_ORE)) {
 
-            //TileState data = (TileState)state;
             state.setMetadata("no_exp", new FixedMetadataValue(plugin,"true"));
 
             plugin.getLocations().add(block.getLocation());
+        }
+    }
+
+    @EventHandler
+    public void onPiston(BlockPistonExtendEvent e){
+
+        e.getBlocks().forEach(block -> {
+            if(block.getType().name().toLowerCase().contains("ore") || block.hasMetadata("no_exp")){
+                e.setCancelled(true);
+            }
+        });
+    }
+    @EventHandler
+    public void onPiston(BlockPistonEvent e){
+        if(e.getBlock().getType().name().toLowerCase().contains("ore")|| e.getBlock().hasMetadata("no_exp")) {
+            e.setCancelled(true);
         }
     }
 
@@ -204,10 +186,12 @@ public class MaestriaExp implements Listener{
         int minerspawn = new Random().nextInt(10000);
         if (!event.getBlock().getType().name().toLowerCase().contains("ore"))
             return;
-        if (event.getBlock().getState().hasMetadata("no_exp")) {
+        /*if (event.getBlock().getState().hasMetadata("no_exp")) {
             plugin.getLocations().remove(event.getBlock().getLocation());
             return;
         }
+
+         */
         if(minerspawn == 1){
             if(level10 >= 1){
                 p.sendTitle(format("&c&l¡PELIGRO!"),format("&cUn mob va a spawnear"),0,180,0);

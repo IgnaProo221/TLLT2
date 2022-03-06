@@ -37,47 +37,10 @@ public class CustomEnchants implements Listener {
     public static final Enchantment BULLSEYE = new EnchantmentWrapper("bullseye", "bullseye", 1);
 
     public static void register() {
-        /*boolean registered = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(TELEPHATY);
-        boolean getvenganza = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(REVENGE);
-        boolean getsmelting = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(SMELTING_TOUCH);
-        boolean getlucktree = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(LUCKY_TREE);
-        boolean getcriticalhit = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(CRITICAL_HIT);
-        boolean gethunter = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(HUNTER);
-        boolean getgravity = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(GRAVITY);
-        boolean getimpact = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(IMPACT);
-        boolean getbullseye = Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(BULLSEYE);
-        if (!registered) {
-            registerEnchantment(TELEPHATY);
-        }
-        if (!getvenganza) {
-            registerEnchantment(REVENGE);
-        }
-        if (!getsmelting) {
-            registerEnchantment(SMELTING_TOUCH);
-        }
-        if (!getlucktree) {
-            registerEnchantment(LUCKY_TREE);
-        }
-        if (!getcriticalhit) {
-            registerEnchantment(CRITICAL_HIT);
-        }
-        if (!gethunter) {
-            registerEnchantment(HUNTER);
-        }
-        if (!getgravity) {
-            registerEnchantment(GRAVITY);
-        }
-        if (!getimpact) {
-            registerEnchantment(IMPACT);
-        }
-        if (!getbullseye) {
-            registerEnchantment(BULLSEYE);
-        }*/
         for(Enchantment enchantment : allCustomEnchants()){
             if(!Arrays.stream(Enchantment.values()).collect(Collectors.toList()).contains(enchantment)){
                 registerEnchantment(enchantment);
             }
-             //TODO PROBAR
         }
     }
 

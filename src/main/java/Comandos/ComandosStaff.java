@@ -64,7 +64,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
         var data = player.getPersistentDataContainer();
 
-        switch (args[0]) {
+        switch (args[0].toLowerCase()) {
             case "sacrificios" -> {
                 if (args.length < 2) {
                     sender.sendMessage(Format.PREFIX + "Debes colocar un subcomando valido (modify, clear, reset).");
@@ -201,16 +201,34 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     PersistentDataContainer caca = Data.get(player);
                     player.sendMessage(PREFIX,format("&7Reiniciaste tu Nivel de Maestria."));
                     caca.set(Utils.key("maestrialvl"), PersistentDataType.INTEGER, 1);
-                }
-                if(args[1].equalsIgnoreCase("resetattributes")){
+                } else if(args[1].equalsIgnoreCase("resetattributes")){
                     player.sendMessage(PREFIX,format("&7Reiniciaste tus Atributos de Vida, Daño y Defensa."));
                     player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
                     player.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(0);
                     player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(1);
-                }
-                if(args[1].equalsIgnoreCase("levelup")){
+                } else if(args[1].equalsIgnoreCase("levelup")){
                     player.sendMessage(PREFIX,format("&7Se aumento el EXP de la Maestria"));
                     data.set(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER, 999999);
+                }else if(args[1].equalsIgnoreCase("setXP")){
+                    if(args.length >= 4) {
+                        Player p = Bukkit.getPlayer(args[2]);
+                        if(p.isOnline()) {
+                            try {
+                                int i = Integer.parseInt(args[3]);
+                                int level = MaestriaExp.getInstance().getMasteryLevel(p);
+                                int exp = MaestriaExp.getInstance().getMasteryExp(p);
+                                MaestriaExp.getInstance().setMasteryEXP(player,  MaestriaExp.getInstance().getMasteryExp(p) +  i);
+                                if (exp >= MaestriaExp.getInstance().maxExpNecesary(p)) {
+                                    MaestriaExp.getInstance().setMasteryEXP(p, 0);
+                                    MaestriaExp.getInstance().giveLevel(p, 1);
+
+                                    int newLevel = MaestriaExp.getInstance().getMasteryLevel(p);
+                                }
+                            } catch (NumberFormatException ignored) {
+
+                            }
+                        }
+                    }
                 }
 
                 if(args[1].equalsIgnoreCase("resetbuffs")){

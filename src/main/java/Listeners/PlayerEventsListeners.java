@@ -280,20 +280,11 @@ public class PlayerEventsListeners implements Listener {
         if(p.getInventory().getItemInMainHand() != null || p.getInventory().getItemInOffHand() != null){
             if(p.getInventory().getItemInMainHand().hasItemMeta() || p.getInventory().getItemInOffHand().hasItemMeta()){
                 if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
-                    if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 4455){
-                        return true;
-                    }else{
-                        return false;
-                    }
-                }else{
-                    return false;
+                    return p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 4455;
                 }
-            }else{
-                return false;
             }
-        }else{
-            return false;
         }
+        return false;
     }
 
     public boolean hasCustomModelData(Player p){
