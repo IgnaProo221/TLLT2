@@ -45,7 +45,6 @@ public class PlayerEventsListeners implements Listener {
 
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasDisplayName() && p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(Format.format("&7Daga Ceremonial"))) {
-
                 var data = p.getPersistentDataContainer();
                 var inventory = p.getInventory();
                 var dataSacrifices = data.get(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER);
@@ -86,10 +85,8 @@ public class PlayerEventsListeners implements Listener {
                     p.sendMessage(Format.format(String.format("&cHaz hecho un sacrificio #%s", totalSacrifices)));
 
                     cooldownSacrifice.put(p.getUniqueId(), System.currentTimeMillis() + (10 * 1000));
-
                     p.getPersistentDataContainer().set(Utils.key("NEGATIVE_HEALTH"), PersistentDataType.INTEGER, p.getPersistentDataContainer().get(Utils.key("NEGATIVE_HEALTH"), PersistentDataType.INTEGER) + 2);
                     giveReward(p);
-                    p.setCooldown(Material.IRON_SWORD, 200);
                 }
             }
 
