@@ -49,7 +49,14 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
             return false;
         }
 
+
         var data = player.getPersistentDataContainer();
+
+        String damage = "" + player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue();
+        String damageresult = damage.substring(0,6);
+
+        String defense = "" + player.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue();
+        String defenseresult = defense.substring(0,6);
 
         if (args[0].equalsIgnoreCase("info")) {
 
@@ -121,8 +128,8 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
             sender.sendMessage(format("&7-------------&b&lMAESTRIA&7-------------"));
             sender.sendMessage(format("&cNivel de Maestria: &e&l" + dataMaestria));
             sender.sendMessage(format("&cEXP de Maestria: &e&l" + dataMaestriaExp));
-            sender.sendMessage(format("&7&lDaño: " + player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue()));
-            sender.sendMessage(format("&7&lDefensa: " + player.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue()));
+            sender.sendMessage(format("&7&lDaño: " + damageresult));
+            sender.sendMessage(format("&7&lDefensa: " + defenseresult));
             sender.sendMessage(format("&7&lVida: " + player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()));
             sender.sendMessage(format("&7----------------------------------"));
         }

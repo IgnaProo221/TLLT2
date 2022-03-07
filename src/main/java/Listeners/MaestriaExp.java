@@ -183,7 +183,7 @@ public class MaestriaExp implements Listener{
         var level10 = data.get(new NamespacedKey(plugin,"reachedlvl10"),PersistentDataType.INTEGER);
         var level20 = data.get(new NamespacedKey(plugin,"reachedlvl20"),PersistentDataType.INTEGER);
         var level30 = data.get(new NamespacedKey(plugin,"reachedlvl30"),PersistentDataType.INTEGER);
-        int minerspawn = new Random().nextInt(10000);
+        int minerspawn = new Random().nextInt(1000);
         if (!event.getBlock().getType().name().toLowerCase().contains("ore"))
             return;
         /*if (event.getBlock().getState().hasMetadata("no_exp")) {

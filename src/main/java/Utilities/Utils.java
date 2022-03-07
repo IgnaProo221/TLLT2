@@ -16,6 +16,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import tlldos.tll2.TLL2;
 
@@ -40,6 +42,7 @@ public class Utils {
     public static NamespacedKey key(String key){
         return new NamespacedKey(plugin, key);
     }
+    
     private static int Day() {
         LocalDate FechaActual = LocalDate.now();
 
@@ -47,8 +50,28 @@ public class Utils {
 
         return (int) ChronoUnit.DAYS.between(FechaInicio, FechaActual);
     }
+    
     public static int getDay(){
         return Day();
+    }
+    
+    public static FileConfiguration getConfig() {
+        return plugin.getConfig();
+    }
+
+    public static void reloadConfig() {
+        try {
+            getConfig().save("config.yml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            getConfig().load("config.yml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidConfigurationException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void pasteSchematic(String filename, Location loc){

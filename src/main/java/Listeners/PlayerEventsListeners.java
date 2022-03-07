@@ -45,6 +45,7 @@ public class PlayerEventsListeners implements Listener {
 
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasDisplayName() && p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(Format.format("&7Daga Ceremonial"))) {
+                if (p.hasCooldown(Material.IRON_SWORD)) return;
                 var data = p.getPersistentDataContainer();
                 var inventory = p.getInventory();
                 var dataSacrifices = data.get(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER);
@@ -53,7 +54,7 @@ public class PlayerEventsListeners implements Listener {
 
                 if (cooldownSacrifice.containsKey(p.getUniqueId())) {
                     if (cooldownSacrifice.get(p.getUniqueId()) > System.currentTimeMillis()) {
-                        p.sendMessage(Format.format(String.format("&cTe encuentras en cooldown, espera %d segundo(s).", (cooldownSacrifice.get(p.getUniqueId()) - System.currentTimeMillis())  / 1000)));
+                        p.sendMessage(Format.format(String.format("&cTe encuentras en cooldown, espera %d segundo(s).", (cooldownSacrifice.get(p.getUniqueId()) - System.currentTimeMillis()) / 1000)));
                         return;
                     } else
                         cooldownSacrifice.remove(p.getUniqueId());
@@ -66,67 +67,70 @@ public class PlayerEventsListeners implements Listener {
 
                 if (p.getInventory().firstEmpty() == -1) {
                     p.sendMessage(Format.format("&c¡Ofreciste un sacrificio! pero tu inventario esta lleno."));
-                    return;
-                }
+                    if (p.getInventory().firstEmpty() == -1) {
+                        p.sendMessage(Format.format("&e¡Ofreciste un sacrificio! pero tu inventario esta lleno."));
+                        return;
+                    }
 
-                data.set(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER, totalSacrifices);
+                    data.set(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER, totalSacrifices);
 
-                var areaEffectCloud = (AreaEffectCloud) p.getWorld().spawnEntity(p.getLocation(), EntityType.AREA_EFFECT_CLOUD);
+                    var areaEffectCloud = (AreaEffectCloud) p.getWorld().spawnEntity(p.getLocation(), EntityType.AREA_EFFECT_CLOUD);
 
-                areaEffectCloud.setParticle(Particle.REDSTONE, new Particle.DustOptions(Color.fromBGR(1, 0, 156), 2.0F));
-                areaEffectCloud.setColor(Color.RED);
-                areaEffectCloud.setDuration(40);
-                areaEffectCloud.setRadius(1.3F);
+                    areaEffectCloud.setParticle(Particle.REDSTONE, new Particle.DustOptions(Color.fromBGR(1, 0, 156), 2.0F));
+                    areaEffectCloud.setColor(Color.RED);
+                    areaEffectCloud.setDuration(40);
+                    areaEffectCloud.setRadius(1.3F);
 
-                p.damage(0.2D);
-                Sacrificios.start(p);
-                p.sendMessage(Format.format(String.format("&cHaz hecho un sacrificio #%s", totalSacrifices)));
+                    p.damage(0.2D);
+                    Sacrificios.start(p);
+                    p.sendMessage(Format.format(String.format("&cHaz hecho un sacrificio #%s", totalSacrifices)));
 
-                cooldownSacrifice.put(p.getUniqueId(), System.currentTimeMillis() + (10 * 1000));
+                    cooldownSacrifice.put(p.getUniqueId(), System.currentTimeMillis() + (10 * 1000));
 
-                p.getPersistentDataContainer().set(Utils.key("NEGATIVE_HEALTH"), PersistentDataType.INTEGER, p.getPersistentDataContainer().get(Utils.key("NEGATIVE_HEALTH"), PersistentDataType.INTEGER) + 2);
-                giveReward(p);
-            }
-        }
-
-        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if(p.getInventory().getItemInMainHand().equals(Items.crystalHeart())) {
-                if (p.hasCooldown(Material.RED_DYE)) {
-                    event.setCancelled(true);
-                } else {
-                    EventosItems.crystalHealthup(p);
-                    p.getInventory().removeItem(Items.crystalHeart());
-                    p.getInventory().remove(Material.RED_DYE);
+                    p.getPersistentDataContainer().set(Utils.key("NEGATIVE_HEALTH"), PersistentDataType.INTEGER, p.getPersistentDataContainer().get(Utils.key("NEGATIVE_HEALTH"), PersistentDataType.INTEGER) + 2);
+                    giveReward(p);
+                    p.setCooldown(Material.IRON_SWORD, 200);
                 }
             }
-        }
-        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if(p.getInventory().getItemInMainHand().equals(Items.varaDis())){
-                if(p.hasCooldown(Material.STICK)){
-                    event.setCancelled(true);
-                }else{
-                    EventosItems.discordxd(p);
-                    p.setCooldown(Material.STICK, 12000);
-                }
-            }
-        }
 
-        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (p.getInventory().getItemInMainHand().equals(Items.termometroItem())) {
-                try {
-                    if (p.hasCooldown(Material.AMETHYST_SHARD)) {
+            if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                if (p.getInventory().getItemInMainHand().equals(Items.crystalHeart())) {
+                    if (p.hasCooldown(Material.RED_DYE)) {
                         event.setCancelled(true);
                     } else {
-                        EventosItems.temperatura(p);
-                        p.setCooldown(Material.AMETHYST_SHARD, 60);
+                        EventosItems.crystalHealthup(p);
+                        p.getInventory().removeItem(Items.crystalHeart());
+                        p.getInventory().remove(Material.RED_DYE);
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Warn.Mutant(e);
                 }
             }
             if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455){
+                if (p.getInventory().getItemInMainHand().equals(Items.varaDis())) {
+                    if (p.hasCooldown(Material.STICK)) {
+                        event.setCancelled(true);
+                    } else {
+                        EventosItems.discordxd(p);
+                        p.setCooldown(Material.STICK, 12000);
+                    }
+                }
+            }
+
+            if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                if (p.getInventory().getItemInMainHand().equals(Items.termometroItem())) {
+                    try {
+                        if (p.hasCooldown(Material.AMETHYST_SHARD)) {
+                            event.setCancelled(true);
+                        } else {
+                            EventosItems.temperatura(p);
+                            p.setCooldown(Material.AMETHYST_SHARD, 60);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Warn.Mutant(e);
+                    }
+                }
+                if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                    if (p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455) {
                         if (p.hasCooldown(Material.PRISMARINE_CRYSTALS)) {
                             event.setCancelled(true);
                         } else {
@@ -135,15 +139,15 @@ public class PlayerEventsListeners implements Listener {
                             //alguien puede hacer que al usar esto se saque 1 totem restorer si es que esta stackeado? gracias
                             p.getInventory().removeItem(new ItemStack(Material.PRISMARINE_CRYSTALS, 1));
                         }
+                    }
                 }
-            }
-            if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
-                if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455){
+                if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+                    if (p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455) {
                         PersistentDataContainer data = p.getPersistentDataContainer();
                         int i = data.get(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER);
-                        p.sendMessage(Format.PREFIX, format("&7&l¡Tienes &e&l" +i + "% &7&lporcentaje de Totems!"));
+                        p.sendMessage(Format.PREFIX, format("&7&l¡Tienes &e&l" + i + "% &7&lporcentaje de Totems!"));
                     }
-            }
+                }
 
 
             /*if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
@@ -219,6 +223,8 @@ public class PlayerEventsListeners implements Listener {
                     p.getInventory().getItemInOffHand().setType(Material.AIR);
                 }
             }*/
+
+            }
         }
     }
 
@@ -268,16 +274,21 @@ public class PlayerEventsListeners implements Listener {
         player.getInventory().addItem(Items.bloodShard());
     }
 
+    /*
     @EventHandler
     public void hambreAgotar(EntityExhaustionEvent e) {
         e.setExhaustion(e.getExhaustion() * 2);
     }
+     */
 
+    /*
     @EventHandler
     public void elderGuardianXd(ElderGuardianAppearanceEvent event){
         var p = event.getAffectedPlayer();
         p.setRemainingAir(0);
     }
+
+     */
 
 
 
