@@ -49,6 +49,7 @@ public class PlayerEventsListeners implements Listener {
                 var inventory = p.getInventory();
                 var dataSacrifices = data.get(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER);
                 var totalSacrifices = (dataSacrifices == null ? 1 : ++dataSacrifices);
+
                 if (cooldownSacrifice.containsKey(p.getUniqueId()) && p.hasCooldown(Material.IRON_SWORD)) {
                     if (cooldownSacrifice.get(p.getUniqueId()) > System.currentTimeMillis()) {
                         p.sendMessage(Format.format(String.format("&cTe encuentras en cooldown, espera %d segundo(s).", (cooldownSacrifice.get(p.getUniqueId()) - System.currentTimeMillis()) / 1000)));
@@ -64,27 +65,24 @@ public class PlayerEventsListeners implements Listener {
 
                 if (p.getInventory().firstEmpty() == -1) {
                     p.sendMessage(Format.format("&c¡Ofreciste un sacrificio! pero tu inventario esta lleno."));
-                    if (p.getInventory().firstEmpty() == -1) {
-                        p.sendMessage(Format.format("&e¡Ofreciste un sacrificio! pero tu inventario esta lleno."));
-                        return;
-                    }
+                }
 
-                    data.set(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER, totalSacrifices);
+                data.set(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER, totalSacrifices);
 
-                    var areaEffectCloud = (AreaEffectCloud) p.getWorld().spawnEntity(p.getLocation(), EntityType.AREA_EFFECT_CLOUD);
+                var areaEffectCloud = (AreaEffectCloud) p.getWorld().spawnEntity(p.getLocation(), EntityType.AREA_EFFECT_CLOUD);
 
-                    areaEffectCloud.setParticle(Particle.REDSTONE, new Particle.DustOptions(Color.fromBGR(1, 0, 156), 2.0F));
-                    areaEffectCloud.setColor(Color.RED);
-                    areaEffectCloud.setDuration(40);
-                    areaEffectCloud.setRadius(1.3F);
+                areaEffectCloud.setParticle(Particle.REDSTONE, new Particle.DustOptions(Color.fromBGR(1, 0, 156), 2.0F));
+                areaEffectCloud.setColor(Color.RED);
+                areaEffectCloud.setDuration(40);
+                areaEffectCloud.setRadius(1.3F);
 
-                    p.damage(0.2D);
-                    Sacrificios.start(p);
-                    p.sendMessage(Format.format(String.format("&cHaz hecho un sacrificio #%s", totalSacrifices)));
+                p.damage(0.2D);
+                Sacrificios.start(p);
+                p.sendMessage(Format.format(String.format("&cHaz hecho un sacrificio #%s", totalSacrifices)));
 
-                    cooldownSacrifice.put(p.getUniqueId(), System.currentTimeMillis() + (10 * 1000));
-                    p.getPersistentDataContainer().set(Utils.key("NEGATIVE_HEALTH"), PersistentDataType.INTEGER, p.getPersistentDataContainer().get(Utils.key("NEGATIVE_HEALTH"), PersistentDataType.INTEGER) + 2);
-                    giveReward(p);
+                cooldownSacrifice.put(p.getUniqueId(), System.currentTimeMillis() + (10 * 1000));
+                p.getPersistentDataContainer().set(Utils.key("NEGATIVE_HEALTH"), PersistentDataType.INTEGER, p.getPersistentDataContainer().get(Utils.key("NEGATIVE_HEALTH"), PersistentDataType.INTEGER) + 2);
+                giveReward(p);
                 }
             }
 
@@ -219,7 +217,6 @@ public class PlayerEventsListeners implements Listener {
                 }
             }*/
 
-            }
         }
     }
 
