@@ -440,6 +440,7 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
         self.setHealth(30);
         self.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK).setBaseValue(100);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"MINER_LEVEL_1"),PersistentDataType.STRING,"MINER_LEVEL_1");
     }
     public static void stoneSoldier(Zombie self){
         self.setCustomName(format("&7Stone Soldier"));
@@ -456,20 +457,24 @@ public class Mobs implements Listener{
         self.getEquipment().setDropChance(EquipmentSlot.CHEST,0);
         self.getEquipment().setDropChance(EquipmentSlot.LEGS,0);
         self.getEquipment().setDropChance(EquipmentSlot.FEET,0);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"MINER_LEVEL_1"),PersistentDataType.STRING,"MINER_LEVEL_1");
     }
     public static void goblin(Drowned self){
         self.setCustomName(format("&1Goblin"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10);
         self.setHealth(40);
+        self.setBaby();
         self.getEquipment().setItemInMainHand(new ItemStack(Material.IRON_AXE));
         self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"MINER_LEVEL_1"),PersistentDataType.STRING,"MINER_LEVEL_1");
     }
     public static void oreCreeper(Creeper self){
         self.setCustomName(format("&7Ore Creeper"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
         self.setHealth(30);
         self.setExplosionRadius(5);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"MINER_LEVEL_2"),PersistentDataType.STRING,"MINER_LEVEL_2");
     }
     public static void spectreAssasin(Skeleton self){
         self.setCustomName(format("&7&lSpectre Assassin"));
@@ -485,9 +490,11 @@ public class Mobs implements Listener{
         self.getEquipment().setDropChance(EquipmentSlot.LEGS,0);
         self.getEquipment().setDropChance(EquipmentSlot.FEET,0);
         self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"MINER_LEVEL_2"),PersistentDataType.STRING,"MINER_LEVEL_2");
     }
     public static void lostGolem(IronGolem self){
         self.setCustomName(format("&8&lLost Golem"));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"MINER_LEVEL_3"),PersistentDataType.STRING,"MINER_LEVEL_3");
         CraftIronGolem craft = ((CraftIronGolem) self);
         EntityIronGolem entityIronGolem = craft.getHandle();
         try{

@@ -25,13 +25,13 @@ public class BlocksListeners implements Listener{
         this.plugin = plugin;
     }
 
-
-    @EventHandler
+    //TODO Soy un inutil
+    /*@EventHandler
     public void bambuInutil(BlockBreakEvent e){
         if(e.getBlock().getType() == Material.BAMBOO || e.getBlock().getType() == Material.BAMBOO_SAPLING){
             e.getBlock().getLocation().createExplosion(10,true,true);
         }
-    }
+    }*/
 
     @EventHandler
     public void miedoXd(BlockPlaceEvent e){

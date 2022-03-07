@@ -158,7 +158,7 @@ public class MaestriaExp implements Listener{
             plugin.getLocations().add(block.getLocation());
         }
     }
-
+/*
     @EventHandler
     public void onPiston(BlockPistonExtendEvent e){
 
@@ -173,7 +173,7 @@ public class MaestriaExp implements Listener{
         if(e.getBlock().getType().name().toLowerCase().contains("ore")|| e.getBlock().hasMetadata("no_exp")) {
             e.setCancelled(true);
         }
-    }
+    } */
 
 
     @EventHandler
@@ -250,12 +250,12 @@ public class MaestriaExp implements Listener{
 
     public int getGiveExp(Block block) {
         return switch (block.getType()){
-            case COAL_ORE, COPPER_ORE, NETHER_QUARTZ_ORE, NETHER_GOLD_ORE -> 1;
-            case IRON_ORE, GOLD_ORE, LAPIS_ORE -> 5;
-            case REDSTONE_ORE, DEEPSLATE_COAL_ORE, DEEPSLATE_COPPER_ORE, DEEPSLATE_REDSTONE_ORE, DEEPSLATE_LAPIS_ORE, DIAMOND_ORE -> 3;
-            case EMERALD_ORE, DEEPSLATE_DIAMOND_ORE -> 10;
-            case DEEPSLATE_IRON_ORE, DEEPSLATE_GOLD_ORE -> 7;
-            case DEEPSLATE_EMERALD_ORE -> 15;
+            case COAL_ORE, COPPER_ORE, NETHER_QUARTZ_ORE, NETHER_GOLD_ORE -> 10;
+            case IRON_ORE, GOLD_ORE, LAPIS_ORE -> 25;
+            case REDSTONE_ORE, DEEPSLATE_COAL_ORE, DEEPSLATE_COPPER_ORE, DEEPSLATE_REDSTONE_ORE, DEEPSLATE_LAPIS_ORE, DIAMOND_ORE -> 35;
+            case EMERALD_ORE, DEEPSLATE_DIAMOND_ORE -> 60;
+            case DEEPSLATE_IRON_ORE, DEEPSLATE_GOLD_ORE -> 30;
+            case DEEPSLATE_EMERALD_ORE -> 85;
             default -> 0;
             //Todo lo mismo que arriba revisar bien porfavor
         };
