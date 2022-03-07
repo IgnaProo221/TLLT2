@@ -125,6 +125,7 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
         if(args[0].equalsIgnoreCase("maestria")){
             var dataMaestria = data.get(new NamespacedKey(plugin,"maestrialvl"),PersistentDataType.INTEGER);
             var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
+
             sender.sendMessage(format("&7-------------&b&lMAESTRIA&7-------------"));
             sender.sendMessage(format("&cNivel de Maestria: &e&l" + dataMaestria));
             sender.sendMessage(format("&cEXP de Maestria: &e&l" + dataMaestriaExp));

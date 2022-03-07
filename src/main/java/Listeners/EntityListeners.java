@@ -162,9 +162,9 @@ public class EntityListeners implements Listener {
 
                             //pa.setHealth(pa.getHealth() + (0.40 / pa.getMaxHealth()));
 
-                            int duration = new Random().nextInt(2) * 20;
+                            int duration = new Random().nextInt(2) + 1* 20;
 
-                            PotionEffect regeneration = new PotionEffect(PotionEffectType.REGENERATION, duration, 3);
+                            PotionEffect regeneration = new PotionEffect(PotionEffectType.REGENERATION, duration, 4);
 
                             pa.addPotionEffect(regeneration);
 

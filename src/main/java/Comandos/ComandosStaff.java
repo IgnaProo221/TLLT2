@@ -201,11 +201,65 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     PersistentDataContainer caca = Data.get(player);
                     player.sendMessage(PREFIX,format("&7Reiniciaste tu Nivel de Maestria."));
                     caca.set(Utils.key("maestrialvl"), PersistentDataType.INTEGER, 1);
-                } else if(args[1].equalsIgnoreCase("resetattributes")){
-                    player.sendMessage(PREFIX,format("&7Reiniciaste tus Atributos de Vida, Daño y Defensa."));
+                } else if(args[1].equalsIgnoreCase("resetattributes")) {
+                    player.sendMessage(PREFIX, format("&7Reiniciaste tus Atributos de Vida, Daño y Defensa."));
                     player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
                     player.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(0);
                     player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(1);
+                } else if (args[1].equalsIgnoreCase("addLevel")) {
+                    if (args.length >= 4) {
+                        Player p = Bukkit.getPlayer(args[2]);
+
+                        if (p.isOnline()) {
+                            PersistentDataContainer persistent = Data.get(p);
+
+                            int give = Integer.parseInt(args[3]);
+                            int current;
+
+                            if (persistent.has(new NamespacedKey(plugin, "maestrialvl"), PersistentDataType.INTEGER)) {
+                                current = persistent.get(Utils.key("maestrialvl"), PersistentDataType.INTEGER);
+
+                            } else {
+                                current = 1;
+                            }
+
+                            int r = give + current;
+
+                            if (r >= 30) {
+                                r = 29;
+                            }
+
+                            persistent.set(Utils.key("maestrialvl"), PersistentDataType.INTEGER, r);
+                            player.sendMessage(format("&aHas aumentado el nivel del jugador &7&l" + p.getName() + "&a."));
+                            player.sendMessage(format("&eAhora se encuentra en el nivel: &b" + r));
+
+                        } else {
+                            player.sendMessage(PREFIX, format("&eEl jugador indicado no se encuentra online"));
+                        }
+                    }
+                } else if (args[1].equalsIgnoreCase("setLevel")) {
+                    if (args.length >= 4) {
+                        Player origin = Bukkit.getPlayer(args[2]);
+
+                        if (origin.isOnline() && origin != null) {
+
+                            int s = Integer.parseInt(args[3]);
+
+                            if (s >= 30 || s <= 0) {
+                                player.sendMessage(format("&cEl valor indicado supera los limites, indica un nivel valido."));
+                                return false;
+                            }
+
+                            PersistentDataContainer container = Data.get(origin);
+
+                            container.set(Utils.key("maestrialvl"), PersistentDataType.INTEGER, s);
+
+                            player.sendMessage(format("&aAhora el nivel del jugador &5&l" + origin.getName() + "&a se ha colocado en: &7. " + s));
+
+                        } else {
+                            player.sendMessage(format("&cEl jugador indicado es null o no se encuentra conectado."));
+                        }
+                    }
                 } else if(args[1].equalsIgnoreCase("levelup")){
                     player.sendMessage(PREFIX,format("&7Se aumento el EXP de la Maestria"));
                     data.set(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER, 999999);
@@ -382,7 +436,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                         }
                     }
 
-                    if (isValid) {
+                    if (!isValid) {
 
                         player.sendMessage(Format.PREFIX + format("&7El team que has seleccionado no es valido."));
 
@@ -610,7 +664,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
             switch (args[0]) {
                 case "enchant" -> addToList(commands,"IMPACT","GRAVITY","BULLSEYE");
                 case "dimension" -> Bukkit.getWorlds().forEach(world -> commands.add(world.getName()));
-                case "maestria"->addToList(commands,"reset","resetattributes","resetbuffs");
+                case "maestria"->addToList(commands,"reset","resetattributes","resetbuffs", "addLevel", "setLevel", "setXP");
                 case "sacrificios" -> addToList(commands, "modify", "clear", "reset");
                 case "god_mode" -> addToList(commands, "on", "off");
                 case "teams" -> addToList(commands, "chat", "join", "all_teams", "info");
@@ -623,14 +677,18 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
             StringUtil.copyPartialMatches(args[1], commands, completions);
         }else if(args.length == 3){
             switch (args[1]) {
-                case "modify", "clear", "reset", "join" -> Bukkit.getOnlinePlayers().forEach(player -> commands.add(player.getName()));
+                case "modify", "clear", "reset", "join", "addLevel", "setLevel", "setXP" -> Bukkit.getOnlinePlayers().forEach(player -> commands.add(player.getName()));
                 case "hipertermia", "hipotermia" -> addToList(commands, "1", "2", "3");
                 case "resetbuffs"->addToList(commands,"lvl10","lvl20","lvl30 ");
             }
             StringUtil.copyPartialMatches(args[2], commands, completions);
         }else if(args.length == 4){
             for(Player player : Bukkit.getOnlinePlayers()) {
-                if (args[2].equals(player.getName()) && args[1].equalsIgnoreCase("join")) addToList(commands, Teams.allTeams().toString());
+                if (args[2].equals(player.getName())) {
+                    if (args[1].equalsIgnoreCase("addLevel") || args[1].equalsIgnoreCase("setLevel"))
+                        addToList(commands, "<Level>");
+                    if (args[1].equalsIgnoreCase("join")) addToList(commands, Teams.allTeams().toString());
+                }
                 if (args[2].equals(player.getName()))
                     addToList(commands, "1", "2", "3", "4", "5");
             }
