@@ -37,7 +37,7 @@ public class PlayerEventsListeners implements Listener {
         this.plugin = plugin;
     }
 
-    private final HashMap<Player, Integer> cooldownSacrifice = new HashMap<>();
+    private final HashMap<UUID, Long> cooldownSacrifice = new HashMap<>();
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
@@ -51,12 +51,20 @@ public class PlayerEventsListeners implements Listener {
 
                 var totalSacrifices = (dataSacrifices == null ? 1 : ++dataSacrifices);
 
-                if(dataSacrifices != null && totalSacrifices > 5){
+                if (cooldownSacrifice.containsKey(p.getUniqueId())) {
+                    if (cooldownSacrifice.get(p.getUniqueId()) > System.currentTimeMillis()) {
+                        p.sendMessage(Format.format(String.format("&cTe encuentras en cooldown, espera %d segundo(s).", (cooldownSacrifice.get(p.getUniqueId()) - System.currentTimeMillis())  / 1000)));
+                        return;
+                    } else
+                        cooldownSacrifice.remove(p.getUniqueId());
+                }
+
+                if (dataSacrifices != null && totalSacrifices > 5) {
                     p.sendMessage(Format.format("&cLos Dioses rechazan tu sacrificio, has perdido mucha sangre y ya no eres digno para un sacrificio más."));
                     return;
                 }
 
-                if(p.getInventory().firstEmpty() == -1){
+                if (p.getInventory().firstEmpty() == -1) {
                     p.sendMessage(Format.format("&c¡Ofreciste un sacrificio! pero tu inventario esta lleno."));
                     return;
                 }
@@ -73,7 +81,9 @@ public class PlayerEventsListeners implements Listener {
                 p.damage(0.2D);
                 Sacrificios.start(p);
                 p.sendMessage(Format.format(String.format("&cHaz hecho un sacrificio #%s", totalSacrifices)));
-                //p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(p.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue()-2.0D);
+
+                cooldownSacrifice.put(p.getUniqueId(), System.currentTimeMillis() + (10 * 1000));
+
                 p.getPersistentDataContainer().set(Utils.key("NEGATIVE_HEALTH"), PersistentDataType.INTEGER, p.getPersistentDataContainer().get(Utils.key("NEGATIVE_HEALTH"), PersistentDataType.INTEGER) + 2);
                 giveReward(p);
             }

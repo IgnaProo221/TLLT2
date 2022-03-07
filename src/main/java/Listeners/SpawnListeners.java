@@ -42,7 +42,8 @@ public class SpawnListeners implements Listener {
         var entity = e.getEntity();
         var pos = e.getLocation();
         var world = Bukkit.getWorld("world");
-        var entitybiome = entity.getWorld().getBiome(entity.getLocation());
+        var entitybiome = entity.getLocation().getBlock().getBiome();
+
         if(entitybiome == Biome.SNOWY_TUNDRA || entitybiome == Biome.SNOWY_BEACH || entitybiome == Biome.SNOWY_TAIGA || entitybiome == Biome.SNOWY_MOUNTAINS || entitybiome == Biome.SNOWY_TAIGA_HILLS || entitybiome == Biome.SNOWY_TAIGA_MOUNTAINS
         || entitybiome == Biome.ICE_SPIKES){
             if(entity instanceof Zombie zombie && !(entity instanceof Drowned) && !(entity instanceof Husk) && !(entity instanceof ZombieVillager) && !(entity instanceof PigZombie) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
