@@ -45,13 +45,14 @@ public class PlayerEventsListeners implements Listener {
 
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasDisplayName() && p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(Format.format("&7Daga Ceremonial"))) {
+
                 var data = p.getPersistentDataContainer();
                 var inventory = p.getInventory();
                 var dataSacrifices = data.get(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER);
 
                 var totalSacrifices = (dataSacrifices == null ? 1 : ++dataSacrifices);
 
-                if (cooldownSacrifice.containsKey(p.getUniqueId())) {
+                if (cooldownSacrifice.containsKey(p.getUniqueId()) && p.hasCooldown(Material.IRON_SWORD)) {
                     if (cooldownSacrifice.get(p.getUniqueId()) > System.currentTimeMillis()) {
                         p.sendMessage(Format.format(String.format("&cTe encuentras en cooldown, espera %d segundo(s).", (cooldownSacrifice.get(p.getUniqueId()) - System.currentTimeMillis()) / 1000)));
                         return;
@@ -88,6 +89,7 @@ public class PlayerEventsListeners implements Listener {
 
                     p.getPersistentDataContainer().set(Utils.key("NEGATIVE_HEALTH"), PersistentDataType.INTEGER, p.getPersistentDataContainer().get(Utils.key("NEGATIVE_HEALTH"), PersistentDataType.INTEGER) + 2);
                     giveReward(p);
+                    p.setCooldown(Material.IRON_SWORD, 200);
                 }
             }
 
