@@ -130,41 +130,49 @@ public class EntityListeners implements Listener {
         int lifestealpercentage = random.nextInt(100);
         var entity = event.getEntity();
         var damager = event.getDamager();
-        if(damager instanceof Player pa){
-            if(pa.getInventory().contains(Items.ringOfAbaddon())){
-                if(lifestealpercentage > 95){
-                    pa.sendMessage(PREFIX,format("&cTu Ring of Abaddon te otorgo Fuerza II por 3 segundos"));
-                    pa.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE,60,1,true,false,true));
+        if(damager instanceof Player pa) {
+            if (pa.getInventory().contains(Items.ringOfAbaddon())) {
+                if (lifestealpercentage > 95) {
+                    pa.sendMessage(PREFIX, format("&cTu Ring of Abaddon te otorgo Fuerza II por 3 segundos"));
+                    pa.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 1, true, false, true));
                 }
             }
             //if(!(pa.getInventory().getItemInMainHand().getItemMeta() == null))return;
             //if(!(pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()))return;
-            if(pa.getInventory().getItemInMainHand() != null){
-                if(pa.getInventory().getItemInMainHand().hasItemMeta()){
+            if (pa.getInventory().getItemInMainHand() != null) {
+                if (pa.getInventory().getItemInMainHand().hasItemMeta()) {
                     if (pa.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.REVENGE)) {
-                        if (entity instanceof Raider || ( entity instanceof Vex || entity instanceof Pillager || entity instanceof Vindicator || entity instanceof Evoker || entity instanceof Illusioner || entity instanceof Witch || entity instanceof Ravager)){
+                        if (entity instanceof Raider || (entity instanceof Vex || entity instanceof Pillager || entity instanceof Vindicator || entity instanceof Evoker || entity instanceof Illusioner || entity instanceof Witch || entity instanceof Ravager)) {
                             event.setDamage(event.getDamage() * 1.25);
                         }
-                    } else if (pa.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.CRITICAL_HIT)){
+                    } else if (pa.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.CRITICAL_HIT)) {
                         int criticalchance = new Random().nextInt(100);
-                        if(criticalchance >= 95){
+                        if (criticalchance >= 95) {
                             event.setDamage(event.getDamage() * 2);
-                            pa.playSound(pa.getLocation(),Sound.ITEM_TRIDENT_THROW, 10.0F, 2.0F);
-                            pa.sendMessage(PREFIX,format("&c¡Tu Espada a hecho un Critico! &7(Total de " + event.getDamage() + " de Daño)"));
+                            pa.playSound(pa.getLocation(), Sound.ITEM_TRIDENT_THROW, 10.0F, 2.0F);
+                            pa.sendMessage(PREFIX, format("&c¡Tu Espada a hecho un Critico! &7(Total de " + event.getDamage() + " de Daño)"));
                         }
                     }
-            if(pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()) {
-                if (pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4006) {
-                    entity.setFreezeTicks(400);
-                } else if (pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4010) {
-                    //pa.setHealth(0.5 / pa.getMaxHealth());
-                    pa.setHealth(pa.getHealth() + (0.40 / pa.getMaxHealth()));
-                    }else if(pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 18129){
-                    Monster monster = (Monster) entity;
-                    monster.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200,1, false, false, false));
+                    if (pa.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()) {
+                        if (pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4006) {
+                            entity.setFreezeTicks(400);
+                        } else if (pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4010) {
+                            //pa.setHealth(0.5 / pa.getMaxHealth());
+
+                            //pa.setHealth(pa.getHealth() + (0.40 / pa.getMaxHealth()));
+
+                            int duration = new Random().nextInt(2) * 20;
+
+                            PotionEffect regeneration = new PotionEffect(PotionEffectType.REGENERATION, duration, 3);
+
+                            pa.addPotionEffect(regeneration);
+
+                        } else if (pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 18129) {
+                            Monster monster = (Monster) entity;
+                            monster.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200, 1, false, false, false));
+                        }
+                    }
                 }
-                }
-            }
             }
         }
 
@@ -576,6 +584,7 @@ public class EntityListeners implements Listener {
         }
     }
 
+    /*
     @EventHandler
     public void noZombPig(EntityTransformEvent e) {
         if (e.getTransformReason() == EntityTransformEvent.TransformReason.PIGLIN_ZOMBIFIED) {
@@ -593,6 +602,8 @@ public class EntityListeners implements Listener {
             e.setCancelled(true);
         }
     }
+
+     */
 
 
 

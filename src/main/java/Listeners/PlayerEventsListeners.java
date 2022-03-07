@@ -57,7 +57,7 @@ public class PlayerEventsListeners implements Listener {
                 }
 
                 if(p.getInventory().firstEmpty() == -1){
-                    p.sendMessage(Format.format("&c¡Ofreciste un sacrificio! pero tu inventario esta lleno."));
+                    p.sendMessage(Format.format("&e¡Ofreciste un sacrificio! pero tu inventario esta lleno."));
                     return;
                 }
 
@@ -258,16 +258,21 @@ public class PlayerEventsListeners implements Listener {
         player.getInventory().addItem(Items.bloodShard());
     }
 
+    /*
     @EventHandler
     public void hambreAgotar(EntityExhaustionEvent e) {
         e.setExhaustion(e.getExhaustion() * 2);
     }
+     */
 
+    /*
     @EventHandler
     public void elderGuardianXd(ElderGuardianAppearanceEvent event){
         var p = event.getAffectedPlayer();
         p.setRemainingAir(0);
     }
+
+     */
 
 
 
