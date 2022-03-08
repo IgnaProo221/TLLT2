@@ -28,7 +28,7 @@ public class EatListeners implements Listener {
     }
 
     @EventHandler
-    public void comerEv(PlayerItemConsumeEvent e){
+    public void comerEv(PlayerItemConsumeEvent e) {
         Player p = e.getPlayer();
         var data = p.getPersistentDataContainer();
         var temperature = data.get(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER);
@@ -36,18 +36,18 @@ public class EatListeners implements Listener {
             if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 2) {
                 e.setCancelled(true);
                 p.sendMessage(Format.PREFIX + format("&c¡Estas paniquiado!"));
-            }else if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 3) {
+            } else if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 3) {
                 e.setCancelled(true);
                 p.sendMessage(Format.PREFIX + format("&c¡Estas paniquiado!"));
-            }else if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 4) {
+            } else if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 4) {
                 e.setCancelled(true);
                 p.sendMessage(Format.PREFIX + format("&c¡Estas paniquiado!"));
             }
         }
-        if(e.getItem() != null && e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(ChatColor.GRAY + "Fungal Clumps")){
+        if (e.getItem() != null && e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(ChatColor.GRAY + "Fungal Clumps")) {
             if (plugin.getConfig().getStringList("ConsumidodoFungalClumps").contains(p.getUniqueId().toString())) {
                 p.sendMessage(prefix + ChatColor.RED + "Ya has consumido este item.");
-            }else{
+            } else {
                 p.setMaxHealth(24);
                 p.sendMessage(prefix + ChatColor.translateAlternateColorCodes('&', "&cHas consumido la &5Fungal Clumps &7(Se Añadieron 2 Contenedores de Vida)."));
                 List<String> lista = plugin.getConfig().getStringList("ConsumidodoFungalClumps");
@@ -55,33 +55,33 @@ public class EatListeners implements Listener {
 
                 plugin.getConfig().set("ConsumidodoFungalClumps", lista);
                 plugin.saveConfig();
+            }
         }
-    }
-        if(e.getItem() != null && e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(ChatColor.WHITE + "" + ChatColor.BOLD + "Cloudy Marshmallow")){
-            p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 200,2));
+        if (e.getItem() != null && e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(ChatColor.WHITE + "" + ChatColor.BOLD + "Cloudy Marshmallow")) {
+            p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 200, 2));
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 400, 1));
             p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 1));
             p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1, 0));
         }
 
 
-        if(e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(format("&bCooler Fruit"))){
+        if (e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(format("&bCooler Fruit"))) {
             data.set(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER, temperature - 10);
             p.sendMessage(PREFIX, format("&b¡Tu temperatura bajo 10°!"));
         }
-        if(e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(format("&6Hot Fruit"))){
+        if (e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(format("&6Hot Fruit"))) {
             data.set(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER, temperature + 10);
             p.sendMessage(PREFIX, format("&6¡Tu temperatura subió 10°!"));
         }
-        if(e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(format("&cBrimstone"))){
-            p.sendMessage(PREFIX,format("&c&lHas Aumentado tu Daño y Vida Maxima!"));
+        if (e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(format("&cBrimstone"))) {
+            p.sendMessage(PREFIX, format("&c&lHas Aumentado tu Daño y Vida Maxima!"));
             int ehp = data.has(Utils.key("maestry_health"), PersistentDataType.INTEGER) ? data.get(Utils.key("maestry_health"), PersistentDataType.INTEGER) : 0;
             data.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, ehp + 2);
             p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
         }
-        if(e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(format("&7Crystal Apple"))){
-            p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,200,2,true,false,true));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,300,0,true,false,true));
+        if (e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(format("&7Crystal Apple"))) {
+            p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 2, true, false, true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 300, 0, true, false, true));
         }
-}
+    }
 }
