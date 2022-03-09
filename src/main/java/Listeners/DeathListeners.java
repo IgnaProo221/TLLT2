@@ -83,29 +83,50 @@ public class DeathListeners extends ListenerAdapter implements Listener {
                     "☠️\uD83D\uDC80 https://www.youtube.com/watch?v=sOvyNa9-39c \uD83D\uDC80☠️").queue();
         }*/
         if (msg.getContentRaw().equals("tll!players")) {
+
             EmbedBuilder eb = new EmbedBuilder();
+
             eb.setFooter("TheLastLifeT2.jar", "https://cdn.discordapp.com/attachments/906642578013843526/943284426442436679/hardcorehearth-export.png");
             eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
             eb.setTitle("Jugadores conectados en estos momentos:");
             StringBuilder jugadores = new StringBuilder();
+
             for (Player players : Bukkit.getOnlinePlayers()) {
+
                 String hp = "" + players.getHealth();
-                String result = hp.substring(0,4);
+                String result = hp.substring(0, 4);
+
                 if (jugadores.length() > 0) {
                     jugadores.append('\n');
                 }
-                jugadores.append(players.getName() +" :heart: : " + result);
+
+                PersistentDataContainer data = Data.get(players);
+
+                int level;
+
+                if (data.has(Utils.key("maestrialvl"), PersistentDataType.INTEGER)) {
+                    level = data.get(Utils.key("maestrialvl"), PersistentDataType.INTEGER);
+                } else {
+                    level = 1;
+                }
+
+
+                jugadores.append(players.getName() + " :heart: : " + result + " - Maestria: " + level);
             }
+
             eb.setDescription(jugadores.length() > 0 ? jugadores : "No hay jugadores conectados en estos momentos.");
             eb.setColor(new Color(252, 186, 3));
+
             msg.getChannel().sendMessage(eb.build()).queue();
         }
         if (msg.getContentRaw().equals("tll!blaststorm")) {
             World world = Bukkit.getWorld("world");
             long segundos = 0;
+
             if (world != null) {
                 segundos = world.getWeatherDuration() / 20;
             }
+
             long hours = segundos / 1800L;
             long minutes = segundos % 1800L / 60L;
             long seconds = segundos % 60L;

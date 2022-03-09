@@ -65,13 +65,6 @@ public class Utils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        try {
-            getConfig().load("config.yml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InvalidConfigurationException e) {
-            e.printStackTrace();
-        }
     }
 
     public static void pasteSchematic(String filename, Location loc){

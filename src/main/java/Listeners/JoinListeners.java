@@ -38,18 +38,14 @@ public class JoinListeners implements Listener {
         var extra_health =  data.get(Utils.key("maestry_health"), PersistentDataType.INTEGER);
         var negative_health = data.get(Utils.key("negative_health"), PersistentDataType.INTEGER);
 
-        if(TLL2.mantenimiento){
-            if(!e.getPlayer().isOp()) {
-                Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                    p.kickPlayer("&c&l¡El Servidor esta en Mantenimiento! Vuelva mas tarde.");
-                }, 20L);
-            }
-        }
-
+        /*
         if (Utils.getConfig().contains("Maestria." + p.getName())) {
 
             int level;
             int exp;
+
+            int expConfig = Utils.getConfig().getInt("Maestria." + p.getName() + ".EXP");
+            int levelConfig = Utils.getConfig().getInt("Maestria." + p.getName() + ".Level");
 
             if (data.has(Utils.key("maestrialvl"), PersistentDataType.INTEGER)) {
 
@@ -70,10 +66,12 @@ public class JoinListeners implements Listener {
             data.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, exp);
             data.set(Utils.key("maestrialvl"), PersistentDataType.INTEGER, level);
 
-            Bukkit.getLogger().info("Se le ha añadido los data: maestriaexp y maestrialvl al jugador " + p.getName() + ".");
+            Bukkit.getLogger().info("se ha registrado los PersistentData: maestriaexp y maestrialvl al jugador " + p.getName() + ".");
             Bukkit.getLogger().info("EXP: " + exp);
             Bukkit.getLogger().info("Level: " + level);
+
         }
+         */
 
         if(negative_health == null){
             data.set(Utils.key("negative_health"), PersistentDataType.INTEGER, 0);
@@ -129,12 +127,14 @@ public class JoinListeners implements Listener {
             container.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, dataMaestria);
         }
 
+        /*
         try {
 
             // No se para que es lo de arriba pero bale
             // Intento de solucion a lo de perder el nivel-exp de la maestria
 
             int level;
+            int exp;
 
             if (data.has(Utils.key("maestrialvl"), PersistentDataType.INTEGER)) {
                 level = dataMaestria;
@@ -142,19 +142,18 @@ public class JoinListeners implements Listener {
                 level = 1;
             }
 
-            Utils.getConfig().set("Maestria." + e.getPlayer().getName() + ".Level", level);
-
-            int exp;
-
             if (data.has(Utils.key("maestriaexp"), PersistentDataType.INTEGER)) {
                 exp = dataMaestriaExp;
             } else {
                 exp = 0;
             }
 
+            Utils.getConfig().set("Maestria." + e.getPlayer().getName() + ".Level", level);
             Utils.getConfig().set("Maestria." + e.getPlayer().getName() + ".EXP", exp);
 
             Utils.reloadConfig();
+
+            Bukkit.getConsoleSender().sendMessage("Se ha almacenado en el config el nivel y EXP de " + e.getPlayer().getName() + ".");
             // Basicamente se recoge el nivel del jugador (si es null es 1, si no pues es el nivel del jugador) y este se coloca en el config para almacenarlo
             // Despues al entrar y si el jugador esta en el config.yml (Maestria), si no tiene nivel, recoge los datos del config, si no, pues del data, y despues al data se le añade los valores recogidos
 
@@ -164,5 +163,6 @@ public class JoinListeners implements Listener {
             Bukkit.getConsoleSender().sendMessage("Se ha ocacionado un error al guardar el nivel-exp de maestria del jugador (" + e.getPlayer().getName()
                     + ") al archivo: config.yml");
         }
+         */
     }
 }
