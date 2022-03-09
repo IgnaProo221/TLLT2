@@ -142,6 +142,24 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     health.setBaseValue(20.0D);
 
             }
+            case "mantenimiento" ->{
+                if(args.length < 2){
+                    player.sendMessage(Format.PREFIX + "Debes colocar un subcomando valido.");
+                    return false;
+                }
+                if(args[1].equalsIgnoreCase("true")){
+                    TLL2.mantenimiento = true;
+                    player.sendMessage(Format.PREFIX + format("¡&7Se puso el server en mantenimiento!"));
+
+                    return false;
+                }
+                if(args[1].equalsIgnoreCase("false")){
+                    TLL2.mantenimiento = false;
+                    player.sendMessage(Format.PREFIX + format("¡&7Se quito el mantenimiento del server!"));
+
+                    return false;
+                }
+            }
             case "god_mode" -> {
                 if (args.length < 2) {
                     player.sendMessage(Format.PREFIX + "Debes colocar un subcomando valido.");
@@ -192,6 +210,105 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     player.sendMessage(Format.format(Format.PREFIX + "&7¡Ha ocurrido un &c&lerror &7al resetear los tótems."));
                 }
             }
+            case "atributos" -> {
+                if (args.length < 2) {
+                    player.sendMessage(Format.PREFIX + "Debes colocar un subcomando valido.");
+                    return false;
+                }
+                if (args[1].equalsIgnoreCase("setDamage")) {
+                    if (args.length >= 4) {
+                        Player origin = Bukkit.getPlayer(args[2]);
+
+                        if (origin.isOnline() && origin != null) {
+
+                            int s = Integer.parseInt(args[3]);
+
+                            if (s >= 100 || s <= 0) {
+                                player.sendMessage(format("&cEl valor indicado supera los limites, indica un nivel valido."));
+                                return false;
+                            }
+
+                            player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(s);
+
+                            player.sendMessage(format("&aAhora el daño del jugador &5&l" + origin.getName() + "&a se ha colocado en: &7. " + s));
+
+                        } else {
+                            player.sendMessage(format("&cEl jugador indicado es null o no se encuentra conectado."));
+                        }
+                    }
+                }
+                if (args[1].equalsIgnoreCase("setDefense")) {
+                    if (args.length >= 4) {
+                        Player origin = Bukkit.getPlayer(args[2]);
+
+                        if (origin.isOnline() && origin != null) {
+
+                            int s = Integer.parseInt(args[3]);
+
+                            if (s >= 100 || s <= 0) {
+                                player.sendMessage(format("&cEl valor indicado supera los limites, indica un nivel valido."));
+                                return false;
+                            }
+
+                            player.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(s);
+
+                            player.sendMessage(format("&aAhora la defensa del jugador &5&l" + origin.getName() + "&a se ha colocado en: &7. " + s));
+
+                        } else {
+                            player.sendMessage(format("&cEl jugador indicado es null o no se encuentra conectado."));
+                        }
+                    }
+                }
+                if (args[1].equalsIgnoreCase("setHealth")) {
+                    if (args.length >= 4) {
+                        Player origin = Bukkit.getPlayer(args[2]);
+
+                        if (origin.isOnline() && origin != null) {
+
+                            int s = Integer.parseInt(args[3]);
+
+                            if (s >= 100 || s <= 0) {
+                                player.sendMessage(format("&cEl valor indicado supera los limites, indica un nivel valido."));
+                                return false;
+                            }
+
+                            PersistentDataContainer container = Data.get(origin);
+
+                            container.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, s);
+
+                            player.sendMessage(format("&aAhora la vida del jugador &5&l" + origin.getName() + "&a se ha colocado en: &7. " + s));
+
+                        } else {
+                            player.sendMessage(format("&cEl jugador indicado es null o no se encuentra conectado."));
+                        }
+                    }
+                }
+                if (args[1].equalsIgnoreCase("removeNegativeHealth")) {
+                    if (args.length >= 4) {
+                        Player origin = Bukkit.getPlayer(args[2]);
+
+                        if (origin.isOnline() && origin != null) {
+
+                            int s = Integer.parseInt(args[3]);
+
+                            if (s >= 0 || s <= 0) {
+                                player.sendMessage(format("&cEl valor indicado supera los limites, indica un nivel valido."));
+                                return false;
+                            }
+
+                            PersistentDataContainer container = Data.get(origin);
+
+                            container.set(Utils.key("negative_health"), PersistentDataType.INTEGER, s);
+
+                            player.sendMessage(format("&aSe removio la vida negativa del jugador &5&l" + origin.getName()));
+
+                        } else {
+                            player.sendMessage(format("&cEl jugador indicado es null o no se encuentra conectado."));
+                        }
+                    }
+                }
+            }
+
             case "maestria" ->{
                 if (args.length < 2) {
                     player.sendMessage(Format.PREFIX + "Debes colocar un subcomando valido.");
@@ -237,7 +354,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                             player.sendMessage(PREFIX, format("&eEl jugador indicado no se encuentra online"));
                         }
                     }
-                } else if (args[1].equalsIgnoreCase("setLevel")) {
+                } else if (args[1].equalsIgnoreCase("levelXP")) {
                     if (args.length >= 4) {
                         Player origin = Bukkit.getPlayer(args[2]);
 
@@ -245,16 +362,16 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
                             int s = Integer.parseInt(args[3]);
 
-                            if (s >= 30 || s <= 0) {
+                            if (s >= 999999 || s <= 0) {
                                 player.sendMessage(format("&cEl valor indicado supera los limites, indica un nivel valido."));
                                 return false;
                             }
 
                             PersistentDataContainer container = Data.get(origin);
 
-                            container.set(Utils.key("maestrialvl"), PersistentDataType.INTEGER, s);
+                            container.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, s);
 
-                            player.sendMessage(format("&aAhora el nivel del jugador &5&l" + origin.getName() + "&a se ha colocado en: &7. " + s));
+                            player.sendMessage(format("&aAhora la exp del jugador &5&l" + origin.getName() + "&a se ha colocado en: &7. " + s));
 
                         } else {
                             player.sendMessage(format("&cEl jugador indicado es null o no se encuentra conectado."));
@@ -657,12 +774,13 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
         List<String> completions = new ArrayList<>();
         if (args.length == 1) {
-            addToList(commands, "sacrificios", "alerta", "give", "sacrificios_test", "debug", "totem_bar", "totems_clear", "vida_reset", "dimension", "temperatura", "spawn", "teams", "god_mode","enchant","maestria" );
+            addToList(commands, "sacrificios", "alerta", "give", "sacrificios_test", "debug", "totem_bar", "totems_clear", "vida_reset", "dimension", "temperatura", "spawn", "teams", "god_mode","enchant","maestria","mantenimiento" );
 
             StringUtil.copyPartialMatches(args[0], commands, completions);
         } else if (args.length == 2) {
             switch (args[0]) {
                 case "enchant" -> addToList(commands,"IMPACT","GRAVITY","BULLSEYE");
+                case "mantenimiento" -> addToList(commands,"true","false");
                 case "dimension" -> Bukkit.getWorlds().forEach(world -> commands.add(world.getName()));
                 case "maestria"->addToList(commands,"reset","resetattributes","resetbuffs", "addLevel", "setLevel", "setXP");
                 case "sacrificios" -> addToList(commands, "modify", "clear", "reset");

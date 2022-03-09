@@ -53,10 +53,10 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
         var data = player.getPersistentDataContainer();
 
         String damage = "" + player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue();
-        String damageresult = damage.substring(0,6);
+        String damageresult = damage.substring(0,3);
 
         String defense = "" + player.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue();
-        String defenseresult = defense.substring(0,6);
+        String defenseresult = defense.substring(0,3);
 
         if (args[0].equalsIgnoreCase("info")) {
 

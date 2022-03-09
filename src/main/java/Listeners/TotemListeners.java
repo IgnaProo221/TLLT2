@@ -256,7 +256,7 @@ public class TotemListeners implements Listener {
                         eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
                         eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
                         eb.addField(":map: **Coordenadas:**",  "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-                        eb.addField(":game_die: **Numero**","4.- Wither, Slowness y Veneno II por 10 segundos",true);
+                        eb.addField(":game_die: **Numero**","4.- Weakness, Slowness y Veneno II por 10 segundos",true);
                         eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674332517441586/dado4.png");
                         eb.setColor(new Color(252, 186, 3));
                         if (channel != null) {
@@ -265,10 +265,10 @@ public class TotemListeners implements Listener {
                         for (Player players : Bukkit.getOnlinePlayers()) {
                             players.sendMessage(ChatColor.DARK_GRAY + "¡El jugador " + ChatColor.RED + "" + ChatColor.BOLD + p.getName() + ChatColor.DARK_GRAY + " ha usado un " + ChatColor.RED + "tótem!" + ChatColor.GRAY + " (Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + ChatColor.GRAY + ")");
                             players.sendMessage(ChatColor.GRAY + "¡El tótem ha caído en la cara " + ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "número 4!");
-                            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Wither, Slowness y Veneno II por 10 segundos.");
+                            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Weakness, Slowness y Veneno II por 10 segundos.");
 
                             Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 200, 1));
+                                p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200, 1));
                                 p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 1));
                                 p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 200, 1));
                             }, 10);

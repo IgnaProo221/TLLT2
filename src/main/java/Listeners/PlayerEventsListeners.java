@@ -50,7 +50,7 @@ public class PlayerEventsListeners implements Listener {
                 var dataSacrifices = data.get(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER);
                 var totalSacrifices = (dataSacrifices == null ? 1 : ++dataSacrifices);
 
-                if (cooldownSacrifice.containsKey(p.getUniqueId()) && p.hasCooldown(Material.IRON_SWORD)) {
+                if (cooldownSacrifice.containsKey(p.getUniqueId())) {
                     if (cooldownSacrifice.get(p.getUniqueId()) > System.currentTimeMillis()) {
                         p.sendMessage(Format.format(String.format("&cTe encuentras en cooldown, espera %d segundo(s).", (cooldownSacrifice.get(p.getUniqueId()) - System.currentTimeMillis()) / 1000)));
                         return;

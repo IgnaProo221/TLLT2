@@ -36,6 +36,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
     //private Configuration blockConfig;
     private ReplaceListeners replaceListeners;
     public static TLL2 instance;
+    public static boolean mantenimiento = true;
 
     @Override
     public void onEnable() {
@@ -53,7 +54,6 @@ public final class TLL2 extends JavaPlugin implements Listener{
             getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "THE LAST LIFE T2 >>> " + ChatColor.YELLOW + "¡TheLastLifeT2Test.jar se cargo correctamente!");
             getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "_______________________________________________________________________");
             world = Bukkit.getWorld("world");
-
             locations = new ArrayList<>();
 
            /* if(!new File(getDataFolder() + "/blocks.yml").exists())
@@ -251,7 +251,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
                     }
                 }*/
                 if (hasBloodstainedArmor(player)) {
-                    health += 6;
+                    health += 12;
                 }
                 if (hasExoArmor(player)) {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, true, false, true));
