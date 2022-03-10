@@ -24,6 +24,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import player.CustomPlayer;
 import tlldos.tll2.TLL2;
 
 import javax.security.auth.login.LoginException;
@@ -100,15 +101,14 @@ public class DeathListeners extends ListenerAdapter implements Listener {
                     jugadores.append('\n');
                 }
 
-                PersistentDataContainer data = Data.get(players);
+                //PersistentDataContainer data = Data.get(players);
 
-                int level;
-
-                if (data.has(Utils.key("maestrialvl"), PersistentDataType.INTEGER)) {
-                    level = data.get(Utils.key("maestrialvl"), PersistentDataType.INTEGER);
-                } else {
-                    level = 1;
-                }
+                int level = CustomPlayer.fromName(players.getName()).getData().getMasteryLevel();
+                //if (data.has(Utils.key("maestrialvl"), PersistentDataType.INTEGER)) {
+                    //level = data.get(Utils.key("maestrialvl"), PersistentDataType.INTEGER);
+                //} else {
+                    //level = 1;
+                //}
 
 
                 jugadores.append(players.getName() + " :heart: : " + result + " - Maestria: " + level);
@@ -157,6 +157,7 @@ public class DeathListeners extends ListenerAdapter implements Listener {
         data.set(Utils.key("Y") , PersistentDataType.DOUBLE, loc.getY());
         data.set(Utils.key("Z"), PersistentDataType.DOUBLE, loc.getZ());
         data.set(Utils.key("WORLD"), PersistentDataType.STRING, loc.getWorld().getName());
+
         Bukkit.getScheduler().runTaskLater(plugin, ()->{
             if(p.getWorld().getEnvironment() == World.Environment.NORMAL){
                 Utils.pasteSchematic("overworld", p.getLocation());

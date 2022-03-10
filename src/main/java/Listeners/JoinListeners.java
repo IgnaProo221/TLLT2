@@ -1,6 +1,7 @@
 package Listeners;
 
 import Utilities.Data;
+import Utilities.Format;
 import Utilities.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -8,23 +9,49 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import player.CustomPlayer;
 import tlldos.tll2.TLL2;
 
 import java.io.IOException;
 
 public class JoinListeners implements Listener {
-     TLL2 plugin;
+    private final TLL2 plugin;
     public static BossBar tormenta;
     public JoinListeners(TLL2 plugin){
         this.plugin = plugin;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onLogin(PlayerLoginEvent e) {
+        if(TLL2.mantenimiento && !e.getPlayer().isOp()){
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                e.setKickMessage(Format.format("&c&l¡El Servidor esta en Mantenimiento! Vuelva mas tarde."));
+                e.setResult(PlayerLoginEvent.Result.KICK_OTHER);
+            }, 20L);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onJoin(PlayerJoinEvent e) {
+        Player p = e.getPlayer();
+        CustomPlayer player = CustomPlayer.addPlayer(p.getName(), p.getUniqueId());
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onLeave(PlayerQuitEvent e) {
+        CustomPlayer.fromName(e.getPlayer().getName()).getData().saveData(e.getPlayer());
+        CustomPlayer.removePlayer(e.getPlayer().getName());
+    }
+
+    //@EventHandler
     public void zTest(PlayerJoinEvent e){
         Player p = e.getPlayer();
         var data = Data.get(p);
@@ -117,7 +144,7 @@ public class JoinListeners implements Listener {
         }
     }
 
-    @EventHandler
+    //@EventHandler
     public void onQuit(PlayerQuitEvent e) {
         PersistentDataContainer container = e.getPlayer().getPersistentDataContainer();
         PersistentDataContainer data = Data.get(e.getPlayer()); //Todo se que es lo mismo pero tengo que revisar

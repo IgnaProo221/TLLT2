@@ -25,6 +25,8 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import player.CustomPlayer;
+import player.PlayerData;
 import tlldos.tll2.TLL2;
 
 
@@ -62,7 +64,8 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
             return false;
         }
 
-        var data = player.getPersistentDataContainer();
+        var dataHolder = player.getPersistentDataContainer();
+        PlayerData data = CustomPlayer.fromName(player.getName()).getData();
 
         switch (args[0].toLowerCase()) {
             case "sacrificios" -> {
@@ -86,7 +89,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                             return true;
                         }
 
-                        if (!data.has(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER)) {
+                        if (!dataHolder.has(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER)) {
                             sender.sendMessage(Format.PREFIX + Format.format("&cEl usuario mencionado no tiene ningún sacrificio."));
                             return true;
                         }
@@ -96,7 +99,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                             return true;
                         }
 
-                        data.set(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER, modify);
+                        dataHolder.set(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER, modify);
 
                         sender.sendMessage(Format.PREFIX + Format.format(String.format("Se ha modificado los sacrifios de &6%s &7a &6%d.", target.getName(), modify)));
 
@@ -126,7 +129,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
             }
             case "alerta" -> Bukkit.getLogger().info("Alguien hizo el coso de Alerta @Mutant te llaman xdxdxd");
             case "totem_bar" -> {
-                var totems = data.get(new NamespacedKey(plugin, "TOTEM_BAR"), PersistentDataType.INTEGER);
+                var totems = dataHolder.get(new NamespacedKey(plugin, "TOTEM_BAR"), PersistentDataType.INTEGER);
 
                 player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
                 player.sendMessage(Format.PREFIX + format("&7&l¡Tienes &e&l" + totems + "% &7&lporcentaje de Totems!"));
@@ -166,12 +169,12 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     return false;
                 }
 
-                var immunityKey = new NamespacedKey(plugin, "inmunity");
-                var immunity = data.get(immunityKey, PersistentDataType.INTEGER);
+                //var immunityKey = new NamespacedKey(plugin, "inmunity");
+                var immunity = data.getImmunity();
 
 
-                if (immunity == null) {
-                    data.set(immunityKey, PersistentDataType.INTEGER, 1);
+                if (data.getImmunity() == 0) {
+                    data.setImmunity(1);
                     player.sendMessage(Format.PREFIX + format("¡&7Se ha activo el modo &cDios!"));
 
                     return false;
@@ -185,7 +188,8 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                         return false;
                     }
 
-                    data.set(immunityKey, PersistentDataType.INTEGER, 1);
+                    data.setImmunity(1);
+                    //dataHolder.set(immunityKey, PersistentDataType.INTEGER, 1);
                     player.sendMessage(Format.PREFIX + format("¡&7Se ha activo el modo &cDios!"));
                 } else if (args[1].equalsIgnoreCase("off")) {
                     if (!activate) {
@@ -193,7 +197,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                         return false;
                     }
 
-                    data.set(immunityKey, PersistentDataType.INTEGER, 0);
+                    data.setImmunity(0);
                     player.sendMessage(Format.PREFIX + format("¡&7Se ha desactivado el modo &cDios!"));
                 }
             }
@@ -263,7 +267,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     if (args.length >= 4) {
                         Player origin = Bukkit.getPlayer(args[2]);
 
-                        if (origin.isOnline() && origin != null) {
+                        if (origin != null && origin.isOnline()) {
 
                             int s = Integer.parseInt(args[3]);
 
@@ -272,9 +276,9 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                                 return false;
                             }
 
-                            PersistentDataContainer container = Data.get(origin);
-
-                            container.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, s);
+                            //PersistentDataContainer container = Data.get(origin);
+                            //container.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, s);
+                            CustomPlayer.fromName(origin.getName()).getData().setExtraHealth(s);
 
                             player.sendMessage(format("&aAhora la vida del jugador &5&l" + origin.getName() + "&a se ha colocado en: &7. " + s));
 
@@ -296,9 +300,9 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                                 return false;
                             }
 
-                            PersistentDataContainer container = Data.get(origin);
-
-                            container.set(Utils.key("negative_health"), PersistentDataType.INTEGER, s);
+                            //PersistentDataContainer container = Data.get(origin);
+                            //container.set(Utils.key("negative_health"), PersistentDataType.INTEGER, s);
+                            CustomPlayer.fromName(origin.getName()).getData().setNegativeHealth(s);
 
                             player.sendMessage(format("&aSe removio la vida negativa del jugador &5&l" + origin.getName()));
 
@@ -315,9 +319,10 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     return false;
                 }
                 if(args[1].equalsIgnoreCase("reset")){
-                    PersistentDataContainer caca = Data.get(player);
+                    //PersistentDataContainer caca = Data.get(player);
                     player.sendMessage(PREFIX,format("&7Reiniciaste tu Nivel de Maestria."));
-                    caca.set(Utils.key("maestrialvl"), PersistentDataType.INTEGER, 1);
+                    //caca.set(Utils.key("maestrialvl"), PersistentDataType.INTEGER, 1);
+                    CustomPlayer.fromName(player.getName()).getData().setMasteryLevel(1);
                 } else if(args[1].equalsIgnoreCase("resetattributes")) {
                     player.sendMessage(PREFIX, format("&7Reiniciaste tus Atributos de Vida, Daño y Defensa."));
                     player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
@@ -328,17 +333,16 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                         Player p = Bukkit.getPlayer(args[2]);
 
                         if (p.isOnline()) {
-                            PersistentDataContainer persistent = Data.get(p);
+                            //PersistentDataContainer persistent = Data.get(p);
 
                             int give = Integer.parseInt(args[3]);
-                            int current;
+                            int current = CustomPlayer.fromName(player.getName()).getData().getMasteryLevel();
 
-                            if (persistent.has(new NamespacedKey(plugin, "maestrialvl"), PersistentDataType.INTEGER)) {
-                                current = persistent.get(Utils.key("maestrialvl"), PersistentDataType.INTEGER);
-
-                            } else {
-                                current = 1;
-                            }
+                            //if (persistent.has(new NamespacedKey(plugin, "maestrialvl"), PersistentDataType.INTEGER)) {
+                                //current = persistent.get(Utils.key("maestrialvl"), PersistentDataType.INTEGER);
+                            //} else {
+                                //current = 1;
+                            //}
 
                             int r = give + current;
 
@@ -346,7 +350,8 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                                 r = 29;
                             }
 
-                            persistent.set(Utils.key("maestrialvl"), PersistentDataType.INTEGER, r);
+                            //persistent.set(Utils.key("maestrialvl"), PersistentDataType.INTEGER, r);
+                            CustomPlayer.fromName(player.getName()).getData().setMasteryLevel(r);
                             player.sendMessage(format("&aHas aumentado el nivel del jugador &7&l" + p.getName() + "&a."));
                             player.sendMessage(format("&eAhora se encuentra en el nivel: &b" + r));
 
@@ -367,9 +372,9 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                                 return false;
                             }
 
-                            PersistentDataContainer container = Data.get(origin);
-
-                            container.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, s);
+                            //PersistentDataContainer container = Data.get(origin);
+                            //container.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, s);
+                            CustomPlayer.fromName(origin.getName()).getData().setMasteryExp(s);
 
                             player.sendMessage(format("&aAhora la exp del jugador &5&l" + origin.getName() + "&a se ha colocado en: &7. " + s));
 
@@ -379,21 +384,19 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     }
                 } else if(args[1].equalsIgnoreCase("levelup")){
                     player.sendMessage(PREFIX,format("&7Se aumento el EXP de la Maestria"));
-                    data.set(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER, 999999);
+                    data.setMasteryExp(999999);
                 }else if(args[1].equalsIgnoreCase("setXP")){
                     if(args.length >= 4) {
                         Player p = Bukkit.getPlayer(args[2]);
                         if(p.isOnline()) {
                             try {
                                 int i = Integer.parseInt(args[3]);
-                                int level = MaestriaExp.getInstance().getMasteryLevel(p);
-                                int exp = MaestriaExp.getInstance().getMasteryExp(p);
-                                MaestriaExp.getInstance().setMasteryEXP(player,  MaestriaExp.getInstance().getMasteryExp(p) +  i);
-                                if (exp >= MaestriaExp.getInstance().maxExpNecesary(p)) {
-                                    MaestriaExp.getInstance().setMasteryEXP(p, 0);
-                                    MaestriaExp.getInstance().giveLevel(p, 1);
 
-                                    int newLevel = MaestriaExp.getInstance().getMasteryLevel(p);
+                                int level = data.getMasteryLevel();
+                                int exp = data.getMasteryExp();
+                                data.setMasteryExp(data.getMasteryExp() +  i);
+                                if (exp >= MaestriaExp.getInstance().maxExpNecesary(level)) {
+                                    data.levelUpMastery(1);
                                 }
                             } catch (NumberFormatException ignored) {
 
@@ -401,35 +404,9 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                         }
                     }
                 }
-
-                if(args[1].equalsIgnoreCase("resetbuffs")){
-
-                    var level10 = data.get(new NamespacedKey(plugin,"reachedlvl10"),PersistentDataType.INTEGER);
-                    var level20 = data.get(new NamespacedKey(plugin,"reachedlvl20"),PersistentDataType.INTEGER);
-                    var level30 = data.get(new NamespacedKey(plugin,"reachedlvl30"),PersistentDataType.INTEGER);
-                    if(args[2].equalsIgnoreCase("lvl10")){
-                        if(level10 != null) {
-                            data.set(new NamespacedKey(plugin, "reachedlvl10"), PersistentDataType.INTEGER, 0);
-                            player.sendMessage(PREFIX, format("&7Reiniciaste tus Buffs de Maestria."));
-                        }
-                    }
-                    if(args[2].equalsIgnoreCase("lvl20")){
-                        if(level20 != null) {
-                            data.set(new NamespacedKey(plugin, "reachedlvl20"), PersistentDataType.INTEGER, 0);
-                            player.sendMessage(PREFIX, format("&7Reiniciaste tus Buffs de Maestria."));
-                        }
-                    }
-                    if(args[2].equalsIgnoreCase("lvl30")){
-                        if(level30 != null) {
-                            data.set(new NamespacedKey(plugin, "reachedlvl30"), PersistentDataType.INTEGER, 0);
-                            player.sendMessage(PREFIX, format("&7Reiniciaste tus Buffs de Maestria."));
-                        }
-                    }
-                }
-
             }
             case "temperatura" -> {
-                var temperatureKey = new NamespacedKey(plugin, "temperatura");
+                //var temperatureKey = new NamespacedKey(plugin, "temperatura");
 
                 if (args.length < 2) {
                     player.sendMessage(Format.PREFIX + "¡Debes colocar un subcomando valido!");
@@ -438,28 +415,28 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
                 if (args[1].equalsIgnoreCase("clear")) {
                     player.sendMessage(Format.PREFIX + format("&7Reiniciaste tu Temperatura a 30°"));
-                    data.set(temperatureKey, PersistentDataType.INTEGER, 30);
+                    data.setTemperature(30);
                 } else if (args[1].equalsIgnoreCase("hipotermia")) {
                     if (args[2].equalsIgnoreCase("1")) {
                         player.sendMessage(Format.PREFIX + format("&7Pusisiste tu Temperatura a -70°"));
-                        data.set(temperatureKey, PersistentDataType.INTEGER, -70);
+                        data.setTemperature(-70);
                     } else if (args[2].equalsIgnoreCase("2")) {
                         player.sendMessage(Format.PREFIX + format("&7Pusisiste tu Temperatura a -120°"));
-                        data.set(temperatureKey, PersistentDataType.INTEGER, -120);
+                        data.setTemperature(-120);
                     } else if (args[2].equalsIgnoreCase("3")) {
                         player.sendMessage(Format.PREFIX + format("&7Pusisiste tu Temperatura a -180°"));
-                        data.set(temperatureKey, PersistentDataType.INTEGER, -180);
+                        data.setTemperature(-180);
                     }
                 } else if (args[1].equalsIgnoreCase("hipertermia")) {
                     if (args[2].equalsIgnoreCase("1")) {
                         player.sendMessage(Format.PREFIX + format("&7Pusisiste tu Temperatura a 120°"));
-                        data.set(temperatureKey, PersistentDataType.INTEGER, 120);
+                        data.setTemperature(120);
                     } else if (args[2].equalsIgnoreCase("2")) {
                         player.sendMessage(Format.PREFIX + format("&7Pusisiste tu Temperatura a 180°"));
-                        data.set(temperatureKey, PersistentDataType.INTEGER, 180);
+                        data.setTemperature(180);
                     } else if (args[2].equalsIgnoreCase("3")) {
                         player.sendMessage(Format.PREFIX + format("&7Pusisiste tu Temperatura a 220°"));
-                        data.set(temperatureKey, PersistentDataType.INTEGER, 220);
+                        data.setTemperature(220);
                     }
                 }
             }

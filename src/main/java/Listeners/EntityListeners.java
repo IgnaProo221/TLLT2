@@ -15,6 +15,8 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import player.CustomPlayer;
+import player.PlayerData;
 import tlldos.tll2.TLL2;
 
 import java.util.*;
@@ -585,18 +587,23 @@ public class EntityListeners implements Listener {
         }
         if(entity instanceof Silverfish silverfish && killer instanceof Player p){
             if(silverfish.getPersistentDataContainer().has(Utils.key("MINER_LEVEL_1"),PersistentDataType.STRING)){
-            PersistentDataContainer data = Data.get(p);
-            var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
-            if(dataMaestriaExp == null)return;
-            data.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, dataMaestriaExp + 350);
+                PlayerData data = CustomPlayer.fromName(p.getName()).getData();
+                data.setMasteryExp(data.getMasteryExp()+350);
             }
+            //PersistentDataContainer data = Data.get(p);
+            //var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
+            //if(dataMaestriaExp == null)return;
+            //data.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, dataMaestriaExp + 350);
+            //}
         }
         if(entity instanceof Zombie zombie && killer instanceof Player p){
             if(zombie.getPersistentDataContainer().has(Utils.key("MINER_LEVEL_1"),PersistentDataType.STRING)){
-                PersistentDataContainer data = Data.get(p);
-                var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
-                if(dataMaestriaExp == null)return;
-                data.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, dataMaestriaExp + 350);
+                PlayerData data = CustomPlayer.fromName(p.getName()).getData();
+                data.setMasteryExp(data.getMasteryExp()+350);
+                //PersistentDataContainer data = Data.get(p);
+                //var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
+                //if(dataMaestriaExp == null)return;
+                //data.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, dataMaestriaExp + 350);
             }
         }
         if(entity instanceof Drowned drowned && killer instanceof Player p){
@@ -609,26 +616,32 @@ public class EntityListeners implements Listener {
         }
         if(entity instanceof Creeper creeper && killer instanceof Player p){
             if(creeper.getPersistentDataContainer().has(Utils.key("MINER_LEVEL_2"),PersistentDataType.STRING)){
-                PersistentDataContainer data = Data.get(p);
-                var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
-                if(dataMaestriaExp == null)return;
-                data.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, dataMaestriaExp + 750);
+                PlayerData data = CustomPlayer.fromName(p.getName()).getData();
+                data.setMasteryExp(data.getMasteryExp()+750);
+                //PersistentDataContainer data = Data.get(p);
+                //var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
+                //if(dataMaestriaExp == null)return;
+                //data.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, dataMaestriaExp + 750);
             }
         }
         if(entity instanceof Skeleton skeleton && killer instanceof Player p){
             if(skeleton.getPersistentDataContainer().has(Utils.key("MINER_LEVEL_2"),PersistentDataType.STRING)){
-                PersistentDataContainer data = Data.get(p);
-                var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
-                if(dataMaestriaExp == null)return;
-                data.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, dataMaestriaExp + 750);
+                //PersistentDataContainer data = Data.get(p);
+                //var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
+                //if(dataMaestriaExp == null)return;
+                //data.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, dataMaestriaExp + 750);
+                PlayerData data = CustomPlayer.fromName(p.getName()).getData();
+                data.setMasteryExp(data.getMasteryExp()+750);
             }
         }
         if(entity instanceof IronGolem ironGolem&& killer instanceof Player p){
             if(ironGolem.getPersistentDataContainer().has(Utils.key("MINER_LEVEL_3"),PersistentDataType.STRING)){
-                PersistentDataContainer data = Data.get(p);
-                var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
-                if(dataMaestriaExp == null)return;
-                data.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, dataMaestriaExp + 1500);
+                //PersistentDataContainer data = Data.get(p);
+                //var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
+                //if(dataMaestriaExp == null)return;
+                //data.set(Utils.key("maestriaexp"), PersistentDataType.INTEGER, dataMaestriaExp + 1500);
+                PlayerData data = CustomPlayer.fromName(p.getName()).getData();
+                data.setMasteryExp(data.getMasteryExp()+1500);
             }
         }
     }

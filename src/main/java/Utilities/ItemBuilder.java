@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
@@ -63,7 +64,13 @@ public class ItemBuilder {
 
     public ItemBuilder addEnchantment(Enchantment enchantment, int level){
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.addEnchant(enchantment, level, true);
+
+        if (itemMeta instanceof EnchantmentStorageMeta) {
+            ((EnchantmentStorageMeta) itemMeta).addStoredEnchant(enchantment, level, true);
+        } else {
+            itemMeta.addEnchant(enchantment, level, true);
+        }
+
         itemStack.setItemMeta(itemMeta);
 
         return this;
