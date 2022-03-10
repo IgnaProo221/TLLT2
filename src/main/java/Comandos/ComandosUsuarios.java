@@ -19,6 +19,8 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import player.CustomPlayer;
+import player.PlayerData;
 import tlldos.tll2.TLL2;
 
 import java.util.ArrayList;
@@ -50,7 +52,8 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
         }
 
 
-        var data = player.getPersistentDataContainer();
+        //var data = player.getPersistentDataContainer();
+        PlayerData data = CustomPlayer.fromName(player.getName()).getData();
 
         String damage = "" + player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue();
         String damageresult = damage.substring(0,3);
@@ -123,8 +126,8 @@ public class ComandosUsuarios implements CommandExecutor, TabCompleter {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Format.PREFIX + "&7Te encuentras con: &6" + amount + "&7 sacrificios hechos."));
         }
         if(args[0].equalsIgnoreCase("maestria")){
-            var dataMaestria = data.get(new NamespacedKey(plugin,"maestrialvl"),PersistentDataType.INTEGER);
-            var dataMaestriaExp = data.get(new NamespacedKey(plugin,"maestriaexp"),PersistentDataType.INTEGER);
+            var dataMaestria = data.getMasteryLevel();
+            var dataMaestriaExp = data.getMasteryExp();
 
             sender.sendMessage(format("&7-------------&b&lMAESTRIA&7-------------"));
             sender.sendMessage(format("&cNivel de Maestria: &e&l" + dataMaestria));

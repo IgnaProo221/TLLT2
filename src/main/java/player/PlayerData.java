@@ -28,16 +28,18 @@ public class PlayerData {
         this.temperature = getOrAddData(p, "temperatura", PersistentDataType.INTEGER, 30);
         this.masteryLevel = getOrAddData(p, "maestrialvl", PersistentDataType.INTEGER, 1);
         this.masteryExp = getOrAddData(p, "maestriaexp", PersistentDataType.INTEGER, 0);
-        this.immunity = getOrAddData(p, "inmunity", PersistentDataType.INTEGER, 0);
+        //this.immunity = getOrAddData(p, "inmunity", PersistentDataType.INTEGER, 0);
         this.extraHealth = getOrAddData(p, "maestry_health", PersistentDataType.INTEGER, 0);
         this.negativeHealth = getOrAddData(p, "negative_health", PersistentDataType.INTEGER, 0);
+
+        this.immunity = 0;
     }
 
     public void saveData(Player p) {
         setData(p, "temperatura", PersistentDataType.INTEGER, this.temperature);
         setData(p, "maestrialvl", PersistentDataType.INTEGER, this.masteryLevel);
         setData(p, "maestriaexp", PersistentDataType.INTEGER, this.masteryExp);
-        setData(p, "inmunity", PersistentDataType.INTEGER, this.immunity);
+        //setData(p, "inmunity", PersistentDataType.INTEGER, this.immunity);
         setData(p, "maestry_health", PersistentDataType.INTEGER, this.extraHealth);
         setData(p, "negative_health", PersistentDataType.INTEGER, this.negativeHealth);
     }
