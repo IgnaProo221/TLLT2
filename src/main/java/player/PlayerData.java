@@ -3,12 +3,17 @@ package player;
 import Listeners.MaestriaExp;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import tlldos.tll2.TLL2;
 
 import java.util.UUID;
+
+import static Utilities.Format.PREFIX;
+import static Utilities.Format.format;
 
 public class PlayerData {
     private String playerName;
@@ -133,12 +138,83 @@ public class PlayerData {
 
     public void setMasteryExp(int masteryExp) {
         this.masteryExp = Math.max(masteryExp, 0);
-        checkMasteryLevel();
+        checkMasteryLevel(Bukkit.getPlayer(this.uuid), this.masteryExp);
     }
 
-    private void checkMasteryLevel() {
-        if (this.masteryExp >= MaestriaExp.getInstance().maxExpNecesary(this.masteryLevel)) {
-            this.levelUpMastery();
+    public void checkMasteryLevel(Player p, int exp) {
+        if (p == null) return;
+
+        if (exp >= MaestriaExp.getInstance().maxExpNecesary(this.masteryLevel)) {
+            int level = getMasteryLevel();
+            int newLevel = levelUpMastery();
+
+            p.playSound(p.getLocation(), Sound.BLOCK_RESPAWN_ANCHOR_DEPLETE, 10.0F, 2.0F);
+            p.playSound(p.getLocation(),Sound.ENTITY_PLAYER_LEVELUP, 10.0F,-1.0F);
+
+            p.sendTitle(format("&b¡NUEVO NIVEL!"), format("&8" + level + "&c -> &7" + newLevel));
+
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                player.sendMessage(format("&3MAESTRIA &8> &c&l" + p.getName() + "&7 ha aumentado su nivel. &e" + level + "&8 >> &6" + newLevel));
+            });
+            //int ehp = data.has(Utils.key("maestry_health"), PersistentDataType.INTEGER) ? data.get(Utils.key("maestry_health"), PersistentDataType.INTEGER) : 0;
+            int ehp = getExtraHealth();
+
+            if(getMasteryLevel() == 1) {
+                p.sendMessage(MaestriaExp.hp_plus);
+                setExtraHealth(ehp + 2);
+            }else if(getMasteryLevel() == 2) {
+                p.sendMessage(MaestriaExp.hp_plus);
+                setExtraHealth(ehp + 2);
+            }else if(getMasteryLevel() == 3) {
+                p.sendMessage(MaestriaExp.att_plus);
+                p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
+            }else if(getMasteryLevel() == 4) {
+                p.sendMessage(MaestriaExp.def_plus);
+                p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue() + 0.50);
+            }else if(getMasteryLevel() == 5) {
+                p.sendMessage(MaestriaExp.hp_plus);
+                setExtraHealth(ehp + 2);
+            }else if(getMasteryLevel() == 6) {
+                p.sendMessage(MaestriaExp.att_plus);
+                p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
+            }else if(getMasteryLevel() == 7) {
+                p.sendMessage(MaestriaExp.def_plus);
+                p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue() +0.50);
+            }else if(getMasteryLevel() == 8) {
+                p.sendMessage(MaestriaExp.hp_plus);
+                setExtraHealth(ehp + 2);
+            }else if(getMasteryLevel() == 9) {
+                p.sendMessage(MaestriaExp.att_plus);
+                p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
+            }else if(getMasteryLevel() == 10) {
+                p.sendMessage(format("&3MAESTRIA &8> Has recibido un Buff de Vision Nocturna Permanente!"));
+                p.sendMessage(format("&3MAESTRIA &8> &e&l¡PELIGRO! Ahora picar puede llamar la atencion de criaturas hostiles"));
+                //set(Utils.key("reachedlvl10"),PersistentDataType.INTEGER, 1);
+            }else if(getMasteryLevel() == 11) {
+                p.sendMessage(MaestriaExp.hp_plus);
+                setExtraHealth(ehp + 2);
+            }else if(getMasteryLevel() == 12) {
+                p.sendMessage(MaestriaExp.att_plus);
+                p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
+            }else if(getMasteryLevel() == 13) {
+                p.sendMessage(MaestriaExp.def_plus);
+                p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue() + 0.50);
+            }else if(getMasteryLevel() == 14) {
+                p.sendMessage(MaestriaExp.hp_plus);
+                setExtraHealth(ehp + 2);
+            }else if(getMasteryLevel() == 15) {
+                p.sendMessage(format("&3MAESTRIA &8> Llegaste al Nivel 15, &el¡Felicidades! &c&lAhora afronta tu destino sin mas recompensas"));
+            }else if(getMasteryLevel() == 20) {
+                p.sendMessage(format("&3MAESTRIA &8> Has recibido un Buff de Haste I Permanente!"));
+                p.sendMessage(format("&3MAESTRIA &8> &e&l¡PELIGRO! Ahora hay muchas mas criaturas dispuestas a acabar contigo!"));
+                //set(Utils.key("reachedlvl20"),PersistentDataType.INTEGER, 1);
+            }else if(getMasteryLevel() == 30) {
+                p.sendMessage(format("&3MAESTRIA &8> Has recibido un Buff de Haste II Permanente!"));
+                p.sendMessage(format("&3MAESTRIA &8> &e&l¡PELIGRO! El Cosmos esta enfadado contigo!"));
+                p.sendMessage(PREFIX,format("&e&lFelicidades por llegar al Nivel 30, no hay mas camino para tu trabajo de Mineria, ¡Buen Trabajo!"));
+                //set(Utils.key("reachedlvl20"),PersistentDataType.INTEGER, 0);
+                //set(Utils.key("reachedlvl30"),PersistentDataType.INTEGER, 1);
+            }
         }
     }
 
