@@ -112,8 +112,8 @@ public class Items {
         return new ItemBuilder(Material.RED_DYE, size)
                 .setName(format("&cFragmento de Sangre"))
                 .setLore(lore)
-                .addEnchantment(Enchantment.ARROW_INFINITE, 1)
-                .setItemFlags(ItemFlag.HIDE_ENCHANTS)
+                //.addEnchantment(Enchantment.ARROW_INFINITE, 1)
+                //.setItemFlags(ItemFlag.HIDE_ENCHANTS)
                 .setCustomModelData(4983)
                 .setUnbreakable(true)
                 .build();

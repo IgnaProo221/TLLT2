@@ -18,6 +18,8 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import player.CustomPlayer;
+import player.PlayerData;
 import tasks.TemperatureBlocks;
 import tasks.TemperatureTask;
 
@@ -36,11 +38,12 @@ public final class TLL2 extends JavaPlugin implements Listener{
     //private Configuration blockConfig;
     private ReplaceListeners replaceListeners;
     public static TLL2 instance;
+    public static boolean mantenimiento = true;
 
     @Override
     public void onEnable() {
         try {
-            instance = this; //Testeen por favor
+            instance = this;
             saveDefaultConfig();
             getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "_______________________________________________________________________");
             getServer().getConsoleSender().sendMessage(ChatColor.GOLD +
@@ -53,7 +56,6 @@ public final class TLL2 extends JavaPlugin implements Listener{
             getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "THE LAST LIFE T2 >>> " + ChatColor.YELLOW + "¡TheLastLifeT2Test.jar se cargo correctamente!");
             getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "_______________________________________________________________________");
             world = Bukkit.getWorld("world");
-
             locations = new ArrayList<>();
 
            /* if(!new File(getDataFolder() + "/blocks.yml").exists())
@@ -183,17 +185,20 @@ public final class TLL2 extends JavaPlugin implements Listener{
         Bukkit.getScheduler().runTaskTimer(this,()->{
         if(Bukkit.getOnlinePlayers().size() < 1)return;
         for(Player p : Bukkit.getOnlinePlayers()){
-            var data = p.getPersistentDataContainer();
-            var level10 = data.get(new NamespacedKey(this,"reachedlvl10"),PersistentDataType.INTEGER);
-            var level20 = data.get(new NamespacedKey(this,"reachedlvl20"),PersistentDataType.INTEGER);
-            var level30 = data.get(new NamespacedKey(this,"reachedlvl30"),PersistentDataType.INTEGER);
-            if(level10 >= 1 && level10 != null){
-                p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION,400,0,true,false,true));
+
+            PlayerData data = CustomPlayer.fromName(p.getName()).getData();
+            //var level10 = data.get(new NamespacedKey(this,"reachedlvl10"),PersistentDataType.INTEGER);
+            //var level20 = data.get(new NamespacedKey(this,"reachedlvl20"),PersistentDataType.INTEGER);
+            //var level30 = data.get(new NamespacedKey(this,"reachedlvl30"),PersistentDataType.INTEGER);
+
+
+            if(data.hasReachedLevel10()) {
+                p.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 400, 0, true, false, true));
             }
-            if(level20 >= 1 && level30 <= 0 && level20 != null && level30 != null){
-                p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING,200,0,true,false,true));
+            if(data.hasReachedLevel20()) {
+                p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 200, 0, true, false, true));
             }
-            if(level30 >= 1 && level20 <= 0 && level20 != null && level30 != null){
+            if (data.hasReachedLevel30()) {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING,200,0,true,false,true));
             }
         }
@@ -222,8 +227,10 @@ public final class TLL2 extends JavaPlugin implements Listener{
         if(Bukkit.getOnlinePlayers().size() < 1)return;
         for(Player player : Bukkit.getOnlinePlayers()){
             if(player.getGameMode() == GameMode.SURVIVAL) {
-                var data = player.getPersistentDataContainer();
-                var dataTemperatura = data.get(new NamespacedKey(this, "temperatura"), PersistentDataType.INTEGER);
+                var data = CustomPlayer.fromName(player.getName()).getData();
+
+                var dataTemperatura = data.getTemperature();
+                ////var dataTemperatura = data.get(new NamespacedKey(this, "temperatura"), PersistentDataType.INTEGER);
                 if (dataTemperatura >= 220 || dataTemperatura <= -180) {
                     demente(player, player);
                 }
@@ -237,6 +244,8 @@ public final class TLL2 extends JavaPlugin implements Listener{
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (player.getGameMode() == GameMode.SURVIVAL) {
                 Location l = player.getLocation().clone();
+                PlayerData data = CustomPlayer.fromName(player.getName()).getData();
+
                 double health = 20;
                 /*if (r.nextInt(2) == 1) {
                     int pX = (r.nextBoolean() ? -1 : 1) * (r.nextInt(25)) + 15;
@@ -251,18 +260,18 @@ public final class TLL2 extends JavaPlugin implements Listener{
                     }
                 }*/
                 if (hasBloodstainedArmor(player)) {
-                    health += 6;
+                    health += 12;
                 }
                 if (hasExoArmor(player)) {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, true, false, true));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, true, false, true));
                 }
-                health += Data.get(player).get(Utils.key("maestry_health"), PersistentDataType.INTEGER); //Todo sin testear por favor revisarlo gracias
-                health -= Data.get(player).get(Utils.key("negative_health"), PersistentDataType.INTEGER); //probar
+                health += data.getExtraHealth();
+                health -= data.getNegativeHealth();
                 player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
 
-                /*var data = player.getPersistentDataContainer();
-                var dataTemperatura = data.get(new NamespacedKey(this, "temperatura"), PersistentDataType.INTEGER);
+                /*
+                var dataTemperatura = data.getTemperature();
                 //Hipertermia
                 if (dataTemperatura >= 120 && dataTemperatura <= 180) {
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &6&l" + dataTemperatura + "° &7|| &4¡Hipertermia I!")));
@@ -349,6 +358,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
             p.sendMessage(Format.format("&7&o??? te susurra: ¿Me pasas las Coordenadas de tu Base?"));
         }else if(clase == 13){
             p.sendMessage(Format.format("&7&o??? te susurra: ¿Ya viste los nuevos Cambios de Dificultad?")); //XD
+            // XD
         }else if(clase == 14){
             p.playSound(p.getLocation(),Sound.ENTITY_ELDER_GUARDIAN_CURSE,SoundCategory.MASTER,10.0F,1.0F);
         }else if(clase == 15){
