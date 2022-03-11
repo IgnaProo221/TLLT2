@@ -12,6 +12,8 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import player.CustomPlayer;
+import player.PlayerData;
 import tlldos.tll2.TLL2;
 
 import java.util.List;
@@ -30,8 +32,8 @@ public class EatListeners implements Listener {
     @EventHandler
     public void comerEv(PlayerItemConsumeEvent e) {
         Player p = e.getPlayer();
-        var data = p.getPersistentDataContainer();
-        var temperature = data.get(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER);
+        PlayerData data = CustomPlayer.fromName(p.getName()).getData();
+        var temperature = data.getTemperature();
         if (p.hasPotionEffect(PotionEffectType.LUCK)) {
             if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 2) {
                 e.setCancelled(true);
@@ -66,17 +68,17 @@ public class EatListeners implements Listener {
 
 
         if (e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(format("&bCooler Fruit"))) {
-            data.set(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER, temperature - 10);
+            data.setTemperature(temperature - 10);
             p.sendMessage(PREFIX, format("&b¡Tu temperatura bajo 10°!"));
         }
         if (e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(format("&6Hot Fruit"))) {
-            data.set(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER, temperature + 10);
+            data.setTemperature(temperature + 10);
             p.sendMessage(PREFIX, format("&6¡Tu temperatura subió 10°!"));
         }
         if (e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(format("&cBrimstone"))) {
             p.sendMessage(PREFIX, format("&c&lHas Aumentado tu Daño y Vida Maxima!"));
-            int ehp = data.has(Utils.key("maestry_health"), PersistentDataType.INTEGER) ? data.get(Utils.key("maestry_health"), PersistentDataType.INTEGER) : 0;
-            data.set(Utils.key("maestry_health"), PersistentDataType.INTEGER, ehp + 2);
+            int ehp = data.getExtraHealth();
+            data.setExtraHealth(ehp + 2);
             p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
         }
         if (e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(format("&7Crystal Apple"))) {

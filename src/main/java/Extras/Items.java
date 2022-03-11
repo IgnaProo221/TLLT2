@@ -437,10 +437,46 @@ public class Items {
 
 
 
-
-
-
-
+    public static ItemStack lavaSigil(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Prende Fuego a todos los Mobs alreadedor tuyo")));
+        lore.add(Component.text(format("&c¡No afecta entidades como otros jugadores, aldeanos o Iron Golems!")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.TOTEM_OF_UNDYING).setName(format("&6&lSigilo de Magma")).setLore(lore).setUnbreakable(true).setCustomModelData(901823).build();
+    }
+    public static ItemStack iceSigil(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Congela a todos los Mobs alreadedor tuyo")));
+        lore.add(Component.text(format("&c¡No afecta entidades como otros jugadores, aldeanos o Iron Golems!")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.TOTEM_OF_UNDYING).setName(format("&b&lSigilo de Hielo")).setLore(lore).setUnbreakable(true).setCustomModelData(911823).build();
+    }
+    public static ItemStack blizzardSigil(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Hace levitar a todos los Mobs alreadedor tuyo")));
+        lore.add(Component.text(format("&c¡No afecta entidades como otros jugadores, aldeanos o Iron Golems!")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.TOTEM_OF_UNDYING).setName(format("&f&lSigilo de Ventisca")).setLore(lore).setUnbreakable(true).setCustomModelData(921823).build();
+    }
+    public static ItemStack magicSigil(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Debilita a todos los Mobs alreadedor tuyo")));
+        lore.add(Component.text(format("&c¡No afecta entidades como otros jugadores, aldeanos o Iron Golems!")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.TOTEM_OF_UNDYING).setName(format("&d&lSigilo de Hechizos")).setLore(lore).setUnbreakable(true).setCustomModelData(931823).build();
+    }
+    public static ItemStack explosiveSigil(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&c&lExplota a todos los Mobs alreadedor tuyo")));
+        lore.add(Component.text(format("&c¡No afecta entidades como otros jugadores, aldeanos o Iron Golems!")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.TOTEM_OF_UNDYING).setName(format("&4&lSigilo de Destruccion")).setLore(lore).setUnbreakable(true).setCustomModelData(941823).build();
+    }
 
 
 

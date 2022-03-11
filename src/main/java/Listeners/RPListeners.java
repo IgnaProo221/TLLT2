@@ -1,5 +1,6 @@
 package Listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,5 +31,13 @@ public class RPListeners implements Listener{
         if(locale.contains("TLL001_en_us") || locale.contains("TLL001_es_ar") || locale.contains("TLL001_es_cl") ||locale.contains("TLL001_es_es") || locale.contains("TLL001_es_mx")){ // el número uno es la versión del IDIOMA rp, si se cambia, debes cambiar lo demas (Incluye pack.mcmeta) y actualizar el rp
             player.sendMessage("");
         } else player.kickPlayer(NO_TXT);
+    }
+    @EventHandler
+    public void mantenimientoOn(PlayerLocaleChangeEvent event){
+        if(TLL2.mantenimiento){
+            if(!event.getPlayer().isOp()) {
+                    event.getPlayer().kickPlayer("&c&l¡El Servidor esta en Mantenimiento! Vuelva mas tarde.");
+            }
+        }
     }
 }

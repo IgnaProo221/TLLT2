@@ -62,7 +62,7 @@ public class MaestriaExp implements Listener{
         p.sendActionBar(format("&bMinería: " + exp + " / " + maxExpNecesary(level)));
         p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10.0F, 2.0F);
 
-        data.checkMasteryLevel(p, data.getMasteryExp()+getGiveExp(block));
+        data.checkMasteryLevel(p, data.getMasteryExp() + getGiveExp(block));
     }
 
 
@@ -105,11 +105,11 @@ public class MaestriaExp implements Listener{
     @EventHandler
     public void apareciolacreatura(BlockBreakEvent event){
         var p = event.getPlayer();
-        var data = p.getPersistentDataContainer();
-        var level10 = data.get(new NamespacedKey(plugin,"reachedlvl10"),PersistentDataType.INTEGER);
-        var level20 = data.get(new NamespacedKey(plugin,"reachedlvl20"),PersistentDataType.INTEGER);
-        var level30 = data.get(new NamespacedKey(plugin,"reachedlvl30"),PersistentDataType.INTEGER);
-        int minerspawn = new Random().nextInt(1000);
+        PlayerData data = CustomPlayer.fromName(p.getName()).getData();
+        var level10 = data.hasReachedLevel10();
+        var level20 = data.hasReachedLevel20();
+        var level30 = data.hasReachedLevel30();
+        int minerspawn = new Random().nextInt(100);
         if (!event.getBlock().getType().name().toLowerCase().contains("ore"))
             return;
         /*if (event.getBlock().getState().hasMetadata("no_exp")) {
@@ -119,7 +119,7 @@ public class MaestriaExp implements Listener{
 
          */
         if(minerspawn == 1){
-            if(level10 >= 1){
+            if(level10){
                 p.sendTitle(format("&c&l¡PELIGRO!"),format("&cUn mob va a spawnear"),0,180,0);
                 p.playSound(p.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 10.0F, -1.0F);
                 Bukkit.getScheduler().runTaskLater(plugin,()->{
@@ -140,7 +140,7 @@ public class MaestriaExp implements Listener{
                 },180L);
             }
         }else if(minerspawn == 2){
-            if(level20 >= 1){
+            if(level20){
                 p.sendTitle(format("&c&l¡PELIGRO!"),format("&cUn mob va a spawnear"),0,180,0);
                 p.playSound(p.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 10.0F, -1.0F);
                 Bukkit.getScheduler().runTaskLater(plugin,()->{
@@ -158,7 +158,7 @@ public class MaestriaExp implements Listener{
                 },180L);
             }
         }else if(minerspawn == 3){
-            if(level30 >= 1){
+            if(level30){
                 p.sendTitle(format("&c&l¡PELIGRO!"),format("&cUn mob va a spawnear"),0,180,0);
                 p.playSound(p.getLocation(), Sound.BLOCK_BEACON_DEACTIVATE, 10.0F, -1.0F);
                 Bukkit.getScheduler().runTaskLater(plugin,()->{
@@ -175,7 +175,7 @@ public class MaestriaExp implements Listener{
 
 
     public int getGiveExp(Block block) {
-        return switch (block.getType()){
+        /*return switch (block.getType()){
             case COAL_ORE, COPPER_ORE, NETHER_QUARTZ_ORE, NETHER_GOLD_ORE -> 10;
             case IRON_ORE, GOLD_ORE, LAPIS_ORE -> 25;
             case REDSTONE_ORE, DEEPSLATE_COAL_ORE, DEEPSLATE_COPPER_ORE, DEEPSLATE_REDSTONE_ORE, DEEPSLATE_LAPIS_ORE, DIAMOND_ORE -> 35;
@@ -184,8 +184,8 @@ public class MaestriaExp implements Listener{
             case DEEPSLATE_EMERALD_ORE -> 85;
             default -> 0;
             //Todo lo mismo que arriba revisar bien porfavor
-        };
-        /*if(block.getType() == Material.COAL_ORE){
+        };*/
+        if(block.getType() == Material.COAL_ORE){
             return 1;
         }else if(block.getType() == Material.IRON_ORE){
             return 5;
@@ -223,7 +223,7 @@ public class MaestriaExp implements Listener{
             return 15;
         } else {
             return 0;
-        }*/
+        }
     }
 
     public int maxExpNecesary(int level) {

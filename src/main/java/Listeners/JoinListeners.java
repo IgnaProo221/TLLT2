@@ -64,14 +64,6 @@ public class JoinListeners implements Listener {
         var level30 = data.get(new NamespacedKey(plugin,"reachedlvl30"),PersistentDataType.INTEGER);
         var extra_health =  data.get(Utils.key("maestry_health"), PersistentDataType.INTEGER);
         var negative_health = data.get(Utils.key("negative_health"), PersistentDataType.INTEGER);
-
-        if(TLL2.mantenimiento){
-            if(!e.getPlayer().isOp()) {
-                Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                    p.kickPlayer("&c&l¡El Servidor esta en Mantenimiento! Vuelva mas tarde.");
-                }, 20L);
-            }
-        }
         /*
         if (Utils.getConfig().contains("Maestria." + p.getName())) {
 

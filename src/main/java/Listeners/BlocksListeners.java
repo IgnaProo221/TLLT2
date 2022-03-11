@@ -33,7 +33,7 @@ public class BlocksListeners implements Listener{
         }
     }*/
 
-    @EventHandler
+   /*@EventHandler
     public void miedoXd(BlockPlaceEvent e){
         var p = e.getPlayer();
         if (p.hasPotionEffect(PotionEffectType.LUCK)) {
@@ -59,7 +59,7 @@ public class BlocksListeners implements Listener{
                 p.sendMessage(Format.PREFIX + format("&c¡Estas paniquiado!"));
             }
         }
-    }
+    }*/
 
     @EventHandler
     public void picoHabilidad(BlockBreakEvent e){

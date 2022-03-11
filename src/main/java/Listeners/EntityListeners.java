@@ -135,7 +135,7 @@ public class EntityListeners implements Listener {
         var damager = event.getDamager();
         if(damager instanceof Player pa) {
             if (pa.getInventory().contains(Items.ringOfAbaddon())) {
-                if (lifestealpercentage > 95) {
+                if (lifestealpercentage > 80) {
                     pa.sendMessage(PREFIX, format("&cTu Ring of Abaddon te otorgo Fuerza II por 3 segundos"));
                     pa.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 1, true, false, true));
                 }
@@ -583,7 +583,7 @@ public class EntityListeners implements Listener {
             event.getDrops().add(dropFrag);
 
             addHash(p);
-            p.sendMessage(format("&7¡Has sacrificado a un &6&lAldeano&7, has recibido un &6&l" + size + " &cFragmento(s) de Sangre&7!"));
+            p.sendMessage(format("&7¡Has sacrificado a un &6&lAldeano&7, has recibido &6&l" + size + " &cFragmento(s) de Sangre&7!"));
         }
         if(entity instanceof Silverfish silverfish && killer instanceof Player p){
             if(silverfish.getPersistentDataContainer().has(Utils.key("MINER_LEVEL_1"),PersistentDataType.STRING)){
@@ -742,6 +742,7 @@ public class EntityListeners implements Listener {
         }
     }
 
+
     @EventHandler
     public void arcoAaaamemuero(ProjectileHitEvent e){
         var block = e.getHitBlock();
@@ -770,6 +771,16 @@ public class EntityListeners implements Listener {
                     }
                 }
             }
+        }
+    }
+
+    @EventHandler
+    public void targetChange(EntityTargetEvent e){
+        Entity entity = e.getEntity();
+        Entity entity1 = e.getTarget();
+        if(entity instanceof IronGolem){
+            if(entity1 instanceof Player)return;
+            e.setCancelled(true);
         }
     }
 }

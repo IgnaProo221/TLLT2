@@ -295,7 +295,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
                             int s = Integer.parseInt(args[3]);
 
-                            if (s >= 0 || s <= 0) {
+                            if (s >= 2 || s <= 0) {
                                 player.sendMessage(format("&cEl valor indicado supera los limites, indica un nivel valido."));
                                 return false;
                             }
