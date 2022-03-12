@@ -148,6 +148,8 @@ public class DeathListeners extends ListenerAdapter implements Listener {
     @EventHandler
     public void muerteEvento(PlayerDeathEvent e){
         Player p = e.getEntity();
+        p.setHealth(20);
+        p.setGameMode(GameMode.SPECTATOR);
         Location location = p.getLocation().clone();
         Bukkit.getScoreboardManager().getMainScoreboard().getTeam("11-Muerto").addEntry(p.getName());
         World world = Bukkit.getWorld("world");
