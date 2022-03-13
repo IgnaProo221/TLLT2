@@ -59,15 +59,16 @@ public class MaestriaExp implements Listener{
         int level = data.getMasteryLevel();
         int exp = data.getMasteryExp();
 
+        if (level >= 30) return;
         p.sendActionBar(format("&bMinería: " + exp + " / " + maxExpNecesary(level)));
         p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10.0F, 2.0F);
 
-        data.checkMasteryLevel(p, data.getMasteryExp() + getGiveExp(block));
+        data.checkMasteryLevel(p, getGiveExp(block));
     }
 
 
     @EventHandler
-    public void aVoidDupeXP(BlockPlaceEvent e){
+    public void avoidDupeXP(BlockPlaceEvent e){
         var p = e.getPlayer();
         var block = e.getBlockPlaced();
         var state = block.getState();
@@ -222,7 +223,7 @@ public class MaestriaExp implements Listener{
         }else if(block.getType() == Material.DEEPSLATE_EMERALD_ORE){
             return 15;
         } else {
-            return 0;
+            return 1;
         }
     }
 
