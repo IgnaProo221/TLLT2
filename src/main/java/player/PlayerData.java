@@ -133,7 +133,8 @@ public class PlayerData {
     }
 
     public int setMasteryLevel(int masteryLevel) {
-        if (masteryLevel >= 30) return this.masteryLevel;
+        if (masteryLevel >= 30) return this.masteryLevel = 30;
+        if (masteryLevel <= 0) return this.masteryLevel = 1;
         this.masteryLevel = masteryLevel;
         this.masteryExp = 0;
 
