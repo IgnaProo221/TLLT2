@@ -187,41 +187,41 @@ public class MaestriaExp implements Listener{
             //Todo lo mismo que arriba revisar bien porfavor
         };*/
         if(block.getType() == Material.COAL_ORE){
-            return 10;
+            return 15;
         }else if(block.getType() == Material.IRON_ORE){
-            return 35;
+            return 52;
         }else if(block.getType() == Material.COPPER_ORE){
-            return 10;
+            return 15;
         }else if(block.getType() == Material.GOLD_ORE){
-            return 35;
+            return 52;
         }else if(block.getType() == Material.LAPIS_ORE){
-            return 25;
+            return 37;
         }else if(block.getType() == Material.REDSTONE_ORE){
-            return 25;
+            return 37;
         }else if(block.getType() == Material.EMERALD_ORE){
-            return 10;
+            return 15;
         }else if(block.getType() == Material.DIAMOND_ORE){
-            return 35;
+            return 52;
         }else if(block.getType() == Material.NETHER_QUARTZ_ORE){
-            return 20;
+            return 37;
         }else if(block.getType() == Material.NETHER_GOLD_ORE){
-            return 20;
+            return 37;
         }else if(block.getType() == Material.DEEPSLATE_COAL_ORE){
-            return 25;
+            return 37;
         }else if(block.getType() == Material.DEEPSLATE_COPPER_ORE){
-           return 35;
+           return 37;
         }else if(block.getType() == Material.DEEPSLATE_IRON_ORE){
-            return 45;
+            return 67;
         }else if(block.getType() == Material.DEEPSLATE_GOLD_ORE){
-            return 45;
+            return 67;
         }else if(block.getType() == Material.DEEPSLATE_REDSTONE_ORE){
-            return 35;
+            return 52;
         }else if(block.getType() == Material.DEEPSLATE_LAPIS_ORE){
-            return 35;
+            return 52;
         }else if(block.getType() == Material.DEEPSLATE_DIAMOND_ORE){
-            return 60;
+            return 90;
         }else if(block.getType() == Material.DEEPSLATE_EMERALD_ORE){
-            return 60;
+            return 90;
         } else {
             return 1;
         }
