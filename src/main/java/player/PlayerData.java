@@ -38,6 +38,8 @@ public class PlayerData {
         this.negativeHealth = getOrAddData(p, "negative_health", PersistentDataType.INTEGER, 0);
 
         this.immunity = 0;
+
+        printDebug(p);
     }
 
     public void saveData(Player p) {
@@ -47,6 +49,18 @@ public class PlayerData {
         //setData(p, "inmunity", PersistentDataType.INTEGER, this.immunity);
         setData(p, "maestry_health", PersistentDataType.INTEGER, this.extraHealth);
         setData(p, "negative_health", PersistentDataType.INTEGER, this.negativeHealth);
+
+        printDebug(p);
+    }
+
+    private void printDebug(Player p) {
+        Bukkit.broadcastMessage("-------[ DEBUG DATA " + getName() + " ]-------");
+        Bukkit.broadcastMessage("Temperatura: " + temperature + " | " + getData(p, "temperatura", PersistentDataType.INTEGER));
+        Bukkit.broadcastMessage("Maestria Level: " + masteryLevel + " | " + getData(p, "maestrialvl", PersistentDataType.INTEGER));
+        Bukkit.broadcastMessage("Maestria Exp: " + masteryExp + " | " + getData(p, "maestriaexp", PersistentDataType.INTEGER));
+        Bukkit.broadcastMessage(" ");
+        Bukkit.broadcastMessage(" ");
+        Bukkit.broadcastMessage(" ");
     }
 
     public void tick() {
@@ -61,13 +75,20 @@ public class PlayerData {
         return value;
     }
 
-    private <T, Z> Z  getOrAddData(Player p, String id, PersistentDataType<T, Z> type, Z defValue) {
+    private <T, Z> Z getOrAddData(Player p, String id, PersistentDataType<T, Z> type, Z defValue) {
         PersistentDataContainer data = p.getPersistentDataContainer();
         NamespacedKey key = new NamespacedKey(TLL2.getInstance(), id);
 
         if (!data.has(key, type)) {
             data.set(key, type, defValue);
         }
+
+        return data.get(key, type);
+    }
+
+    private <T, Z> Z getData(Player p, String id, PersistentDataType<T, Z> type) {
+        PersistentDataContainer data = p.getPersistentDataContainer();
+        NamespacedKey key = new NamespacedKey(TLL2.getInstance(), id);
 
         return data.get(key, type);
     }
