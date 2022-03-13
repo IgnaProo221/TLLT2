@@ -57,13 +57,12 @@ public class MaestriaExp implements Listener{
 
         PlayerData data = CustomPlayer.fromName(p.getName()).getData();
         int level = data.getMasteryLevel();
-        int exp = data.getMasteryExp();
 
         if (level >= 30) return;
-        p.sendActionBar(format("&bMinería: " + exp + " / " + maxExpNecesary(level)));
-        p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10.0F, 2.0F);
-
         data.checkMasteryLevel(p, getGiveExp(block));
+
+        p.sendActionBar(format("&bMinería: " + data.getMasteryExp() + " / " + maxExpNecesary(level)));
+        p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 10.0F, 2.0F);
     }
 
 
