@@ -460,7 +460,6 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                                     msg.append(" ").append(arg);
                                 }
                             }
-
                             a.sendMessage(format("&8[&6&lTEAM&8] &7" + player.getName() + "&8>&d" + msg));
                         }
                     }
@@ -488,7 +487,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     player.sendMessage(builder.toString());
                 }
 
-                if (args[1].equalsIgnoreCase("info")) {
+                if (args[1].equalsIgnoreCase("info")) { // ya vuelvo
 
                     if (!Teams.isInTeam(player)) {
                         player.sendMessage(Format.PREFIX + format("&7Actualmente no conformas ningún team."));

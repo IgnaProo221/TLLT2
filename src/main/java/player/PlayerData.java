@@ -39,7 +39,6 @@ public class PlayerData {
 
         this.immunity = 0;
 
-        printDebug(p);
     }
 
     public void saveData(Player p) {
@@ -50,7 +49,6 @@ public class PlayerData {
         setData(p, "maestry_health", PersistentDataType.INTEGER, this.extraHealth);
         setData(p, "negative_health", PersistentDataType.INTEGER, this.negativeHealth);
 
-        printDebug(p);
     }
 
     private void printDebug(Player p) {
