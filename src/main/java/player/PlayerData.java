@@ -192,8 +192,8 @@ public class PlayerData {
                 p.sendMessage(MaestriaExp.att_plus);
                 p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
             }else if(getMasteryLevel() == 10) {
-                p.sendMessage(format("&3MAESTRIA &8> Has recibido un Buff de Vision Nocturna Permanente!"));
-                p.sendMessage(format("&3MAESTRIA &8> &e&l¡PELIGRO! Ahora picar puede llamar la atencion de criaturas hostiles"));
+                p.sendMessage(format("&3MAESTRIA &8> Has recibido un Buff de Visión Nocturna Permanente!"));
+                p.sendMessage(format("&3MAESTRIA &8> &e&l¡PELIGRO! Ahora picar puede llamar la atención de criaturas hostiles"));
             }else if(getMasteryLevel() == 11) {
                 p.sendMessage(MaestriaExp.hp_plus);
                 setExtraHealth(ehp + 2);

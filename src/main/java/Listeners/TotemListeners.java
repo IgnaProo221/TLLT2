@@ -219,7 +219,6 @@ public class TotemListeners implements Listener {
         }
     }
 
-
     public void diceBot(int head, Player p) {
         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
         if (head == 1) {
@@ -232,7 +231,7 @@ public class TotemListeners implements Listener {
             eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
             eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
             eb.addField(":map: **Coordenadas:**", "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-            eb.addField(":game_die: **Numero**", "1.- Sin Efectos", true);
+            eb.addField(":game_die: **Número**", "1.- Sin efectos", true);
             eb.setThumbnail("https://media.discordapp.net/attachments/906642578013843526/949674113314738236/dado1.png");
             eb.setColor(new Color(252, 186, 3));
             if (channel != null) {
@@ -249,7 +248,7 @@ public class TotemListeners implements Listener {
             eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
             eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
             eb.addField(":map: **Coordenadas:**", "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-            eb.addField(":game_die: **Numero**", "2.- Speed II por 10 segundos", true);
+            eb.addField(":game_die: **Número**", "2.- Speed II por 10 segundos", true);
             eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674197188214824/dado2.png");
             eb.setColor(new Color(252, 186, 3));
             if (channel != null) {
@@ -267,7 +266,7 @@ public class TotemListeners implements Listener {
             eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
             eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
             eb.addField(":map: **Coordenadas:**", "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-            eb.addField(":game_die: **Numero**", "3.- Fuerza y Haste II por 5 segundos", true);
+            eb.addField(":game_die: **Número**", "3.- Fuerza y haste II por 5 segundos", true);
 
             eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674264490045480/dado3.png");
 
@@ -289,7 +288,7 @@ public class TotemListeners implements Listener {
             eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
             eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
             eb.addField(":map: **Coordenadas:**", "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-            eb.addField(":game_die: **Numero**", "4.- Wither, Slowness y Veneno II por 10 segundos", true);
+            eb.addField(":game_die: **Número**", "4.- Wither, slowness y veneno II por 10 segundos", true);
 
             eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674332517441586/dado4.png");
 
@@ -313,7 +312,7 @@ public class TotemListeners implements Listener {
             eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
             eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
             eb.addField(":map: **Coordenadas:**", "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-            eb.addField(":game_die: **Numero**", "5.- Usar otro totem en tu Inventario", true);
+            eb.addField(":game_die: **Número**", "5.- Usar otro Tótem en tu inventario", true);
 
             eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674389157326908/dado5.png");
 
@@ -340,9 +339,9 @@ public class TotemListeners implements Listener {
             eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
             eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
             eb.addField(":map: **Coordenadas:**", "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-            eb.addField(":game_die: **Numero**", "6.- Sin efectos del Totem", true);
+            eb.addField(":game_die: **Número**", "6.- No se aplican los efectos del Tótem", true);
 
-            eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674451472097310/dado6.pn");
+            eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674451472097310/dado6.png");
 
             eb.setColor(new Color(252, 186, 3));
 

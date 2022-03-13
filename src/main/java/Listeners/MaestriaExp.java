@@ -187,41 +187,41 @@ public class MaestriaExp implements Listener{
             //Todo lo mismo que arriba revisar bien porfavor
         };*/
         if(block.getType() == Material.COAL_ORE){
-            return 1;
+            return 10;
         }else if(block.getType() == Material.IRON_ORE){
-            return 5;
+            return 35;
         }else if(block.getType() == Material.COPPER_ORE){
-            return 1;
+            return 10;
         }else if(block.getType() == Material.GOLD_ORE){
-            return 5;
+            return 35;
         }else if(block.getType() == Material.LAPIS_ORE){
-            return 5;
+            return 25;
         }else if(block.getType() == Material.REDSTONE_ORE){
-            return 3;
+            return 25;
         }else if(block.getType() == Material.EMERALD_ORE){
             return 10;
         }else if(block.getType() == Material.DIAMOND_ORE){
-            return 3;
+            return 35;
         }else if(block.getType() == Material.NETHER_QUARTZ_ORE){
-            return 1;
+            return 20;
         }else if(block.getType() == Material.NETHER_GOLD_ORE){
-            return 1;
+            return 20;
         }else if(block.getType() == Material.DEEPSLATE_COAL_ORE){
-            return 3;
+            return 25;
         }else if(block.getType() == Material.DEEPSLATE_COPPER_ORE){
-           return 3;
+           return 35;
         }else if(block.getType() == Material.DEEPSLATE_IRON_ORE){
-            return 7;
+            return 45;
         }else if(block.getType() == Material.DEEPSLATE_GOLD_ORE){
-            return 7;
+            return 45;
         }else if(block.getType() == Material.DEEPSLATE_REDSTONE_ORE){
-            return 3;
+            return 35;
         }else if(block.getType() == Material.DEEPSLATE_LAPIS_ORE){
-            return 3;
+            return 35;
         }else if(block.getType() == Material.DEEPSLATE_DIAMOND_ORE){
-            return 10;
+            return 60;
         }else if(block.getType() == Material.DEEPSLATE_EMERALD_ORE){
-            return 15;
+            return 60;
         } else {
             return 1;
         }

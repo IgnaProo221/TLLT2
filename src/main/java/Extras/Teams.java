@@ -2,7 +2,6 @@ package Extras;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +16,7 @@ public class Teams {
 
         try {
             STAFF_TEAM = new Team("Staff Chat", "Mutant17", Arrays.asList("Itz_Antonio_PvP", "Carrotw"
-                    , "JohanBigCum", "FoquitaLover", "cPepos", "ItzFel17", "cBaguette17", "wHermes17", "Pepe3012", "xAlexPlayx", "LechugaMC17", "Blackstamp", "Gus_Gus19"
+                    , "JohanBigCum", "FoquitaLover", "cPepos", "ItzFel17", "cBaguette17", "wHermes17", "Pepe3012", "xAlexPlayx", "LechugaMC17", "Blackstamp", "Gus_Gus19" // y por alguna razón aqui da error también?
                     , "THESMOL_T", "SkarbyPalace", "Tom_555", "NovaKingdom"));
 
             Bukkit.getLogger().info("Staff Team creado.");
@@ -28,42 +27,19 @@ public class Teams {
             Bukkit.getLogger().info("Se ha causado un error al crear el team STAFF_TEAM. Error: " + x);
         }
         //Si creas un team añadelo a este ArrayList.
-        /*
-        STAFF_TEAM.joinMember("Mutant17",true);
-        STAFF_TEAM.joinMember("Itz_Antonio_PvP",false);
-        STAFF_TEAM.joinMember("Carrotw",false);
-        STAFF_TEAM.joinMember("JohanBigCum",false);
-        STAFF_TEAM.joinMember("FoquitaLover",false);
-        STAFF_TEAM.joinMember("cPepos",false);
-        STAFF_TEAM.joinMember("ItzFel17",false);
-        STAFF_TEAM.joinMember("cBaguette17",false);
-        STAFF_TEAM.joinMember("wHermes17",false);
-        STAFF_TEAM.joinMember("Pepe3012",false);
-        STAFF_TEAM.joinMember("xAlexPlayx",false);
-        STAFF_TEAM.joinMember("LechugaMC17",false);
-        STAFF_TEAM.joinMember("Blackstamp",false);
-        STAFF_TEAM.joinMember("Gus_Gus19",false);
-        STAFF_TEAM.joinMember("THESMOL_T",false);
-        STAFF_TEAM.joinMember("SkarbyPalace",false);
-        STAFF_TEAM.joinMember("Tom_555",false);
-        STAFF_TEAM.joinMember("NovaKingdom",false);
-        */
 
         teams.add(STAFF_TEAM);
-
     }
 
     public static boolean isInTeam(Player p) {
         return Teams.get(Teams.getTeamName(p)) != null;
     }
 
-
     public static String getTeamName(Player p) {
         Team d = forPlayer(p);
 
         return d.getName();
     }
-
 
     public static Team get (String teamName) {
         Team b = null;
@@ -101,14 +77,13 @@ public class Teams {
         String teamName;
         Player owner;
 
-        List<String> memberss;
+        List<String> memberss = new ArrayList<>();
 
         public Team (String teamName, String owner, List<String> members) {
             this.teamName = teamName;
 
             this.owner = Bukkit.getPlayer(owner);
-            this.memberss = members;
-
+            memberss.addAll(members);
             this.memberss.add(owner);
         }
         
