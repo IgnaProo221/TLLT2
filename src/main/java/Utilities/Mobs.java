@@ -65,6 +65,7 @@ public class Mobs implements Listener{
 
     public static void creeperCongelado(Creeper self){
         self.setCustomName(format("&bCreeper Congelado"));
+        self.setPowered(true);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ICE_CREEPER"), PersistentDataType.STRING, "ICE_CREEPER");
     }
 
@@ -90,6 +91,7 @@ public class Mobs implements Listener{
     }
     public static void mossCreeper(Creeper self){
         self.setCustomName(format("&2Moss Creeper"));
+        self.setPowered(true);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "MOSS_CREEPER"), PersistentDataType.STRING, "MOSS_CREEPER");
     }
 
@@ -115,6 +117,7 @@ public class Mobs implements Listener{
     public static void creeperSandstone(Creeper self){
         self.setCustomName(format("&6Sandstone Creeper"));
         self.setFuseTicks(25);
+        self.setPowered(true);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SANDSTONE_CREEPER"), PersistentDataType.STRING, "SANDSTONE_CREEPER");
     }
 
@@ -739,6 +742,7 @@ public class Mobs implements Listener{
         self.setShouldBurnInDay(false);
         self.setBaby(false);
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(30);
         self.setHealth(40);
         ItemStack mazo = new ItemStack(Material.NETHERITE_AXE);
         ItemMeta mazom = mazo.getItemMeta();
@@ -754,6 +758,7 @@ public class Mobs implements Listener{
         self.setShouldBurnInDay(false);
         self.setBaby(false);
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40.0);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(12);
         self.setHealth(40);
         ItemStack machete = new ItemStack(Material.NETHERITE_SWORD);
         ItemMeta machetem = machete.getItemMeta();
@@ -764,10 +769,13 @@ public class Mobs implements Listener{
         self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
     }
     public static void zombObeso(IronGolem self){
-        self.setCustomName(format("&6Zombi Grande"));
+        self.setCustomName(format("&6Zombi Destructor"));
         self.setRemoveWhenFarAway(true);
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60.0);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(30);
+        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE,1,false,false,false));
         self.setHealth(60);
+        self.setSilent(true);
         CraftIronGolem craft = ((CraftIronGolem) self);
         EntityIronGolem entityIronGolem = craft.getHandle();
         try{
