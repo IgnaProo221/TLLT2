@@ -266,6 +266,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
                 if (hasExoArmor(player)) {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, true, false, true));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, true, false, true));
+                    health += 6;
                 }
                 health += data.getExtraHealth();
                 health -= data.getNegativeHealth();
@@ -392,7 +393,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
 
      */
 
-    public boolean hasExoArmor(Player p){
+    public static boolean hasExoArmor(Player p){
         if(p.getInventory().getHelmet() != null && p.getInventory().getChestplate() != null && p.getInventory().getLeggings() != null && p.getInventory().getBoots() != null){
             if(p.getInventory().getHelmet().hasItemMeta() && p.getInventory().getChestplate().hasItemMeta() && p.getInventory().getLeggings().hasItemMeta() && p.getInventory().getBoots().hasItemMeta()){
                 if(p.getInventory().getHelmet().getItemMeta().hasCustomModelData() && p.getInventory().getChestplate().getItemMeta().hasCustomModelData() && p.getInventory().getLeggings().getItemMeta().hasCustomModelData() && p.getInventory().getBoots().getItemMeta().hasCustomModelData()){

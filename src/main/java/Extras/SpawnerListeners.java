@@ -40,6 +40,39 @@ public class SpawnerListeners implements Listener {
                     Mobs.exoGolem(irongolem);
                 }
             }
+        }else if(en instanceof Sheep) {
+            if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER) {
+                if (en.getCustomName().equalsIgnoreCase("a")) {
+                    event.setCancelled(true);
+                    var lushz = en.getLocation().getWorld().spawn(en.getLocation(), Zombie.class);
+                    Mobs.lushZombie(lushz);
+                }
+                if (en.getCustomName().equalsIgnoreCase("b")) {
+                    event.setCancelled(true);
+                    var lushz = en.getLocation().getWorld().spawn(en.getLocation(), Skeleton.class);
+                    Mobs.lushSkeleton(lushz);
+                }
+                if (en.getCustomName().equalsIgnoreCase("c")) {
+                    event.setCancelled(true);
+                    var lushz = en.getLocation().getWorld().spawn(en.getLocation(), IronGolem.class);
+                    Mobs.experimentWOOD(lushz);
+                }
+                if (en.getCustomName().equalsIgnoreCase("d")) {
+                    event.setCancelled(true);
+                    var lushz = en.getLocation().getWorld().spawn(en.getLocation(), Creeper.class);
+                    Mobs.roboMine(lushz);
+                }
+                if (en.getCustomName().equalsIgnoreCase("f")) {
+                    event.setCancelled(true);
+                    var lushz = en.getLocation().getWorld().spawn(en.getLocation(), Creeper.class);
+                    Mobs.mossCreeper(lushz);
+                }
+                if (en.getCustomName().equalsIgnoreCase("g")) {
+                    event.setCancelled(true);
+                    var lushz = en.getLocation().getWorld().spawn(en.getLocation(), Spider.class);
+                    Mobs.spiderJungla(lushz);
+                }
+            }
         }
     }
 }

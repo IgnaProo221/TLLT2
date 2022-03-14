@@ -25,30 +25,45 @@ public class DropsListeners implements Listener{
                 e.getDrops().clear();
                 e.getDrops().add(MobDrops.blighdrop1(quantity));
                 e.getDrops().add(MobDrops.terrorEssence(quantity));
+            }else if(zombie.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXO_MELEE"),PersistentDataType.STRING)){
+                e.getDrops().clear();
+                e.getDrops().add(MobDrops.exoCore(quantity));
             }
         }else if(entity instanceof Skeleton skeleton){
             if(skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_SKELETON"), PersistentDataType.STRING)){
                 e.getDrops().clear();
                 e.getDrops().add(MobDrops.blighdrop2(quantity));
                 e.getDrops().add(MobDrops.terrorEssence(quantity));
+            }else if(skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXO_DISTANCE"),PersistentDataType.STRING)){
+                e.getDrops().clear();
+                e.getDrops().add(MobDrops.exoCore(quantity));
             }
         }else if(entity instanceof Creeper creeper){
             if(creeper.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_CREEPER"), PersistentDataType.STRING)){
                 e.getDrops().clear();
                 e.getDrops().add(MobDrops.blighdrop4(quantity));
                 e.getDrops().add(MobDrops.terrorEssence(quantity));
+            }else if(creeper.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXO_EXPLODE"),PersistentDataType.STRING)){
+                e.getDrops().clear();
+                e.getDrops().add(MobDrops.exoCore(quantity));
             }
         }else if(entity instanceof Spider spider){
             if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_SPIDER"), PersistentDataType.STRING)){
                 e.getDrops().clear();
                 e.getDrops().add(MobDrops.blighdrop3(quantity));
                 e.getDrops().add(MobDrops.terrorEssence(quantity));
+            }else if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXO_MELEE"),PersistentDataType.STRING)){
+                e.getDrops().clear();
+                e.getDrops().add(MobDrops.exoCore(quantity));
             }
         }else if(entity instanceof Phantom phantom){
             if(phantom.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_PHANTOM"), PersistentDataType.STRING)){
                 e.getDrops().clear();
                 e.getDrops().add(MobDrops.blighdrop5(quantity));
                 e.getDrops().add(MobDrops.terrorEssence(quantity));
+            }else if(phantom.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXO_MELEE"),PersistentDataType.STRING)){
+                e.getDrops().clear();
+                e.getDrops().add(MobDrops.exoCore(quantity));
             }
         }else if(entity instanceof Witch witch){
             if(witch.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_WITCH"), PersistentDataType.STRING)){
@@ -82,6 +97,14 @@ public class DropsListeners implements Listener{
             }else if(ironGolem.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"WARDEN"),PersistentDataType.STRING)){
                 e.getDrops().clear();
                 e.getDrops().add(MobDrops.phantomHeart());
+                int shriekchannce = new Random().nextInt(100);
+                if(shriekchannce > 80){
+                    e.getDrops().add(Items.shriekTome());
+                }
+            } else if (ironGolem.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXPERIMENT_W"), PersistentDataType.STRING)){
+                e.getDrops().clear();
+                e.getDrops().add(MobDrops.blackRose());
+
             }
         }
     }

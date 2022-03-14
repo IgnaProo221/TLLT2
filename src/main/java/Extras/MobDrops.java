@@ -127,4 +127,10 @@ public class MobDrops{
     public static ItemStack phantomHeart(){
         return new ItemBuilder(Material.GOLDEN_APPLE).setName(format("&d&lPhantom Heart")).setUnbreakable(true).build();
     }
+    public static ItemStack exoCore(int amount){
+        return new ItemBuilder(Material.PRISMARINE_SHARD,amount).setName(format("&6&lExo-Core")).setUnbreakable(true).build();
+    }
+    public static ItemStack blackRose(){
+        return new ItemBuilder(Material.BLACK_DYE).setName(format("&8&lBlack Rose")).setUnbreakable(true).build();
+    }
 }

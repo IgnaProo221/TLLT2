@@ -212,8 +212,9 @@ public class Mobs implements Listener{
         meta.setUnbreakable(true);
         es.setItemMeta(meta);
         self.setCustomName(format("&c&lBlighted Piglin Brute"));
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(65);
-        self.setHealth(65);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(25);
+        self.setHealth(25);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(15);
         self.getEquipment().setItemInMainHand(es);
         self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_BRUTE"), PersistentDataType.STRING, "BLIGHTED_BRUTE");
@@ -1034,4 +1035,51 @@ public class Mobs implements Listener{
         self.setShouldBurnInDay(false);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXO_MELEE"),PersistentDataType.STRING,"EXO_MELEE");
     }
+
+    //MOBS DEL PLANETOIDE
+
+    public static void lushZombie(Zombie self){
+        self.setCustomName(format("&2&lLush Zombie"));
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
+        self.setHealth(40);
+    }
+    public static void lushSkeleton(Skeleton self){
+        self.setCustomName(format("&2&lLush Skeleton"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
+        self.setHealth(40);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"LUSH_SKELETON"),PersistentDataType.STRING,"LUSH_SKELETON");
+    }
+    public static void roboMine(Creeper self){
+        self.setCustomName(format("&4&lRobo-Mine"));
+        self.setMaxFuseTicks(10);
+        self.setFuseTicks(10);
+        self.setExplosionRadius(5);
+    }
+    public static void experimentWOOD(IronGolem self){
+        self.setCustomName(format("&2&lExperiment &4&lW00D34"));
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(35);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(200);
+        self.setHealth(200);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXPERIMENT_W"),PersistentDataType.STRING,"EXPERIMENT_W");
+        CraftIronGolem craft = ((CraftIronGolem) self);
+        EntityIronGolem entityIronGolem = craft.getHandle();
+        try{
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("bP");
+            gf.setAccessible(true);
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityIronGolem);
+            goal.a(0, new PathfinderGoalMeleeAttack(entityIronGolem,1.0D,true));
+
+            Field tf = cl.getDeclaredField("bQ");
+            tf.setAccessible(true);
+
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityIronGolem);
+            target.a(0,new PathfinderGoalNearestAttackableTarget<>(entityIronGolem, EntityHuman.class, 10,true,false,null));
+        }catch (Exception e){
+            e.printStackTrace();
+            Warn.Mutant(e);
+        }
+    }
+
 }

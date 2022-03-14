@@ -2,12 +2,9 @@ package Listeners;
 
 import Utilities.Format;
 import io.papermc.paper.event.entity.EntityMoveEvent;
-import net.minecraft.server.level.EntityPlayer;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftEntity;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,6 +13,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 import tlldos.tll2.TLL2;
 
 import java.util.Random;
@@ -100,6 +99,8 @@ public class BossesListeners implements Listener{
                         p.playSound(p.getLocation(),Sound.ENTITY_ENDER_DRAGON_GROWL,SoundCategory.HOSTILE,10.0F, -1.0F);
                         p.sendMessage(Format.PREFIX,Format.format("&3¡El Warden a lanzado un sonido aturdidor!"));
                         p.damage(40,ironGolem);
+                        Vector vector = p.getEyeLocation().getDirection().multiply(-3);
+                        p.setVelocity(vector);
                     }
                 }
             }
