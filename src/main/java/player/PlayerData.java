@@ -19,7 +19,7 @@ public class PlayerData {
     private String playerName;
     private UUID uuid;
 
-    private int temperature, masteryLevel, masteryExp, immunity, extraHealth, negativeHealth;
+    private int temperature, masteryLevel, masteryExp, immunity, extraHealth, negativeHealth,paralizis;
 
     public PlayerData(String playerName, UUID id) {
         this.playerName = playerName;
@@ -38,6 +38,7 @@ public class PlayerData {
         this.negativeHealth = getOrAddData(p, "negative_health", PersistentDataType.INTEGER, 0);
 
         this.immunity = 0;
+        this.paralizis = 0;
 
     }
 
@@ -48,6 +49,7 @@ public class PlayerData {
         //setData(p, "inmunity", PersistentDataType.INTEGER, this.immunity);
         setData(p, "maestry_health", PersistentDataType.INTEGER, this.extraHealth);
         setData(p, "negative_health", PersistentDataType.INTEGER, this.negativeHealth);
+
 
     }
 
@@ -117,6 +119,14 @@ public class PlayerData {
 
     public void setImmunity(int immunity) {
         this.immunity = immunity;
+    }
+
+    public int getParalizis(){
+        return paralizis;
+    }
+
+    public void setParalizis(int paralizis){
+        this.paralizis = paralizis;
     }
 
     public int getExtraHealth() {

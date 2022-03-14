@@ -302,21 +302,25 @@ public class Mobs implements Listener{
     }
 
     public static void evokerExplosive(Evoker self){
-        self.setCustomName(format("&c&lExplosive Evoker"));
+        self.setCustomName(format("&c&lChaotic Conjurer"));
 
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXPLOSIVE_EVOKER"), PersistentDataType.STRING, "EXPLOSIVE_EVOKER");
     }
     public static void evokerFire(Evoker self){
-        self.setCustomName(format("&6&lHellfire Evoker"));
+        self.setCustomName(format("&6&lHellvoker"));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "FIRE_EVOKER"), PersistentDataType.STRING, "FIRE_EVOKER");
     }
     public static void evokerFreeze(Evoker self){
-        self.setCustomName(format("&c&lBlizzard Evoker"));
+        self.setCustomName(format("&b&lFreezeloger"));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "FREEZE_EVOKER"), PersistentDataType.STRING, "FREEZE_EVOKER");
     }
     public static void evokerhex(Evoker self){
-        self.setCustomName(format("&4&lHex Evoker"));
+        self.setCustomName(format("&5&lWizard"));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HEX_EVOKER"), PersistentDataType.STRING, "HEX_EVOKER");
+    }
+    public static void evokerWind(Evoker self){
+        self.setCustomName(format("&f&lWindyloge"));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "WIND_EVOKER"), PersistentDataType.STRING, "HEX_EVOKER");
     }
 
 
@@ -424,6 +428,40 @@ public class Mobs implements Listener{
         self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"THIEF"),PersistentDataType.STRING, "THIEF");
     }
+
+
+
+
+
+
+
+    public static void Warden(IronGolem self){
+        self.setCustomName(format("&3&lWarden"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(400);
+        self.setHealth(400);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
+        self.setSilent(true);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"WARDEN"),PersistentDataType.STRING,"WARDEN");
+        CraftIronGolem craft = ((CraftIronGolem) self);
+        EntityIronGolem entityIronGolem = craft.getHandle();
+        try{
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("bP");
+            gf.setAccessible(true);
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityIronGolem);
+            goal.a(0, new PathfinderGoalMeleeAttack(entityIronGolem,1.0D,true));
+
+            Field tf = cl.getDeclaredField("bQ");
+            tf.setAccessible(true);
+
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityIronGolem);
+            target.a(0,new PathfinderGoalNearestAttackableTarget<>(entityIronGolem, EntityHuman.class, 10,true,false,null));
+        }catch (Exception e){
+            e.printStackTrace();
+            Warn.Mutant(e);
+        }
+    }
+
 
 
 
@@ -587,29 +625,6 @@ public class Mobs implements Listener{
         self.setAnger(Integer.MAX_VALUE);
 
     }
-
-
-
-    public static void piglinBrutedim(PiglinBrute self){
-
-        ItemStack ax = new ItemStack(Material.NETHERITE_AXE);
-        ItemMeta meta = ax.getItemMeta();
-        meta.addEnchant(Enchantment.DAMAGE_ALL,10, true);
-        meta.setUnbreakable(true);
-        ax.setItemMeta(meta);
-
-        self.setCustomName(format("&6Dimensional Brute"));
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50.0);
-        self.setHealth(50);
-
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10.0);
-        self.getEquipment().setItemInMainHand(ax);
-        self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
-        self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DIMENSIONAL_BRUTE"), PersistentDataType.STRING, "DIMENSIONAL_BRUTE");
-
-    }
-
 
 
 
@@ -907,7 +922,7 @@ public class Mobs implements Listener{
 
 
     ///cacaplayo
-
+   //Grosero
 
 
 
@@ -969,5 +984,45 @@ public class Mobs implements Listener{
         self.getEquipment().setItemInOffHandDropChance(0);
         self.getEquipment().setItemInOffHand(flecha1);
         self.getEquipment().setItemInMainHand(bowed);
+    }
+
+
+
+    // EXO MOBS
+    public static void roboZombi(Zombie self){
+        self.setCustomName(format("&4&lExo-Undead"));
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(45);
+        self.setHealth(45);
+        self.setBaby(false);
+        self.setShouldBurnInDay(false);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXO_MELEE"),PersistentDataType.STRING,"EXO_MELEE");
+    }
+    public static void roboSkele(Skeleton self){
+        self.setCustomName(format("&4&lExo-Archer"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(45);
+        self.setHealth(45);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXO_DISTANCE"),PersistentDataType.STRING,"EXO_DISTANCE");
+    }
+    public static void roboCreeper(Creeper self){
+        self.setCustomName(format("&4&lExo-Dynamite"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(45);
+        self.setHealth(45);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXO_EXPLODE"),PersistentDataType.STRING,"EXO_EXPLODE");
+    }
+    public static void roboSpider(Spider self){
+        self.setCustomName(format("&4&lExo-Spider"));
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(14);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(45);
+        self.setHealth(45);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXO_MELEE"),PersistentDataType.STRING,"EXO_MELEE");
+    }
+    public static void roboPhantom(Phantom self){
+        self.setCustomName(format("&4&lExo-Ghost"));
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(14);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(45);
+        self.setHealth(45);
+        self.setShouldBurnInDay(false);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXO_MELEE"),PersistentDataType.STRING,"EXO_MELEE");
     }
 }

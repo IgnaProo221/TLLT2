@@ -35,6 +35,7 @@ public class CustomEnchants implements Listener {
     public static final Enchantment GRAVITY = new EnchantmentWrapper("gravity", "gravity", 1);
     public static final Enchantment IMPACT = new EnchantmentWrapper("impact", "impact", 1);
     public static final Enchantment BULLSEYE = new EnchantmentWrapper("bullseye", "bullseye", 1);
+    public static final Enchantment SHRIEK = new EnchantmentWrapper("shriek","shriek",1);
 
     public static void register() {
         for(Enchantment enchantment : allCustomEnchants()){
@@ -55,6 +56,7 @@ public class CustomEnchants implements Listener {
         list.add(CustomEnchants.GRAVITY);
         list.add(CustomEnchants.IMPACT);
         list.add(CustomEnchants.BULLSEYE);
+        list.add(CustomEnchants.SHRIEK);
 
         return list;
 

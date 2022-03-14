@@ -349,9 +349,12 @@ public class Items {
     }
 
 
-
-
-
+    public static ItemStack pieCalor(){
+        return new ItemBuilder(Material.PUMPKIN_PIE).setName(format("&6&lMagma Pie")).build();
+    }
+    public static ItemStack pieFrio(){
+        return new ItemBuilder(Material.PUMPKIN_PIE).setName(format("&b&lIce Pie")).build();
+    }
 
 
 

@@ -81,7 +81,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
             registrarCrafteos();
             tick();
             //tickTormenta();
-            //dementetemperatura();
+            dementetemperatura();
             maestriaLol();
             getCommand("thelastlife").setExecutor(new ComandosUsuarios(this));
             getCommand("tllstaff").setExecutor(new ComandosStaff(this));
@@ -91,8 +91,8 @@ public final class TLL2 extends JavaPlugin implements Listener{
 
             new Teams();
 
-            //new TemperatureTask(this).runTaskTimer(this, 0L, 1400L);
-            //new TemperatureBlocks(this).runTaskTimer(this,0L,200L);
+            new TemperatureTask(this).runTaskTimer(this, 0L, 1400L);
+            new TemperatureBlocks(this).runTaskTimer(this,0L,200L);
         } catch (Error e){
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("######################################################");
@@ -141,10 +141,10 @@ public final class TLL2 extends JavaPlugin implements Listener{
         registerListeners(
                 new TotemListeners(this),
                 new EatListeners(this),
-                //new EnderPearlListeners(this),
+                new EnderPearlListeners(this),
                 new SleepListeners(this),
-                //new ExplosionListeners(this),
-                //new DamageListeners(this),
+                new ExplosionListeners(this),
+                new DamageListeners(this),
                 new PlayerEventsListeners(this),
                 new SpawnerListeners(this),
                 new SpawnListeners(this),
@@ -153,9 +153,10 @@ public final class TLL2 extends JavaPlugin implements Listener{
                 new BlocksListeners(this),
                 //new MobsTeleports(this),
                 new DropsListeners(this),
+                new BossesListeners(this),
                 new ChatListeners(this),
                 //new NMSSpawn(this),
-                //new ReplaceListeners(this),
+                new ReplaceListeners(this),
                 //new WorldEventsListeners(this),
                 new JoinListeners(this),
                 new RPListeners(this),
@@ -270,7 +271,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
                 health -= data.getNegativeHealth();
                 player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
 
-                /*
+
                 var dataTemperatura = data.getTemperature();
                 //Hipertermia
                 if (dataTemperatura >= 120 && dataTemperatura <= 180) {
@@ -323,7 +324,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
                     player.setFreezeTicks(20);
                 } else {
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &c" + dataTemperatura + "°")));
-                }*/
+                }
             }
         }
     }

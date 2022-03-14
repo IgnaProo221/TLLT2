@@ -16,6 +16,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
+import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -287,7 +288,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                         }
                     }
                 }
-                if (args[1].equalsIgnoreCase("removeNegativeHealth")) {
+                if (args[1].equalsIgnoreCase("setNegativeHealth")) {
                     if (args.length >= 4) {
                         Player origin = Bukkit.getPlayer(args[2]);
 
@@ -295,7 +296,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
                             int s = Integer.parseInt(args[3]);
 
-                            if (s >= 2 || s <= 0) {
+                            if (s >= 10 || s <= 0) {
                                 player.sendMessage(format("&cEl valor indicado supera los limites, indica un nivel valido."));
                                 return false;
                             }
@@ -597,18 +598,9 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     return false;
                 }
 
-                if(args[1].equalsIgnoreCase("HOSTILE_COW")){
-                    try {
-                        HostileTest hostileTest = new HostileTest(player.getLocation());
-                        WorldServer worldServer = ((CraftWorld) player.getLocation().getWorld()).getHandle();
-
-                        worldServer.addEntity(hostileTest, CreatureSpawnEvent.SpawnReason.CUSTOM);
-
-                        player.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Invocaste al mob correctamente!");
-                    }catch (Exception e){
-                        e.printStackTrace();
-                        Warn.Mutant(e);
-                    }
+                if(args[1].equalsIgnoreCase("WARDEN")){
+                    IronGolem ironGolem = player.getLocation().getWorld().spawn(player.getLocation(),IronGolem.class);
+                    Mobs.Warden(ironGolem);
                 }else{
                     player.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Debes colocar un mob valido!");
                     return false;
@@ -761,6 +753,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                 case "maestria"->addToList(commands,"reset","resetattributes","resetbuffs", "addLevel", "setLevel", "setXP");
                 case "sacrificios" -> addToList(commands, "modify", "clear", "reset");
                 case "god_mode" -> addToList(commands, "on", "off");
+                case "spawn" -> addToList(commands,"WARDEN");
                 case "teams" -> addToList(commands, "chat", "join", "all_teams", "info");
                 case "debug" -> addToList(commands, "blastStormStart", "blackStormEnd", "totemTest", "muerteFake", "dementeTest");
                 case "temperatura" -> addToList(commands, "clear", "hipotermia", "hipertermia");

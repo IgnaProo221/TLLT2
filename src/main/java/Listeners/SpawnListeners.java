@@ -11,13 +11,19 @@ import net.minecraft.world.entity.EntityInsentient;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalMeleeAttack;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
 import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackableTarget;
+import net.minecraft.world.entity.animal.EntityBee;
 import net.minecraft.world.entity.animal.EntityDolphin;
+import net.minecraft.world.entity.animal.EntityPanda;
+import net.minecraft.world.entity.animal.EntityPolarBear;
 import net.minecraft.world.entity.player.EntityHuman;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftBee;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftDolphin;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPanda;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPolarBear;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -93,6 +99,8 @@ public class SpawnListeners implements Listener {
         if (entity instanceof Skeleton skeleton && !(entity instanceof Stray) && !(entity instanceof WitherSkeleton) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             if (spawnmob > 80) {
                 Mobs.blightedSkeleton(skeleton);
+            }else if(spawnmob > 50 && entitybiome == Biome.PLAINS){
+                Mobs.roboSkele(skeleton);
             } else {
                 int bow = new Random().nextInt(2) + 1;
                 if (bow == 1) {
@@ -105,6 +113,8 @@ public class SpawnListeners implements Listener {
         } else if (entity instanceof Spider spider && !(entity instanceof CaveSpider) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             if (spawnmob > 80) {
                 Mobs.blightedSpider(spider);
+            }else if(spawnmob > 50 && entitybiome == Biome.PLAINS){
+                Mobs.roboSpider(spider);
             } else {
                 int spidertype = new Random().nextInt(3) + 1;
                 int jockeychance = new Random().nextInt(100);
@@ -131,6 +141,8 @@ public class SpawnListeners implements Listener {
         } else if (entity instanceof Zombie zombie && !(entity instanceof ZombieVillager) && !(entity instanceof Husk) && !(entity instanceof Drowned) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             if (spawnmob > 80) {
                 Mobs.blightedZombi(zombie);
+            }else if(spawnmob > 50 && entitybiome == Biome.PLAINS){
+                Mobs.roboZombi(zombie);
             } else {
                 int zombitype = new Random().nextInt(5) + 1;
                 if (zombitype == 1) {
@@ -149,6 +161,8 @@ public class SpawnListeners implements Listener {
         } else if (entity instanceof Creeper creeper && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             if (spawnmob > 80) {
                 Mobs.blightedCreeper(creeper);
+            }else if(spawnmob > 50 && entitybiome == Biome.PLAINS){
+                Mobs.roboCreeper(creeper);
             } else {
                 creeper.setPowered(true);
                 creeper.setCustomName(format("&6&lPowered Creeper"));
@@ -218,9 +232,6 @@ public class SpawnListeners implements Listener {
         }else if(entity instanceof Witch witch && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             if (spawnmob > 80) {
                 Mobs.blightedWitch(witch);
-            } else {
-                witch.setCustomName(format("&7Bruja Avanzada"));
-                witch.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "AD_WITCH"), PersistentDataType.STRING, "AD_WITCH");
             }
         }else if(entity  instanceof Ghast ghast && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
             if(spawnmob > 80){
@@ -230,7 +241,79 @@ public class SpawnListeners implements Listener {
             if(spawnmob > 80){
                 Mobs.blightedPiglin(piglinBrute);
             }
+        }else if(entity instanceof Phantom phantom && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
+            if(spawnmob > 80){
+                Mobs.blightedPhantom(phantom);
+            }else if(spawnmob > 50 && entitybiome == Biome.PLAINS){
+                Mobs.roboPhantom(phantom);
+            }
+        }else if(entity instanceof PolarBear polarBear && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
+            polarBear.setCustomName(format("&b&lFrostbear"));
+            polarBear.setAdult();
+            polarBear.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(12);
+            polarBear.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"FROSTBEAR"),PersistentDataType.STRING,"FROSTBEAR");
+            CraftPolarBear craft = ((CraftPolarBear) polarBear);
+            EntityPolarBear entityPolarBear = craft.getHandle();
+            try {
+                Class<? extends EntityInsentient> cl = EntityInsentient.class;
+                Field gf = cl.getDeclaredField("bP");
+                gf.setAccessible(true);
+                PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityPolarBear);
+                goal.a(0, new PathfinderGoalMeleeAttack(entityPolarBear, 1.0D, true));
+
+                Field tf = cl.getDeclaredField("bQ");
+                tf.setAccessible(true);
+
+                PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityPolarBear);
+                target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityPolarBear, EntityHuman.class, 10, true, false, null));
+            } catch (Exception exception) {
+                exception.printStackTrace();
+                Warn.Mutant(exception);
+            }
+        }else if(entity instanceof Panda panda && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
+            panda.setCustomName(format("&4&lDreadbear"));
+            panda.setAdult();
+            panda.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
+            panda.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,Integer.MAX_VALUE,1,false,false,false));
+            CraftPanda craft = ((CraftPanda) panda);
+            EntityPanda entityPanda = craft.getHandle();
+            try {
+                Class<? extends EntityInsentient> cl = EntityInsentient.class;
+                Field gf = cl.getDeclaredField("bP");
+                gf.setAccessible(true);
+                PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityPanda);
+                goal.a(0, new PathfinderGoalMeleeAttack(entityPanda, 1.0D, true));
+
+                Field tf = cl.getDeclaredField("bQ");
+                tf.setAccessible(true);
+
+                PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityPanda);
+                target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityPanda, EntityHuman.class, 10, true, false, null));
+            } catch (Exception exception) {
+                exception.printStackTrace();
+                Warn.Mutant(exception);
+            }
+        }else if(entity instanceof Bee bee){
+            CraftBee craftBee = ((CraftBee) bee);
+            EntityBee beejoke = craftBee.getHandle();
+            try {
+                Class<? extends EntityInsentient> cl = EntityInsentient.class;
+                Field gf = cl.getDeclaredField("bP");
+                gf.setAccessible(true);
+                PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(beejoke);
+                goal.a(0, new PathfinderGoalMeleeAttack(beejoke, 1.0D, true));
+
+                Field tf = cl.getDeclaredField("bQ");
+                tf.setAccessible(true);
+
+                PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(beejoke);
+                target.a(0, new PathfinderGoalNearestAttackableTarget<>(beejoke, EntityHuman.class, 10, true, false, null));
+            } catch (Exception exception) {
+                exception.printStackTrace();
+                Warn.Mutant(exception);
+            }
         }
+
     }
 
     public void spawnRandomMob(Location location){

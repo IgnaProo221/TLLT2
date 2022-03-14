@@ -32,25 +32,14 @@ public class SleepListeners implements Listener{
         World world = Bukkit.getWorld("world");
         Player p = e.getPlayer();
         if(world.isDayTime() || world.isThundering()){
-            p.sendMessage( prefix + format("&7¡No puedes dormir de&6&l día&7 o en&6&l tormenta!"));
+            p.sendMessage( prefix + format("&e¡Has reiniciado tus Phantoms!"));
+            p.setStatistic(Statistic.TIME_SINCE_REST, 0);
             e.setCancelled(true);
             return;
         } else {
-            Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    world.setTime(0L);
-                    p.damage(0.1);
-                    for(Player jugadores : Bukkit.getOnlinePlayers()){
-                        if(jugadores.isSleeping()){
-                            jugadores.setStatistic(Statistic.TIME_SINCE_REST, 0);
-                        }
-                        jugadores.sendMessage(ChatColor.translateAlternateColorCodes('&'," " + prefix +  "&7¡El jugador &3&l" + p.getName()+ " &7ha dormido!"));
-                        players.clear();
-                    }
-                }
-            },100L);
+            p.sendMessage(prefix + format("&e¡Has reiniciado tus Phantoms!"));
             p.setStatistic(Statistic.TIME_SINCE_REST, 0);
+            e.setCancelled(true);
         }
     }
 }

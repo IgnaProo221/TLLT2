@@ -8,8 +8,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import player.CustomPlayer;
+import player.PlayerData;
 import tlldos.tll2.TLL2;
 
+import static Utilities.Format.PREFIX;
 import static Utilities.Format.format;
 
 public class EventosItems {
@@ -120,6 +123,16 @@ public class EventosItems {
             }, 65);
     }
 
+
+    public static void paralizison(Player p, PlayerData data){
+        p.playSound(p.getLocation(), "tllt2.zapsoundeffect",SoundCategory.HOSTILE,10.0F,1.0F);
+        p.sendMessage(PREFIX,format("&c¡Has sido &c&lParalizado&c!"));
+        data.setParalizis(1);
+    }
+    public static void paralizisoff(Player p, PlayerData data){
+        p.sendMessage(PREFIX,format("&c¡Tu Paralizis desapareció!"));
+        data.setParalizis(0);
+    }
 
     public static void discordxd(Player p){
         p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1200,2, true, false, true));

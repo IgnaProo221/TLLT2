@@ -1,13 +1,16 @@
 package Listeners;
 
+import Extras.EventosItems;
 import Extras.Items;
 import Utilities.*;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.command.PluginCommandYamlParser;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 
@@ -192,6 +195,9 @@ public class EntityListeners implements Listener {
                         ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 400, 0, true, true, true));
                         ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 400, 4, true, true, true));
                         ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 400, 0, true, true, true));
+                    }else if(evoker.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "WIND_EVOKER"), PersistentDataType.STRING)){
+                        ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 100,9,false,false,false));
+
                     }
                 }
             }
@@ -227,7 +233,18 @@ public class EntityListeners implements Listener {
             }
             if(damager instanceof Spider){
                 var spider = (Spider)damager;
+                PlayerData data = CustomPlayer.fromName(p.getName()).getData();
                 if(p.isBlocking())return;
+                if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXO_MELEE"),PersistentDataType.STRING)){
+                    int parachance = new Random().nextInt(100);
+                    if(data.getParalizis() >= 1)return;
+                    if(parachance > 90){
+                        EventosItems.paralizison(p,data);
+                        Bukkit.getScheduler().runTaskLater(plugin, ()->{
+                            EventosItems.paralizisoff(p,data);
+                        },40);
+                    }
+                }
                 if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"ICE_MOB"),PersistentDataType.STRING)){
                     p.setFreezeTicks(400);
                 }
@@ -259,7 +276,18 @@ public class EntityListeners implements Listener {
             }
             if(damager instanceof Zombie){
                 var zombie = (Zombie)damager;
+                PlayerData data = CustomPlayer.fromName(p.getName()).getData();
                 if(p.isBlocking())return;
+                if(zombie.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXO_MELEE"),PersistentDataType.STRING)){
+                    int parachance = new Random().nextInt(100);
+                    if(data.getParalizis() >= 1)return;
+                    if(parachance > 90){
+                        EventosItems.paralizison(p,data);
+                        Bukkit.getScheduler().runTaskLater(plugin, ()->{
+                            EventosItems.paralizisoff(p,data);
+                        },40);
+                    }
+                }
                 if(zombie.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"SAND_MOB"),PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,400,0));
                 }
@@ -288,6 +316,17 @@ public class EntityListeners implements Listener {
             }
             if(damager instanceof Phantom){
                 var phantom = (Phantom)damager;
+                PlayerData data = CustomPlayer.fromName(p.getName()).getData();
+                if(phantom.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXO_MELEE"),PersistentDataType.STRING)){
+                    int parachance = new Random().nextInt(100);
+                    if(data.getParalizis() >= 1)return;
+                    if(parachance > 90){
+                        EventosItems.paralizison(p,data);
+                        Bukkit.getScheduler().runTaskLater(plugin, ()->{
+                            EventosItems.paralizisoff(p,data);
+                        },40);
+                    }
+                }
                 if(phantom.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_PHANTOM"), PersistentDataType.STRING)){
                     if(p.isBlocking())return;
                     p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 100,9, true,false,true));
@@ -393,6 +432,20 @@ public class EntityListeners implements Listener {
 
         if (shooter instanceof Skeleton) {
             var skeleton = (Entity) shooter;
+            if(skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXO_DISTANCE"),PersistentDataType.STRING)){
+                Player p = (Player)entity;
+                PlayerData data = CustomPlayer.fromName(p.getName()).getData();
+                int pararandom = new Random().nextInt(100);
+                Arrow arrow = (Arrow) projectile;
+                arrow.setDamage(23);
+                if(pararandom > 90){
+                    EventosItems.paralizison(p,data);
+                    Bukkit.getScheduler().runTaskLater(plugin, ()->{
+                        EventosItems.paralizisoff(p,data);
+                    },40);
+                }
+
+            }
             if (skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "IGNITED_SKELETON"), PersistentDataType.STRING)) {
                 if (hitblock != null) {
                     hitblock.getLocation().createExplosion(skeleton,2, false, true);
@@ -474,6 +527,17 @@ public class EntityListeners implements Listener {
             }
             if (creeper.getPersistentDataContainer().has(new NamespacedKey(Utils.getPlugin(), "ICE_CREEPER"), PersistentDataType.STRING)) {
                 entity.getLocation().getNearbyPlayers( 5, 5, 5).forEach(player -> player.setFreezeTicks(1200));
+            }
+            if(creeper.getPersistentDataContainer().has(new NamespacedKey(plugin,"EXO_EXPLODE"),PersistentDataType.STRING)){
+                for(Entity p : creeper.getNearbyEntities(5,5,5)){
+                    if(!(p instanceof Player))return;
+                    Player player = (Player)p;
+                    PlayerData data = CustomPlayer.fromName(player.getName()).getData();
+                    EventosItems.paralizison(player,data);
+                    Bukkit.getScheduler().runTaskLater(plugin, ()->{
+                        EventosItems.paralizisoff(player,data);
+                    },40);
+                }
             }
             if(creeper.getPersistentDataContainer().has(new NamespacedKey(Utils.getPlugin(),"MOSS_CREEPER"),PersistentDataType.STRING)){
                 entity.getLocation().getNearbyPlayers( 5, 5, 5).forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.POISON,200,0)));
@@ -646,7 +710,16 @@ public class EntityListeners implements Listener {
         }
     }
 
-    /*
+    @EventHandler
+    public void paralizsthing(PlayerMoveEvent e){
+        Player p = e.getPlayer();
+        PlayerData data = CustomPlayer.fromName(p.getName()).getData();
+        if(data.getParalizis() >= 1){
+            e.setCancelled(true);
+        }
+    }
+
+
     @EventHandler
     public void noZombPig(EntityTransformEvent e) {
         if (e.getTransformReason() == EntityTransformEvent.TransformReason.PIGLIN_ZOMBIFIED) {
@@ -665,7 +738,7 @@ public class EntityListeners implements Listener {
         }
     }
 
-     */
+
 
 
 
@@ -781,6 +854,18 @@ public class EntityListeners implements Listener {
         if(entity instanceof IronGolem){
             if(entity1 instanceof Player)return;
             e.setCancelled(true);
+        }else if(entity instanceof Monster){
+            if(entity1 instanceof IronGolem){
+                e.setCancelled(true);
+            }
         }
     }
+
+
+
+
+
+
+
+
 }

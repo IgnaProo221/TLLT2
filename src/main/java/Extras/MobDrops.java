@@ -1,5 +1,6 @@
 package Extras;
 
+import Utilities.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -124,5 +125,8 @@ public class MobDrops{
         s.setItemMeta(smeta);
         s.setAmount(amount);
         return s;
+    }
+    public static ItemStack phantomHeart(){
+        return new ItemBuilder(Material.GOLDEN_APPLE).setName(format("&d&lPhantom Heart")).setUnbreakable(true).build();
     }
 }
