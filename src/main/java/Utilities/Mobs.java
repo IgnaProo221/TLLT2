@@ -429,6 +429,15 @@ public class Mobs implements Listener{
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"THIEF"),PersistentDataType.STRING, "THIEF");
     }
 
+    public static void dynamLlager(Pillager self){
+        self.setCustomName(format("&c&lDynamllager"));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"DYNAMLLAGER"), PersistentDataType.STRING, "DYNAMLLAGER");
+    }
+    public static void mountllagers(Pillager self){
+        self.setCustomName(format("&f&lMountllager"));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"MOUNTLLAGER"), PersistentDataType.STRING, "MOUNTLLAGER");
+    }
+
 
 
 

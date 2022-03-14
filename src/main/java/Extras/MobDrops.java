@@ -105,8 +105,6 @@ public class MobDrops{
         meta.setDisplayName(format("&cBlighted Pearl"));
         List<String> lore = new ArrayList<>();
         lore.add(format("&7Perla de un ente misterioso"));
-        lore.add(format(""));
-        lore.add(format("&cEsta Perla te otorgara Speed I al caer."));
         meta.setLore(lore);
         s.setItemMeta(meta);
         s.setAmount(amount);

@@ -103,8 +103,8 @@ public class TotemListeners implements Listener {
 
                     }
 
-                    if (head == 5) {
-                        int needTotems = 2;
+                    if (head == 2) {
+                        int needTotems = 3;
                         int main = 0;
                         int off = 0;
 
@@ -131,8 +131,15 @@ public class TotemListeners implements Listener {
                                     p.playEffect(EntityEffect.TOTEM_RESURRECT);
                                 }
                             }.runTaskLater(TLL2.getPlugin(TLL2.class), 20L);
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 5.0F, 1.0F);
+                                    p.playEffect(EntityEffect.TOTEM_RESURRECT);
+                                }
+                            }.runTaskLater(TLL2.getPlugin(TLL2.class), 40L);
 
-                            p.getInventory().removeItem(new ItemStack(Material.TOTEM_OF_UNDYING, 1));
+                            p.getInventory().removeItem(new ItemStack(Material.TOTEM_OF_UNDYING, 2));
 
 
                             globalMessage = format("&8¡El jugador &c&l"+ p.getName() + "&8 ha usado " + needTotems + "&c tótems! &7(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + "&7)");
@@ -174,47 +181,35 @@ public class TotemListeners implements Listener {
     public void totemeffects(int head, Player p, Player players) {
         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
         if (head == 1){
-
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                p.removePotionEffect(PotionEffectType.ABSORPTION);
+                p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+                p.removePotionEffect(PotionEffectType.REGENERATION);
+                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,300,1,true,false,true));
+                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,300,1,true,false,true));
+            }, 5L);
 
         } else if (head == 2) {
-            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Speed II por 10 segundos.");
-            Bukkit.getScheduler().runTaskLater(plugin, () -> p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 200, 1)), 10);
+            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Usar 3 tótems de tu inventario.");
         } else if (head == 3) {
-            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Fuerza y Haste II por 5 segundos.");
-
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 1));
-                p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 100, 1));
-            }, 10);
-
+            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Saturación a 0.");
+            p.setSaturation(0);
         } else if (head == 4) {
-            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Wither, Slowness y Veneno II por 10 segundos.");
-
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 200, 1));
-                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 1));
-                p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 200, 1));
-            }, 10);
-
+            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Congelación Infinita");
+            p.setFreezeTicks(Integer.MAX_VALUE);
         } else if (head == 5) {
-
-            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Usar otro tótem en tu inventario.");
-
-
+            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "CotM por 1 ,inuto");
+            Bukkit.getScheduler().runTaskLater(plugin, ()->{
+                p.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK,1200,0,true,false,true));
+            },5L);
         } else {
             if (head > 6) {
                 Bukkit.getLogger().info("El dado ha caído en una cara mayor al limite (6).");
                 return;
             }
 
-            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "No se aplican los efectos positivos");
-
-
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                p.removePotionEffect(PotionEffectType.ABSORPTION);
-                p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
-                p.removePotionEffect(PotionEffectType.REGENERATION);
-            }, 5L);
+            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Cooldown de 5 segundos");
+            p.setCooldown(Material.TOTEM_OF_UNDYING,100);
 
         }
     }
@@ -231,7 +226,7 @@ public class TotemListeners implements Listener {
             eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
             eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
             eb.addField(":map: **Coordenadas:**", "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-            eb.addField(":game_die: **Número**", "1.- Sin efectos", true);
+            eb.addField(":game_die: **Número**", "1.- Efectos Contrarios", true);
             eb.setThumbnail("https://media.discordapp.net/attachments/906642578013843526/949674113314738236/dado1.png");
             eb.setColor(new Color(252, 186, 3));
             if (channel != null) {
@@ -248,7 +243,7 @@ public class TotemListeners implements Listener {
             eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
             eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
             eb.addField(":map: **Coordenadas:**", "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-            eb.addField(":game_die: **Número**", "2.- Speed II por 10 segundos", true);
+            eb.addField(":game_die: **Número**", "2.- Usar 3 tótems de tu Inventario", true);
             eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674197188214824/dado2.png");
             eb.setColor(new Color(252, 186, 3));
             if (channel != null) {
@@ -266,7 +261,7 @@ public class TotemListeners implements Listener {
             eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
             eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
             eb.addField(":map: **Coordenadas:**", "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-            eb.addField(":game_die: **Número**", "3.- Fuerza y haste II por 5 segundos", true);
+            eb.addField(":game_die: **Número**", "3.- Saturacion Negativa", true);
 
             eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674264490045480/dado3.png");
 
@@ -288,7 +283,7 @@ public class TotemListeners implements Listener {
             eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
             eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
             eb.addField(":map: **Coordenadas:**", "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-            eb.addField(":game_die: **Número**", "4.- Wither, slowness y veneno II por 10 segundos", true);
+            eb.addField(":game_die: **Número**", "4.- Congelacion Infinita", true);
 
             eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674332517441586/dado4.png");
 
@@ -312,7 +307,7 @@ public class TotemListeners implements Listener {
             eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
             eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
             eb.addField(":map: **Coordenadas:**", "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-            eb.addField(":game_die: **Número**", "5.- Usar otro Tótem en tu inventario", true);
+            eb.addField(":game_die: **Número**", "5.- Curse of the Moon por 1 minuto", true);
 
             eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674389157326908/dado5.png");
 
@@ -339,7 +334,7 @@ public class TotemListeners implements Listener {
             eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
             eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
             eb.addField(":map: **Coordenadas:**", "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-            eb.addField(":game_die: **Número**", "6.- No se aplican los efectos del Tótem", true);
+            eb.addField(":game_die: **Número**", "6.- Cooldown de 5 segundos", true);
 
             eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674451472097310/dado6.png");
 

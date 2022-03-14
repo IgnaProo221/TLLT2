@@ -484,13 +484,19 @@ public class EntityListeners implements Listener {
         }
         if (shooter instanceof Pillager) {
             var pillager = (Entity) shooter;
-            if (pillager.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "OVERRATED_PILLAGER"), PersistentDataType.STRING)) {
+            if (pillager.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DYNAMLLAGER"), PersistentDataType.STRING)) {
                 if (hitblock != null) {
                     hitblock.getLocation().createExplosion(pillager,2, false, true);
                     projectile.remove();
                 } else if (entity != null) {
                     entity.getLocation().createExplosion(pillager,2, false, true);
                     projectile.remove();
+                }
+            }
+            if (pillager.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "MOUNTLLAGER"), PersistentDataType.STRING)) {
+                 if (entity != null) {
+                    LivingEntity livingEntity = (LivingEntity) entity;
+                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,200,3,false,false,false));
                 }
             }
         }

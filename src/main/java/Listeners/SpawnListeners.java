@@ -60,6 +60,14 @@ public class SpawnListeners implements Listener {
         var pos = e.getLocation();
         var world = Bukkit.getWorld("world");
         var entitybiome = entity.getLocation().getBlock().getBiome();
+        if(entity instanceof Monster monster){
+            if(monster.getWorld().isThundering()){
+                int fuerzachance = new Random().nextInt(100);
+                if(fuerzachance > 90){
+                    monster.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE,Integer.MAX_VALUE,1,false,false,false));
+                }
+            }
+        }
 
         if (entitybiome == Biome.SNOWY_TUNDRA || entitybiome == Biome.SNOWY_BEACH || entitybiome == Biome.SNOWY_TAIGA || entitybiome == Biome.SNOWY_MOUNTAINS || entitybiome == Biome.SNOWY_TAIGA_HILLS || entitybiome == Biome.SNOWY_TAIGA_MOUNTAINS
                 || entitybiome == Biome.ICE_SPIKES) {
@@ -312,6 +320,34 @@ public class SpawnListeners implements Listener {
                 exception.printStackTrace();
                 Warn.Mutant(exception);
             }
+        }else if(entity instanceof Pillager pillager && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.RAID){
+            int pillatype = new Random().nextInt(2)+1;
+            if(pillatype == 1){
+                Mobs.mountllagers(pillager);
+            }else{
+                Mobs.dynamLlager(pillager);
+            }
+        }else if(entity instanceof Evoker evoker && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.RAID){
+            int evoketype = new Random().nextInt(5)+1;
+            if(evoketype == 1){
+                Mobs.evokerWind(evoker);
+            }else if(evoketype == 2){
+                Mobs.evokerExplosive(evoker);
+            }else if(evoketype == 3){
+                Mobs.evokerFire(evoker);
+            }else if(evoketype == 4){
+                Mobs.evokerFreeze(evoker);
+            }else if(evoketype == 5){
+                Mobs.evokerhex(evoker);
+            }
+        }else if(entity instanceof Vindicator vindicator && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.RAID){
+            vindicator.setCustomName(format("&c&lButcher"));
+            vindicator.getEquipment().setItemInMainHand(new ItemBuilder(Material.NETHERITE_AXE).addEnchantment(Enchantment.DAMAGE_ALL,15).build());
+        }else if(entity instanceof Ravager ravager && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.RAID){
+            ravager.setCustomName(format("&6&lDestroyer"));
+            ravager.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(34);
+            ravager.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(100);
+            ravager.setHealth(100);
         }
 
     }

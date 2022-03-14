@@ -88,6 +88,9 @@ public class DamageListeners implements Listener{
                 if(e.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || e.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION){
                     e.setDamage(e.getDamage() * 2);
                 }
+                if(e.getCause() == EntityDamageEvent.DamageCause.DROWNING){
+                    e.setDamage(e.getDamage() * 5);
+                }
             }else if(player.hasPotionEffect(PotionEffectType.UNLUCK)) {
                 if (player.getPotionEffect(PotionEffectType.UNLUCK).getAmplifier() == 1) {
                     if (e.getCause() != EntityDamageEvent.DamageCause.SUICIDE || e.getCause() != EntityDamageEvent.DamageCause.THORNS || e.getCause() != EntityDamageEvent.DamageCause.POISON || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK || e.getCause() != EntityDamageEvent.DamageCause.VOID) {

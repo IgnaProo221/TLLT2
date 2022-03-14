@@ -17,11 +17,20 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityExhaustionEvent;
+import org.bukkit.event.entity.VillagerAcquireTradeEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.TradeSelectEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemDamageEvent;
+import org.bukkit.event.player.PlayerRiptideEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Merchant;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import tlldos.tll2.TLL2;
 
 import java.util.*;
@@ -264,6 +273,34 @@ public class PlayerEventsListeners implements Listener {
         }
 
         player.getInventory().addItem(Items.bloodShard());
+    }
+
+    @EventHandler
+    public void tormentaDesgastar(PlayerItemDamageEvent e){
+        if(e.getPlayer().getWorld().isThundering()){
+            e.setDamage(e.getDamage() * 2);
+        }
+    }
+
+    @EventHandler
+    public void riptideFallo(PlayerRiptideEvent e){
+        //TODO OK NO PUDE HACER QUE EL EVENTO SE CANCELE RIP XD
+        if(e.getPlayer().getWorld().isThundering()){
+            int tridentechance = new Random().nextInt(100);
+            if(tridentechance > 90){
+                e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION,400,0,false,false,false));
+            }
+        }
+    }
+
+    @EventHandler
+    public void aldeanosnoNether(InventoryClickEvent e){
+        if(e.getWhoClicked().getWorld().getEnvironment() == World.Environment.NETHER){
+            if(e.getClickedInventory() instanceof Merchant){
+                e.setCancelled(true);
+                e.getWhoClicked().sendMessage(PREFIX,format("&c&lEl Aldeano se Niega a Tradear!"));
+            }
+        }
     }
 
     /*

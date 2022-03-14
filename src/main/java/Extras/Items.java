@@ -288,10 +288,10 @@ public class Items {
     }
 
     public static ItemStack temperatureCooler(){
-        return new ItemBuilder(Material.GOLDEN_APPLE).setName("&bCooler Fruit").setCustomModelData(8883).build();
+        return new ItemBuilder(Material.APPLE).setName("&bCooler Fruit").setCustomModelData(8883).build();
     }
     public static ItemStack temperatureHot(){
-        return new ItemBuilder(Material.GOLDEN_APPLE).setName("&6Hot Fruit").setCustomModelData(8993).build();
+        return new ItemBuilder(Material.APPLE).setName("&6Hot Fruit").setCustomModelData(8993).build();
     }
     public static ItemStack sigilodeInmunidad(){
         List<Component> lore = new ArrayList<>();
@@ -339,6 +339,12 @@ public class Items {
         lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lBullsEye")));
         lore.add(Component.text(format("&7La Flecha hace mas Daño mientras mas bloques recorre")));
         return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.BULLSEYE, 1).setLore(lore).build();
+    }
+    public static ItemStack shriekTome(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lShriek")));
+        lore.add(Component.text(format("&7Haces mas Daño a los Mobs de Sculk")));
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.SHRIEK, 1).setLore(lore).build();
     }
 
     public static ItemStack testEnchant(){

@@ -22,13 +22,15 @@ public class EnderPearlListeners implements Listener {
 
     @EventHandler
     public void onInteract(PlayerTeleportEvent e){
+        if(e.getPlayer().getWorld().isThundering()){
         if(e.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL){
             e.getPlayer().setCooldown(Material.ENDER_PEARL, 200);
+        }
         }
     }
 
 
-    @EventHandler
+    /*@EventHandler
     public void enderCayo(PlayerTeleportEvent e) {
         Player p = (Player) e.getPlayer();
         Random random = new Random();
@@ -44,6 +46,6 @@ public class EnderPearlListeners implements Listener {
                 Mobs.vortice(creeprr);
             }
         }
-    }
+    }*/
 
 }

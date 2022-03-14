@@ -16,6 +16,7 @@ import org.bukkit.potion.PotionEffectType;
 import tlldos.tll2.TLL2;
 
 import java.util.Collection;
+import java.util.Random;
 
 import static Utilities.Format.format;
 
@@ -69,6 +70,15 @@ public class BlocksListeners implements Listener{
         /* if(NBTEditor.contains(p.getInventory().getItemInMainHand(),1,"holafelipe")){
             p.sendMessage("debUG LOL");
         } */
+
+        if(p.getWorld().isThundering()){
+            if (block.getType().name().toLowerCase().contains("ore")){
+                int chancedenodrop = new Random().nextInt(100);
+                if(chancedenodrop > 80){
+                    e.setDropItems(false);
+                }
+            }
+        }
 
         if(block.getType() == Material.DEEPSLATE_DIAMOND_ORE){
             if(p.getInventory().getItemInMainHand() != null){

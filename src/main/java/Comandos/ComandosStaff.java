@@ -706,6 +706,10 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     player.getInventory().addItem(Items.exoSword());
                 }else if(args[1].equalsIgnoreCase("EXO_BOW")){
                     player.getInventory().addItem(Items.exoBow());
+                }else if(args[1].equalsIgnoreCase("MAGMA_PIE")){
+                    player.getInventory().addItem(Items.pieCalor());
+                }else if(args[1].equalsIgnoreCase("ICE_PIE")){
+                    player.getInventory().addItem(Items.pieFrio());
                 }else if(args[1].equalsIgnoreCase("EXO_ARMOR")){
                     player.getInventory().addItem(Items.exoHelmet());
                     player.getInventory().addItem(Items.exoChestplate());
@@ -727,6 +731,8 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     player.getInventory().addItem(Items.critihitTome());
                 } else if (args[1].equalsIgnoreCase("ANCIENT_TOME_6")){
                     player.getInventory().addItem(Items.bullsEyeTome());
+                }else if (args[1].equalsIgnoreCase("ANCIENT_TOME_7")){
+                    player.getInventory().addItem(Items.shriekTome());
                 }
             }
 
@@ -758,7 +764,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                 case "debug" -> addToList(commands, "blastStormStart", "blackStormEnd", "totemTest", "muerteFake", "dementeTest");
                 case "temperatura" -> addToList(commands, "clear", "hipotermia", "hipertermia");
                 case "give" -> addToList(commands, "FUNGAL_CLUMPS","WEIRD_DAGGER", "CATACLYSM_PEARL", "BLOOD_SABER", "BERSERKER_TOTEM", "CRYSTAL_HEART", "DISCORD", "CLOUDY_MARSH", "BLOOD_STONE", "BLOOD_SHARD", "TEMPERATURE_METER", "TOTEM_RESTORER", "FROSTBITE","CELULA_ENERGIA","METAL_DESC","EXO_SHIELD","ICESHOT","BLOOD_ARMOR","EXO_DRILL", "ANCIENT_TOME_6",
-                        "EXO_TOTEM","PYROCROSS","COOLER_FRUIT","HOT_FRUIT","EXO_SWORD","EXO_BOW","EXO_ARMOR","INMUNITY_SIGIL","ANCIENT_TOME_1","ANCIENT_TOME_2","ANCIENT_TOME_3","ANCIENT_TOME_4","ANCIENT_TOME_5");
+                        "EXO_TOTEM","PYROCROSS","COOLER_FRUIT","HOT_FRUIT","EXO_SWORD","EXO_BOW","EXO_ARMOR","INMUNITY_SIGIL","ANCIENT_TOME_1","ANCIENT_TOME_2","ANCIENT_TOME_3","ANCIENT_TOME_4","ANCIENT_TOME_5","ANCIENT_TOME_7","MAGMA_PIE","ICE_PIE");
             }
 
             StringUtil.copyPartialMatches(args[1], commands, completions);
