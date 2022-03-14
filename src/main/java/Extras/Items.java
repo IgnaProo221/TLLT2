@@ -262,7 +262,7 @@ public class Items {
         lore.add(Component.text(format("")));
         lore.add(Component.text(format("&6&lHABILIDAD: &e&lSabotaje")));
         lore.add(Component.text(format("&7Los golpes de esta espada hace que los Mobs")));
-        lore.add(Component.text(format("&7sean debilitados momentáneamente.")));
+        lore.add(Component.text(format("&7sean debilitados y realentizados momentáneamente.")));
         lore.add(Component.text(format("")));
         return new ItemBuilder(Material.NETHERITE_SWORD).setName(format("&7&lExo-Blade")).setLore(lore).setUnbreakable(true).setCustomModelData(18129).build();
     }
@@ -271,7 +271,7 @@ public class Items {
         lore.add(Component.text(format("")));
         lore.add(Component.text(format("&6&lHABILIDAD: &e&lSabotaje")));
         lore.add(Component.text(format("&7Los impactos de flecha a una Entidad hace")));
-        lore.add(Component.text(format("&7que esta sea debilitado momentáneamente.")));
+        lore.add(Component.text(format("&7que esta sea debilitado y realentizados momentáneamente.")));
         lore.add(Component.text(format("")));
         return new ItemBuilder(Material.BOW).setName(format("&7&lExo-Bow")).setLore(lore).setUnbreakable(true).setCustomModelData(27289).build();
     }
