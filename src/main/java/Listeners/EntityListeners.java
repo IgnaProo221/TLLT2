@@ -418,23 +418,16 @@ public class EntityListeners implements Listener {
         var shooter = event.getEntity().getShooter();
         var projectile = event.getEntity();
 
-        /*if(shooter instanceof Wither wither) {
+        if(shooter instanceof Wither wither) {
             if (projectile instanceof WitherSkull) {
+                if(wither.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"ADVANCED_WITHER"),PersistentDataType.STRING))
                 if (hitblock != null) {
                     hitblock.getLocation().createExplosion(wither, 3, false, true);
                 } else if (entity != null) {
                     entity.getLocation().createExplosion(wither, 3, false, true);
                 }
             }
-        }else{
-            if (projectile instanceof WitherSkull witherSkull) {
-                if (hitblock != null) {
-                    hitblock.getLocation().createExplosion(witherSkull, 2, false, true);
-                } else if (entity != null) {
-                    entity.getLocation().createExplosion(witherSkull, 2, false, true);
-                }
-            }
-        }*/
+        }
 
         if(shooter instanceof Shulker){
             var shulker = (Entity)shooter;

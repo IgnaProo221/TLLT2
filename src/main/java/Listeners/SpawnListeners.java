@@ -141,8 +141,15 @@ public class SpawnListeners implements Listener {
         } else if (entity instanceof Zombie zombie && !(entity instanceof ZombieVillager) && !(entity instanceof Husk) && !(entity instanceof Drowned) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             if (spawnmob > 80) {
                 Mobs.blightedZombi(zombie);
-            }else if(spawnmob > 50 && entitybiome == Biome.PLAINS){
+            }else if(spawnmob > 50 && entitybiome == Biome.PLAINS) {
                 Mobs.roboZombi(zombie);
+            }else if(zombie.getLocation().getY() < 0){
+                int wardenchance = new Random().nextInt(100);
+                if(wardenchance > 95){
+                    zombie.remove();
+                    IronGolem ironGolem = zombie.getLocation().getWorld().spawn(zombie.getLocation(),IronGolem.class);
+                    Mobs.Warden(ironGolem);
+                }
             } else {
                 int zombitype = new Random().nextInt(5) + 1;
                 if (zombitype == 1) {
