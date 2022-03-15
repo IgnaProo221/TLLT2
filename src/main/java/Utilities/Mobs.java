@@ -800,6 +800,7 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(30);
         self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE,1,false,false,false));
         self.setHealth(60);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"ZO1"),PersistentDataType.STRING,"ZO1");
         self.setSilent(true);
         CraftIronGolem craft = ((CraftIronGolem) self);
         EntityIronGolem entityIronGolem = craft.getHandle();

@@ -145,13 +145,13 @@ public class SpawnListeners implements Listener {
                 Mobs.roboZombi(zombie);
             }else if(zombie.getLocation().getY() < 0){
                 int wardenchance = new Random().nextInt(100);
-                if(wardenchance > 95){
+                if(wardenchance > 90){
                     zombie.remove();
                     IronGolem ironGolem = zombie.getLocation().getWorld().spawn(zombie.getLocation(),IronGolem.class);
                     Mobs.Warden(ironGolem);
                 }
             } else {
-                int zombitype = new Random().nextInt(5) + 1;
+                int zombitype = new Random().nextInt(6) + 1;
                 if (zombitype == 1) {
                     Mobs.zombBox(zombie);
                 } else if (zombitype == 2) {
@@ -160,9 +160,11 @@ public class SpawnListeners implements Listener {
                     Mobs.zombHerrero(zombie);
                 } else if (zombitype == 4) {
                     Mobs.zombiJinete(zombie);
-                } else {
+                } else if(zombitype == 5){
                     IronGolem ironGolem = zombie.getLocation().getWorld().spawn(zombie.getLocation(), IronGolem.class);
                     Mobs.zombObeso(ironGolem);
+                }else{
+                    zombie.setBaby(true);
                 }
             }
         } else if (entity instanceof Creeper creeper && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {

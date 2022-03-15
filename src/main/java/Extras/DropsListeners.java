@@ -105,6 +105,8 @@ public class DropsListeners implements Listener{
                 e.getDrops().clear();
                 e.getDrops().add(MobDrops.blackRose());
 
+            }else if(ironGolem.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"ZO1"),PersistentDataType.STRING)){
+                e.getDrops().clear();
             }
         }
     }

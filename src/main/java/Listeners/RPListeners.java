@@ -27,7 +27,7 @@ public class RPListeners implements Listener{
     public void onResourcePackChange(PlayerLocaleChangeEvent e){
         var player = e.getPlayer();
         var locale = e.getLocale().toString();
-        if(locale.contains("TLL001_en_us") || locale.contains("TLL001_es_ar") || locale.contains("TLL001_es_cl") ||locale.contains("TLL001_es_es") || locale.contains("TLL001_es_mx")){ // el número uno es la versión del IDIOMA rp, si se cambia, debes cambiar lo demas (Incluye pack.mcmeta) y actualizar el rp
+        if(locale.contains("TLL002_en_us") || locale.contains("TLL002_es_ar") || locale.contains("TLL002_es_cl") ||locale.contains("TLL002_es_es") || locale.contains("TLL002_es_mx")){ // el número uno es la versión del IDIOMA rp, si se cambia, debes cambiar lo demas (Incluye pack.mcmeta) y actualizar el rp
             player.sendMessage("");
         } else player.kickPlayer(NO_TXT);
     }
