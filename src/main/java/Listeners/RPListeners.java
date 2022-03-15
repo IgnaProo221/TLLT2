@@ -29,7 +29,7 @@ public class RPListeners implements Listener{
         var locale = e.getLocale().toString();
         if(locale.contains("TLL002_en_us") || locale.contains("TLL002_es_ar") || locale.contains("TLL002_es_cl") ||locale.contains("TLL002_es_es") || locale.contains("TLL002_es_mx")){ // el número uno es la versión del IDIOMA rp, si se cambia, debes cambiar lo demas (Incluye pack.mcmeta) y actualizar el rp
             player.sendMessage("");
-        } else player.kickPlayer(NO_TXT);
+        } else player.kickPlayer(NO_TXT + ChatColor.RED + "\n Hay una nueva actualización del texture pack, ¡descarga la ultima!");
     }
     @EventHandler
     public void mantenimientoOn(PlayerLocaleChangeEvent event){
