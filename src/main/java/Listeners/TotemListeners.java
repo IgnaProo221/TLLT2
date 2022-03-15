@@ -305,6 +305,7 @@ public class TotemListeners implements Listener {
         } else if (head == 3) {
             players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Saturación a 0.");
             p.setSaturation(0);
+            p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,10,9,false,false,false));
         } else if (head == 4) {
             players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Congelación Infinita");
             p.setFreezeTicks(Integer.MAX_VALUE);
