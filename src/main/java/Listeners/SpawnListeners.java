@@ -11,19 +11,13 @@ import net.minecraft.world.entity.EntityInsentient;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalMeleeAttack;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
 import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackableTarget;
-import net.minecraft.world.entity.animal.EntityBee;
-import net.minecraft.world.entity.animal.EntityDolphin;
-import net.minecraft.world.entity.animal.EntityPanda;
-import net.minecraft.world.entity.animal.EntityPolarBear;
+import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.player.EntityHuman;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftBee;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftDolphin;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPanda;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPolarBear;
+import org.bukkit.craftbukkit.v1_17_R1.entity.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -102,9 +96,7 @@ public class SpawnListeners implements Listener {
             } else if (entity instanceof Creeper creeper && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
                 Mobs.creeperSandstone(creeper);
             }
-        }
-
-        if (entity instanceof Skeleton skeleton && !(entity instanceof Stray) && !(entity instanceof WitherSkeleton) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+        }else if (entity instanceof Skeleton skeleton && !(entity instanceof Stray) && !(entity instanceof WitherSkeleton) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             if (spawnmob > 80) {
                 Mobs.blightedSkeleton(skeleton);
             }else if(spawnmob > 50 && entitybiome == Biome.PLAINS){
@@ -348,6 +340,106 @@ public class SpawnListeners implements Listener {
             ravager.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(34);
             ravager.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(100);
             ravager.setHealth(100);
+        }else if(entity instanceof Wolf wolf){
+            CraftWolf craft = ((CraftWolf) wolf);
+            EntityWolf entityWolf = craft.getHandle();
+            try {
+                Class<? extends EntityInsentient> cl = EntityInsentient.class;
+                Field gf = cl.getDeclaredField("bP");
+                gf.setAccessible(true);
+                PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityWolf);
+                goal.a(0, new PathfinderGoalMeleeAttack(entityWolf, 1.0D, true));
+
+                Field tf = cl.getDeclaredField("bQ");
+                tf.setAccessible(true);
+
+                PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityWolf);
+                target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityWolf, EntityHuman.class, 10, true, false, null));
+            } catch (Exception exception) {
+                exception.printStackTrace();
+                Warn.Mutant(exception);
+            }
+        }else if(entity instanceof Cat wolf){
+            CraftCat craft = ((CraftCat) wolf);
+            EntityCat entityWolf = craft.getHandle();
+            try {
+                Class<? extends EntityInsentient> cl = EntityInsentient.class;
+                Field gf = cl.getDeclaredField("bP");
+                gf.setAccessible(true);
+                PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityWolf);
+                goal.a(0, new PathfinderGoalMeleeAttack(entityWolf, 1.0D, true));
+
+                Field tf = cl.getDeclaredField("bQ");
+                tf.setAccessible(true);
+
+                PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityWolf);
+                target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityWolf, EntityHuman.class, 10, true, false, null));
+            } catch (Exception exception) {
+                exception.printStackTrace();
+                Warn.Mutant(exception);
+            }
+        }else if(entity instanceof Goat wolf){
+            CraftGoat craft = ((CraftGoat) wolf);
+            net.minecraft.world.entity.animal.goat.Goat entityWolf = craft.getHandle();
+            try {
+                Class<? extends EntityInsentient> cl = EntityInsentient.class;
+                Field gf = cl.getDeclaredField("bP");
+                gf.setAccessible(true);
+                PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityWolf);
+                goal.a(0, new PathfinderGoalMeleeAttack(entityWolf, 1.0D, true));
+
+                Field tf = cl.getDeclaredField("bQ");
+                tf.setAccessible(true);
+
+                PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityWolf);
+                target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityWolf, EntityHuman.class, 10, true, false, null));
+            } catch (Exception exception) {
+                exception.printStackTrace();
+                Warn.Mutant(exception);
+            }
+        }else if(entity instanceof Axolotl wolf){
+            CraftAxolotl craft = ((CraftAxolotl) wolf);
+            net.minecraft.world.entity.animal.axolotl.Axolotl entityWolf = craft.getHandle();
+            try {
+                Class<? extends EntityInsentient> cl = EntityInsentient.class;
+                Field gf = cl.getDeclaredField("bP");
+                gf.setAccessible(true);
+                PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityWolf);
+                goal.a(0, new PathfinderGoalMeleeAttack(entityWolf, 1.0D, true));
+
+                Field tf = cl.getDeclaredField("bQ");
+                tf.setAccessible(true);
+
+                PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityWolf);
+                target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityWolf, EntityHuman.class, 10, true, false, null));
+            } catch (Exception exception) {
+                exception.printStackTrace();
+                Warn.Mutant(exception);
+            }
+        }else if(entity instanceof Fox wolf){
+            CraftFox craft = ((CraftFox) wolf);
+            EntityFox entityWolf = craft.getHandle();
+            try {
+                Class<? extends EntityInsentient> cl = EntityInsentient.class;
+                Field gf = cl.getDeclaredField("bP");
+                gf.setAccessible(true);
+                PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityWolf);
+                goal.a(0, new PathfinderGoalMeleeAttack(entityWolf, 1.0D, true));
+
+                Field tf = cl.getDeclaredField("bQ");
+                tf.setAccessible(true);
+
+                PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityWolf);
+                target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityWolf, EntityHuman.class, 10, true, false, null));
+            } catch (Exception exception) {
+                exception.printStackTrace();
+                Warn.Mutant(exception);
+            }
+        }else if(entity instanceof  PufferFish pufferFish){
+            pufferFish.setCustomName(format("&4&lRadiactive Globe"));
+            pufferFish.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
+            pufferFish.setHealth(30);
+            pufferFish.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"RADIO_GLOBE"),PersistentDataType.STRING,"RADIO_GLOBE");
         }
 
     }

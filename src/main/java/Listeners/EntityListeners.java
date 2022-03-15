@@ -281,6 +281,11 @@ public class EntityListeners implements Listener {
                     p.setFreezeTicks(1200);
                 }
             }
+            if(damager instanceof PufferFish pufferFish){
+                if(pufferFish.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"RADIO_GLOBE"),PersistentDataType.STRING)){
+                    ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.HARM,1,1,false,false,false));
+                }
+            }
             if(damager instanceof Zombie){
                 var zombie = (Zombie)damager;
                 PlayerData data = CustomPlayer.fromName(p.getName()).getData();
@@ -378,8 +383,8 @@ public class EntityListeners implements Listener {
                 skull.setYield(10);
                 event.setProjectile(skull);
             } else if (skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "LUSH_SKELETON"), PersistentDataType.STRING)) {
-                Arrow arrow = (Arrow)entity;
-                arrow.setDamage(20);
+                Arrow arrow = (Arrow)event.getProjectile();
+                arrow.setDamage(23);
             }
         }
         if (entity instanceof Illusioner) {

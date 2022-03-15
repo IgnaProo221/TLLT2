@@ -40,7 +40,7 @@ public class SpawnerListeners implements Listener {
                     Mobs.exoGolem(irongolem);
                 }
             }
-        }else if(en instanceof Sheep) {
+        }else if(en instanceof Silverfish) {
             if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER) {
                 if (en.getCustomName().equalsIgnoreCase("a")) {
                     event.setCancelled(true);

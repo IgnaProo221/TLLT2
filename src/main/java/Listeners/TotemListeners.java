@@ -103,6 +103,57 @@ public class TotemListeners implements Listener {
 
                     }
 
+                    if (hasChaosSigil(p)) {
+
+                        for (Entity living : p.getNearbyEntities(10, 10, 10)) {
+                            if (!(living instanceof Player || living instanceof Item || living instanceof Villager || living instanceof IronGolem || living instanceof ArmorStand || living instanceof ItemFrame)) {
+                                Monster monster = (Monster) living;
+                                ((Monster) living).damage(20,p);
+                            }
+                        }
+
+                        globalMessage = format("&8El Jugador &c&l" + p.getName() + " &8uso un &e&lTótem Especial &7(Totem: &6&lSigilo de Caos)");
+
+                    }
+                    if (hasFreezeSigil(p)) {
+
+                        for (Entity living : p.getNearbyEntities(10, 10, 10)) {
+                            if (!(living instanceof Player || living instanceof Item || living instanceof Villager || living instanceof IronGolem || living instanceof ArmorStand || living instanceof ItemFrame)) {
+                                Monster monster = (Monster) living;
+                                ((Monster) living).setFreezeTicks(1200);
+                            }
+                        }
+
+                        globalMessage = format("&8El Jugador &c&l" + p.getName() + " &8uso un &e&lTótem Especial &7(Totem: &6&lSigilo de Caos)");
+
+                    }
+                    if (hasWindSigil(p)) {
+
+                        for (Entity living : p.getNearbyEntities(10, 10, 10)) {
+                            if (!(living instanceof Player || living instanceof Item || living instanceof Villager || living instanceof IronGolem || living instanceof ArmorStand || living instanceof ItemFrame)) {
+                                Monster monster = (Monster) living;
+                                ((Monster) living).addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,300,0,false,false,false));
+                            }
+                        }
+
+                        globalMessage = format("&8El Jugador &c&l" + p.getName() + " &8uso un &e&lTótem Especial &7(Totem: &6&lSigilo de Caos)");
+
+                    }
+                    if (hasWizardSigil(p)) {
+
+                        for (Entity living : p.getNearbyEntities(10, 10, 10)) {
+                            if (!(living instanceof Player || living instanceof Item || living instanceof Villager || living instanceof IronGolem || living instanceof ArmorStand || living instanceof ItemFrame)) {
+                                Monster monster = (Monster) living;
+                                ((Monster) living).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,400,0,false,false,false));
+                                ((Monster) living).addPotionEffect(new PotionEffect(PotionEffectType.SLOW,400,0,false,false,false));
+                            }
+                        }
+
+                        globalMessage = format("&8El Jugador &c&l" + p.getName() + " &8uso un &e&lTótem Especial &7(Totem: &6&lSigilo de Caos)");
+
+                    }
+
+
                     if (head == 2) {
                         int needTotems = 3;
                         int main = 0;
@@ -178,9 +229,69 @@ public class TotemListeners implements Listener {
         return has;
     }
 
+    public boolean hasFreezeSigil(Player p){
+        boolean has = false;
+        if(p.getInventory().getItemInMainHand() != null){
+            if (p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING && (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 911823)) {
+                has = true;
+            }
+        }
+        if(p.getInventory().getItemInOffHand() != null){
+            if (p.getInventory().getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING && (p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 911823)) {
+                has = true;
+            }
+        }
+        return has;
+    }
+
+    public boolean hasWindSigil(Player p){
+        boolean has = false;
+        if(p.getInventory().getItemInMainHand() != null){
+            if (p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING && (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 921823)) {
+                has = true;
+            }
+        }
+        if(p.getInventory().getItemInOffHand() != null){
+            if (p.getInventory().getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING && (p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 921823)) {
+                has = true;
+            }
+        }
+        return has;
+    }
+
+    public boolean hasWizardSigil(Player p){
+        boolean has = false;
+        if(p.getInventory().getItemInMainHand() != null){
+            if (p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING && (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 931823)) {
+                has = true;
+            }
+        }
+        if(p.getInventory().getItemInOffHand() != null){
+            if (p.getInventory().getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING && (p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 931823)) {
+                has = true;
+            }
+        }
+        return has;
+    }
+    public boolean hasChaosSigil(Player p){
+        boolean has = false;
+        if(p.getInventory().getItemInMainHand() != null){
+            if (p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING && (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 941823)) {
+                has = true;
+            }
+        }
+        if(p.getInventory().getItemInOffHand() != null){
+            if (p.getInventory().getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING && (p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 941823)) {
+                has = true;
+            }
+        }
+        return has;
+    }
+
     public void totemeffects(int head, Player p, Player players) {
         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
         if (head == 1){
+            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Efectos revertidos.");
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 p.removePotionEffect(PotionEffectType.ABSORPTION);
                 p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
@@ -198,7 +309,7 @@ public class TotemListeners implements Listener {
             players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Congelación Infinita");
             p.setFreezeTicks(Integer.MAX_VALUE);
         } else if (head == 5) {
-            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "CotM por 1 ,inuto");
+            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "CotM por 1 minuto");
             Bukkit.getScheduler().runTaskLater(plugin, ()->{
                 p.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK,1200,0,true,false,true));
             },5L);

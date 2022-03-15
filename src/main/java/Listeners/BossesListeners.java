@@ -79,14 +79,26 @@ public class BossesListeners implements Listener{
         var damaged = e.getEntity();
         if(damager instanceof Player){
             if(damaged instanceof IronGolem ironGolem){
-                if(ironGolem.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"WARDEN"), PersistentDataType.STRING)){
-                    ironGolem.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE,1200,4,false,false,false));
-                    ironGolem.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,1200,1,false,false,false));
+                    if (ironGolem.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "WARDEN"), PersistentDataType.STRING)) {
+                        int attacklol = new Random().nextInt(100);
+                        if(attacklol == 1){
+                            for(Player p : ironGolem.getWorld().getNearbyPlayers(ironGolem.getLocation(),10,10,10)) {
+                                if(p == null)return;
+                                p.playSound(p.getLocation(),Sound.ENTITY_ENDER_DRAGON_GROWL,SoundCategory.HOSTILE,10.0F, -1.0F);
+                                p.sendMessage(Format.PREFIX,Format.format("&3¡El Warden a lanzado un sonido aturdidor!"));
+                                p.damage(40,ironGolem);
+                                Vector vector = p.getEyeLocation().getDirection().multiply(-3);
+                                p.setVelocity(vector);
+                            }
+                        }else {
+                        ironGolem.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1200, 4, false, false, false));
+                        ironGolem.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1200, 1, false, false, false));
+                    }
                 }
             }
         }
     }
-
+/*
     @EventHandler
     public void wardenAttacks2(EntityMoveEvent event){
         var entity = event.getEntity();
@@ -105,5 +117,5 @@ public class BossesListeners implements Listener{
                 }
             }
         }}
-
+*/
 }
