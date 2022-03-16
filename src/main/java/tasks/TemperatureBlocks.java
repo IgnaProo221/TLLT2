@@ -27,12 +27,18 @@ public class TemperatureBlocks extends BukkitRunnable{
 
                 if(block == Material.ICE || block == Material.BLUE_ICE || block == Material.PACKED_ICE || block == Material.FROSTED_ICE){
                     data.setTemperature(temperature - 10);
-                }else if(block == Material.MAGMA_BLOCK || block == Material.TORCH || block == Material.CAMPFIRE){
+                }
+                if(block == Material.MAGMA_BLOCK || block == Material.TORCH || block == Material.CAMPFIRE){
                     data.setTemperature(temperature + 10);
-                }else if(block == Material.SOUL_CAMPFIRE || block == Material.SOUL_TORCH || block == Material.WATER){
+                }
+                if(block == Material.SOUL_CAMPFIRE || block == Material.SOUL_TORCH){
                     data.setTemperature(temperature - 5);
-                }else if(block == Material.LAVA){
+                }
+                if(block == Material.LAVA){
                     data.setTemperature(temperature + 5);
+                }
+                if(block == Material.WATER){
+                    data.setTemperature(temperature - 20);
                 }
             }
         }

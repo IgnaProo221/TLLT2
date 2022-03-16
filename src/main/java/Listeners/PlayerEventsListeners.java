@@ -58,8 +58,8 @@ public class PlayerEventsListeners implements Listener {
                 var inventory = p.getInventory();
                 var dataSacrifices = data.get(new NamespacedKey(plugin, "sacrificios"), PersistentDataType.INTEGER);
                 var totalSacrifices = (dataSacrifices == null ? 1 : ++dataSacrifices);
-
-                if (cooldownSacrifice.containsKey(p.getUniqueId())) {
+                p.sendMessage(format("&cLo Sentimos! los sacrificios ya no pueden ser realizados debido a un bug masivo y abusable"));
+                /*if (cooldownSacrifice.containsKey(p.getUniqueId())) {
                     if (cooldownSacrifice.get(p.getUniqueId()) > System.currentTimeMillis()) {
                         p.sendMessage(Format.format(String.format("&cTe encuentras en cooldown, espera %d segundo(s).", (cooldownSacrifice.get(p.getUniqueId()) - System.currentTimeMillis()) / 1000)));
                         return;
@@ -92,7 +92,8 @@ public class PlayerEventsListeners implements Listener {
                 cooldownSacrifice.put(p.getUniqueId(), System.currentTimeMillis() + (10 * 1000));
                 p.getPersistentDataContainer().set(Utils.key("NEGATIVE_HEALTH"), PersistentDataType.INTEGER, p.getPersistentDataContainer().get(Utils.key("NEGATIVE_HEALTH"), PersistentDataType.INTEGER) + 2);
                 giveReward(p);
-                }
+                }*/
+            }
             }
 
             if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {

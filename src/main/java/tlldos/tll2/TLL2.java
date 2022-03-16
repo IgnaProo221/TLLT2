@@ -22,6 +22,7 @@ import player.CustomPlayer;
 import player.PlayerData;
 import tasks.TemperatureBlocks;
 import tasks.TemperatureTask;
+import tasks.TemperatureY;
 
 import java.io.File;
 import java.io.IOException;
@@ -91,8 +92,9 @@ public final class TLL2 extends JavaPlugin implements Listener{
 
             new Teams();
 
-            new TemperatureTask(this).runTaskTimer(this, 0L, 1400L);
+            new TemperatureTask(this).runTaskTimer(this, 0L, 2400L);
             new TemperatureBlocks(this).runTaskTimer(this,0L,200L);
+            new TemperatureY(this).runTaskTimer(this,0L,1200);
         } catch (Error e){
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("######################################################");
