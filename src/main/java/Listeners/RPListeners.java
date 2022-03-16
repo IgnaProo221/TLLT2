@@ -17,7 +17,7 @@ public class RPListeners implements Listener{
             ChatColor.RED + "2. Después dirigete a las opciones del juego y pontelo. \n" +
             ChatColor.GREEN + "Una vez hecho: \n" +
             ChatColor.RED + "3. Activa el texture pack y\n" + // mensaje de arriba
-            ChatColor.GOLD + "después selecciona el lenguaje custom: 'The Last Life' ";
+            ChatColor.WHITE + "después selecciona el lenguaje custom: 'The Last Life' ";
 
     public RPListeners(TLL2 instance){
         this.instance = instance;
