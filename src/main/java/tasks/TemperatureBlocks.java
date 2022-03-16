@@ -38,7 +38,7 @@ public class TemperatureBlocks extends BukkitRunnable{
                     data.setTemperature(temperature + 5);
                 }
                 if(block == Material.WATER){
-                    data.setTemperature(temperature - 20);
+                    data.setTemperature(temperature - 5);
                 }
             }
         }
