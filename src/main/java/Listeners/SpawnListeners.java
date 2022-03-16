@@ -99,17 +99,20 @@ public class SpawnListeners implements Listener {
         }else if (entity instanceof Skeleton skeleton && !(entity instanceof Stray) && !(entity instanceof WitherSkeleton) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             if (spawnmob > 80) {
                 Mobs.blightedSkeleton(skeleton);
+                skeleton.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
             }else if(spawnmob > 50 && entitybiome == Biome.PLAINS){
                 Mobs.roboSkele(skeleton);
+                skeleton.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
             } else {
                 int bow = new Random().nextInt(2) + 1;
                 if (bow == 1) {
                     skeleton.getEquipment().setItemInMainHand(new ItemBuilder(Material.BOW).addEnchantment(Enchantment.ARROW_DAMAGE, 20).build());
+                    skeleton.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
                 } else {
                     skeleton.getEquipment().setItemInMainHand(new ItemBuilder(Material.BOW).addEnchantment(Enchantment.ARROW_DAMAGE, 40).build());
+                    skeleton.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
                 }
             }
-            skeleton.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
         } else if (entity instanceof Spider spider && !(entity instanceof CaveSpider) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             if (spawnmob > 80) {
                 Mobs.blightedSpider(spider);
@@ -131,8 +134,10 @@ public class SpawnListeners implements Listener {
                     spider.setPassenger(skeletonpass);
                     int bow = new Random().nextInt(2) + 1;
                     if (bow == 1) {
+                        skeletonpass.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
                         skeletonpass.getEquipment().setItemInMainHand(new ItemBuilder(Material.BOW).addEnchantment(Enchantment.ARROW_DAMAGE, 20).build());
                     } else {
+                        skeletonpass.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
                         skeletonpass.getEquipment().setItemInMainHand(new ItemBuilder(Material.BOW).addEnchantment(Enchantment.ARROW_DAMAGE, 40).build());
                     }
                 }
@@ -344,6 +349,7 @@ public class SpawnListeners implements Listener {
         }else if(entity instanceof Vindicator vindicator && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.RAID){
             vindicator.setCustomName(format("&c&lButcher"));
             vindicator.getEquipment().setItemInMainHand(new ItemBuilder(Material.NETHERITE_AXE).addEnchantment(Enchantment.DAMAGE_ALL,15).build());
+            vindicator.getEquipment().setDropChance(EquipmentSlot.HAND,0);
         }else if(entity instanceof Ravager ravager && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.RAID){
             ravager.setCustomName(format("&6&lDestroyer"));
             ravager.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(34);
