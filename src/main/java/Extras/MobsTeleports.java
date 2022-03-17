@@ -7,9 +7,11 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Ghast;
+import org.bukkit.entity.Skeleton;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.persistence.PersistentDataType;
 import tlldos.tll2.TLL2;
 
 import java.util.Random;
@@ -56,7 +58,23 @@ public class MobsTeleports implements Listener {
         int tp = random.nextInt(100);
 
         if (event.getCause() != EntityDamageEvent.DamageCause.VOID) {
-            if (event.getEntity() instanceof Creeper c) {
+
+            if(event.getEntity() instanceof Skeleton c){
+                if (c.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SPECTRE"), PersistentDataType.STRING)) {
+                    int locX = c.getLocation().getBlockX();
+                    int locY = c.getLocation().getBlockY();
+                    int locZ = c.getLocation().getBlockZ();
+                    if (tp > 90) {
+
+                        c.playEffect(EntityEffect.TELEPORT_ENDER);
+
+                        c.getWorld().playSound(c.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 5.0F, 0.0F);
+
+                        teleport(c, locX, locY, locZ, c.getWorld());
+                    }
+                }
+            }
+            /*if (event.getEntity() instanceof Creeper c) {
 
                 int locX = c.getLocation().getBlockX();
                 int locY = c.getLocation().getBlockY();
@@ -86,7 +104,7 @@ public class MobsTeleports implements Listener {
 
                     teleport(z, locX, locY, locZ, z.getWorld());
                 }
-            }
+            }*/
         }
     }
 
@@ -95,12 +113,11 @@ public class MobsTeleports implements Listener {
         Random random = new Random();
 
         int tp = random.nextInt(10000);
-        if(e.getEntity() instanceof Creeper c){
+        if(e.getEntity() instanceof Skeleton c){
+            if (c.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SPECTRE"), PersistentDataType.STRING)) {
             int locX = c.getLocation().getBlockX();
             int locY = c.getLocation().getBlockY();
             int locZ = c.getLocation().getBlockZ();
-
-
             if (tp == 1) {
 
                 c.playEffect(EntityEffect.TELEPORT_ENDER);
@@ -108,6 +125,7 @@ public class MobsTeleports implements Listener {
                 c.getWorld().playSound(c.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 5.0F, 0.0F);
 
                 teleport(c, locX, locY, locZ, c.getWorld());
+               }
             }
         }
     }

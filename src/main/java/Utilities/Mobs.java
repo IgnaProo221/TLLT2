@@ -533,15 +533,10 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
         self.setHealth(60);
         self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1,false,false,false));
-        self.getEquipment().setChestplate(new ItemBuilder(Material.IRON_CHESTPLATE).setUnbreakable(true).build());
-        self.getEquipment().setLeggings(new ItemBuilder(Material.IRON_LEGGINGS).setUnbreakable(true).build());
-        self.getEquipment().setBoots(new ItemBuilder(Material.IRON_BOOTS).setUnbreakable(true).build());
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
         self.getEquipment().setItemInMainHand(new ItemBuilder(Material.NETHERITE_SWORD).addEnchantment(Enchantment.DAMAGE_ALL, 20).build());
-        self.getEquipment().setDropChance(EquipmentSlot.CHEST,0);
-        self.getEquipment().setDropChance(EquipmentSlot.LEGS,0);
-        self.getEquipment().setDropChance(EquipmentSlot.FEET,0);
         self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
-        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"MINER_LEVEL_2"),PersistentDataType.STRING,"MINER_LEVEL_2");
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"SPECTRE"),PersistentDataType.STRING,"SPECTRE");
     }
     public static void lostGolem(IronGolem self){
         self.setCustomName(format("&8&lLost Golem"));

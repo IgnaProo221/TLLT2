@@ -1,8 +1,10 @@
 package Listeners;
 
 import CustomMobs.*;
+import Utilities.Mobs;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -19,7 +21,45 @@ public class NMSSpawn implements Listener{
         this.plugin = plugin;
     }
 
+
+    //TODO ESTO PUEDE SALIR O MUY MAL O MUY BIEN
     @EventHandler
+    public void customGen(CreatureSpawnEvent e){
+        var world = e.getEntity().getWorld();
+        var entity = e.getEntity();
+        int chance = new Random().nextInt(100);
+        if(world.getEnvironment() == World.Environment.NETHER || world.getEnvironment() == World.Environment.THE_END)return;
+        if(entity instanceof Animals)return;
+        if(!(e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL))return;
+        if(world.isThundering()){
+            if(chance == 1){
+                int mobtype = new Random().nextInt(5);
+                if(mobtype == 1){
+                    e.setCancelled(true);
+                    Zombie zombie = entity.getLocation().getWorld().spawn(entity.getLocation(),Zombie.class);
+                    Mobs.stoneSoldier(zombie);
+                }else if(mobtype == 2){
+                    e.setCancelled(true);
+                    Silverfish silverfish = entity.getLocation().getWorld().spawn(entity.getLocation(),Silverfish.class);
+                    Mobs.escarabajoGoliath(silverfish);
+                }else if(mobtype == 3){
+                    e.setCancelled(true);
+                    Drowned drowned = entity.getLocation().getWorld().spawn(entity.getLocation(),Drowned.class);
+                    Mobs.goblin(drowned);
+                }else if(mobtype == 4){
+                    e.setCancelled(true);
+                    Creeper creeper = entity.getLocation().getWorld().spawn(entity.getLocation(),Creeper.class);
+                    Mobs.oreCreeper(creeper);
+                }else{
+                    e.setCancelled(true);
+                    Skeleton skeleton = entity.getLocation().getWorld().spawn(entity.getLocation(),Skeleton.class);
+                    Mobs.spectreAssasin(skeleton);
+                }
+            }
+        }
+    }
+
+    /*@EventHandler
     public void customGen(EntitySpawnEvent e) {
         Random random = new Random();
         int spawn = random.nextInt(100);
@@ -44,6 +84,6 @@ public class NMSSpawn implements Listener{
                 Bukkit.getServer().getConsoleSender().sendMessage("Entidad: "+aldeanoT  .getEntityType().id);
             }
         }
-    }
+    }*/
 
 }
