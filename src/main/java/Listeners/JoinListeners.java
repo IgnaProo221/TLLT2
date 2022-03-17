@@ -11,10 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import player.CustomPlayer;
@@ -32,10 +29,8 @@ public class JoinListeners implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onLogin(PlayerLoginEvent e) {
         if(TLL2.mantenimiento && !e.getPlayer().isOp()){
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                e.setKickMessage(Format.format("&c&l¡El Servidor esta en Mantenimiento! Vuelva mas tarde."));
-                e.setResult(PlayerLoginEvent.Result.KICK_OTHER);
-            }, 20L);
+             e.setKickMessage(Format.format("&c&l¡El Servidor esta en Mantenimiento! Vuelva mas tarde."));
+             e.setResult(PlayerLoginEvent.Result.KICK_OTHER);
         }
     }
 
@@ -47,6 +42,12 @@ public class JoinListeners implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onLeave(PlayerQuitEvent e) {
+        CustomPlayer.fromName(e.getPlayer().getName()).getData().saveData(e.getPlayer());
+        CustomPlayer.removePlayer(e.getPlayer().getName());
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onKick(PlayerKickEvent e){
         CustomPlayer.fromName(e.getPlayer().getName()).getData().saveData(e.getPlayer());
         CustomPlayer.removePlayer(e.getPlayer().getName());
     }
