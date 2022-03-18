@@ -24,10 +24,10 @@ public class TemperatureY extends BukkitRunnable {
                 var temperature = data.getTemperature();
 
                 if(altitude > 120){
-                    data.setTemperature(temperature - 10);
+                    data.setTemperature((int) (temperature - (10 + (altitude - 120 * 0.25))));
                 }
                 if(altitude < -10){
-                    data.setTemperature(temperature + 10);
+                    data.setTemperature((int) (temperature + (10 + (altitude + 10 * 0.25))));
                 }
             }
         }

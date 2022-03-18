@@ -11,13 +11,14 @@ import java.util.Random;
 
 public class RPListeners implements Listener{
     TLL2 instance;
-    static public String NO_TXT = ChatColor.GOLD + "¡Necesitas el texture pack para jugar!\n " +
+    public static  String NO_TXT = ChatColor.GOLD + "¡Necesitas el texture pack para jugar!\n " +
             ChatColor.RED + "1. Descarga el texture pack. \n" +
             ChatColor.GOLD + "Este esta en menu principal. \n" +
             ChatColor.RED + "2. Después dirigete a las opciones del juego y pontelo. \n" +
             ChatColor.GREEN + "Una vez hecho: \n" +
             ChatColor.RED + "3. Activa el texture pack y\n" + // mensaje de arriba
             ChatColor.WHITE + "después selecciona el lenguaje custom: 'The Last Life' ";
+    //PORQUE STATIC PUBLIC
 
     public RPListeners(TLL2 instance){
         this.instance = instance;
