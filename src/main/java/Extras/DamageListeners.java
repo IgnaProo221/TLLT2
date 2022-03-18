@@ -1,5 +1,6 @@
 package Extras;
 
+import Utilities.CustomEnchants;
 import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.*;
@@ -80,6 +81,12 @@ public class DamageListeners implements Listener{
                 }
             }
 
+            if(player.getInventory().getChestplate().hasItemMeta() && player.getInventory().getChestplate().getItemMeta().hasEnchant(CustomEnchants.WITHER_JUSTICE)){
+                if(e.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || e.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION){
+                    e.setDamage(e.getDamage() / 2);
+                }
+            }
+
             if(player.getGameMode() == GameMode.SPECTATOR) {
                 if (e.getCause() == EntityDamageEvent.DamageCause.VOID) {
                     e.setCancelled(true);
@@ -89,7 +96,7 @@ public class DamageListeners implements Listener{
                     e.setDamage(e.getDamage() * 2);
                 }
                 if(e.getCause() == EntityDamageEvent.DamageCause.DROWNING){
-                    e.setDamage(e.getDamage() * 5);
+                    e.setDamage(e.getDamage() * 8);
                 }
             }else if(player.hasPotionEffect(PotionEffectType.UNLUCK)) {
                 if (player.getPotionEffect(PotionEffectType.UNLUCK).getAmplifier() == 1) {

@@ -18,6 +18,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 import player.CustomPlayer;
 import player.PlayerData;
 import tlldos.tll2.TLL2;
@@ -814,19 +815,28 @@ public class EntityListeners implements Listener {
         var damager = e.getDamager();
         if(entity instanceof Player player) {
             if (player.isBlocking()) {
+                if(e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK){
                 if (player.getInventory().getItemInMainHand() != null || player.getInventory().getItemInOffHand() != null) {
                     if (player.getInventory().getItemInMainHand().hasItemMeta() || player.getInventory().getItemInOffHand().hasItemMeta()) {
+                        if(player.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.TACKLE) || player.getInventory().getItemInOffHand().getItemMeta().hasEnchant(CustomEnchants.TACKLE)){
+                            if(damager instanceof LivingEntity livingEntity){
+                                Vector vector = livingEntity.getEyeLocation().getDirection().multiply(-2);
+                                livingEntity.setVelocity(vector);
+                            }
+                        }
+
                         if (player.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || player.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()) {
                             if (player.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 5015 || player.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 5015) {
                                 if (damager instanceof Monster monster) {
                                     monster.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 99, false, false, false));
                                     monster.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 200, 0, false, false, false));
                                 }
-                                if(e.getCause() == EntityDamageEvent.DamageCause.LIGHTNING){
+                                if (e.getCause() == EntityDamageEvent.DamageCause.LIGHTNING) {
                                     e.setDamage(0);
                                 }
-                                player.setCooldown(Material.SHIELD,400);
+                                player.setCooldown(Material.SHIELD, 400);
                             }
+                        }
                         }
                     }
                 }

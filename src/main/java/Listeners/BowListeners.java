@@ -62,15 +62,15 @@ public class BowListeners implements Listener{
         var damaged = e.getHitEntity();
         if(shooter instanceof Player p){
             if(projectile instanceof Arrow arrow) {
-                if (p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.IMPACT)) {
+                if (p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.PYROMANIAC)) {
                     if (damaged != null) {
                         int cacapepe = new Random().nextInt(100);
-                        if (cacapepe >= 90) {
+                        if (cacapepe >= 80) {
                             damaged.getWorld().playSound(damaged.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 10.0F, 1.0F);
-                            damaged.getWorld().getNearbyEntities(p.getLocation(), 10, 10, 10, entity -> entity instanceof LivingEntity).forEach(entity -> {
+                            damaged.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, damaged.getLocation(), 1);
+                            damaged.getWorld().getNearbyEntities(damaged.getLocation(), 10, 10, 10, entity -> entity instanceof LivingEntity).forEach(entity -> {
                                 LivingEntity livingEntity = (LivingEntity) entity;
-                                livingEntity.damage(5);
-                                livingEntity.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, livingEntity.getLocation(), 1);
+                                livingEntity.damage(25);
                             });
                         }
                     }

@@ -29,13 +29,13 @@ public class CustomEnchants implements Listener {
     public static final Enchantment SMELTING_TOUCH = new EnchantmentWrapper("smelting_touch", "smelting_touch", 1);
     public static final Enchantment LUCKY_TREE = new EnchantmentWrapper("luckytree", "luckytree", 1);
     public static final Enchantment CRITICAL_HIT = new EnchantmentWrapper("critical_hit", "critical_hit", 1);
-    public static final Enchantment HUNTER = new EnchantmentWrapper("hunter", "hunter", 1);
-    public static final Enchantment ECHO = new EnchantmentWrapper("echo", "echo", 1);
-    public static final Enchantment LIFESTEAL = new EnchantmentWrapper("lifesteal", "lifesteal", 1);
     public static final Enchantment GRAVITY = new EnchantmentWrapper("gravity", "gravity", 1);
     public static final Enchantment IMPACT = new EnchantmentWrapper("impact", "impact", 1);
     public static final Enchantment BULLSEYE = new EnchantmentWrapper("bullseye", "bullseye", 1);
     public static final Enchantment SHRIEK = new EnchantmentWrapper("shriek","shriek",1);
+    public static final Enchantment WITHER_JUSTICE = new EnchantmentWrapper("wither_justice","wither_justice",1);
+    public static final Enchantment PYROMANIAC = new EnchantmentWrapper("pyromaniac","pyromaniac",1);
+    public static final Enchantment TACKLE = new EnchantmentWrapper("tackle","tackle",1);
 
     public static void register() {
         for(Enchantment enchantment : allCustomEnchants()){
@@ -57,6 +57,8 @@ public class CustomEnchants implements Listener {
         list.add(CustomEnchants.IMPACT);
         list.add(CustomEnchants.BULLSEYE);
         list.add(CustomEnchants.SHRIEK);
+        list.add(CustomEnchants.WITHER_JUSTICE);
+        list.add(CustomEnchants.PYROMANIAC);
 
         return list;
 
