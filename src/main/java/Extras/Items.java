@@ -495,5 +495,33 @@ public class Items {
         lore.add(Component.text(format("&7extraídos de las cuevas pronfundas de Deepslate.")));
         return new ItemBuilder(Material.DIAMOND).setName(format("&cRare Gem")).setLore(lore).setCustomModelData(5420).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1).setItemFlags(ItemFlag.HIDE_ENCHANTS).build();
     }
+    public static ItemStack nanoTech(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&6&lHABILIDAD: &e&lQuantum Edge")));
+        lore.add(Component.text(format("&7Debilita, Realentiza y Infecta al Mob afectado")));
+        lore.add(Component.text(format("&7por su Filo")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.NETHERITE_SWORD).setName(format("&8&lNano-Tech")).setLore(lore).setCustomModelData(382388).setUnbreakable(true).build();
+    }
+    public static ItemStack undyingStaff(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lHABILIDAD: &e&lUndying Blood")));
+        lore.add(Component.text(format("&7Te Otorgara Inmortalidad por 15 segundos")));
+        lore.add(Component.text(format("&8Cooldown de &c5 minutos")));
+        return new ItemBuilder(Material.BLAZE_ROD).setName(format("&e&lUndying Spectre")).setLore(lore).setCustomModelData(8736689).setUnbreakable(true).build();
+    }
+    public static ItemStack unluckyIdol(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&7Este Tótem evitara la suerte de los Dados")));
+        lore.add(Component.text(format("&c&l¡Este Totem usara otros 4 totems de tu Inventario!")));
+        return new ItemBuilder(Material.TOTEM_OF_UNDYING).setName(format("&c&lUnlucky Idol")).setLore(lore).setCustomModelData(28171219).setUnbreakable(true).build();
+    }
+    public static ItemStack luminiteArtifact(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&7Al tenerlo en tu Inventario hay un 1% de")));
+        lore.add(Component.text(format("&7Negar el Daño Recibido")));
+        return new ItemBuilder(Material.NETHERITE_SCRAP).setName(format("&b&lMedallon de Luminita")).setLore(lore).setCustomModelData(999378).build();
+    }
 
 }

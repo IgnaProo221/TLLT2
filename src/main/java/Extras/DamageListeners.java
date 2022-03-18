@@ -1,7 +1,9 @@
 package Extras;
 
 import Utilities.CustomEnchants;
+import Utilities.Format;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -12,6 +14,8 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffectType;
 import player.CustomPlayer;
 import tlldos.tll2.TLL2;
+
+import java.util.Random;
 
 public class DamageListeners implements Listener{
     private TLL2 plugin;
@@ -78,6 +82,15 @@ public class DamageListeners implements Listener{
             if(inmunity >= 1){
                 if(e.getCause() != EntityDamageEvent.DamageCause.SUICIDE){
                     e.setCancelled(true);
+                }
+            }
+            if(player.getInventory().contains(Items.luminiteArtifact())){
+                int damagenegate = new Random().nextInt(100);
+                if(damagenegate == 1){
+                    if(player.hasCooldown(Material.NETHERITE_SCRAP))return;
+                    e.setCancelled(true);
+                    player.sendMessage(Format.PREFIX,Format.format("&bTu Medallon de Luminita a Negado el Daño Recibido!"));
+                    player.setCooldown(Material.NETHERITE_SCRAP,1200);
                 }
             }
 

@@ -184,6 +184,11 @@ public class EntityListeners implements Listener {
                             Monster monster = (Monster) entity;
                             monster.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,200,1,false,false,false));
                             monster.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200, 1, false, false, false));
+                        }else if(pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 382388){
+                            LivingEntity livingEntity = (LivingEntity) entity;
+                            livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,600,2,false,false,false));
+                            livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,600,2,false,false,false));
+                            livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,600,2,false,false,false));
                         }
                     }
                 }

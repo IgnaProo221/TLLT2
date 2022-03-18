@@ -91,66 +91,71 @@ public class TotemListeners implements Listener {
 
                     String globalMessage = format("&8¡El jugador &c&l"+ p.getName() + "&8 ha usado un&c tótem! &7(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + "&7)");
 
-                    if (hasLavaSigil(p)) {
+                    if (hasUnluckyIdol(p)) {
+                        int needTotems = 4;
+                        int main = 0;
+                        int off = 0;
 
-                        for (Entity living : p.getNearbyEntities(10, 10, 10)) {
-                            if (!(living instanceof Player || living instanceof Item || living instanceof Villager || living instanceof IronGolem || living instanceof ArmorStand || living instanceof ItemFrame)) {
-                                living.setFireTicks(1200);
-                            }
+                        if (p.getInventory().getItemInMainHand().getType().equals(Material.TOTEM_OF_UNDYING)) {
+                            main = 1;
+                        }
+                        if (p.getInventory().getItemInOffHand().getType().equals(Material.TOTEM_OF_UNDYING)) {
+                            off = 1;
                         }
 
-                        globalMessage = format("&8El Jugador &c&l" + p.getName() + " &8uso un &e&lTótem Especial &7(Totem: &6&lSigilo de Magma)");
+                        int result = main + off;
+                        int size = p.getInventory().all(Material.TOTEM_OF_UNDYING).size() + result;
 
-                    }
 
-                    if (hasChaosSigil(p)) {
+                        if (needTotems > size) {
+                            e.setCancelled(true);
+                            globalMessage = format("&8El jugador &c&l" + p.getName() + "&8 no tenia suficientes&c tótems &8en su inventario. &7(&6&l" + size + "&7/&6&l" + needTotems + "&7)&8! &7(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + "&7)");
+                        } else {
 
-                        for (Entity living : p.getNearbyEntities(10, 10, 10)) {
-                            if (!(living instanceof Player || living instanceof Item || living instanceof Villager || living instanceof IronGolem || living instanceof ArmorStand || living instanceof ItemFrame)) {
-                                Monster monster = (Monster) living;
-                                ((Monster) living).damage(20,p);
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 5.0F, 1.0F);
+                                    p.playEffect(EntityEffect.TOTEM_RESURRECT);
+                                }
+                            }.runTaskLater(TLL2.getPlugin(TLL2.class), 20L);
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 5.0F, 1.0F);
+                                    p.playEffect(EntityEffect.TOTEM_RESURRECT);
+                                }
+                            }.runTaskLater(TLL2.getPlugin(TLL2.class), 40L);
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 5.0F, 1.0F);
+                                    p.playEffect(EntityEffect.TOTEM_RESURRECT);
+                                }
+                            }.runTaskLater(TLL2.getPlugin(TLL2.class), 60L);
+
+                            p.getInventory().removeItem(new ItemStack(Material.TOTEM_OF_UNDYING, 3));
+                            globalMessage = format("&8El Jugador &c&l" + p.getName() + " &8uso un &e&lTótem Especial &7(Totem: &c&lUnlucky Idol) &7(Causa: "  + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + "&7)" );
+                            EmbedBuilder eb = new EmbedBuilder();
+                            TextChannel channel = DeathListeners.getJda().getTextChannelById("949669572179533854");
+
+                            eb.setFooter("TheLastLifeT2.jar", "https://cdn.discordapp.com/attachments/906642578013843526/943284426442436679/hardcorehearth-export.png");
+                            eb.setAuthor("The Last Life T2 | Servidor de Minecraft");
+
+                            eb.setTitle("**¡El jugador " + p.getName() + " ha usado un Ídolo del Infortunio!**");
+
+                            eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
+                            eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
+                            eb.addField(":map: **Coordenadas:**", "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
+
+                            eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674264490045480/dado3.png");
+
+                            eb.setColor(new Color(252, 186, 3));
+
+                            if (channel != null) {
+                                channel.sendMessage(eb.build()).queue();
                             }
                         }
-
-                        globalMessage = format("&8El Jugador &c&l" + p.getName() + " &8uso un &e&lTótem Especial &7(Totem: &6&lSigilo de Caos)");
-
-                    }
-                    if (hasFreezeSigil(p)) {
-
-                        for (Entity living : p.getNearbyEntities(10, 10, 10)) {
-                            if (!(living instanceof Player || living instanceof Item || living instanceof Villager || living instanceof IronGolem || living instanceof ArmorStand || living instanceof ItemFrame)) {
-                                Monster monster = (Monster) living;
-                                ((Monster) living).setFreezeTicks(1200);
-                            }
-                        }
-
-                        globalMessage = format("&8El Jugador &c&l" + p.getName() + " &8uso un &e&lTótem Especial &7(Totem: &6&lSigilo de Caos)");
-
-                    }
-                    if (hasWindSigil(p)) {
-
-                        for (Entity living : p.getNearbyEntities(10, 10, 10)) {
-                            if (!(living instanceof Player || living instanceof Item || living instanceof Villager || living instanceof IronGolem || living instanceof ArmorStand || living instanceof ItemFrame)) {
-                                Monster monster = (Monster) living;
-                                ((Monster) living).addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,300,0,false,false,false));
-                            }
-                        }
-
-                        globalMessage = format("&8El Jugador &c&l" + p.getName() + " &8uso un &e&lTótem Especial &7(Totem: &6&lSigilo de Caos)");
-
-                    }
-                    if (hasWizardSigil(p)) {
-
-                        for (Entity living : p.getNearbyEntities(10, 10, 10)) {
-                            if (!(living instanceof Player || living instanceof Item || living instanceof Villager || living instanceof IronGolem || living instanceof ArmorStand || living instanceof ItemFrame)) {
-                                Monster monster = (Monster) living;
-                                ((Monster) living).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,400,0,false,false,false));
-                                ((Monster) living).addPotionEffect(new PotionEffect(PotionEffectType.SLOW,400,0,false,false,false));
-                            }
-                        }
-
-                        globalMessage = format("&8El Jugador &c&l" + p.getName() + " &8uso un &e&lTótem Especial &7(Totem: &6&lSigilo de Caos)");
-
                     }
 
 
@@ -214,79 +219,7 @@ public class TotemListeners implements Listener {
     }
 
 
-    public boolean hasLavaSigil(Player p){
-        boolean has = false;
-        if(p.getInventory().getItemInMainHand() != null){
-            if (p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING && (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 901823)) {
-                has = true;
-            }
-        }
-        if(p.getInventory().getItemInOffHand() != null){
-            if (p.getInventory().getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING && (p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 901823)) {
-                has = true;
-            }
-        }
-        return has;
-    }
 
-    public boolean hasFreezeSigil(Player p){
-        boolean has = false;
-        if(p.getInventory().getItemInMainHand() != null){
-            if (p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING && (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 911823)) {
-                has = true;
-            }
-        }
-        if(p.getInventory().getItemInOffHand() != null){
-            if (p.getInventory().getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING && (p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 911823)) {
-                has = true;
-            }
-        }
-        return has;
-    }
-
-    public boolean hasWindSigil(Player p){
-        boolean has = false;
-        if(p.getInventory().getItemInMainHand() != null){
-            if (p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING && (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 921823)) {
-                has = true;
-            }
-        }
-        if(p.getInventory().getItemInOffHand() != null){
-            if (p.getInventory().getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING && (p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 921823)) {
-                has = true;
-            }
-        }
-        return has;
-    }
-
-    public boolean hasWizardSigil(Player p){
-        boolean has = false;
-        if(p.getInventory().getItemInMainHand() != null){
-            if (p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING && (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 931823)) {
-                has = true;
-            }
-        }
-        if(p.getInventory().getItemInOffHand() != null){
-            if (p.getInventory().getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING && (p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 931823)) {
-                has = true;
-            }
-        }
-        return has;
-    }
-    public boolean hasChaosSigil(Player p){
-        boolean has = false;
-        if(p.getInventory().getItemInMainHand() != null){
-            if (p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING && (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 941823)) {
-                has = true;
-            }
-        }
-        if(p.getInventory().getItemInOffHand() != null){
-            if (p.getInventory().getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING && (p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 941823)) {
-                has = true;
-            }
-        }
-        return has;
-    }
 
     public void totemeffects(int head, Player p, Player players) {
         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
@@ -518,8 +451,20 @@ public class TotemListeners implements Listener {
                 return "Desconocida";
         }
     }
-    public boolean hasCustomModelData(Player p){
-        return ((p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()) || (p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()));
+
+    public boolean hasUnluckyIdol(Player p){
+        boolean has = false;
+        if(p.getInventory().getItemInMainHand() != null){
+            if (p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING && (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 28171219)) {
+                has = true;
+            }
+        }
+        if(p.getInventory().getItemInOffHand() != null){
+            if (p.getInventory().getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING && (p.getInventory().getItemInOffHand().hasItemMeta() && p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 28171219)) {
+                has = true;
+            }
+        }
+        return has;
     }
 
 }

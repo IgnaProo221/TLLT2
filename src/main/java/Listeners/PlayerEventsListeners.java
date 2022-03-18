@@ -31,6 +31,8 @@ import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import player.CustomPlayer;
+import player.PlayerData;
 import tlldos.tll2.TLL2;
 
 import java.util.*;
@@ -47,6 +49,7 @@ public class PlayerEventsListeners implements Listener {
     }
 
     private final HashMap<UUID, Long> cooldownSacrifice = new HashMap<>();
+    private final HashMap<UUID, Long> undyingCooldown = new HashMap<>();
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
@@ -117,19 +120,20 @@ public class PlayerEventsListeners implements Listener {
                     }
                 }
             }
-
-            if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                if (p.getInventory().getItemInMainHand().equals(Items.termometroItem())) {
-                    try {
-                        if (p.hasCooldown(Material.AMETHYST_SHARD)) {
-                            event.setCancelled(true);
-                        } else {
-                            EventosItems.temperatura(p);
-                            p.setCooldown(Material.AMETHYST_SHARD, 60);
+                if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
+                    if(p.getInventory().getItemInMainHand().hasItemMeta() || p.getInventory().getItemInOffHand().hasItemMeta()){
+                        if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()){
+                            if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 8736689 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 8736689){
+                                PlayerData data = CustomPlayer.fromName(p.getName()).getData();
+                                if(undyingCooldown.containsKey(p.getUniqueId())){
+                                    p.sendMessage(PREFIX,format("&c&lEsta habilidad esta en Cooldown!"));
+                                }
+                                data.setImmunity(1);
+                                Bukkit.getScheduler().runTaskLater(plugin,()->{
+                                    data.setImmunity(0);
+                                },300L);
+                            }
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Warn.Mutant(e);
                     }
                 }
                 if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
@@ -139,7 +143,6 @@ public class PlayerEventsListeners implements Listener {
                         } else {
                             EventosItems.totemrestorerEvent(p, plugin);
                             p.setCooldown(Material.PRISMARINE_CRYSTALS, 400);
-                            //alguien puede hacer que al usar esto se saque 1 totem restorer si es que esta stackeado? gracias
                             p.getInventory().removeItem(new ItemStack(Material.PRISMARINE_CRYSTALS, 1));
                         }
                     }
@@ -227,7 +230,6 @@ public class PlayerEventsListeners implements Listener {
                 }
             }*/
 
-        }
     }
 
 

@@ -715,14 +715,14 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     player.getInventory().addItem(Items.exoChestplate());
                     player.getInventory().addItem(Items.exoLeggings());
                     player.getInventory().addItem(Items.exoBoots());
-                }else if(args[1].equalsIgnoreCase("INMUNITY_SIGIL")){
+                }else if(args[1].equalsIgnoreCase("INMUNITY_SIGIL")) {
                     player.getInventory().addItem(Items.sigilodeInmunidad());
-                } else if (args[1].equalsIgnoreCase("CUSTOM_TOTEMS")){
-                    player.getInventory().addItem(Items.blizzardSigil());
-                    player.getInventory().addItem(Items.explosiveSigil());
-                    player.getInventory().addItem(Items.iceSigil());
-                    player.getInventory().addItem(Items.lavaSigil());
-                    player.getInventory().addItem(Items.magicSigil());
+                }else if(args[1].equalsIgnoreCase("NANOTECH")){
+                    player.getInventory().addItem(Items.nanoTech());
+                }else if(args[1].equalsIgnoreCase("UNLUCKY_IDOL")){
+                    player.getInventory().addItem(Items.unluckyIdol());
+                }else if(args[1].equalsIgnoreCase("UNDYING_SCEPTRE")){
+                    player.getInventory().addItem(Items.undyingStaff());
                 }else if(args[1].equalsIgnoreCase("TEST_PICKAXE")){
                     player.getInventory().addItem(Items.testEnchant());
                 }else if(args[1].equalsIgnoreCase("ANCIENT_TOME_1")){
