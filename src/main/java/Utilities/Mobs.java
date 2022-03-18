@@ -30,6 +30,7 @@ import tlldos.tll2.TLL2;
 
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 import static Utilities.Format.format;
 
@@ -443,6 +444,27 @@ public class Mobs implements Listener{
 
 
 
+    public static void setCustomMobcap(LivingEntity entity, int maxPerDistance, double multiplier, int distance, int maxPerWorld, boolean withSameName) {
+        ArrayList<LivingEntity> nearbyEntities = new ArrayList<>();
+        maxPerDistance *= (multiplier * entity.getWorld().getPlayers().stream().filter(player -> player.getGameMode() == GameMode.SURVIVAL).count() / 2);
+        maxPerWorld *= (multiplier * entity.getWorld().getPlayers().stream().filter(player -> player.getGameMode() == GameMode.SURVIVAL).count()) ;
+        if(withSameName){
+            for (LivingEntity nearbyEntity : entity.getLocation().getNearbyEntitiesByType(entity.getClass() ,distance, distance, distance)) {
+
+                if (nearbyEntity.getName().equalsIgnoreCase(entity.getName())) nearbyEntities.add(nearbyEntity);
+            }
+            if(nearbyEntities.size() >= maxPerDistance || entity.getWorld().getEntitiesByClass(entity.getClass()).size() > maxPerWorld) {
+                entity.remove();
+            }
+        }else {
+            for (LivingEntity nearbyEntity : entity.getLocation().getNearbyEntitiesByType(entity.getClass(), distance, distance, distance)) {
+                nearbyEntities.add(nearbyEntity);
+            }
+            if (nearbyEntities.size() >= maxPerDistance || entity.getWorld().getEntitiesByClass(entity.getClass()).size() > maxPerWorld) {
+                entity.remove();
+            }
+        }
+    }
 
 
     public static void Warden(IronGolem self){
@@ -452,6 +474,7 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
         self.setSilent(true);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"WARDEN"),PersistentDataType.STRING,"WARDEN");
+        setCustomMobcap(self, 3, 1.10, 24, 20, true);
         CraftIronGolem craft = ((CraftIronGolem) self);
         EntityIronGolem entityIronGolem = craft.getHandle();
         try{
@@ -1058,6 +1081,7 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(200);
         self.setHealth(200);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXPERIMENT_W"),PersistentDataType.STRING,"EXPERIMENT_W");
+        setCustomMobcap(self, 5, 1.10, 8, 30, true);
         CraftIronGolem craft = ((CraftIronGolem) self);
         EntityIronGolem entityIronGolem = craft.getHandle();
         try{

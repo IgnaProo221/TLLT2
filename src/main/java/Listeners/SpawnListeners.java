@@ -35,6 +35,7 @@ import tlldos.tll2.TLL2;
 import static Utilities.Format.format;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -43,6 +44,27 @@ public class SpawnListeners implements Listener {
 
     public SpawnListeners(TLL2 plugin) {
         this.plugin = plugin;
+    }
+    public void setCustomMobcap(LivingEntity entity, int maxPerDistance, double multiplier, int distance, int maxPerWorld, boolean withSameName) {
+        ArrayList<LivingEntity> nearbyEntities = new ArrayList<>();
+        maxPerDistance *= multiplier;
+        maxPerWorld *= multiplier;
+        if(withSameName){
+            for (LivingEntity nearbyEntity : entity.getLocation().getNearbyEntitiesByType(entity.getClass() ,distance, distance, distance)) {
+
+                if (nearbyEntity.getName().equalsIgnoreCase(entity.getName())) nearbyEntities.add(nearbyEntity);
+            }
+            if(nearbyEntities.size() >= maxPerDistance || entity.getWorld().getEntitiesByClass(entity.getClass()).size() > maxPerWorld) {
+                entity.remove();
+            }
+        }else {
+            for (LivingEntity nearbyEntity : entity.getLocation().getNearbyEntitiesByType(entity.getClass(), distance, distance, distance)) {
+                nearbyEntities.add(nearbyEntity);
+            }
+            if (nearbyEntities.size() >= maxPerDistance || entity.getWorld().getEntitiesByClass(entity.getClass()).size() > maxPerWorld) {
+                entity.remove();
+            }
+        }
     }
 
 
@@ -152,8 +174,7 @@ public class SpawnListeners implements Listener {
                 int wardenchance = new Random().nextInt(100);
                 if(wardenchance == 1){
                     zombie.remove();
-                    IronGolem ironGolem = zombie.getLocation().getWorld().spawn(zombie.getLocation(),IronGolem.class);
-                    Mobs.Warden(ironGolem);
+                    Mobs.Warden(zombie.getLocation().getWorld().spawn(zombie.getLocation(),IronGolem.class));
                 }
             } else {
                 int zombitype = new Random().nextInt(6) + 1;

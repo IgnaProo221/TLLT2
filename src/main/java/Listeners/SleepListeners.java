@@ -40,6 +40,6 @@ public class SleepListeners implements Listener{
             p.sendMessage(prefix + format("&e¡Has reiniciado tus Phantoms!"));
             p.setStatistic(Statistic.TIME_SINCE_REST, 0);
             e.setCancelled(true);
-        }
+        } //Setndi
     }
 }

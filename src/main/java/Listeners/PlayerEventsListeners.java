@@ -290,6 +290,7 @@ public class PlayerEventsListeners implements Listener {
             int tridentechance = new Random().nextInt(100);
             if(tridentechance > 90){
                 e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION,400,0,false,false,false));
+                //Todo quizas lo tepeas a donde estaba y le quitas la velocity ?
             }
         }
     }
