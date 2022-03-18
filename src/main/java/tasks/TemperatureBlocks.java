@@ -10,7 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import player.CustomPlayer;
 import tlldos.tll2.TLL2;
 
-public class TemperatureBlocks extends BukkitRunnable{
+public class TemperatureBlocks extends BukkitRunnable {
     private final TLL2 plugin;
     public TemperatureBlocks(TLL2 plugin){
         this.plugin = plugin;
@@ -21,14 +21,15 @@ public class TemperatureBlocks extends BukkitRunnable{
             if (player.getGameMode() == GameMode.SURVIVAL) {
                 var location = player.getLocation();
                 var block = location.getBlock().getType();
+                var downBlock  = location.add(0.0D, -1.0D, 0.0D).clone().getBlock().getType();
 
                 var data = CustomPlayer.fromName(player.getName()).getData();
                 var temperature = data.getTemperature();
 
-                if(block == Material.ICE || block == Material.BLUE_ICE || block == Material.PACKED_ICE || block == Material.FROSTED_ICE){
+                if(downBlock == Material.ICE || downBlock == Material.BLUE_ICE || downBlock == Material.PACKED_ICE || downBlock == Material.FROSTED_ICE){
                     data.setTemperature(temperature - 10);
                 }
-                if(block == Material.MAGMA_BLOCK || block == Material.TORCH || block == Material.CAMPFIRE){
+                if(downBlock == Material.MAGMA_BLOCK || block == Material.TORCH || block == Material.CAMPFIRE){
                     data.setTemperature(temperature + 10);
                 }
                 if(block == Material.SOUL_CAMPFIRE || block == Material.SOUL_TORCH){

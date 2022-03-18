@@ -488,8 +488,11 @@ public class DeathListeners extends ListenerAdapter implements Listener {
             case "FantaDeMole":
                 players.sendMessage(format("&7" +player.getName() + ". goalselector.b()"));
                 break;
+            case "Pabluziuz":
+                    players.sendMessage(format("&7" +player.getName() + " baneen ha pablu."));
+                break;
             default:
-                players.sendMessage(format("&7"+ player.getName() + "no ha logrado superarse."));
+                players.sendMessage(format("&7"+ player.getName() + " no ha logrado superarse."));
                 break;
 
         }
