@@ -3,10 +3,8 @@ package tasks;
 import Utilities.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.NamespacedKey;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 import player.CustomPlayer;
 import tlldos.tll2.TLL2;
@@ -51,8 +49,10 @@ public class TemperatureTask extends BukkitRunnable {
 
 
                 if (Utils.getWorld().hasStorm() && player.getWorld().getName().equalsIgnoreCase(Utils.getWorld().getName())) {
-                    data.setTemperature(data.getTemperature() - 4);
-                    if (player.getWorld().isThundering()) data.setTemperature(data.getTemperature() - 6);
+                    if (player.getLocation().getBlockY() >= Utils.getWorld().getHighestBlockYAt(location.getBlockX(), location.getBlockZ())) {
+                        data.setTemperature(data.getTemperature() - 4);
+                        if (player.getWorld().isThundering()) data.setTemperature(data.getTemperature() - 6);
+                    }
                 }
             }
         }

@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 
@@ -839,9 +840,19 @@ public class EntityListeners implements Listener {
                                 if (e.getCause() == EntityDamageEvent.DamageCause.LIGHTNING) {
                                     e.setDamage(0);
                                 }
-                                player.setCooldown(Material.SHIELD, 400);
+                                    if (player.getEquipment().getItemInMainHand().getType().equals(Material.SHIELD)) {
+                                        ItemStack shield = player.getEquipment().getItemInMainHand().clone();
+                                        player.getEquipment().getItemInMainHand().setAmount(0);
+                                        player.getEquipment().setItemInMainHand(shield);
+
+                                    } else if (player.getEquipment().getItemInOffHand().getType().equals(Material.SHIELD)){
+                                        ItemStack shield = player.getEquipment().getItemInOffHand().clone();
+                                        player.getEquipment().getItemInOffHand().setAmount(0);
+                                        player.getEquipment().setItemInOffHand(shield);
+                                    }
+                                    player.setCooldown(Material.SHIELD, 400);
+                                }
                             }
-                        }
                         }
                     }
                 }

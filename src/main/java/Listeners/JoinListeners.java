@@ -54,6 +54,7 @@ public class JoinListeners implements Listener {
 
     //@EventHandler
     public void zTest(PlayerJoinEvent e){
+
         Player p = e.getPlayer();
         var data = Data.get(p);
         var dataTemperatura = data.get(new NamespacedKey(plugin, "temperatura"), PersistentDataType.INTEGER);
