@@ -533,6 +533,17 @@ public class EntityListeners implements Listener {
                     entity.getLocation().getWorld().strikeLightning(entity.getLocation());
                 }
             }
+            if(skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"ABOMINATION"),PersistentDataType.STRING)){
+                if (hitblock != null) {
+                    hitblock.getLocation().createExplosion(skeleton,6, false, true);
+                    hitblock.getLocation().getWorld().strikeLightning(hitblock.getLocation());
+                    projectile.remove();
+                } else if (entity != null) {
+                    entity.getLocation().createExplosion(skeleton,6,false, true);
+                    entity.getLocation().getWorld().strikeLightning(entity.getLocation());
+                    projectile.remove();
+                }
+            }
         }
         if (shooter instanceof Pillager) {
             var pillager = (Entity) shooter;

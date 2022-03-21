@@ -78,9 +78,11 @@ public class SpawnListeners implements Listener {
         var world = Bukkit.getWorld("world");
         var entitybiome = entity.getLocation().getBlock().getBiome();
         int chanceeffect = new Random().nextInt(100);
-        if(chanceeffect > 80){
-            entity.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE,Integer.MAX_VALUE,1,false,false,false));
-            entity.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,Integer.MAX_VALUE,0,false,false,false));
+        if(Utils.getWorld().isThundering()) {
+            if (chanceeffect > 80) {
+                entity.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false, false, false));
+                entity.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 0, false, false, false));
+            }
         }
         if (entitybiome == Biome.SNOWY_TUNDRA || entitybiome == Biome.SNOWY_BEACH || entitybiome == Biome.SNOWY_TAIGA || entitybiome == Biome.SNOWY_MOUNTAINS || entitybiome == Biome.SNOWY_TAIGA_HILLS || entitybiome == Biome.SNOWY_TAIGA_MOUNTAINS
                 || entitybiome == Biome.ICE_SPIKES) {

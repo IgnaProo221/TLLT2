@@ -47,6 +47,7 @@ public class PlayerEventsListeners implements Listener {
         Player p = event.getPlayer();
 
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if(!event.getItem().hasItemMeta())return;
             if (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasDisplayName() && p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(Format.format("&7Daga Ceremonial"))) {
                 var data = p.getPersistentDataContainer();
                 var inventory = p.getInventory();
@@ -102,7 +103,7 @@ public class PlayerEventsListeners implements Listener {
                          p.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION,1200,9,false,false,false));
                          p.getWorld().getNearbyEntities(p.getLocation(),10,10,10, entity -> entity instanceof LivingEntity).forEach(entity -> {
                              LivingEntity livingEntity = (LivingEntity) entity;
-                             if(livingEntity instanceof Player)return;
+                             if(livingEntity instanceof Player || livingEntity instanceof Villager)return;
                              livingEntity.damage(600);
                          });
                      }

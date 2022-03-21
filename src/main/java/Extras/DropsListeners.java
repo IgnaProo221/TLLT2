@@ -81,11 +81,18 @@ public class DropsListeners implements Listener{
                 e.getDrops().add(MobDrops.blighdrop7(quantity));
                 e.getDrops().add(MobDrops.terrorEssence(quantity));
             }
-        }else if(entity instanceof PiglinBrute brute && killer instanceof Player){
-            if(brute.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_BRUTE"), PersistentDataType.STRING)){
+        }else if(entity instanceof PiglinBrute brute && killer instanceof Player) {
+            if (brute.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_BRUTE"), PersistentDataType.STRING)) {
                 e.getDrops().clear();
                 e.getDrops().add(MobDrops.blighdrop8(quantity));
                 e.getDrops().add(MobDrops.terrorEssence(quantity));
+            }
+        }else if(entity instanceof WitherSkeleton witherSkeleton && killer instanceof Player){
+            if(witherSkeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"ABOMINATION"),PersistentDataType.STRING)){
+                int pyrochance = new Random().nextInt(100);
+                if(pyrochance > 90){
+                    e.getDrops().add(Items.pyroTome());
+                }
             }
         }else if(entity instanceof Enderman enderman && killer instanceof Player) {
             if (enderman.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_ENDERMAN"), PersistentDataType.STRING)) {
@@ -98,6 +105,10 @@ public class DropsListeners implements Listener{
                 if (darkstaffchance == 1) {
                     e.getDrops().add(MobDrops.darkstaff());
                 }
+            }
+        }else if(entity instanceof Wither wither && killer instanceof Player){
+            if(wither.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"ADVANCED_WITHER"),PersistentDataType.STRING)){
+                e.getDrops().add(Items.whiterjusticeTome());
             }
         }else if(entity instanceof Blaze blaze && killer instanceof Player){
             if(blaze.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"HELLFIRE"),PersistentDataType.STRING)){
@@ -122,6 +133,10 @@ public class DropsListeners implements Listener{
 
             }else if(ironGolem.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"ZO1"),PersistentDataType.STRING)){
                 e.getDrops().clear();
+                int tackle = new Random().nextInt(100);
+                if(tackle > 95){
+                    e.getDrops().add(Items.tackle0ome());
+                }
             }
         }
     }
