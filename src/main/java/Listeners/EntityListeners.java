@@ -384,11 +384,7 @@ public class EntityListeners implements Listener {
         var entity = event.getEntity();
         if (entity instanceof Skeleton) {
             var skeleton = (Entity) entity;
-            if (skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "POWERED_SKELETON"), PersistentDataType.STRING)) {
-                var skull = (WitherSkull)event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0, 1, 0), EntityType.WITHER_SKULL);
-                skull.setYield(10);
-                event.setProjectile(skull);
-            } else if (skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "LUSH_SKELETON"), PersistentDataType.STRING)) {
+            if (skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "LUSH_SKELETON"), PersistentDataType.STRING)) {
                 Arrow arrow = (Arrow)event.getProjectile();
                 arrow.setDamage(23);
             }
@@ -412,6 +408,15 @@ public class EntityListeners implements Listener {
                     fireball.setYield(4);
                     event.setProjectile(fireball);
                 }
+            }else if (witherskeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "POWERED_SKELETON"), PersistentDataType.STRING)) {
+                var skull = (WitherSkull)event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0, 1, 0), EntityType.WITHER_SKULL);
+                skull.setYield(10);
+                event.setProjectile(skull);
+            }else if (witherskeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ABOMINATION"), PersistentDataType.STRING)) {
+                var skull = (WitherSkull)event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0, 1, 0), EntityType.WITHER_SKULL);
+                skull.setYield(10);
+                skull.setCustomName(format("abom_skull"));
+                skull.setCharged(true);
             }
         }
     }
@@ -431,6 +436,16 @@ public class EntityListeners implements Listener {
                     hitblock.getLocation().createExplosion(wither, 3, false, true);
                 } else if (entity != null) {
                     entity.getLocation().createExplosion(wither, 3, false, true);
+                }
+            }
+        }
+        if(projectile instanceof WitherSkull witherSkull){
+            if(witherSkull.getCustomName().contains("abom_skull")){
+                if(witherSkull.getCustomName().isEmpty())return;
+                if (hitblock != null) {
+                    hitblock.getLocation().createExplosion( 5, false, true);
+                } else if (entity != null) {
+                    entity.getLocation().createExplosion(5, false, true);
                 }
             }
         }

@@ -112,7 +112,7 @@ public class DamageListeners implements Listener{
                     e.setDamage(e.getDamage() * 8);
                 }
             }else if(player.hasPotionEffect(PotionEffectType.UNLUCK)) {
-                if (player.getPotionEffect(PotionEffectType.UNLUCK).getAmplifier() == 1) {
+                if (player.getPotionEffect(PotionEffectType.UNLUCK).getAmplifier() == 1 || player.getPotionEffect(PotionEffectType.UNLUCK).getAmplifier() == 0) {
                     if (e.getCause() != EntityDamageEvent.DamageCause.SUICIDE || e.getCause() != EntityDamageEvent.DamageCause.THORNS || e.getCause() != EntityDamageEvent.DamageCause.POISON || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK || e.getCause() != EntityDamageEvent.DamageCause.VOID) {
                         e.setDamage(e.getDamage() * 2);
                     }else if(e.getCause() == EntityDamageEvent.DamageCause.FALL){
@@ -164,6 +164,10 @@ public class DamageListeners implements Listener{
                     e.setDamage(e.getDamage() * 2);
                 }else if(e.getCause() == EntityDamageEvent.DamageCause.FREEZE){
                     e.setDamage(e.getDamage() * 2);
+                }else if(e.getCause() == EntityDamageEvent.DamageCause.DROWNING){
+                    e.setDamage(e.getDamage() * 6);
+                }else if(e.getCause() == EntityDamageEvent.DamageCause.STARVATION){
+                    e.setDamage(e.getDamage() * 6);
                 }
             }
         }

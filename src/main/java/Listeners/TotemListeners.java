@@ -159,7 +159,7 @@ public class TotemListeners implements Listener {
                     }
 
 
-                    if (head == 2) {
+                    if (head == 5) {
                         int needTotems = 3;
                         int main = 0;
                         int off = 0;
@@ -224,20 +224,26 @@ public class TotemListeners implements Listener {
     public void totemeffects(int head, Player p, Player players) {
         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
         if (head == 1){
-            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Efectos revertidos.");
+            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Efectos Destructivos");
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
                 p.removePotionEffect(PotionEffectType.ABSORPTION);
                 p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
                 p.removePotionEffect(PotionEffectType.REGENERATION);
-                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,300,1,true,false,true));
-                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,300,1,true,false,true));
+                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,400,1,true,false,true));
+                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,400,1,true,false,true));
+                p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,400,1,true,false,true));
+                p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION,400,1,true,false,true));
+                p.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK,400,0,true,false,true));
             }, 5L);
 
         } else if (head == 2) {
-            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Usar 3 tótems de tu inventario.");
+            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Bad Omen V permanente");
+            Bukkit.getScheduler().runTaskLater(plugin,()->{
+                p.addPotionEffect(new PotionEffect(PotionEffectType.BAD_OMEN,Integer.MAX_VALUE,4,true,false,true));
+            },5L);
         } else if (head == 3) {
-            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Saturación a 0.");
-            p.setSaturation(0);
+            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Mob Random.");
+            SpawnListeners.spawnRandomMob(p.getLocation());
             p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,10,9,false,false,false));
         } else if (head == 4) {
             players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Congelación Infinita");

@@ -618,6 +618,12 @@ public class Mobs implements Listener{
         self.setPowered(true);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE_CREEPER"), PersistentDataType.STRING, "HELLFIRE_CREEPER");
     }
+    public static void hellfire(Blaze self){
+        self.setCustomName(format("&6&lHellfire"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
+        self.setHealth(50);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"HELLFIRE"),PersistentDataType.STRING,"HELLFIRE");
+    }
 
     public static void hiveMind(Creeper self){
         self.setCustomName(format("&6Hive Mind"));
@@ -672,13 +678,14 @@ public class Mobs implements Listener{
         self.setCustomName(format("&6Solar Scorpion"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
         self.setHealth(40);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20.0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SOLAR_SCORPION"), PersistentDataType.STRING, "SOLAR_SCORPION");
     }
     public static void agileTarantule(Spider self){
         self.setCustomName(format("&bTarantula Rompevientos"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
         self.setHealth(40);
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(14.0);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20.0);
         self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 10000000,2, false, false, false));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "AGILE_SPIDER"), PersistentDataType.STRING, "AGILE_SPIDER");
     }
@@ -686,10 +693,46 @@ public class Mobs implements Listener{
         self.setCustomName(format("&5Visitante Interdimensional"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
         self.setHealth(40);
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(14.0);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20.0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "INTER_SPIDER"), PersistentDataType.STRING, "INTER_SPIDER");
     }
 
+    public static void sombra(Skeleton self){
+        self.setSilent(true);
+        self.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,Integer.MAX_VALUE,0,false,false,false));
+        self.setCustomName(format("&5&lSombra"));
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"SHADE"),PersistentDataType.STRING,"SHADE");
+    }
+
+    public static void darkSpectre(Enderman self){
+        self.setCustomName(format("&8&lDark Spectre"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
+        self.setHealth(50);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"DARK_SPECTRE"),PersistentDataType.STRING,"DARK_SPECTRE");
+        CraftEnderman craft = ((CraftEnderman)self);
+        EntityEnderman entityEnderman = craft.getHandle();
+        try{
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("bP");
+            gf.setAccessible(true);
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityEnderman);
+            goal.a(0, new PathfinderGoalMeleeAttack(entityEnderman,1.0D,true));
+
+            Field tf = cl.getDeclaredField("bQ");
+            tf.setAccessible(true);
+
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityEnderman);
+            target.a(0,new PathfinderGoalNearestAttackableTarget<>(entityEnderman, EntityHuman.class, 10,true,false,null));
+        }catch (Exception e){
+            e.printStackTrace();
+            Warn.Mutant(e);
+        }
+    }
+    public static void gorgomite(Endermite self){
+        self.setCustomName(format("&6&lGorgomite"));
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(18);
+    }
 
 
 
@@ -814,10 +857,10 @@ public class Mobs implements Listener{
     public static void zombObeso(IronGolem self){
         self.setCustomName(format("&6Zombi Destructor"));
         self.setRemoveWhenFarAway(true);
-        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60.0);
-        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(30);
-        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE,1,false,false,false));
-        self.setHealth(60);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(80.0);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(50);
+        self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE,2,false,false,false));
+        self.setHealth(80);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"ZO1"),PersistentDataType.STRING,"ZO1");
         self.setSilent(true);
         CraftIronGolem craft = ((CraftIronGolem) self);
@@ -876,13 +919,15 @@ public class Mobs implements Listener{
         ItemMeta meta = ai.getItemMeta();
         meta.addEnchant(Enchantment.ARROW_DAMAGE, 20,true);
         ai.setItemMeta(meta);
-        self.setCustomName(format("&6Ignited &cSkeleton"));
+        self.setCustomName(format("&6&lHellfire Archer"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
         self.setHealth(30);
         self.getEquipment().setItemInMainHand(ai);
-        self.getEquipment().setHelmet(new ItemStack(Material.GLASS));
+        self.getEquipment().setHelmet(new ItemStack(Material.AIR));
+        self.getEquipment().setChestplate(new ItemStack(Material.AIR));
+        self.getEquipment().setLeggings(new ItemStack(Material.AIR));
+        self.getEquipment().setBoots(new ItemStack(Material.AIR));
         self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
-        self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "IGNITED_SKELETON"), PersistentDataType.STRING, "IGNITED_SKELETON");
     }
 
@@ -890,15 +935,17 @@ public class Mobs implements Listener{
         ItemStack ai = new ItemStack(Material.BOW);
         ItemMeta meta = ai.getItemMeta();
         meta.addEnchant(Enchantment.ARROW_DAMAGE, 30,true);
-        meta.addEnchant(Enchantment.ARROW_KNOCKBACK, 20,true);
+        meta.addEnchant(Enchantment.ARROW_KNOCKBACK, 40,true);
         ai.setItemMeta(meta);
-        self.setCustomName(format("&bBlizzard &cSkeleton"));
+        self.setCustomName(format("&b&lSnow Sniper"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
         self.setHealth(30);
         self.getEquipment().setItemInMainHand(ai);
-        self.getEquipment().setHelmet(new ItemStack(Material.PACKED_ICE));
+        self.getEquipment().setHelmet(new ItemStack(Material.AIR));
+        self.getEquipment().setChestplate(new ItemStack(Material.AIR));
+        self.getEquipment().setLeggings(new ItemStack(Material.AIR));
+        self.getEquipment().setBoots(new ItemStack(Material.AIR));
         self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
-        self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIZZARD_SKELETON"), PersistentDataType.STRING, "BLIZZARD_SKELETON");
     }
 
@@ -908,11 +955,14 @@ public class Mobs implements Listener{
         meta.addEnchant(Enchantment.ARROW_DAMAGE, 20,true);
         meta.addEnchant(Enchantment.ARROW_FIRE, 20,true);
         ai.setItemMeta(meta);
-        self.setCustomName(format("&eCopper &cSkeleton"));
+        self.setCustomName(format("&e&lCopper Robot"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30.0);
         self.setHealth(30);
         self.getEquipment().setItemInMainHand(ai);
         self.getEquipment().setHelmet(new ItemStack(Material.LIGHTNING_ROD));
+        self.getEquipment().setChestplate(new ItemStack(Material.AIR));
+        self.getEquipment().setLeggings(new ItemStack(Material.AIR));
+        self.getEquipment().setBoots(new ItemStack(Material.AIR));
         self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
         self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "COPPER_SKELETON"), PersistentDataType.STRING, "COPPER_SKELETON");
@@ -923,28 +973,44 @@ public class Mobs implements Listener{
         ItemMeta meta = ai.getItemMeta();
         meta.addEnchant(Enchantment.ARROW_DAMAGE, 99,true);
         ai.setItemMeta(meta);
-        self.setCustomName(format("&4Bullseye &cSkeleton"));
+        self.setCustomName(format("&4&lBullseye Archer"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50.0);
         self.setHealth(50);
         self.getEquipment().setItemInMainHand(ai);
-        self.getEquipment().setHelmet(new ItemStack(Material.OBSERVER));
+        self.getEquipment().setHelmet(new ItemStack(Material.AIR));
+        self.getEquipment().setChestplate(new ItemStack(Material.AIR));
+        self.getEquipment().setLeggings(new ItemStack(Material.AIR));
+        self.getEquipment().setBoots(new ItemStack(Material.AIR));
         self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
-        self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BULLSEYE_SKELETON"), PersistentDataType.STRING, "BULLSEYE_SKELETON");
     }
-    public static void poweredSkeleton(Skeleton self){
+    public static void poweredSkeleton(WitherSkeleton self){
         ItemStack ai = new ItemStack(Material.BOW);
         ItemMeta meta = ai.getItemMeta();
         meta.addEnchant(Enchantment.ARROW_DAMAGE, 20,true);
         ai.setItemMeta(meta);
-        self.setCustomName(format("&5Powered &cSkeleton"));
+        self.setCustomName(format("&5&lUndead Reaper"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50.0);
         self.setHealth(50);
         self.getEquipment().setItemInMainHand(ai);
-        self.getEquipment().setHelmet(new ItemStack(Material.TINTED_GLASS));
+        self.getEquipment().setHelmet(new ItemStack(Material.AIR));
+        self.getEquipment().setChestplate(new ItemStack(Material.AIR));
+        self.getEquipment().setLeggings(new ItemStack(Material.AIR));
+        self.getEquipment().setBoots(new ItemStack(Material.AIR));
         self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
-        self.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "POWERED_SKELETON"), PersistentDataType.STRING, "POWERED_SKELETON");
+    }
+    public static void abomination(WitherSkeleton self){
+        self.setCustomName(format("&6&lAbomination"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(80);
+        self.setHealth(80);
+        self.getEquipment().setHelmet(new ItemStack(Material.AIR));
+        self.getEquipment().setChestplate(new ItemStack(Material.AIR));
+        self.getEquipment().setLeggings(new ItemStack(Material.AIR));
+        self.getEquipment().setBoots(new ItemStack(Material.AIR));
+        self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+        self.getEquipment().setItemInMainHand(new ItemBuilder(Material.BOW).addEnchantment(Enchantment.ARROW_DAMAGE,80).addEnchantment(Enchantment.ARROW_FIRE,10).addEnchantment(Enchantment.ARROW_KNOCKBACK,20).setUnbreakable(true).build());
+        self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"ABOMINATION"),PersistentDataType.STRING,"ABOMINATION");
     }
 
 

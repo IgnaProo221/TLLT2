@@ -3,6 +3,7 @@ package Listeners;
 import Utilities.Format;
 import Utilities.Utils;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
@@ -38,6 +39,9 @@ public class EatListeners implements Listener {
 
         if(p.getWorld().isThundering()){
             applyRandomEffects(p);
+        }
+        if(e.getItem().getType() == Material.MILK_BUCKET){
+            e.setCancelled(true);
         }
 
         if (p.hasPotionEffect(PotionEffectType.LUCK)) {

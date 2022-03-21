@@ -12,6 +12,7 @@ import net.minecraft.world.entity.ai.goal.PathfinderGoalMeleeAttack;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
 import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackableTarget;
 import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.monster.EntityPigZombie;
 import net.minecraft.world.entity.player.EntityHuman;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -118,7 +119,7 @@ public class SpawnListeners implements Listener {
             } else if (entity instanceof Creeper creeper && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
                 Mobs.creeperSandstone(creeper);
             }
-        }else if (entity instanceof Skeleton skeleton && !(entity instanceof Stray) && !(entity instanceof WitherSkeleton) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+        }else if (entity instanceof Skeleton skeleton && !(entity instanceof Stray) && !(entity instanceof WitherSkeleton) && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL || e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CUSTOM)) {
             if (spawnmob > 80) {
                 Mobs.blightedSkeleton(skeleton);
                 skeleton.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
@@ -126,16 +127,26 @@ public class SpawnListeners implements Listener {
                 Mobs.roboSkele(skeleton);
                 skeleton.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
             } else {
-                int bow = new Random().nextInt(2) + 1;
-                if (bow == 1) {
-                    skeleton.getEquipment().setItemInMainHand(new ItemBuilder(Material.BOW).addEnchantment(Enchantment.ARROW_DAMAGE, 20).build());
-                    skeleton.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
-                } else {
-                    skeleton.getEquipment().setItemInMainHand(new ItemBuilder(Material.BOW).addEnchantment(Enchantment.ARROW_DAMAGE, 40).build());
-                    skeleton.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+                int skeletontype = new Random().nextInt(6);
+                if(skeletontype == 1){
+                    skeleton.remove();
+                    var wither = skeleton.getWorld().spawn(skeleton.getLocation(),WitherSkeleton.class);
+                    Mobs.poweredSkeleton(wither);
+                }else if(skeletontype == 2){
+                    Mobs.bullseyeSkeleton(skeleton);
+                }else if(skeletontype == 3){
+                    Mobs.copperSkeleton(skeleton);
+                }else if(skeletontype == 4){
+                    Mobs.ignitedSkeleton(skeleton);
+                }else if(skeletontype == 5){
+                    Mobs.blizzardSkeleton(skeleton);
+                }else{
+                    skeleton.remove();
+                    var wither = skeleton.getWorld().spawn(skeleton.getLocation(),WitherSkeleton.class);
+                    Mobs.abomination(wither);
                 }
             }
-        } else if (entity instanceof Spider spider && !(entity instanceof CaveSpider) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+        } else if (entity instanceof Spider spider && !(entity instanceof CaveSpider) && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL || e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CUSTOM)) {
             if (spawnmob > 80) {
                 Mobs.blightedSpider(spider);
             }else if(spawnmob > 50 && entitybiome == Biome.PLAINS){
@@ -154,27 +165,29 @@ public class SpawnListeners implements Listener {
                 if (jockeychance > 70) {
                     var skeletonpass = spider.getLocation().getWorld().spawn(spider.getLocation(), Skeleton.class);
                     spider.setPassenger(skeletonpass);
-                    int bow = new Random().nextInt(2) + 1;
+                    int bow = new Random().nextInt(4);
                     if (bow == 1) {
-                        skeletonpass.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
-                        skeletonpass.getEquipment().setItemInMainHand(new ItemBuilder(Material.BOW).addEnchantment(Enchantment.ARROW_DAMAGE, 20).build());
-                    } else {
-                        skeletonpass.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
-                        skeletonpass.getEquipment().setItemInMainHand(new ItemBuilder(Material.BOW).addEnchantment(Enchantment.ARROW_DAMAGE, 40).build());
+                        Mobs.ignitedSkeleton(skeletonpass);
+                    }else if(bow == 2){
+                        Mobs.blizzardSkeleton(skeletonpass);
+                    }else if(bow == 3){
+                        Mobs.copperSkeleton(skeletonpass);
+                    }else{
+                        Mobs.bullseyeSkeleton(skeletonpass);
                     }
                 }
 
             }
-        } else if (entity instanceof Zombie zombie && !(entity instanceof ZombieVillager) && !(entity instanceof Husk) && !(entity instanceof Drowned) && !(entity instanceof PigZombie) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+        } else if (entity instanceof Zombie zombie && !(entity instanceof ZombieVillager) && !(entity instanceof Husk) && !(entity instanceof Drowned) && !(entity instanceof PigZombie) && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL || e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CUSTOM)) {
             if (spawnmob > 80) {
                 Mobs.blightedZombi(zombie);
-            }else if(spawnmob > 50 && entitybiome == Biome.PLAINS) {
+            } else if (spawnmob > 50 && entitybiome == Biome.PLAINS) {
                 Mobs.roboZombi(zombie);
-            }else if(zombie.getLocation().getY() < 0){
+            } else if (zombie.getLocation().getY() < 0) {
                 int wardenchance = new Random().nextInt(100);
-                if(wardenchance == 1){
+                if (wardenchance == 1) {
                     zombie.remove();
-                    Mobs.Warden(zombie.getLocation().getWorld().spawn(zombie.getLocation(),IronGolem.class));
+                    Mobs.Warden(zombie.getLocation().getWorld().spawn(zombie.getLocation(), IronGolem.class));
                 }
             } else {
                 int zombitype = new Random().nextInt(6) + 1;
@@ -186,22 +199,74 @@ public class SpawnListeners implements Listener {
                     Mobs.zombHerrero(zombie);
                 } else if (zombitype == 4) {
                     Mobs.zombiJinete(zombie);
-                } else if(zombitype == 5){
+                } else if (zombitype == 5) {
                     IronGolem ironGolem = zombie.getLocation().getWorld().spawn(zombie.getLocation(), IronGolem.class);
                     Mobs.zombObeso(ironGolem);
-                }else{
+                } else {
                     zombie.setBaby(true);
+                    zombie.getEquipment().setHelmet(new ItemBuilder(Material.DIAMOND_HELMET).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).build());
+                    zombie.getEquipment().setChestplate(new ItemBuilder(Material.DIAMOND_CHESTPLATE).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).build());
+                    zombie.getEquipment().setLeggings(new ItemBuilder(Material.DIAMOND_LEGGINGS).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).build());
+                    zombie.getEquipment().setBoots(new ItemBuilder(Material.DIAMOND_BOOTS).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).build());
+                    zombie.getEquipment().setItemInMainHand(new ItemBuilder(Material.DIAMOND_SWORD).addEnchantment(Enchantment.DAMAGE_ALL, 20).build());
+                    zombie.getEquipment().setDropChance(EquipmentSlot.HEAD, 0);
+                    zombie.getEquipment().setDropChance(EquipmentSlot.CHEST, 0);
+                    zombie.getEquipment().setDropChance(EquipmentSlot.LEGS, 0);
+                    zombie.getEquipment().setDropChance(EquipmentSlot.FEET, 0);
+                    zombie.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
                 }
             }
-        } else if (entity instanceof Creeper creeper && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+        }else  if(entity instanceof Bat bat && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+            if (bat.getWorld().isThundering()) {
+                bat.remove();
+                Blaze blaze = bat.getWorld().spawn(bat.getLocation(), Blaze.class);
+                Mobs.hellfire(blaze);
+            }
+        }else if(entity instanceof PigZombie pigZombie && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
+            CraftPigZombie craft = ((CraftPigZombie) pigZombie);
+            EntityPigZombie entityPigZombie = craft.getHandle();
+            try{
+                Class<? extends EntityInsentient> cl = EntityInsentient.class;
+                Field gf = cl.getDeclaredField("bP");
+                gf.setAccessible(true);
+                PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityPigZombie);
+                goal.a(0, new PathfinderGoalMeleeAttack(entityPigZombie,1.0D,true));
+
+                Field tf = cl.getDeclaredField("bQ");
+                tf.setAccessible(true);
+
+                PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityPigZombie);
+                target.a(0,new PathfinderGoalNearestAttackableTarget<>(entityPigZombie, EntityHuman.class, 10,true,false,null));
+            }catch (Exception ec){
+                ec.printStackTrace();
+                Warn.Mutant(ec);
+            }
+            int chancedebrute = new Random().nextInt(100);
+            if(chancedebrute >= 10){
+                pigZombie.remove();
+                PiglinBrute piglinBrute = pigZombie.getWorld().spawn(pigZombie.getLocation(),PiglinBrute.class);
+            }
+
+        }else if(entity instanceof Blaze blaze && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
+            Mobs.hellfire(blaze);
+        } else if (entity instanceof Creeper creeper && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL || e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CUSTOM)) {
             if (spawnmob > 80) {
                 Mobs.blightedCreeper(creeper);
-            }else if(spawnmob > 50 && entitybiome == Biome.PLAINS){
+            } else if (spawnmob > 50 && entitybiome == Biome.PLAINS) {
                 Mobs.roboCreeper(creeper);
             } else {
                 creeper.setPowered(true);
                 creeper.setCustomName(format("&6&lPowered Creeper"));
             }
+        }else if(entity instanceof Husk husk && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+            husk.setCustomName(format("&6Devorador"));
+            husk.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
+            husk.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false, false, false));
+        }else if(entity instanceof Stray stray && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
+            stray.setCustomName(format("&e&lIce Killer"));
+            stray.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, false, false, false));
+            stray.getEquipment().setItemInMainHand(new ItemBuilder(Material.GOLDEN_AXE).setUnbreakable(true).addEnchantment(Enchantment.DAMAGE_ALL,50).setUnbreakable(true).build());
+            stray.getEquipment().setDropChance(EquipmentSlot.HAND,0);
         } else if (entity instanceof Wither wither) {
             wither.setCustomName(format("&6&lAdvanced Wither"));
             wither.setInvulnerableTicks(500);
@@ -210,7 +275,7 @@ public class SpawnListeners implements Listener {
             wither.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ADVANCED_WITHER"), PersistentDataType.STRING, "ADVANCED_WITHER");
         } else if (entity instanceof Dolphin dolphin) {
             dolphin.setCustomName(format("&c&lYelmo de las Profundidades"));
-            dolphin.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
+            dolphin.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(40);
             dolphin.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(40);
             dolphin.setHealth(40);
             CraftDolphin craft = ((CraftDolphin) dolphin);
@@ -367,7 +432,7 @@ public class SpawnListeners implements Listener {
             }else if(evoketype == 5){
                 Mobs.evokerhex(evoker);
             }
-        }else if(entity instanceof Vindicator vindicator && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.RAID){
+        }else if(entity instanceof Vindicator vindicator && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.RAID || e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CUSTOM)){
             vindicator.setCustomName(format("&c&lButcher"));
             vindicator.getEquipment().setItemInMainHand(new ItemBuilder(Material.NETHERITE_AXE).addEnchantment(Enchantment.DAMAGE_ALL,15).build());
             vindicator.getEquipment().setDropChance(EquipmentSlot.HAND,0);
@@ -480,10 +545,11 @@ public class SpawnListeners implements Listener {
 
     }
 
-    public void spawnRandomMob(Location location){
+    public static void spawnRandomMob(Location location){
         int whatmob = new Random().nextInt(10) +1;
         if(whatmob == 1){
             location.getWorld().spawn(location, Zombie.class);
+
         }else if(whatmob == 2){
             location.getWorld().spawn(location,Skeleton.class);
         }else if(whatmob == 3){
