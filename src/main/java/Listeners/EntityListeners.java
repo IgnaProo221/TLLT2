@@ -215,6 +215,11 @@ public class EntityListeners implements Listener {
                     }
                 }
             }
+            if(damager instanceof CaveSpider caveSpider){
+                if(caveSpider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"MUTACION"),PersistentDataType.STRING)){
+                    entity.getWorld().createExplosion(caveSpider,6,false,true);
+                }
+            }
             if (damager instanceof Vex vex) {
                 if(p.isBlocking())return;
                 if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"CINDER"), PersistentDataType.STRING)){
@@ -390,6 +395,13 @@ public class EntityListeners implements Listener {
                 arrow.setDamage(23);
             }
         }
+        if(entity instanceof Piglin piglin){
+            if (piglin.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "FRANCO"), PersistentDataType.STRING)) {
+                Arrow arrow = (Arrow)event.getProjectile();
+                arrow.setDamage(60);
+                arrow.setGravity(false);
+            }
+        }
         if (entity instanceof Illusioner) {
             var illusioner = (Entity) entity;
             if (illusioner.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DIMEN_MAGE"), PersistentDataType.STRING)) {
@@ -412,6 +424,7 @@ public class EntityListeners implements Listener {
             }else if (witherskeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "POWERED_SKELETON"), PersistentDataType.STRING)) {
                 var skull = (WitherSkull)event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0, 1, 0), EntityType.WITHER_SKULL);
                 skull.setYield(10);
+                skull.setCustomName("CACA");
                 event.setProjectile(skull);
             }else if (witherskeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ABOMINATION"), PersistentDataType.STRING)) {
                 var skull = (WitherSkull)event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0, 1, 0), EntityType.WITHER_SKULL);
@@ -447,6 +460,13 @@ public class EntityListeners implements Listener {
                     hitblock.getLocation().createExplosion( 5, false, true);
                 } else if (entity != null) {
                     entity.getLocation().createExplosion(5, false, true);
+                }
+            }else if(witherSkull.getCustomName().contains("CACA")){
+                if(witherSkull.getCustomName().isEmpty())return;
+                if (hitblock != null) {
+                    hitblock.getLocation().createExplosion( 3, false, true);
+                } else if (entity != null) {
+                    entity.getLocation().createExplosion(3, false, true);
                 }
             }
         }

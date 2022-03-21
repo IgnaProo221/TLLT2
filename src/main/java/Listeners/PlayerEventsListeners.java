@@ -2,35 +2,26 @@ package Listeners;
 
 import Extras.EventosItems;
 import Extras.Items;
-import Extras.Sacrificios;
 import Utilities.*;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.entity.AreaEffectCloud;
-import org.bukkit.entity.EntityType;
-import io.papermc.paper.event.entity.ElderGuardianAppearanceEvent;
+import org.bukkit.entity.*;
 import org.bukkit.Material;
-import org.bukkit.entity.Monster;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityExhaustionEvent;
-import org.bukkit.event.entity.VillagerAcquireTradeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.TradeSelectEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerRiptideEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 import player.CustomPlayer;
 import player.PlayerData;
 import tlldos.tll2.TLL2;
@@ -99,6 +90,25 @@ public class PlayerEventsListeners implements Listener {
             }
             }
 
+            if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
+                if(p.getInventory().getItemInMainHand().hasItemMeta()){
+                    if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
+                     if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 84984389){
+                         Location playerLocation = p.getLocation();
+                         Vector playerDirection = p.getLocation().getDirection().multiply(3);
+                         Location targetLocation = playerLocation.add(playerDirection);
+                         p.teleport(targetLocation);
+                         p.getWorld().spawnParticle(Particle.EXPLOSION_HUGE,p.getLocation(),1);
+                         p.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION,1200,9,false,false,false));
+                         p.getWorld().getNearbyEntities(p.getLocation(),10,10,10, entity -> entity instanceof LivingEntity).forEach(entity -> {
+                             LivingEntity livingEntity = (LivingEntity) entity;
+                             if(livingEntity instanceof Player)return;
+                             livingEntity.damage(600);
+                         });
+                     }
+                    }
+                }
+            }
             if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 if (p.getInventory().getItemInMainHand().equals(Items.crystalHeart())) {
                     if (p.hasCooldown(Material.RED_DYE)) {

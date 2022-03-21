@@ -133,4 +133,10 @@ public class MobDrops{
     public static ItemStack blackRose(){
         return new ItemBuilder(Material.BLACK_DYE).setName(format("&8&lBlack Rose")).setUnbreakable(true).build();
     }
+    public static ItemStack darkstaff(){
+        return new ItemBuilder(Material.BLAZE_ROD).setName(format("&7&lDark Staff")).setUnbreakable(true).build();
+    }
+    public static ItemStack hellfireRod(){
+        return new ItemBuilder(Material.BLAZE_ROD).setName(format("&6&lHellfire Rod")).setCustomModelData(108239139).build();
+    }
 }

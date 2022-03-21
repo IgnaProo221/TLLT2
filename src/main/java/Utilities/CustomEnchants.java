@@ -275,6 +275,69 @@ public class CustomEnchants implements Listener {
 
                 p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
                 p.getInventory().getItemInOffHand().setType(Material.AIR);
+            }else if (p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_CHESTPLATE) && (p.getInventory().getItemInOffHand().getType().equals(Material.ENCHANTED_BOOK) && p.getInventory().getItemInOffHand().getItemMeta().hasEnchant(CustomEnchants.WITHER_JUSTICE))) {
+                List<String> lorvez;
+
+                ItemStack pickax43 = p.getInventory().getItemInMainHand();
+
+                if (hasCustomEnchants(pickax43)) return;
+
+                if(pickax43.getItemMeta().hasLore()){
+                    lorvez = pickax43.getLore();
+                }else{
+                    lorvez= new ArrayList<>();
+                }
+                lorvez.add(format("&6Encantamiento Ancestral: &eWhiter Justice"));
+
+                pickax43.addUnsafeEnchantment(CustomEnchants.WITHER_JUSTICE, 1);
+                pickax43.setLore(lorvez);
+
+                p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
+
+                p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
+                p.getInventory().getItemInOffHand().setType(Material.AIR);
+            }else if (p.getInventory().getItemInMainHand().getType().equals(Material.BOW) && (p.getInventory().getItemInOffHand().getType().equals(Material.ENCHANTED_BOOK) && p.getInventory().getItemInOffHand().getItemMeta().hasEnchant(CustomEnchants.PYROMANIAC))) {
+                List<String> lorvez;
+
+                ItemStack pickax43 = p.getInventory().getItemInMainHand();
+
+                if (hasCustomEnchants(pickax43)) return;
+
+                if(pickax43.getItemMeta().hasLore()){
+                    lorvez = pickax43.getLore();
+                }else{
+                    lorvez= new ArrayList<>();
+                }
+                lorvez.add(format("&6Encantamiento Ancestral: &ePyromaniac"));
+
+                pickax43.addUnsafeEnchantment(CustomEnchants.PYROMANIAC, 1);
+                pickax43.setLore(lorvez);
+
+                p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
+
+                p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
+                p.getInventory().getItemInOffHand().setType(Material.AIR);
+            }else if (p.getInventory().getItemInMainHand().getType().equals(Material.SHIELD) && (p.getInventory().getItemInOffHand().getType().equals(Material.ENCHANTED_BOOK) && p.getInventory().getItemInOffHand().getItemMeta().hasEnchant(CustomEnchants.TACKLE))) {
+                List<String> lorvez;
+
+                ItemStack pickax43 = p.getInventory().getItemInMainHand();
+
+                if (hasCustomEnchants(pickax43)) return;
+
+                if(pickax43.getItemMeta().hasLore()){
+                    lorvez = pickax43.getLore();
+                }else{
+                    lorvez= new ArrayList<>();
+                }
+                lorvez.add(format("&6Encantamiento Ancestral: &eWhiter Justice"));
+
+                pickax43.addUnsafeEnchantment(CustomEnchants.TACKLE, 1);
+                pickax43.setLore(lorvez);
+
+                p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
+
+                p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
+                p.getInventory().getItemInOffHand().setType(Material.AIR);
             }
         }
     }

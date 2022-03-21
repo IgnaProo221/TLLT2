@@ -31,7 +31,7 @@ public class NMSSpawn implements Listener{
     public void customGen(CreatureSpawnEvent e){
         var world = e.getEntity().getWorld();
         var entity = e.getEntity();
-        int chance = new Random().nextInt(100);
+        int chance = new Random().nextInt(1000);
         if(world.getEnvironment() == World.Environment.NETHER || world.getEnvironment() == World.Environment.THE_END)return;
         if(entity instanceof Animals)return;
         if(!(e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL))return;

@@ -50,10 +50,16 @@ public class Utils {
 
         return (int) ChronoUnit.DAYS.between(FechaInicio, FechaActual);
     }
+    private static int NewDayAfterStorm(){
+        LocalDate FechaActual = LocalDate.now();
+        LocalDate FechaInicio = LocalDate.parse("2022-03-20");
+        return (int) ChronoUnit.DAYS.between(FechaInicio,FechaActual);
+    }
     
     public static int getDay(){
         return Day();
     }
+    public static int getNewDay(){return NewDayAfterStorm();}
     
     public static FileConfiguration getConfig() {
         return plugin.getConfig();

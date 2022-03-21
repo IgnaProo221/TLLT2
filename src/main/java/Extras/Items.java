@@ -346,6 +346,24 @@ public class Items {
         lore.add(Component.text(format("&7Haces mas Daño a los Mobs de Sculk")));
         return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.SHRIEK, 1).setLore(lore).build();
     }
+    public static ItemStack whiterjusticeTome(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lWither Justice")));
+        lore.add(Component.text(format("&7Reduce el Daño por Explosion")));
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.WITHER_JUSTICE, 1).setLore(lore).build();
+    }
+    public static ItemStack pyroTome(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lPyromaniac")));
+        lore.add(Component.text(format("&7Tus Flechas pueden hacer un daño en area")));
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.PYROMANIAC, 1).setLore(lore).build();
+    }
+    public static ItemStack tackle0ome(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lTackle")));
+        lore.add(Component.text(format("&7Los Mobs son lanzados despues de golpear tu escudo")));
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.TACKLE, 1).setLore(lore).build();
+    }
 
     public static ItemStack testEnchant(){
         //TODO usen este item si hay algun enchant bug para probarlo
@@ -362,6 +380,32 @@ public class Items {
         return new ItemBuilder(Material.PUMPKIN_PIE).setName(format("&b&lIce Pie")).build();
     }
 
+
+    //NO DEJEN QUE FEL TOQUE ESTO PORFAVOR
+    public static ItemStack hyperion(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&7Gear Score: &d615")));
+        lore.add(Component.text(format("&7Damage: &c+260")));
+        lore.add(Component.text(format("&7Strength: &c+150")));
+        lore.add(Component.text(format("&7Intelligence: &a+350")));
+        lore.add(Component.text(format("&7Ferocity: &a+30")));
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Deals +&a50% &7damage to")));
+        lore.add(Component.text(format("&7Withers. Grants &c+1 Damage")));
+        lore.add(Component.text(format("&7and &a+2 &bIntelligence")));
+        lore.add(Component.text(format("&7per &cCatacombs &7level")));
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Your Catacombs level: &c0")));
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&eRight-Click to use your class ability!")));
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&8This item can be reforged")));
+        lore.add(Component.text(format("&cRequires &aCatacombs Floor VII")));
+        lore.add(Component.text(format("&7Completion")));
+        lore.add(Component.text(format("&6&lLEGENDARY DUNGEON SWORD")));
+        return new ItemBuilder(Material.IRON_SWORD).setName(format("&6Hyperion")).setUnbreakable(true).setItemFlags(ItemFlag.HIDE_UNBREAKABLE).setLore(lore).setCustomModelData(84984389).build();
+    }
 
 
 

@@ -38,6 +38,9 @@ public class DropsListeners implements Listener{
             }else if(skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXO_DISTANCE"),PersistentDataType.STRING)){
                 e.getDrops().clear();
                 e.getDrops().add(MobDrops.exoCore(quantity));
+            }else if(skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"SHADE"),PersistentDataType.STRING)){
+                e.getDrops().clear();
+                e.getDrops().add(Items.crystalApple(quantity));
             }
         }else if(entity instanceof Creeper creeper && killer instanceof Player){
             if(creeper.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_CREEPER"), PersistentDataType.STRING)){
@@ -84,11 +87,22 @@ public class DropsListeners implements Listener{
                 e.getDrops().add(MobDrops.blighdrop8(quantity));
                 e.getDrops().add(MobDrops.terrorEssence(quantity));
             }
-        }else if(entity instanceof Enderman enderman && killer instanceof Player){
-            if(enderman.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_ENDERMAN"), PersistentDataType.STRING)){
+        }else if(entity instanceof Enderman enderman && killer instanceof Player) {
+            if (enderman.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_ENDERMAN"), PersistentDataType.STRING)) {
                 e.getDrops().clear();
                 e.getDrops().add(MobDrops.blighdrop9(quantity));
                 e.getDrops().add(MobDrops.terrorEssence(quantity));
+            } else if (enderman.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DARK_SPECTRE"), PersistentDataType.STRING)) {
+                e.getDrops().clear();
+                int darkstaffchance = new Random().nextInt(100);
+                if (darkstaffchance == 1) {
+                    e.getDrops().add(MobDrops.darkstaff());
+                }
+            }
+        }else if(entity instanceof Blaze blaze && killer instanceof Player){
+            if(blaze.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"HELLFIRE"),PersistentDataType.STRING)){
+                e.getDrops().clear();
+                e.getDrops().add(MobDrops.hellfireRod());
             }
         }else if(entity instanceof IronGolem ironGolem && killer instanceof Player){
             if(ironGolem.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXPERIMENT_1"),PersistentDataType.STRING)){

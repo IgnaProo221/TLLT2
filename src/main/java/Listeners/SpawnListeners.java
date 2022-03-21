@@ -77,15 +77,11 @@ public class SpawnListeners implements Listener {
         var pos = e.getLocation();
         var world = Bukkit.getWorld("world");
         var entitybiome = entity.getLocation().getBlock().getBiome();
-        if(entity instanceof Monster monster){
-            if(monster.getWorld().isThundering()){
-                int fuerzachance = new Random().nextInt(100);
-                if(fuerzachance > 90){
-                    monster.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE,Integer.MAX_VALUE,1,false,false,false));
-                }
-            }
+        int chanceeffect = new Random().nextInt(100);
+        if(chanceeffect > 80){
+            entity.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE,Integer.MAX_VALUE,1,false,false,false));
+            entity.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY,Integer.MAX_VALUE,0,false,false,false));
         }
-
         if (entitybiome == Biome.SNOWY_TUNDRA || entitybiome == Biome.SNOWY_BEACH || entitybiome == Biome.SNOWY_TAIGA || entitybiome == Biome.SNOWY_MOUNTAINS || entitybiome == Biome.SNOWY_TAIGA_HILLS || entitybiome == Biome.SNOWY_TAIGA_MOUNTAINS
                 || entitybiome == Biome.ICE_SPIKES) {
             if (entity instanceof Zombie zombie && !(entity instanceof Drowned) && !(entity instanceof Husk) && !(entity instanceof ZombieVillager) && !(entity instanceof PigZombie) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
@@ -222,6 +218,15 @@ public class SpawnListeners implements Listener {
                 Blaze blaze = bat.getWorld().spawn(bat.getLocation(), Blaze.class);
                 Mobs.hellfire(blaze);
             }
+        }else if(entity instanceof Piglin piglin && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
+            piglin.setCustomName(format("&b&lFrancotirador"));
+            piglin.getEquipment().setItemInMainHand(new ItemBuilder(Material.CROSSBOW).addEnchantment(Enchantment.PIERCING,10).setUnbreakable(true).build());
+            piglin.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+            piglin.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"FRANCO"),PersistentDataType.STRING,"FRANCO");
+        }else if(entity instanceof CaveSpider caveSpider && !(entity instanceof Spider)){
+            caveSpider.setCustomName(format("&6Mutacion"));
+            caveSpider.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"MUTACION"),PersistentDataType.STRING,"MUTACION");
+            //mutanteo exitoso
         }else if(entity instanceof PigZombie pigZombie && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
             CraftPigZombie craft = ((CraftPigZombie) pigZombie);
             EntityPigZombie entityPigZombie = craft.getHandle();
@@ -412,12 +417,19 @@ public class SpawnListeners implements Listener {
                 exception.printStackTrace();
                 Warn.Mutant(exception);
             }
-        }else if(entity instanceof Pillager pillager && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.RAID){
-            int pillatype = new Random().nextInt(2)+1;
-            if(pillatype == 1){
+        }else if(entity instanceof Pillager pillager && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.RAID) {
+            int pillatype = new Random().nextInt(2) + 1;
+            if (pillatype == 1) {
                 Mobs.mountllagers(pillager);
-            }else{
+            } else {
                 Mobs.dynamLlager(pillager);
+            }
+        }else if(entity instanceof WitherSkeleton witherSkeleton && !(entity instanceof Stray) && !(entity instanceof Skeleton) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
+            int lavachance = new Random().nextInt(100);
+            if(lavachance > 90){
+                witherSkeleton.remove();
+                IronGolem ironGolem = witherSkeleton.getWorld().spawn(witherSkeleton.getLocation(),IronGolem.class);
+                Mobs.lavaGolem(ironGolem);
             }
         }else if(entity instanceof Evoker evoker && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.RAID){
             int evoketype = new Random().nextInt(5)+1;

@@ -103,7 +103,7 @@ public class BlastStormListeners implements Listener {
                 world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
             }
 
-            int days = Utils.getDay();
+            int days = Utils.getNewDay();
 
             int time = world.isThundering() ? world.getWeatherDuration() / 20 + days * 1800 : days * 1800;
 

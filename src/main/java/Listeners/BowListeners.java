@@ -70,6 +70,7 @@ public class BowListeners implements Listener{
                             damaged.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, damaged.getLocation(), 1);
                             damaged.getWorld().getNearbyEntities(damaged.getLocation(), 10, 10, 10, entity -> entity instanceof LivingEntity).forEach(entity -> {
                                 LivingEntity livingEntity = (LivingEntity) entity;
+                                if(livingEntity instanceof Player)return;
                                 livingEntity.damage(25);
                             });
                         }

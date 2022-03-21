@@ -168,6 +168,12 @@ public class DamageListeners implements Listener{
                     e.setDamage(e.getDamage() * 6);
                 }else if(e.getCause() == EntityDamageEvent.DamageCause.STARVATION){
                     e.setDamage(e.getDamage() * 6);
+                }else if(e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK){
+                    e.setDamage(e.getDamage() * 5);
+                }else if(e.getCause() == EntityDamageEvent.DamageCause.LAVA){
+                    e.setDamage(e.getDamage() * 6);
+                }else if(e.getCause() == EntityDamageEvent.DamageCause.CONTACT){
+                    e.setDamage(e.getDamage() * 10);
                 }
             }
         }
