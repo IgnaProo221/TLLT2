@@ -135,7 +135,7 @@ public class DropsListeners implements Listener{
                 e.getDrops().clear();
                 int tackle = new Random().nextInt(100);
                 if(tackle > 95){
-                    e.getDrops().add(Items.tackle0ome());
+                    e.getDrops().add(Items.tackleTome());
                 }
             }
         }
