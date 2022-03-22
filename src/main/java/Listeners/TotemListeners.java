@@ -156,6 +156,7 @@ public class TotemListeners implements Listener {
                                 channel.sendMessage(eb.build()).queue();
                             }
                         }
+                        return;
                     }
 
 

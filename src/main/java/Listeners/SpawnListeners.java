@@ -117,7 +117,7 @@ public class SpawnListeners implements Listener {
             } else if (entity instanceof Creeper creeper && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
                 Mobs.creeperSandstone(creeper);
             }
-        }else if (entity instanceof Skeleton skeleton && !(entity instanceof Stray) && !(entity instanceof WitherSkeleton) && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL || e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CUSTOM)) {
+        }else if (entity instanceof Skeleton skeleton && !(entity instanceof Stray) && !(entity instanceof WitherSkeleton) && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL)) {
             if (spawnmob > 80) {
                 Mobs.blightedSkeleton(skeleton);
                 skeleton.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
@@ -144,7 +144,7 @@ public class SpawnListeners implements Listener {
                     Mobs.abomination(wither);
                 }
             }
-        } else if (entity instanceof Spider spider && !(entity instanceof CaveSpider) && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL || e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CUSTOM)) {
+        } else if (entity instanceof Spider spider && !(entity instanceof CaveSpider) && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL)) {
             if (spawnmob > 80) {
                 Mobs.blightedSpider(spider);
             }else if(spawnmob > 50 && entitybiome == Biome.PLAINS){
@@ -176,7 +176,7 @@ public class SpawnListeners implements Listener {
                 }
 
             }
-        } else if (entity instanceof Zombie zombie && !(entity instanceof ZombieVillager) && !(entity instanceof Husk) && !(entity instanceof Drowned) && !(entity instanceof PigZombie) && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL || e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CUSTOM)) {
+        } else if (entity instanceof Zombie zombie && !(entity instanceof ZombieVillager) && !(entity instanceof Husk) && !(entity instanceof Drowned) && !(entity instanceof PigZombie) && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL)) {
             if (spawnmob > 80) {
                 Mobs.blightedZombi(zombie);
             } else if (spawnmob > 50 && entitybiome == Biome.PLAINS) {
@@ -216,9 +216,12 @@ public class SpawnListeners implements Listener {
             }
         }else  if(entity instanceof Bat bat && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             if (bat.getWorld().isThundering()) {
+                int mobcaptry = new Random().nextInt(10000);
                 bat.remove();
-                Blaze blaze = bat.getWorld().spawn(bat.getLocation(), Blaze.class);
-                Mobs.hellfire(blaze);
+                if(mobcaptry == 1) {
+                    Blaze blaze = bat.getWorld().spawn(bat.getLocation(), Blaze.class);
+                    Mobs.hellfire(blaze);
+                }
             }
         }else if(entity instanceof Piglin piglin && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
             piglin.setCustomName(format("&b&lFrancotirador"));
@@ -254,7 +257,7 @@ public class SpawnListeners implements Listener {
                 PiglinBrute piglinBrute = pigZombie.getWorld().spawn(pigZombie.getLocation(),PiglinBrute.class);
             }
 
-        }else if(entity instanceof Blaze blaze && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
+        }else if(entity instanceof Blaze blaze){
             Mobs.hellfire(blaze);
         } else if (entity instanceof Creeper creeper && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL || e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CUSTOM)) {
             if (spawnmob > 80) {
@@ -265,11 +268,11 @@ public class SpawnListeners implements Listener {
                 creeper.setPowered(true);
                 creeper.setCustomName(format("&6&lPowered Creeper"));
             }
-        }else if(entity instanceof Husk husk && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+        }else if(entity instanceof Husk husk) {
             husk.setCustomName(format("&6Devorador"));
             husk.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
             husk.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false, false, false));
-        }else if(entity instanceof Stray stray && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
+        }else if(entity instanceof Stray stray){
             stray.setCustomName(format("&e&lIce Killer"));
             stray.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, false, false, false));
             stray.getEquipment().setItemInMainHand(new ItemBuilder(Material.GOLDEN_AXE).setUnbreakable(true).addEnchantment(Enchantment.DAMAGE_ALL,50).setUnbreakable(true).build());
@@ -562,26 +565,38 @@ public class SpawnListeners implements Listener {
     public static void spawnRandomMob(Location location){
         int whatmob = new Random().nextInt(10) +1;
         if(whatmob == 1){
-            location.getWorld().spawn(location, Zombie.class);
-
+            var entity = location.getWorld().spawn(location, Zombie.class);
+            Mobs.zombCarni(entity);
         }else if(whatmob == 2){
-            location.getWorld().spawn(location,Skeleton.class);
+            var entity =location.getWorld().spawn(location,Skeleton.class);
+            Mobs.blightedSkeleton(entity);
         }else if(whatmob == 3){
-            location.getWorld().spawn(location,Creeper.class);
+            var entity = location.getWorld().spawn(location,Creeper.class);
+            Mobs.blightedCreeper(entity);
         }else if(whatmob == 4){
-            location.getWorld().spawn(location,Spider.class);
+            var entity =location.getWorld().spawn(location,Spider.class);
+            Mobs.blightedSpider(entity);
         }else if(whatmob == 5){
-            location.getWorld().spawn(location,Enderman.class);
+            var entity = location.getWorld().spawn(location,Enderman.class);
+            Mobs.blightedEndermam(entity);
         }else if(whatmob == 6){
-            location.getWorld().spawn(location,Wither.class);
+            var entity =location.getWorld().spawn(location,IronGolem.class);
+            Mobs.zombObeso(entity);
         }else if(whatmob == 7){
-            location.getWorld().spawn(location,Pillager.class);
+            var entity =location.getWorld().spawn(location,Pillager.class);
+            Mobs.dynamLlager(entity);
         }else if(whatmob == 8){
-            location.getWorld().spawn(location,Ravager.class);
+            var ravager = location.getWorld().spawn(location,Ravager.class);
+            ravager.setCustomName(format("&6&lDestroyer"));
+            ravager.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(34);
+            ravager.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(100);
+            ravager.setHealth(100);
         }else if(whatmob == 9){
-            location.getWorld().spawn(location,PiglinBrute.class);
+            var entity = location.getWorld().spawn(location,PiglinBrute.class);
+            Mobs.blightedPiglin(entity);
         }else{
-            location.getWorld().spawn(location,WitherSkeleton.class);
+            var entity = location.getWorld().spawn(location,WitherSkeleton.class);
+            Mobs.abomination(entity);
         }
     }
 }

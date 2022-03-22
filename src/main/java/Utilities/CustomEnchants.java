@@ -329,7 +329,7 @@ public class CustomEnchants implements Listener {
                 }else{
                     lorvez= new ArrayList<>();
                 }
-                lorvez.add(format("&6Encantamiento Ancestral: &eWhiter Justice"));
+                lorvez.add(format("&6Encantamiento Ancestral: &eTackle"));
 
                 pickax43.addUnsafeEnchantment(CustomEnchants.TACKLE, 1);
                 pickax43.setLore(lorvez);

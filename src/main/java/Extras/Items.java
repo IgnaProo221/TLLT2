@@ -358,7 +358,7 @@ public class Items {
         lore.add(Component.text(format("&7Tus Flechas pueden hacer un daño en area")));
         return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.PYROMANIAC, 1).setLore(lore).build();
     }
-    public static ItemStack tackle0ome(){
+    public static ItemStack tackleTome(){
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lTackle")));
         lore.add(Component.text(format("&7Los Mobs son lanzados despues de golpear tu escudo")));

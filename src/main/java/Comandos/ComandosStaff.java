@@ -744,7 +744,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                 }else if (args[1].equalsIgnoreCase("ANCIENT_TOME_9")){
                     player.getInventory().addItem(Items.pyroTome());
                 }else if (args[1].equalsIgnoreCase("ANCIENT_TOME_10")){
-                    player.getInventory().addItem(Items.tackle0ome());
+                    player.getInventory().addItem(Items.tackleTome());
                 }else if (args[1].equalsIgnoreCase("HYPERION")){
                     player.getInventory().addItem(Items.hyperion());
                 }

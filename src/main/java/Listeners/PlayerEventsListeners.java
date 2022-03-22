@@ -6,6 +6,7 @@ import Utilities.*;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.Block;
 import org.bukkit.entity.*;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -95,11 +96,30 @@ public class PlayerEventsListeners implements Listener {
                 if(p.getInventory().getItemInMainHand().hasItemMeta()){
                     if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
                      if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 84984389){
-                         Location playerLocation = p.getLocation();
-                         Vector playerDirection = p.getLocation().getDirection().multiply(3);
-                         Location targetLocation = playerLocation.add(playerDirection);
-                         p.teleport(targetLocation);
+                         final HashSet hashSet = new HashSet<Material>();
+                         hashSet.add(Material.AIR);
+                         final Block block = p.getTargetBlock((Set<Material>) hashSet, 10);
+
+                         final Location playerLocation = p.getLocation();
+                         final Location teleportLocation = new Location(block.getWorld(), block.getX(),
+                                 block.getY(), block.getZ(), playerLocation.getYaw(), playerLocation.getPitch());
+
+                         if (teleportLocation.getBlock().getType() != Material.AIR) {
+                             teleportLocation.setY(teleportLocation.getY() + 1);
+                         }
+
+                         if (new Location(teleportLocation.getWorld(), teleportLocation.getX(), teleportLocation.getY() + 1,
+                                 teleportLocation.getZ()).getBlock().getType() == Material.AIR
+                                 && p.getLocation().add(p.getLocation().getDirection()).getBlock().getType() == Material.AIR) {
+                             teleportLocation.setX(teleportLocation.getX() - 0.5D);
+                             teleportLocation.setZ(teleportLocation.getZ() - 0.5D);
+                         } else {
+                             teleportLocation.setX(teleportLocation.getX() + 0.5D);
+                             teleportLocation.setZ(teleportLocation.getZ() + 0.5D);
+                         }
+                         p.teleport(teleportLocation);
                          p.getWorld().spawnParticle(Particle.EXPLOSION_HUGE,p.getLocation(),1);
+                         p.playSound(p.getLocation(),Sound.ENTITY_ZOMBIE_VILLAGER_CURE,SoundCategory.HOSTILE,10.0F,0.7F);
                          p.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION,1200,9,false,false,false));
                          p.getWorld().getNearbyEntities(p.getLocation(),10,10,10, entity -> entity instanceof LivingEntity).forEach(entity -> {
                              LivingEntity livingEntity = (LivingEntity) entity;
