@@ -109,7 +109,9 @@ public class TotemListeners implements Listener {
 
                         if (needTotems > size) {
                             e.setCancelled(true);
-                            globalMessage = format("&8El jugador &c&l" + p.getName() + "&8 no tenia suficientes&c tótems &8en su inventario. &7(&6&l" + size + "&7/&6&l" + needTotems + "&7)&8! &7(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + "&7)");
+                            for(Player player : Bukkit.getOnlinePlayers()){
+                                player.sendMessage(format("&8El jugador &c&l" + p.getName() + "&8 no tenia suficientes&c tótems &8en su inventario. &7(&6&l" + size + "&7/&6&l" + needTotems + "&7)&8! &7(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + "&7)"));
+                            }
                         } else {
 
                             new BukkitRunnable() {
@@ -135,7 +137,9 @@ public class TotemListeners implements Listener {
                             }.runTaskLater(TLL2.getPlugin(TLL2.class), 60L);
 
                             p.getInventory().removeItem(new ItemStack(Material.TOTEM_OF_UNDYING, 3));
-                            globalMessage = format("&8El Jugador &c&l" + p.getName() + " &8uso un &e&lTótem Especial &7(Totem: &c&lUnlucky Idol) &7(Causa: "  + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + "&7)" );
+                            for (Player player : Bukkit.getOnlinePlayers()){
+                                player.sendMessage(format("&8El Jugador &c&l" + p.getName() + " &8uso un &e&lTótem Especial &7(Totem: &c&lUnlucky Idol) &7(Causa: "  + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + "&7)"));
+                            }
                             EmbedBuilder eb = new EmbedBuilder();
                             TextChannel channel = DeathListeners.getJda().getTextChannelById("949669572179533854");
 

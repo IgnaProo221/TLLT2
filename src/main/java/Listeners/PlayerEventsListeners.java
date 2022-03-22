@@ -158,11 +158,15 @@ public class PlayerEventsListeners implements Listener {
                                 PlayerData data = CustomPlayer.fromName(p.getName()).getData();
                                 if(undyingCooldown.containsKey(p.getUniqueId())){
                                     p.sendMessage(PREFIX,format("&c&lEsta habilidad esta en Cooldown!"));
+                                    return;
+                                }else {
+                                    data.setImmunity(1);
+                                    p.sendMessage(PREFIX, format("&6Has usado la &e&lUndying Sceptre"));
+                                    undyingCooldown.put(p.getUniqueId(), System.currentTimeMillis() + (500 * 1000));
+                                    Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                                        data.setImmunity(0);
+                                    }, 300L);
                                 }
-                                data.setImmunity(1);
-                                Bukkit.getScheduler().runTaskLater(plugin,()->{
-                                    data.setImmunity(0);
-                                },300L);
                             }
                         }
                     }

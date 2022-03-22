@@ -36,7 +36,7 @@ public class NMSSpawn implements Listener{
         if(entity instanceof Animals)return;
         if(!(e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL))return;
         if(entity.getWorld().getEnvironment() == World.Environment.NORMAL){
-            int minrrspawn = new Random().nextInt(10000);
+            int minrrspawn = new Random().nextInt(1000);
             if(minrrspawn == 1){
                 int mobtype = new Random().nextInt(3);
                 if(mobtype == 1){

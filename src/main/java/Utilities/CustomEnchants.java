@@ -59,6 +59,7 @@ public class CustomEnchants implements Listener {
         list.add(CustomEnchants.SHRIEK);
         list.add(CustomEnchants.WITHER_JUSTICE);
         list.add(CustomEnchants.PYROMANIAC);
+        list.add(CustomEnchants.TACKLE);
 
         return list;
 

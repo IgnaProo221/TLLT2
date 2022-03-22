@@ -216,7 +216,7 @@ public class SpawnListeners implements Listener {
             }
         }else  if(entity instanceof Bat bat && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             if (bat.getWorld().isThundering()) {
-                int mobcaptry = new Random().nextInt(10000);
+                int mobcaptry = new Random().nextInt(1000);
                 bat.remove();
                 if(mobcaptry == 1) {
                     Blaze blaze = bat.getWorld().spawn(bat.getLocation(), Blaze.class);
@@ -252,9 +252,10 @@ public class SpawnListeners implements Listener {
                 Warn.Mutant(ec);
             }
             int chancedebrute = new Random().nextInt(100);
-            if(chancedebrute >= 10){
+            if(chancedebrute >= 90){
                 pigZombie.remove();
                 PiglinBrute piglinBrute = pigZombie.getWorld().spawn(pigZombie.getLocation(),PiglinBrute.class);
+                piglinBrute.setRemoveWhenFarAway(true);
             }
 
         }else if(entity instanceof Blaze blaze){
