@@ -16,6 +16,7 @@ import org.bukkit.event.weather.ThunderChangeEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
 import java.util.Random;
+import java.util.logging.Level;
 
 import static Utilities.Format.format;
 
@@ -23,6 +24,8 @@ public class BlastStormListeners implements Listener {
 
     private static BossBar bossBar;
     private static Integer TaskBossBarID = 0;
+
+    private static boolean active = false;
 
 
     public static void createBossBar() {
@@ -47,12 +50,12 @@ public class BlastStormListeners implements Listener {
         });
 
         World world = Utils.getWorld();
+        active = true;
 
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
         world.setTime(18000);
         Bukkit.getScheduler().scheduleSyncDelayedTask(Utils.getPlugin(), () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
-                //player.playSound(player.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 10.0F, -1.0F);
                 player.playSound(player.getLocation(),"tllt2.stormsound", SoundCategory.RECORDS,10.0F, 1.0F);
                 player.sendTitle(Format.format(e.getTitleStorm(tierLevel)), Format.format(e.getSubtitleStorm(tierLevel)));
             }
@@ -65,6 +68,8 @@ public class BlastStormListeners implements Listener {
             Bukkit.getScheduler().cancelTask(TaskBossBarID);
             TaskBossBarID = null;
         }
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "weather clear 999999"); // nose cuantos 9 son pero hola:
+        active = false;
     }
 
     private static String getTime(){
@@ -82,7 +87,7 @@ public class BlastStormListeners implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        if (Utils.getWorld().getWeatherDuration() > 0 && bossBar != null) {
+        if (BlastStormListeners.IsActive() && bossBar != null) {
             bossBar.addPlayer(e.getPlayer());
         }
 
@@ -123,31 +128,6 @@ public class BlastStormListeners implements Listener {
 
 
 
-   /* @EventHandler //no entiendo para que es esto pero ok
-    public void setBlastStorm(WeatherChangeEvent e) {
-        Bukkit.getLogger().info("asd");
-
-        if(e.toWeatherState()){
-            Bukkit.getLogger().info("asd1");
-
-            Random random = new Random();
-            int chance = 2 * Utils.getDay() - 1;
-
-            int a = 90;
-            int b = Utils.getDay() + 45;
-
-            if (chance > a) {
-                a = a + chance - b;
-            }
-            if (random.nextInt(a) < chance) {
-                e.setCancelled(true);
-                //StartBlastStormEvent start = new StartBlastStormEvent();
-                //Bukkit.getPluginManager().callEvent(start);
-            }else{
-                e.setCancelled(true);
-            }
-        }
-    }*/
 
     @EventHandler
     public void onThunderChange(ThunderChangeEvent e){
@@ -162,9 +142,23 @@ public class BlastStormListeners implements Listener {
             bossBar.setVisible(false);
             Utils.getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true);
 
+
             StopBlastStormEvent event = new StopBlastStormEvent(StopBlastStormEvent.Cause.NATURAL);
             Bukkit.getPluginManager().callEvent(event);
         }
     }
 
+
+        //Testear antes de poner @EventHandler
+    public void onWeatherChange(WeatherChangeEvent e){
+        if(BlastStormListeners.IsActive() && e.toWeatherState()) {
+            e.setCancelled(true);
+            Bukkit.getLogger().info("Ha comenzado una tormenta natural cuando ya estaba una blast storm activa");
+        }else if(e.toWeatherState() && !BlastStormListeners.IsActive()) {
+            Bukkit.getScheduler().runTask(Utils.getPlugin(), () -> e.setCancelled(true));
+        }
+    }
+    public static boolean IsActive() {
+        return active;
+    }
 }

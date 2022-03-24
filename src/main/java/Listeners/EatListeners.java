@@ -37,7 +37,7 @@ public class EatListeners implements Listener {
         PlayerData data = CustomPlayer.fromName(p.getName()).getData();
         var temperature = data.getTemperature();
 
-        if(p.getWorld().isThundering()){
+        if(p.getWorld().isThundering() && BlastStormListeners.IsActive()){
             applyRandomEffects(p);
         }
         if(e.getItem().getType() == Material.MILK_BUCKET){
