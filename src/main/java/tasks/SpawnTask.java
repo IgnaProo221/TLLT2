@@ -23,7 +23,7 @@ public class SpawnTask extends BukkitRunnable {
     public void run() {
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (player.getGameMode() == GameMode.SURVIVAL) {
-                if (Utils.getWorld().isThundering()) {
+                if (Utils.getWorld().isThundering()) { //Nose si esto es en blastStorm pero si lo es cambienlo ha "BlastStormListeners.IsActive()"
                     int chance = new Random().nextInt(1000);
                     Location l = player.getLocation();
                     if (chance == 1) {
