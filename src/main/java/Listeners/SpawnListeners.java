@@ -151,7 +151,6 @@ public class SpawnListeners implements Listener {
                 Mobs.roboSpider(spider);
             } else {
                 int spidertype = new Random().nextInt(3) + 1;
-                int jockeychance = new Random().nextInt(100);
                 if (spidertype == 1) {
                     Mobs.agileTarantule(spider);
                 } else if (spidertype == 2) {
@@ -159,20 +158,17 @@ public class SpawnListeners implements Listener {
                 } else {
                     Mobs.solarScorpion(spider);
                 }
-
-                if (jockeychance > 70) {
-                    var skeletonpass = spider.getLocation().getWorld().spawn(spider.getLocation(), Skeleton.class);
-                    spider.setPassenger(skeletonpass);
-                    int bow = new Random().nextInt(4);
-                    if (bow == 1) {
-                        Mobs.ignitedSkeleton(skeletonpass);
-                    }else if(bow == 2){
-                        Mobs.blizzardSkeleton(skeletonpass);
-                    }else if(bow == 3){
-                        Mobs.copperSkeleton(skeletonpass);
-                    }else{
-                        Mobs.bullseyeSkeleton(skeletonpass);
-                    }
+                var skeletonpass = spider.getLocation().getWorld().spawn(spider.getLocation(), Skeleton.class);
+                spider.setPassenger(skeletonpass);
+                int bow = new Random().nextInt(4);
+                if (bow == 1) {
+                    Mobs.ignitedSkeleton(skeletonpass);
+                }else if(bow == 2){
+                    Mobs.blizzardSkeleton(skeletonpass);
+                }else if(bow == 3){
+                    Mobs.copperSkeleton(skeletonpass);
+                }else{
+                    Mobs.bullseyeSkeleton(skeletonpass);
                 }
 
             }
@@ -216,7 +212,7 @@ public class SpawnListeners implements Listener {
             }
         }else  if(entity instanceof Bat bat && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             if (bat.getWorld().isThundering()) {
-                int mobcaptry = new Random().nextInt(1000);
+                int mobcaptry = new Random().nextInt(100);
                 bat.remove();
                 if(mobcaptry == 1) {
                     Blaze blaze = bat.getWorld().spawn(bat.getLocation(), Blaze.class);
@@ -258,7 +254,7 @@ public class SpawnListeners implements Listener {
                 piglinBrute.setRemoveWhenFarAway(true);
             }
 
-        }else if(entity instanceof Blaze blaze){
+        }else if(entity instanceof Blaze blaze) {
             Mobs.hellfire(blaze);
         } else if (entity instanceof Creeper creeper && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL || e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CUSTOM)) {
             if (spawnmob > 80) {
@@ -268,6 +264,36 @@ public class SpawnListeners implements Listener {
             } else {
                 creeper.setPowered(true);
                 creeper.setCustomName(format("&6&lPowered Creeper"));
+            }
+        }else if(entity instanceof Salmon){
+            e.setCancelled(true);
+            PufferFish pufferFish = entity.getWorld().spawn(entity.getLocation(),PufferFish.class);
+            setCustomMobcap(pufferFish, 3, 1.10, 24, 20, true);
+        }else if(entity instanceof MagmaCube magmaCube && !(entity instanceof Slime) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+            if (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SLIME_SPLIT) {
+                magmaCube.setCustomName(format("&6&lInferno Cube"));
+                magmaCube.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
+                magmaCube.setHealth(20);
+                magmaCube.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10);
+            } else {
+                magmaCube.setCustomName(format("&6&lInferno Cube"));
+                magmaCube.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
+                magmaCube.setHealth(60);
+                magmaCube.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(26);
+                magmaCube.setSize(15);
+            }
+        }else if(entity instanceof Slime slime && !(entity instanceof MagmaCube) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
+            if(e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SLIME_SPLIT){
+                slime.setCustomName(format("&2Sludge"));
+                slime.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(10);
+                slime.setHealth(10);
+                slime.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(26);
+            }else{
+                slime.setSize(8);
+                slime.setCustomName(format("&2Sludge"));
+                slime.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
+                slime.setHealth(60);
+                slime.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(26);
             }
         }else if(entity instanceof Husk husk) {
             husk.setCustomName(format("&6Devorador"));
@@ -315,7 +341,7 @@ public class SpawnListeners implements Listener {
             piglinBrute.setCustomName(format("&c&lZog-Rider"));
         } else if (entity instanceof Silverfish silverfish) {
             if (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SILVERFISH_BLOCK) {
-                if (spawnmob > 90) {
+                if (spawnmob > 80) {
                     silverfish.remove();
                     spawnRandomMob(silverfish.getLocation());
                 }else{
@@ -327,13 +353,14 @@ public class SpawnListeners implements Listener {
 
         } else if (entity instanceof Endermite endermite) {
             if (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.ENDER_PEARL) {
-                if (spawnmob > 90) {
+                if (spawnmob > 80) {
                     endermite.remove();
                     spawnRandomMob(endermite.getLocation());
                 }else{
-                    endermite.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
-                    endermite.setHealth(30);
-                    endermite.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10);
+                    endermite.setCustomName(format("&5&lVoid Fiend"));
+                    endermite.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
+                    endermite.setHealth(50);
+                    endermite.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(30);
                 }
             }
         }else if(entity instanceof Enderman enderman && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
@@ -354,9 +381,9 @@ public class SpawnListeners implements Listener {
             }
         }else if(entity instanceof Phantom phantom && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
             if(spawnmob > 80){
-                Mobs.blightedPhantom(phantom);
-            }else if(spawnmob > 50 && entitybiome == Biome.PLAINS){
                 Mobs.roboPhantom(phantom);
+            }else{
+                Mobs.blightedPhantom(phantom);
             }
         }else if(entity instanceof PolarBear polarBear && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
             polarBear.setCustomName(format("&b&lFrostbear"));
@@ -432,6 +459,12 @@ public class SpawnListeners implements Listener {
             }
         }else if(entity instanceof WitherSkeleton witherSkeleton && !(entity instanceof Stray) && !(entity instanceof Skeleton) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
             int lavachance = new Random().nextInt(100);
+            witherSkeleton.setCustomName(format("&6Advanced Wither Skeleton"));
+            witherSkeleton.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(70);
+            witherSkeleton.setHealth(70);
+            witherSkeleton.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
+            witherSkeleton.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+            witherSkeleton.getEquipment().setItemInMainHand(new ItemBuilder(Material.NETHERITE_AXE).setUnbreakable(true).addEnchantment(Enchantment.DAMAGE_ALL,30).build());
             if(lavachance > 90){
                 witherSkeleton.remove();
                 IronGolem ironGolem = witherSkeleton.getWorld().spawn(witherSkeleton.getLocation(),IronGolem.class);

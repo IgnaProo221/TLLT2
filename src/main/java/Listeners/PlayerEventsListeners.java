@@ -49,8 +49,8 @@ public class PlayerEventsListeners implements Listener {
         Player p = event.getPlayer();
 
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if(!event.getItem().hasItemMeta())return;
             if(event.getItem() == null)return;
+            if(!event.getItem().hasItemMeta())return;
             if (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasDisplayName() && p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(Format.format("&7Daga Ceremonial"))) {
                 var data = p.getPersistentDataContainer();
                 var inventory = p.getInventory();
@@ -102,14 +102,14 @@ public class PlayerEventsListeners implements Listener {
                                 return;
                             }else{
                                 p.sendMessage(PREFIX,format("&6¡Has usado la Ember Sceptre"));
-                                var minifireball1 = (SmallFireball)p.getWorld().spawnEntity(p.getLocation().add(p.getEyeLocation()),EntityType.SMALL_FIREBALL);
+                                var minifireball1 = (SmallFireball)p.launchProjectile(SmallFireball.class);
                                 minifireball1.setCustomName("ember_projectile");
                                 Bukkit.getScheduler().runTaskLater(plugin,()->{
-                                    var minifireball2 = (SmallFireball)p.getWorld().spawnEntity(p.getLocation().add(p.getEyeLocation()),EntityType.SMALL_FIREBALL);
+                                    var minifireball2 = (SmallFireball)p.launchProjectile(SmallFireball.class);
                                     minifireball2.setCustomName("ember_projectile");
                                 },10L);
                                 Bukkit.getScheduler().runTaskLater(plugin,() ->{
-                                    var minifireball3 = (SmallFireball)p.getWorld().spawnEntity(p.getLocation().add(p.getEyeLocation()),EntityType.SMALL_FIREBALL);
+                                    var minifireball3 = (SmallFireball)p.launchProjectile(SmallFireball.class);
                                     minifireball3.setCustomName("ember_projectile");
                                 },20L);
                             }

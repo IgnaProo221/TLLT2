@@ -125,8 +125,8 @@ public class EntityListeners implements Listener {
     @EventHandler
     public void witherTest(ExplosionPrimeEvent e){
         if(e.getEntity() instanceof Wither wither){
-            if(wither.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "TYRANT_WITHER"), PersistentDataType.STRING)) {
-                e.setRadius(20);
+            if(wither.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ADVANCED_WITHER"), PersistentDataType.STRING)) {
+                e.setRadius(10);
             }
         }
     }
@@ -295,7 +295,7 @@ public class EntityListeners implements Listener {
             }
             if(damager instanceof PufferFish pufferFish){
                 if(pufferFish.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"RADIO_GLOBE"),PersistentDataType.STRING)){
-                    ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.HARM,1,1,false,false,false));
+                    ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.HARM,1,3,false,false,false));
                 }
             }
             if(damager instanceof Zombie){
@@ -459,9 +459,9 @@ public class EntityListeners implements Listener {
             if (projectile instanceof WitherSkull) {
                 if(wither.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"ADVANCED_WITHER"),PersistentDataType.STRING))
                 if (hitblock != null) {
-                    hitblock.getLocation().createExplosion(wither, 3, false, true);
+                    hitblock.getLocation().createExplosion(wither, 4, false, true);
                 } else if (entity != null) {
-                    entity.getLocation().createExplosion(wither, 3, false, true);
+                    entity.getLocation().createExplosion(wither, 4, false, true);
                 }
             }
         }
