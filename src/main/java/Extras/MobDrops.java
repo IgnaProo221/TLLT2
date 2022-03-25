@@ -1,10 +1,12 @@
 package Extras;
 
 import Utilities.ItemBuilder;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,5 +140,15 @@ public class MobDrops{
     }
     public static ItemStack hellfireRod(){
         return new ItemBuilder(Material.BLAZE_ROD).setName(format("&6&lHellfire Rod")).setCustomModelData(108239139).build();
+    }
+    public static ItemStack infernalbloom(){
+        return new ItemBuilder(Material.BLAZE_POWDER).setName(format("&4&lInfernobloom")).setCustomModelData(120312).build();
+    }
+    public static ItemStack darknessEssence(int amount){
+        List<net.kyori.adventure.text.Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&7Esencia de la oscuridad, proveniente")));
+        lore.add(Component.text(format("&7de las Sombras desconocidas que rondan")));
+        lore.add(Component.text(format("&7este mundo")));
+        return new ItemBuilder(Material.FEATHER, amount).setName(format("&8&lEsencia de Oscuridad")).setLore(lore).setCustomModelData(988311).build();
     }
 }

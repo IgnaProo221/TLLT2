@@ -303,6 +303,64 @@ public class Items {
         return new ItemBuilder(Material.TOTEM_OF_UNDYING).setName(format("&e&lSigilo de Inmortalidad")).setLore(lore).setCustomModelData(6389).build();
     }
 
+
+
+
+
+    //Umbra Tools
+    public static ItemStack umbraRod(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Chance de Pescar Shade Mobs y otros Items")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.FISHING_ROD).setName(format("&5&lUmbra Rod")).setLore(lore).setUnbreakable(true).setCustomModelData(102038461).build();
+    }
+    public static ItemStack umbraDrill(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Viene con Telekinesis y Experience")));
+        lore.add(Component.text(format("&c&lEvitara Maldiciones en Dias Futuros")));
+        return new ItemBuilder(Material.NETHERITE_PICKAXE).setName(format("&5&lUmbra Drill")).setLore(lore).setUnbreakable(true).addEnchantment(Enchantment.DIG_SPEED,7).setCustomModelData(736535).addCustomEnchant(CustomEnchants.TELEPHATY, 1).addCustomEnchant(CustomEnchants.EXPERIENCE, 1).build();
+    }
+    public static ItemStack umbraAxe(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Viene con Telekinesis y Lucky Tree")));
+        lore.add(Component.text(format("&c&lEvitara Maldiciones en Dias Futuros")));
+        return new ItemBuilder(Material.NETHERITE_AXE).setName(format("&5&lUmbra Axe")).setLore(lore).setUnbreakable(true).addEnchantment(Enchantment.DIG_SPEED,7).setCustomModelData(77353518).addCustomEnchant(CustomEnchants.TELEPHATY, 1).addCustomEnchant(CustomEnchants.LUCKY_TREE, 1).build();
+    }
+    public static ItemStack umbraShovel(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Viene con Smelting Touch")));
+        lore.add(Component.text(format("&c&lEvitara Maldiciones en Dias Futuros")));
+        return new ItemBuilder(Material.NETHERITE_SHOVEL).setName(format("&5&lUmbra Shovel")).setLore(lore).setUnbreakable(true).addEnchantment(Enchantment.DIG_SPEED,7).setCustomModelData(5463739).addCustomEnchant(CustomEnchants.SMELTING_TOUCH, 1).build();
+    }
+    public static ItemStack umbraHoe(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Sacando plantaciones de Zanahorias y Papas")));
+        lore.add(Component.text(format("&7Podras sacar Manzanas Doradas Encantadas")));
+        lore.add(Component.text(format("&c&lEvitara Maldiciones en Dias Futuros")));
+        return new ItemBuilder(Material.NETHERITE_HOE).setName(format("&5&lUmbra Hoe")).setLore(lore).setUnbreakable(true).addEnchantment(Enchantment.KNOCKBACK,5).setCustomModelData(236).build();
+    }
+    public static ItemStack touchofdarkness(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&8&lSe parte de la Oscuridad, vuélvete uno con las Sombras")));
+        lore.add(Component.text(format("&7Tus flechas Infligen Wither, Slowness y Weakness")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.BOW).setName(format("&8&lTouch of Darkness")).setLore(lore).setUnbreakable(true).addEnchantment(Enchantment.ARROW_DAMAGE,10).setCustomModelData(91817).build();
+    }
+
+
+
+
+
+
+
+
+    //ENCANTAMIENTOS
     public static ItemStack teleTome(){
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lTelephaty")));
@@ -364,13 +422,25 @@ public class Items {
         lore.add(Component.text(format("&7Los Mobs son lanzados despues de golpear tu escudo")));
         return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.TACKLE, 1).setLore(lore).build();
     }
-
-    public static ItemStack testEnchant(){
-        //TODO usen este item si hay algun enchant bug para probarlo
-        ItemStack dou = new ItemBuilder(Material.NETHERITE_PICKAXE).setName("&6Test Pickaxe").setUnbreakable(true).addCustomEnchant(CustomEnchants.SMELTING_TOUCH, 1).build();
-        dou = NBTEditor.set(dou,1,"holafelipe");
-        return dou;
+    public static ItemStack heatproteTome(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lHeat Protection")));
+        lore.add(Component.text(format("&7Reduce el daño por Fuego, Lava y Magma Blocks")));
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.HEAT_PROTECTION, 1).setLore(lore).build();
     }
+    public static ItemStack adaptativeTome(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lAdaptative")));
+        lore.add(Component.text(format("&7El Efecto de Hipotermia y Hipertermia 1 ya no se aplican")));
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.ADAPTATIVE, 1).setLore(lore).build();
+    }
+    public static ItemStack infernopowerTome(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lInferno Power")));
+        lore.add(Component.text(format("&7Mejora tu Ember Sceptre, haciendo que lance Fireballs que hacen mas daño!")));
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.INFERNO_POWER, 1).setLore(lore).build();
+    }
+
 
 
     public static ItemStack pieCalor(){
@@ -378,6 +448,25 @@ public class Items {
     }
     public static ItemStack pieFrio(){
         return new ItemBuilder(Material.PUMPKIN_PIE).setName(format("&b&lIce Pie")).build();
+    }
+
+
+    public static ItemStack fireHook(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Te impulsa hacia la direccion que estas mirando")));
+        lore.add(Component.text(format("&6&l¡Te Implusa el doble si estas sobre Lava!")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.FISHING_ROD).setLore(lore).setUnbreakable(true).setCustomModelData(1200390837).setName(format("&6&lFireHook")).build();
+    }
+
+    public static ItemStack emberSceptre(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Lanza una rafaga de Proyectiles hacia donde")));
+        lore.add(Component.text(format("&7estas mirando")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.BLAZE_ROD).setLore(lore).setUnbreakable(true).setCustomModelData(938745122).setName(format("&c&lEmber Sceptre")).build();
     }
 
 
@@ -487,48 +576,50 @@ public class Items {
     }
 
 
-
-
-
-    public static ItemStack lavaSigil(){
+    //UMBRA ARMOR
+    public static ItemStack umbraHelmet(){
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("")));
-        lore.add(Component.text(format("&7Prende Fuego a todos los Mobs alreadedor tuyo")));
-        lore.add(Component.text(format("&c¡No afecta entidades como otros jugadores, aldeanos o Iron Golems!")));
+        lore.add(Component.text(format("&7Un set de armadura con la oscuridad y el inferno")));
+        lore.add(Component.text(format("&7en su Interior")));
+        lore.add(Component.text(format("&7Tener el set completo te dara buffs variados,")));
+        lore.add(Component.text(format("&7otorgara inmunidad a la &eParalización &7y durante")));
+        lore.add(Component.text(format("&7las Noches tendrás el &cDoble de corazones extras&7.")));
         lore.add(Component.text(format("")));
-        return new ItemBuilder(Material.TOTEM_OF_UNDYING).setName(format("&6&lSigilo de Magma")).setLore(lore).setUnbreakable(true).setCustomModelData(901823).build();
+        return new ItemBuilder(Material.NETHERITE_HELMET).setLore(lore).setName(format("&5&lUmbra Helmet")).setUnbreakable(true).setCustomModelData(6761618).build();
     }
-    public static ItemStack iceSigil(){
+    public static ItemStack umbraChestplate(){
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("")));
-        lore.add(Component.text(format("&7Congela a todos los Mobs alreadedor tuyo")));
-        lore.add(Component.text(format("&c¡No afecta entidades como otros jugadores, aldeanos o Iron Golems!")));
+        lore.add(Component.text(format("&7Un set de armadura con la oscuridad y el inferno")));
+        lore.add(Component.text(format("&7en su Interior")));
+        lore.add(Component.text(format("&7Tener el set completo te dara buffs variados,")));
+        lore.add(Component.text(format("&7otorgara inmunidad a la &eParalización &7y durante")));
+        lore.add(Component.text(format("&7las Noches tendrás el &cDoble de corazones extras&7.")));
         lore.add(Component.text(format("")));
-        return new ItemBuilder(Material.TOTEM_OF_UNDYING).setName(format("&b&lSigilo de Hielo")).setLore(lore).setUnbreakable(true).setCustomModelData(911823).build();
+        return new ItemBuilder(Material.NETHERITE_CHESTPLATE).setLore(lore).setName(format("&5&lUmbra Chestplate")).setUnbreakable(true).setCustomModelData(6761618).build();
     }
-    public static ItemStack blizzardSigil(){
+    public static ItemStack umbraLeggings(){
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("")));
-        lore.add(Component.text(format("&7Hace levitar a todos los Mobs alreadedor tuyo")));
-        lore.add(Component.text(format("&c¡No afecta entidades como otros jugadores, aldeanos o Iron Golems!")));
+        lore.add(Component.text(format("&7Un set de armadura con la oscuridad y el inferno")));
+        lore.add(Component.text(format("&7en su Interior")));
+        lore.add(Component.text(format("&7Tener el set completo te dara buffs variados,")));
+        lore.add(Component.text(format("&7otorgara inmunidad a la &eParalización &7y durante")));
+        lore.add(Component.text(format("&7las Noches tendrás el &cDoble de corazones extras&7.")));
         lore.add(Component.text(format("")));
-        return new ItemBuilder(Material.TOTEM_OF_UNDYING).setName(format("&f&lSigilo de Ventisca")).setLore(lore).setUnbreakable(true).setCustomModelData(921823).build();
+        return new ItemBuilder(Material.NETHERITE_LEGGINGS).setLore(lore).setName(format("&5&lUmbra Leggings")).setUnbreakable(true).setCustomModelData(6761618).build();
     }
-    public static ItemStack magicSigil(){
+    public static ItemStack umbraBoots(){
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("")));
-        lore.add(Component.text(format("&7Debilita a todos los Mobs alreadedor tuyo")));
-        lore.add(Component.text(format("&c¡No afecta entidades como otros jugadores, aldeanos o Iron Golems!")));
+        lore.add(Component.text(format("&7Un set de armadura con la oscuridad y el inferno")));
+        lore.add(Component.text(format("&7en su Interior")));
+        lore.add(Component.text(format("&7Tener el set completo te dara buffs variados,")));
+        lore.add(Component.text(format("&7otorgara inmunidad a la &eParalización &7y durante")));
+        lore.add(Component.text(format("&7las Noches tendrás el &cDoble de corazones extras&7.")));
         lore.add(Component.text(format("")));
-        return new ItemBuilder(Material.TOTEM_OF_UNDYING).setName(format("&d&lSigilo de Hechizos")).setLore(lore).setUnbreakable(true).setCustomModelData(931823).build();
-    }
-    public static ItemStack explosiveSigil(){
-        List<Component> lore = new ArrayList<>();
-        lore.add(Component.text(format("")));
-        lore.add(Component.text(format("&c&lExplota a todos los Mobs alreadedor tuyo")));
-        lore.add(Component.text(format("&c¡No afecta entidades como otros jugadores, aldeanos o Iron Golems!")));
-        lore.add(Component.text(format("")));
-        return new ItemBuilder(Material.TOTEM_OF_UNDYING).setName(format("&4&lSigilo de Destruccion")).setLore(lore).setUnbreakable(true).setCustomModelData(941823).build();
+        return new ItemBuilder(Material.NETHERITE_BOOTS).setLore(lore).setName(format("&5&lUmbra Boots")).setUnbreakable(true).setCustomModelData(6761618).build();
     }
 
 

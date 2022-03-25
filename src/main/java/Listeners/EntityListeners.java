@@ -443,6 +443,18 @@ public class EntityListeners implements Listener {
         var shooter = event.getEntity().getShooter();
         var projectile = event.getEntity();
 
+        if(projectile instanceof SmallFireball smallFireball){
+            if(smallFireball.getCustomName() == null)return;
+            if(smallFireball.getCustomName().contains("ember_projectile")){
+                if(entity != null) {
+                    LivingEntity livingEntity = (LivingEntity) entity;
+                    if (livingEntity instanceof Player || livingEntity instanceof Villager || livingEntity instanceof ArmorStand) return;
+                    livingEntity.damage(15);
+                    livingEntity.setFireTicks(400);
+                }
+            }
+        }
+
         if(shooter instanceof Wither wither) {
             if (projectile instanceof WitherSkull) {
                 if(wither.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"ADVANCED_WITHER"),PersistentDataType.STRING))

@@ -34,9 +34,10 @@ public class EventosItems {
 
     public static void totemrestorerEvent(Player p, TLL2 plugin) {
         try{
+            PlayerData data = CustomPlayer.fromName(p.getName()).getData();
             p.sendMessage(Format.PREFIX, format("&cSe han reiniciado el porcentaje de tótems correctamente."));
             p.playEffect(EntityEffect.TOTEM_RESURRECT);
-            p.getPersistentDataContainer().set(new NamespacedKey(plugin, "TOTEM_BAR"), PersistentDataType.INTEGER, 100);
+            data.setTotemspercentage(100);
             Bukkit.getScheduler().runTaskLater(TLL2.getPlugin(TLL2.class), () -> {
                 p.playEffect(EntityEffect.TOTEM_RESURRECT);
             }, 20);

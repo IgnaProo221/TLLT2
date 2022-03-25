@@ -663,9 +663,51 @@ public class Mobs implements Listener{
 
 
 
+   //Darkness mobs
+   public static void Banshee(Vex self){
+        self.setCustomName(format("&8&lBanshee"));
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(15);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
+        self.setHealth(30);
+        self.getPersistentDataContainer().set(Utils.key("BANSHEE"),PersistentDataType.STRING,"BANSHEE");
+   }
+   public static void KillerScream(Vindicator self){
+        self.setCustomName(format("&8&lKillerscream"));
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(30);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(70);
+        self.setHealth(70);
+        self.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1000);
+        self.getPersistentDataContainer().set(Utils.key("KILLERSCREAM"),PersistentDataType.STRING,"KILLERSCREAM");
+   }
+   public static void Nightmare(Ghast self){
+        self.setCustomName(format("&8&lNightmare"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(100);
+        self.setHealth(100);
+        self.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(1000);
+        self.getPersistentDataContainer().set(Utils.key("NIGHTMARE"),PersistentDataType.STRING,"NIGHTMARE");
+   }
+   public static void Overscream(Creeper self){
+        self.setCustomName(format("&8&lOverscream"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
+        self.setHealth(50);
+        self.setExplosionRadius(7);
+        self.setMaxFuseTicks(10);
+        self.setFuseTicks(10);
+        self.getPersistentDataContainer().set(Utils.key("OVERSCREAM"),PersistentDataType.STRING,"OVERSCREAM");
+   }
 
+   public static void enderFlame(Enderman self){
 
+   }
+   public static void enderInfected(Enderman self){
 
+   }
+   public static void enderWatcher(Enderman self){
+
+   }
+   public static void enderAberration(Enderman self){
+
+   }
     //arañas
     public static void plagueSpider(Spider self){
         self.setCustomName(format("&2Plague Spider"));

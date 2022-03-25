@@ -1,5 +1,6 @@
 package Utilities;
 
+import net.minecraft.core.EnumAxisCycle;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -36,6 +37,10 @@ public class CustomEnchants implements Listener {
     public static final Enchantment WITHER_JUSTICE = new EnchantmentWrapper("wither_justice","wither_justice",1);
     public static final Enchantment PYROMANIAC = new EnchantmentWrapper("pyromaniac","pyromaniac",1);
     public static final Enchantment TACKLE = new EnchantmentWrapper("tackle","tackle",1);
+    public static final Enchantment HEAT_PROTECTION = new EnchantmentWrapper("heat_protection","heat_protection",1);
+    public static final Enchantment ADAPTATIVE = new EnchantmentWrapper("adaptative","adaptative",1);
+    public static final Enchantment INFERNO_POWER = new EnchantmentWrapper("inferno_power","inferno_power",1);
+    public static final Enchantment EXPERIENCE = new EnchantmentWrapper("experience","experience",1);
 
     public static void register() {
         for(Enchantment enchantment : allCustomEnchants()){
@@ -60,6 +65,10 @@ public class CustomEnchants implements Listener {
         list.add(CustomEnchants.WITHER_JUSTICE);
         list.add(CustomEnchants.PYROMANIAC);
         list.add(CustomEnchants.TACKLE);
+        list.add(CustomEnchants.ADAPTATIVE);
+        list.add(CustomEnchants.HEAT_PROTECTION);
+        list.add(CustomEnchants.INFERNO_POWER);
+
 
         return list;
 

@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerRiptideEvent;
@@ -49,6 +50,7 @@ public class PlayerEventsListeners implements Listener {
 
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if(!event.getItem().hasItemMeta())return;
+            if(event.getItem() == null)return;
             if (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasDisplayName() && p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(Format.format("&7Daga Ceremonial"))) {
                 var data = p.getPersistentDataContainer();
                 var inventory = p.getInventory();
@@ -91,7 +93,30 @@ public class PlayerEventsListeners implements Listener {
                 }*/
             }
             }
-
+            if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
+                if(event.getItem().hasItemMeta()){
+                    if(event.getItem().getItemMeta().hasCustomModelData()){
+                        if(event.getItem().getItemMeta().getCustomModelData() == 938745122){
+                            if(p.hasCooldown(Material.BLAZE_ROD)){
+                                p.sendMessage(PREFIX,format("&c&lEsta habilidad esta en Cooldown!"));
+                                return;
+                            }else{
+                                p.sendMessage(PREFIX,format("&6¡Has usado la Ember Sceptre"));
+                                var minifireball1 = (SmallFireball)p.getWorld().spawnEntity(p.getLocation().add(p.getEyeLocation()),EntityType.SMALL_FIREBALL);
+                                minifireball1.setCustomName("ember_projectile");
+                                Bukkit.getScheduler().runTaskLater(plugin,()->{
+                                    var minifireball2 = (SmallFireball)p.getWorld().spawnEntity(p.getLocation().add(p.getEyeLocation()),EntityType.SMALL_FIREBALL);
+                                    minifireball2.setCustomName("ember_projectile");
+                                },10L);
+                                Bukkit.getScheduler().runTaskLater(plugin,() ->{
+                                    var minifireball3 = (SmallFireball)p.getWorld().spawnEntity(p.getLocation().add(p.getEyeLocation()),EntityType.SMALL_FIREBALL);
+                                    minifireball3.setCustomName("ember_projectile");
+                                },20L);
+                            }
+                        }
+                    }
+                }
+            }
             if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
                 if(p.getInventory().getItemInMainHand().hasItemMeta()){
                     if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
@@ -119,7 +144,7 @@ public class PlayerEventsListeners implements Listener {
                          }
                          p.teleport(teleportLocation);
                          p.getWorld().spawnParticle(Particle.EXPLOSION_HUGE,p.getLocation(),1);
-                         p.playSound(p.getLocation(),Sound.ENTITY_ZOMBIE_VILLAGER_CURE,SoundCategory.HOSTILE,10.0F,0.7F);
+                         p.playSound(p.getLocation(),Sound.ENTITY_ZOMBIE_VILLAGER_CURE,SoundCategory.HOSTILE,5.0F,0.7F);
                          p.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION,1200,9,false,false,false));
                          p.getWorld().getNearbyEntities(p.getLocation(),10,10,10, entity -> entity instanceof LivingEntity).forEach(entity -> {
                              LivingEntity livingEntity = (LivingEntity) entity;
@@ -156,13 +181,13 @@ public class PlayerEventsListeners implements Listener {
                         if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()){
                             if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 8736689 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 8736689){
                                 PlayerData data = CustomPlayer.fromName(p.getName()).getData();
-                                if(undyingCooldown.containsKey(p.getUniqueId())){
+                                if(p.hasCooldown(Material.BLAZE_ROD)){
                                     p.sendMessage(PREFIX,format("&c&lEsta habilidad esta en Cooldown!"));
                                     return;
-                                }else {
+                                }else{
                                     data.setImmunity(1);
                                     p.sendMessage(PREFIX, format("&6Has usado la &e&lUndying Sceptre"));
-                                    undyingCooldown.put(p.getUniqueId(), System.currentTimeMillis() + (500 * 1000));
+                                    p.setCooldown(Material.BLAZE_ROD,6000);
                                     Bukkit.getScheduler().runTaskLater(plugin, () -> {
                                         data.setImmunity(0);
                                     }, 300L);
@@ -184,9 +209,9 @@ public class PlayerEventsListeners implements Listener {
                 }
                 if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
                     if (p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455) {
-                        PersistentDataContainer data = p.getPersistentDataContainer();
-                        int i = data.get(Utils.key("TOTEM_BAR"), PersistentDataType.INTEGER);
-                        p.sendMessage(Format.PREFIX, format("&7&l¡Tienes &e&l" + i + "% &7&lporcentaje de Totems!"));
+                        PlayerData data = CustomPlayer.fromName(p.getName()).getData();
+                        var totems = data.getTotemPercentage();
+                        p.sendMessage(Format.PREFIX, format("&7&l¡Tienes &e&l" + totems + "% &7&lporcentaje de Totems!"));
                     }
                 }
 
@@ -338,6 +363,42 @@ public class PlayerEventsListeners implements Listener {
             if(e.getClickedInventory() instanceof Merchant){
                 e.setCancelled(true);
                 e.getWhoClicked().sendMessage(PREFIX,format("&c&lEl Aldeano se Niega a Tradear!"));
+            }
+        }
+    }
+
+    @EventHandler
+    public void umbraRod(PlayerFishEvent event){
+        Player p = event.getPlayer();
+        if(p.getInventory().getItemInMainHand().hasItemMeta() || p.getInventory().getItemInOffHand().hasItemMeta()){
+            if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()){
+                if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 102038461 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 102038461){
+                    int entitychance = new Random().nextInt(100);
+                    if(event.getState() == PlayerFishEvent.State.CAUGHT_FISH){
+                        if(entitychance > 70){
+                            int reward = new Random().nextInt(7) +1;
+                            if(reward == 1){
+                                p.sendMessage(format("&6&l¡ENTIDAD!: &7Tu Umbra Rod a atrapado un &8Lost Golem"));
+                                IronGolem ironGolem = event.getHook().getWorld().spawn(event.getHook().getLocation(),IronGolem.class);
+                                Mobs.lostGolem(ironGolem);
+                                Vector vector = ironGolem.getEyeLocation().getDirection().multiply(3);
+                                ironGolem.setVelocity(vector);
+                            }else if(reward == 2){
+                                p.sendMessage(format("&6&l¡ENTIDAD!: &7Tu Umbra Rod a atrapado un &8Nightmare"));
+                                Ghast ghast = event.getHook().getWorld().spawn(event.getHook().getLocation(),Ghast.class);
+                                Mobs.Nightmare(ghast);
+                                Vector vector = ghast.getEyeLocation().getDirection().multiply(3);
+                                ghast.setVelocity(vector);
+                            }else if(reward == 3){
+                                p.sendMessage(format("&6&l¡ENTIDAD!: &7Tu Umbra Rod a atrapado un &8OverScream"));
+                                Creeper creeper = event.getHook().getWorld().spawn(event.getHook().getLocation(),Creeper.class);
+                                Mobs.Overscream(creeper);
+                                Vector vector = creeper.getEyeLocation().getDirection().multiply(3);
+                                creeper.setVelocity(vector);
+                            }
+                        }
+                    }
+                }
             }
         }
     }
