@@ -410,6 +410,12 @@ public class PlayerEventsListeners implements Listener {
 
     @EventHandler
     public void onWorldChange(PlayerChangedWorldEvent event) {
+        Player p = event.getPlayer();
+        
+        PotionEffect cotm = new PotionEffect(PotionEffectType.UNLUCK, 20 * 3, 3 - 1);
+
+        p.addPotionEffect(cotm);
+
     }
 
     /*
