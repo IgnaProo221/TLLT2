@@ -234,6 +234,12 @@ public class EntityListeners implements Listener {
                 if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"GRUE"), PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 400, 0, true, false, true));
                 }
+                if(vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"INFECTED_VEX"), PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 600, 4,true, true, true));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 600, 4,true, true, true));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 600, 4,true, true, true));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 600, 4,true, true, true));
+                }
             }
             if(damager instanceof WitherSkeleton){
                 if(p.isBlocking())return;
@@ -246,6 +252,8 @@ public class EntityListeners implements Listener {
                     p.setFireTicks(1200);
                     p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,200,0, true, false, true));
                     p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,200,0, true, false, true));
+                }else if(ironGolem.getPersistentDataContainer().has(Utils.key("YETI"),PersistentDataType.STRING)){
+                    p.setFreezeTicks(1000);
                 }
             }
 
@@ -284,6 +292,11 @@ public class EntityListeners implements Listener {
                 }
                 if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_SPIDER"), PersistentDataType.STRING)){
                     p.getLocation().getWorld().setType(p.getLocation(), Material.COBWEB);
+                }
+                if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DESERT_SCORPION"), PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 1200,4,true,false,true));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 1200,4,true,false,true));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1200,4,true,false,true));
                 }
             }
             if(damager instanceof Slime){
@@ -331,6 +344,14 @@ public class EntityListeners implements Listener {
                 if(p.isBlocking())return;
                 if(enderman.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_ENDERMAN"), PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 400, 0, true, true, true));
+                }
+                if(enderman.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ENDER_FLAME"), PersistentDataType.STRING)){
+                    p.setFireTicks(1200);
+                }
+                if(enderman.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ENDER_INFECTED"), PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 600, 0, true, true, true));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 600, 1, true, true, true));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 1, 0, true, true, true));
                 }
             }
             if(damager instanceof Skeleton skeleton){

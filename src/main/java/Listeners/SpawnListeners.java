@@ -94,6 +94,14 @@ public class SpawnListeners implements Listener {
                 Mobs.spiderNieve(spider);
             } else if (entity instanceof Creeper creeper && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
                 Mobs.creeperCongelado(creeper);
+            } else if(entity instanceof Husk husk && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
+                husk.remove();
+                Slime slime = husk.getWorld().spawn(husk.getLocation(),Slime.class);
+                Mobs.freezeSlime(slime);
+            }else if(entity instanceof Enderman && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
+                entity.remove();
+                IronGolem ironGolem = entity.getWorld().spawn(entity.getLocation(),IronGolem.class);
+                Mobs.yeti(ironGolem);
             }
         } else if (entitybiome == Biome.JUNGLE || entitybiome == Biome.JUNGLE_EDGE || entitybiome == Biome.JUNGLE_HILLS || entitybiome == Biome.BAMBOO_JUNGLE_HILLS || entitybiome == Biome.BAMBOO_JUNGLE
                 || entitybiome == Biome.MODIFIED_JUNGLE || entitybiome == Biome.MODIFIED_JUNGLE_EDGE) {
@@ -105,6 +113,14 @@ public class SpawnListeners implements Listener {
                 Mobs.spiderJungla(spider);
             } else if (entity instanceof Creeper creeper && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
                 Mobs.mossCreeper(creeper);
+            }else if(entity instanceof Enderman && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
+                entity.remove();
+                WitherSkeleton witherSkeleton = entity.getWorld().spawn(entity.getLocation(),WitherSkeleton.class);
+                Mobs.venomousArcher(witherSkeleton);
+            }else if(entity instanceof Parrot && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
+                entity.remove();
+                Vex vex = entity.getWorld().spawn(entity.getLocation(),Vex.class);
+                Mobs.infectedVex(vex);
             }
         } else if (entitybiome == Biome.DESERT || entitybiome == Biome.DESERT_HILLS || entitybiome == Biome.DESERT_LAKES || entitybiome == Biome.BADLANDS || entitybiome == Biome.BADLANDS_PLATEAU
                 || entitybiome == Biome.ERODED_BADLANDS || entitybiome == Biome.MODIFIED_BADLANDS_PLATEAU || entitybiome == Biome.MODIFIED_WOODED_BADLANDS_PLATEAU || entitybiome == Biome.WOODED_BADLANDS_PLATEAU) {
@@ -116,6 +132,25 @@ public class SpawnListeners implements Listener {
                 Mobs.spiderArena(spider);
             } else if (entity instanceof Creeper creeper && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
                 Mobs.creeperSandstone(creeper);
+            } else if (entity instanceof Enderman && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+                entity.remove();
+                Ghast ghast = entity.getWorld().spawn(entity.getLocation(), Ghast.class);
+                Mobs.ghastDesert(ghast);
+            } else if (entity instanceof Husk && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+                entity.remove();
+                Spider spider = entity.getWorld().spawn(entity.getLocation(), Spider.class);
+                Mobs.desertScorpion(spider);
+            }
+        }else if(entity instanceof Enderman enderman && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
+            int type = new Random().nextInt(4);
+            if(type == 1){
+                Mobs.enderAberration(enderman);
+            }else if(type == 2){
+                Mobs.enderFlame(enderman);
+            }else if(type == 3){
+                Mobs.enderInfected(enderman);
+            }else{
+                Mobs.enderWatcher(enderman);
             }
         }else if (entity instanceof Skeleton skeleton && !(entity instanceof Stray) && !(entity instanceof WitherSkeleton) && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL)) {
             if (spawnmob > 80) {

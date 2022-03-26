@@ -36,7 +36,7 @@ public class ExplosionListeners implements Listener{
             }else if(ghast.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"DREAD_NIGHTMARE"), PersistentDataType.STRING)){
                 fireball.setYield(12);
             }else{
-                fireball.setYield(4);
+                fireball.setYield(5);
             }
         }
     }

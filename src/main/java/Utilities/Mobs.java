@@ -1,5 +1,6 @@
 package Utilities;
 
+import jdk.jshell.execution.Util;
 import net.minecraft.world.entity.EntityInsentient;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalMeleeAttack;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
@@ -55,7 +56,6 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ICE_MOB"), PersistentDataType.STRING, "ICE_MOB");
     }
-
     public static void esqueletoNieve(Skeleton self){
         self.setCustomName(ChatColor.AQUA + "Snow Skeleton");
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(55);
@@ -64,7 +64,6 @@ public class Mobs implements Listener{
         self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ICE_SKELETON"), PersistentDataType.STRING, "ICE_SKELETON");
     }
-
     public static void spiderNieve(Spider self){
         self.setCustomName(ChatColor.AQUA + "Snow Spider");
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(55);
@@ -72,8 +71,6 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ICE_MOB"), PersistentDataType.STRING, "ICE_MOB");
     }
-
-
     public static void creeperCongelado(Creeper self){
         self.setCustomName(format("&bCreeper Congelado"));
         self.setPowered(true);
@@ -82,6 +79,40 @@ public class Mobs implements Listener{
         self.setFuseTicks(20);
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ICE_CREEPER"), PersistentDataType.STRING, "ICE_CREEPER");
     }
+    public static void yeti(IronGolem self){
+        self.setCustomName(format("&b&lYeti"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(120);
+        self.setHealth(120);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(45);
+        self.getPersistentDataContainer().set(Utils.key("YETI"),PersistentDataType.STRING,"YETI");
+        CraftIronGolem craft = ((CraftIronGolem) self);
+        EntityIronGolem entityIronGolem = craft.getHandle();
+        try{
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("bP");
+            gf.setAccessible(true);
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityIronGolem);
+            goal.a(0, new PathfinderGoalMeleeAttack(entityIronGolem,1.0D,true));
+
+            Field tf = cl.getDeclaredField("bQ");
+            tf.setAccessible(true);
+
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityIronGolem);
+            target.a(0,new PathfinderGoalNearestAttackableTarget<>(entityIronGolem, EntityHuman.class, 10,true,false,null));
+        }catch (Exception e){
+            e.printStackTrace();
+            Warn.Mutant(e);
+        }
+    }
+    public static void freezeSlime(Slime self){
+        self.setCustomName(format("&b&lFreeze Slime"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
+        self.getPersistentDataContainer().set(Utils.key("FREEZING_SLIME"),PersistentDataType.STRING,"FREEZE_SLIME");
+    }
+
+
+
 
 
     ///mobs de Jungla
@@ -126,6 +157,24 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(21);
         self.getEquipment().setItemInMainHand(new ItemBuilder(Material.DIAMOND_AXE).addEnchantment(Enchantment.DAMAGE_ALL,10).build());
         self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+        self.getPersistentDataContainer().set(Utils.key("INFECTED_VEX"),PersistentDataType.STRING,"INFECTED_VEX");
+    }
+    public static void venomousArcher(WitherSkeleton self){
+        self.setCustomName(format("&2&lVenomous Archer"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
+        self.setHealth(60);
+        ItemStack flecha1 = new ItemStack(Material.TIPPED_ARROW, 64);
+        PotionMeta flecha1efect = (PotionMeta) flecha1.getItemMeta();
+        flecha1efect.setBasePotionData(new PotionData(PotionType.POISON));
+        flecha1efect.addCustomEffect(new PotionEffect(PotionEffectType.WITHER, 600, 9), true);
+        flecha1efect.addCustomEffect(new PotionEffect(PotionEffectType.SLOW, 600, 9), true);
+        flecha1efect.addCustomEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 600, 9), true);
+        flecha1efect.addCustomEffect(new PotionEffect(PotionEffectType.BLINDNESS, 600, 9), true);
+        flecha1.setItemMeta(flecha1efect);
+        self.getEquipment().setItemInMainHand(new ItemBuilder(Material.BOW).addEnchantment(Enchantment.ARROW_DAMAGE,50).build());
+        self.getEquipment().setItemInOffHand(flecha1);
+        self.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+        self.getEquipment().setDropChance(EquipmentSlot.OFF_HAND,0);
     }
 
 
@@ -517,6 +566,14 @@ public class Mobs implements Listener{
     }
 
 
+    public static void InfernoLord(Blaze self){
+        self.setCustomName(format("&6&lInferno Lord"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(400);
+        self.setHealth(400);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(50);
+        self.setRemoveWhenFarAway(false);
+        self.getPersistentDataContainer().set(Utils.key("INFERNO_LORD"),PersistentDataType.STRING,"INFERNO_LORD");
+    }
     public static void Warden(IronGolem self){
         self.setCustomName(format("&3&lWarden"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(400);
@@ -751,6 +808,7 @@ public class Mobs implements Listener{
        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(50);
        self.setHealth(50);
        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
+       self.getPersistentDataContainer().set(Utils.key("ENDER_FLAME"),PersistentDataType.STRING,"ENDER_FLAME");
    }
    public static void enderInfected(Enderman self){
         self.setCustomName(format("&a&lInfected Enderman"));

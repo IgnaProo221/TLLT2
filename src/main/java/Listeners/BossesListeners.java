@@ -1,15 +1,15 @@
 package Listeners;
 
 import Utilities.Format;
+import Utilities.Mobs;
+import Utilities.Utils;
 import io.papermc.paper.event.entity.EntityMoveEvent;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
-import org.bukkit.entity.IronGolem;
-import org.bukkit.entity.Player;
+import org.bukkit.*;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -98,24 +98,115 @@ public class BossesListeners implements Listener{
             }
         }
     }
-/*
+
+
     @EventHandler
-    public void wardenAttacks2(EntityMoveEvent event){
-        var entity = event.getEntity();
-        if(entity instanceof IronGolem ironGolem) {
-            if (ironGolem.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "WARDEN"), PersistentDataType.STRING)) {
-                int attackchance = new Random().nextInt(100);
-                if(attackchance == 1){
-                    for(Player p : ironGolem.getWorld().getNearbyPlayers(ironGolem.getLocation(),10,10,10)) {
-                        if(p == null)return;
-                        p.playSound(p.getLocation(),Sound.ENTITY_ENDER_DRAGON_GROWL,SoundCategory.HOSTILE,10.0F, -1.0F);
-                        p.sendMessage(Format.PREFIX,Format.format("&3¡El Warden a lanzado un sonido aturdidor!"));
-                        p.damage(40,ironGolem);
-                        Vector vector = p.getEyeLocation().getDirection().multiply(-3);
-                        p.setVelocity(vector);
+    public void infernolordAttacks1(ProjectileHitEvent e) {
+        var projectile = e.getEntity();
+        var shooter = projectile.getShooter();
+        var hitentity = e.getHitEntity();
+        var hitblock = e.getHitBlock();
+        if(projectile instanceof SmallFireball){
+            if(shooter instanceof Blaze blaze){
+                if(blaze.getPersistentDataContainer().has(Utils.key("INFERNO_LORD"),PersistentDataType.STRING)){
+                    int fireballtype = new Random().nextInt(5);
+                    if(fireballtype == 1){
+                        if(hitentity != null){
+                            hitentity.getLocation().createExplosion(blaze,7,false,false);
+                            hitentity.setFireTicks(1200);
+                        }
+                        if(hitblock != null){
+                            hitblock.getLocation().createExplosion(blaze,7,false,true);
+                        }
+                    }else if(fireballtype == 2){
+                        if(hitentity != null){
+                            hitentity.getWorld().strikeLightning(hitentity.getLocation());
+                            hitentity.setFireTicks(1200);
+                        }
+                        if(hitblock != null){
+                            hitblock.getWorld().strikeLightning(hitblock.getLocation());
+                        }
+                    }else if(fireballtype == 3){
+                        if(hitentity != null) {
+                            LivingEntity livingEntity = (LivingEntity)hitentity;
+                            Vector vector = livingEntity.getEyeLocation().getDirection().multiply(-3);
+                            livingEntity.setVelocity(vector);
+                            hitentity.setFireTicks(1200);
+                        }
+                    }else if(fireballtype == 4){
+                        if(hitblock != null) {
+                            hitblock.setType(Material.MAGMA_BLOCK);
+                            hitblock.getWorld().strikeLightning(hitblock.getLocation());
+                        }
+                    }else{
+                        if(hitentity != null){
+                            LivingEntity livingEntity = (LivingEntity)hitentity;
+                            livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,200,9,true,false,true));
+                            livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,200,9,true,false,true));
+                            livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,200,9,true,false,true));
+                            livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,200,9,true,false,true));
+                            livingEntity.setFireTicks(1200);
+                        }
                     }
                 }
             }
-        }}
-*/
+        }
+    }
+
+    @EventHandler
+    public void infernolordAttacks2(EntityDamageByEntityEvent e){
+        var damaged = e.getEntity();
+        var damager = e.getDamager();
+        if(damager instanceof Player player){
+            if(damaged instanceof Blaze blaze) {
+                if (blaze.getPersistentDataContainer().has(Utils.key("INFERNO_LORD"), PersistentDataType.STRING)) {
+                    int attackchance = new Random().nextInt(100);
+                    if (attackchance > 95) {
+                        int x = new Random().nextInt(7) + 1;
+                        int z = new Random().nextInt(7) + 1;
+                        int x1 = new Random().nextInt(7) + 1;
+                        int z1 = new Random().nextInt(7) + 1;
+                        Blaze hell1 = blaze.getLocation().add(x, 0, z).getWorld().spawn(blaze.getLocation(), Blaze.class);
+                        Blaze hell2 = blaze.getLocation().add(x1, 0, z1).getWorld().spawn(blaze.getLocation(), Blaze.class);
+                        Mobs.hellfire(hell1);
+                        Mobs.hellfire(hell2);
+                        for(Player p : blaze.getWorld().getNearbyPlayers(blaze.getLocation(),10,10,10)){
+                            p.sendMessage(Format.PREFIX,Format.format("&6&lEl Inferno Lord invoca sus Aliados!"));
+                        }
+                    }else if(attackchance == 1){
+                        blaze.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, blaze.getLocation(),1);
+                        for(Player p : blaze.getWorld().getNearbyPlayers(blaze.getLocation(),10,10,10)) {
+                            if(p == null)return;
+                            p.playSound(p.getLocation(),Sound.ENTITY_WITHER_SPAWN,SoundCategory.HOSTILE,10.0F, -1.0F);
+                            p.sendMessage(Format.PREFIX,Format.format("&6¡El Inferno Lord deja una Explosion Ignifuga!"));
+                            p.damage(60,blaze);
+                            p.setFireTicks(1200);
+                            Vector vector = p.getEyeLocation().getDirection().multiply(-3);
+                            p.setVelocity(vector);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void infernolordAttacks3(EntityMoveEvent e){
+        var entity = e.getEntity();
+        if(entity instanceof Blaze blaze){
+            if(blaze.getPersistentDataContainer().has(Utils.key("INFERNO_LORD"),PersistentDataType.STRING)){
+                if(blaze.getLocation().getBlock().isLiquid()){
+                    int aurachance = new Random().nextInt(100);
+                    if(aurachance == 1){
+                        for(Player p : blaze.getWorld().getNearbyPlayers(blaze.getLocation(),10,10,10)){
+                            p.sendMessage(Format.PREFIX,Format.format("&6Un Aura Misteriosa esta haciendote daño!"));
+                            p.damage(40,blaze);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
 }

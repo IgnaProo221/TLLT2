@@ -1,5 +1,6 @@
 package Listeners;
 
+import Extras.EventosItems;
 import Extras.Items;
 import Utilities.*;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -42,6 +43,19 @@ public class TotemListeners implements Listener {
 
 
                 if (p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING || p.getInventory().getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING) {
+                    PlayerData data = CustomPlayer.fromName(p.getName()).getData();
+                    var totempercent = data.getTotemPercentage();
+
+                    if(totempercent <= 0){
+                        e.setCancelled(true);
+                        for (Player players : Bukkit.getOnlinePlayers()) {
+                            players.sendMessage(Format.PREFIX + format("&8&l¡Los tótems del jugador " + p.getName() + " se han desactivado y ha muerto! &c&l(Su porcentaje de tótems esta en 0%)."));
+                        }
+                        return;
+                    }else{
+                        data.setTotemspercentage(totempercent - 5);
+                    }
+
 
                     //TotemsBar.anadirTC(p);
                     /*if(TotemsBar.getPorcentaje(p) == 200){
@@ -68,8 +82,6 @@ public class TotemListeners implements Listener {
                         return;
                     }*/
 
-                    CustomPlayer customPlayer = CustomPlayer.fromName(p.getName());
-                    PlayerData data = customPlayer.getData();
 
 
                     if (p.hasCooldown(Material.TOTEM_OF_UNDYING)) {
@@ -163,9 +175,14 @@ public class TotemListeners implements Listener {
                         return;
                     }
 
-
-                    if (head == 5) {
-                        int needTotems = 3;
+                    if(head == 1){
+                        EventosItems.paralizison(p,data);
+                        Bukkit.getScheduler().runTaskLater(plugin,()->{
+                            EventosItems.paralizisoff(p,data);
+                        },100);
+                    }
+                    if(head == 3){
+                        int needTotems = 4;
                         int main = 0;
                         int off = 0;
 
@@ -199,14 +216,27 @@ public class TotemListeners implements Listener {
                                     p.playEffect(EntityEffect.TOTEM_RESURRECT);
                                 }
                             }.runTaskLater(TLL2.getPlugin(TLL2.class), 40L);
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 5.0F, 1.0F);
+                                    p.playEffect(EntityEffect.TOTEM_RESURRECT);
+                                }
+                            }.runTaskLater(TLL2.getPlugin(TLL2.class), 60L);
 
-                            p.getInventory().removeItem(new ItemStack(Material.TOTEM_OF_UNDYING, 2));
+                            p.getInventory().removeItem(new ItemStack(Material.TOTEM_OF_UNDYING, 3));
 
 
                             globalMessage = format("&8¡El jugador &c&l"+ p.getName() + "&8 ha usado " + needTotems + "&c tótems! &7(Causa: " + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + "&7)");
                         }
-
                     }
+                    if(head == 4){
+                        data.setTemperature(data.getTotemPercentage() - 15);
+                    }
+                    if (head == 5) {
+                        SpawnListeners.spawnRandomMob(p.getLocation());
+                    }
+
 
 
                     String totemMsg = globalMessage;
@@ -229,32 +259,16 @@ public class TotemListeners implements Listener {
     public void totemeffects(int head, Player p, Player players) {
         p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10.0F, 2.0F);
         if (head == 1){
-            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Efectos Destructivos");
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                p.removePotionEffect(PotionEffectType.ABSORPTION);
-                p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
-                p.removePotionEffect(PotionEffectType.REGENERATION);
-                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,400,1,true,false,true));
-                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,400,1,true,false,true));
-                p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,400,1,true,false,true));
-                p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION,400,1,true,false,true));
-                p.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK,400,0,true,false,true));
-            }, 5L);
-
+            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Paralizacion por 5 segundos");
         } else if (head == 2) {
-            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Bad Omen V permanente");
+            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Weakness X");
             Bukkit.getScheduler().runTaskLater(plugin,()->{
-                p.addPotionEffect(new PotionEffect(PotionEffectType.BAD_OMEN,Integer.MAX_VALUE,4,true,false,true));
+                p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,1200,9,true,false,true));
             },5L);
         } else if (head == 3) {
-            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Mob Random.");
-            SpawnListeners.spawnRandomMob(p.getLocation());
+            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Usar 4 totems en vez de 1");
         } else if (head == 4) {
-            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Cooldown Universal");
-            p.setCooldown(Material.GOLDEN_APPLE,200);
-            p.setCooldown(Material.ENCHANTED_GOLDEN_APPLE,200);
-            p.setCooldown(Material.ENDER_PEARL,200);
-            p.setCooldown(Material.SHIELD,200);
+            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "20% menos de Totems");
         } else if (head == 5) {
             players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Usar 3 tótems");
         } else {
