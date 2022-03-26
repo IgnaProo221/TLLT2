@@ -747,7 +747,7 @@ public class EntityListeners implements Listener {
         }
 
         if (entity instanceof IronGolem) {
-            if (Utils.getWorld().hasStorm() && BlastStormListeners.isEnabled())
+            if (BlastStormListeners.isEnabled())
                 here.getWorld().createExplosion(here, 3.0F);
         }
 
