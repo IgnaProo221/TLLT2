@@ -68,7 +68,8 @@ public class Utils {
     public static void reloadConfig() {
         try {
             getConfig().save("config.yml");
-        } catch (IOException e) {
+            getConfig().load("config.yml");
+        } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
     }

@@ -12,11 +12,9 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityExhaustionEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerFishEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemDamageEvent;
-import org.bukkit.event.player.PlayerRiptideEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -403,12 +401,16 @@ public class PlayerEventsListeners implements Listener {
         }
     }
 
-    /*
+
     @EventHandler
     public void hambreAgotar(EntityExhaustionEvent e) {
-        e.setExhaustion(e.getExhaustion() * 2);
+        if (BlastStormListeners.isEnabled())
+            e.setExhaustion(e.getExhaustion() * 2);
     }
-     */
+
+    @EventHandler
+    public void onWorldChange(PlayerChangedWorldEvent event) {
+    }
 
     /*
     @EventHandler

@@ -18,9 +18,10 @@ import tlldos.tll2.TLL2;
 
 import java.util.Random;
 
-public class DamageListeners implements Listener{
+public class DamageListeners implements Listener {
     private TLL2 plugin;
-    public DamageListeners(TLL2 plugin){
+
+    public DamageListeners(TLL2 plugin) {
         this.plugin = plugin;
     }
 
@@ -28,21 +29,21 @@ public class DamageListeners implements Listener{
     public void cancelledDamage(EntityDamageEvent e) {
         Entity entity = e.getEntity();
 
-        if(!(entity instanceof Player)){
-            if(e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) || e.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)){
+        if (!(entity instanceof Player)) {
+            if (e.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) || e.getCause().equals(EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)) {
                 e.setCancelled(true);
             }
         }
 
-        if(entity instanceof Blaze || entity instanceof Enderman){
-            if(e.getCause().equals(EntityDamageEvent.DamageCause.DROWNING)){
+        if (entity instanceof Blaze || entity instanceof Enderman) {
+            if (e.getCause().equals(EntityDamageEvent.DamageCause.DROWNING)) {
                 e.setCancelled(true);
             }
         }
 
-        if(entity instanceof IronGolem ironGolem){
-            if(ironGolem.getPersistentDataContainer().has(Utils.key("WARDEN"),PersistentDataType.STRING)){
-                if(e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE){
+        if (entity instanceof IronGolem ironGolem) {
+            if (ironGolem.getPersistentDataContainer().has(Utils.key("WARDEN"), PersistentDataType.STRING)) {
+                if (e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
                     e.setCancelled(true);
                 }
             }
@@ -50,32 +51,25 @@ public class DamageListeners implements Listener{
     }
 
 
-
-
     @EventHandler
     public void danoProdos(EntityDamageEvent e) {
-           if(e.isCancelled()){
-               return;
-           }
-           if (e.getEntity() instanceof Player) {
-               Player p = (Player)e.getEntity();
-               if(!e.isCancelled()) {
-                   if(p.getLastDamageCause() instanceof EntityDamageByEntityEvent){ 
-                       if(((EntityDamageByEntityEvent) p.getLastDamageCause()).getDamager() instanceof LivingEntity){
-                           LivingEntity monster = (LivingEntity) ((EntityDamageByEntityEvent) p.getLastDamageCause()).getDamager();
-                           if (monster.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SOLAR_SCORPION"), PersistentDataType.STRING)) {
-                               if(e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK || e.getCause() == EntityDamageEvent.DamageCause.FIRE) {
-                                   e.setDamage(e.getDamage() * 3);
-                               }
-                           }
-                       }
-                   }
-               }
-           }
+        if (e.isCancelled()) {
+            return;
+        }
+
+        if (e.getEntity() instanceof Player p) {
+            if (p.getLastDamageCause() instanceof EntityDamageByEntityEvent) {
+                if (((EntityDamageByEntityEvent) p.getLastDamageCause()).getDamager() instanceof LivingEntity) {
+                    LivingEntity monster = (LivingEntity) ((EntityDamageByEntityEvent) p.getLastDamageCause()).getDamager();
+                    if (monster.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SOLAR_SCORPION"), PersistentDataType.STRING)) {
+                        if (e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK || e.getCause() == EntityDamageEvent.DamageCause.FIRE) {
+                            e.setDamage(e.getDamage() * 3);
+                        }
+                    }
+                }
+            }
+        }
     }
-
-
-
 
 
     @EventHandler
@@ -122,46 +116,46 @@ public class DamageListeners implements Listener{
                 }
             } else if (player.hasPotionEffect(PotionEffectType.UNLUCK)) {
                 if (player.getPotionEffect(PotionEffectType.UNLUCK).getAmplifier() == 1 || player.getPotionEffect(PotionEffectType.UNLUCK).getAmplifier() == 0) {
-                    if(e.getCause() == EntityDamageEvent.DamageCause.FALL){
+                    if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
                         e.setDamage(e.getDamage() * 3);
-                    }else if(e.getCause() == EntityDamageEvent.DamageCause.FREEZE){
+                    } else if (e.getCause() == EntityDamageEvent.DamageCause.FREEZE) {
                         e.setDamage(e.getDamage() * 3);
-                    }else if(e.getCause() == EntityDamageEvent.DamageCause.DROWNING){
+                    } else if (e.getCause() == EntityDamageEvent.DamageCause.DROWNING) {
                         e.setDamage(e.getDamage() * 7);
-                    }else if(e.getCause() == EntityDamageEvent.DamageCause.STARVATION){
+                    } else if (e.getCause() == EntityDamageEvent.DamageCause.STARVATION) {
                         e.setDamage(e.getDamage() * 7);
-                    }else if(e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK){
+                    } else if (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {
                         e.setDamage(e.getDamage() * 8);
-                    }else if(e.getCause() == EntityDamageEvent.DamageCause.LAVA){
+                    } else if (e.getCause() == EntityDamageEvent.DamageCause.LAVA) {
                         e.setDamage(e.getDamage() * 8);
-                    }else if(e.getCause() == EntityDamageEvent.DamageCause.CONTACT){
+                    } else if (e.getCause() == EntityDamageEvent.DamageCause.CONTACT) {
                         e.setDamage(e.getDamage() * 11);
-                    }else if(e.getCause() == EntityDamageEvent.DamageCause.LIGHTNING){
+                    } else if (e.getCause() == EntityDamageEvent.DamageCause.LIGHTNING) {
                         e.setDamage(e.getDamage() * 8);
-                    }else if(e.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR){
+                    } else if (e.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR) {
                         e.setDamage(e.getDamage() * 21);
-                    }else if (e.getCause() != EntityDamageEvent.DamageCause.SUICIDE || e.getCause() != EntityDamageEvent.DamageCause.THORNS || e.getCause() != EntityDamageEvent.DamageCause.POISON || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK || e.getCause() != EntityDamageEvent.DamageCause.VOID) {
+                    } else if (e.getCause() != EntityDamageEvent.DamageCause.SUICIDE || e.getCause() != EntityDamageEvent.DamageCause.THORNS || e.getCause() != EntityDamageEvent.DamageCause.POISON || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK || e.getCause() != EntityDamageEvent.DamageCause.VOID) {
                         e.setDamage(e.getDamage() * 2);
                     } else if (player.getPotionEffect(PotionEffectType.UNLUCK).getAmplifier() == 2) {
-                        if(e.getCause() == EntityDamageEvent.DamageCause.FALL){
+                        if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
                             e.setDamage(e.getDamage() * 4);
-                        }else if(e.getCause() == EntityDamageEvent.DamageCause.FREEZE){
+                        } else if (e.getCause() == EntityDamageEvent.DamageCause.FREEZE) {
                             e.setDamage(e.getDamage() * 4);
-                        }else if(e.getCause() == EntityDamageEvent.DamageCause.DROWNING){
+                        } else if (e.getCause() == EntityDamageEvent.DamageCause.DROWNING) {
                             e.setDamage(e.getDamage() * 8);
-                        }else if(e.getCause() == EntityDamageEvent.DamageCause.STARVATION){
+                        } else if (e.getCause() == EntityDamageEvent.DamageCause.STARVATION) {
                             e.setDamage(e.getDamage() * 8);
-                        }else if(e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK){
+                        } else if (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {
                             e.setDamage(e.getDamage() * 9);
-                        }else if(e.getCause() == EntityDamageEvent.DamageCause.LAVA){
+                        } else if (e.getCause() == EntityDamageEvent.DamageCause.LAVA) {
                             e.setDamage(e.getDamage() * 9);
-                        }else if(e.getCause() == EntityDamageEvent.DamageCause.CONTACT){
+                        } else if (e.getCause() == EntityDamageEvent.DamageCause.CONTACT) {
                             e.setDamage(e.getDamage() * 12);
-                        }else if(e.getCause() == EntityDamageEvent.DamageCause.LIGHTNING){
+                        } else if (e.getCause() == EntityDamageEvent.DamageCause.LIGHTNING) {
                             e.setDamage(e.getDamage() * 9);
-                        }else if(e.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR){
+                        } else if (e.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR) {
                             e.setDamage(e.getDamage() * 22);
-                        }else if (e.getCause() != EntityDamageEvent.DamageCause.SUICIDE || e.getCause() != EntityDamageEvent.DamageCause.THORNS || e.getCause() != EntityDamageEvent.DamageCause.POISON || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK || e.getCause() != EntityDamageEvent.DamageCause.VOID) {
+                        } else if (e.getCause() != EntityDamageEvent.DamageCause.SUICIDE || e.getCause() != EntityDamageEvent.DamageCause.THORNS || e.getCause() != EntityDamageEvent.DamageCause.POISON || e.getCause() != EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK || e.getCause() != EntityDamageEvent.DamageCause.VOID) {
                             e.setDamage(e.getDamage() * 3);
                         }
                     } else if (player.getPotionEffect(PotionEffectType.UNLUCK).getAmplifier() == 3) {

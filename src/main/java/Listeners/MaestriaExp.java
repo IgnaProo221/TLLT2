@@ -37,9 +37,9 @@ public class MaestriaExp implements Listener{
         return instance;
     }
 
-    static public String hp_plus = format("&3MAESTRIA &8> Tu Vida Máxima ha aumentado!");
-    static public String att_plus = format("&3MAESTRIA &8> Tu Daño Base ha aumentado!");
-    static public String def_plus = format("&3MAESTRIA &8> Tu Defensa Base ha aumentado!");
+    public static String hp_plus = format("&3MAESTRIA &8> Tu Vida Máxima ha aumentado!");
+    public static String att_plus = format("&3MAESTRIA &8> Tu Daño Base ha aumentado!");
+    public static String def_plus = format("&3MAESTRIA &8> Tu Defensa Base ha aumentado!");
 
     @EventHandler
     public void expLol(BlockBreakEvent e){
@@ -52,10 +52,11 @@ public class MaestriaExp implements Listener{
             return;
         }
 
-        if (!block.getType().name().toLowerCase().contains("ore"))
-            return;
+        if (!block.getType().name().toLowerCase().contains("ore")) return;
+        if (block.getType() == Material.SPORE_BLOSSOM) return;
 
         PlayerData data = CustomPlayer.fromName(p.getName()).getData();
+
         int level = data.getMasteryLevel();
 
         if (level >= 30) return;
@@ -84,6 +85,7 @@ public class MaestriaExp implements Listener{
             plugin.getLocations().add(block.getLocation());
         }
     }
+
 /*
     @EventHandler
     public void onPiston(BlockPistonExtendEvent e){
@@ -106,9 +108,9 @@ public class MaestriaExp implements Listener{
     public void apareciolacreatura(BlockBreakEvent event){
         var p = event.getPlayer();
         PlayerData data = CustomPlayer.fromName(p.getName()).getData();
-        var level10 = data.hasReachedLevel10();
-        var level20 = data.hasReachedLevel20();
-        var level30 = data.hasReachedLevel30();
+        boolean level10 = data.hasReachedLevel10();
+        boolean level20 = data.hasReachedLevel20();
+        boolean level30 = data.hasReachedLevel30();
         int minerspawn = new Random().nextInt(100);
         if (!event.getBlock().getType().name().toLowerCase().contains("ore"))
             return;

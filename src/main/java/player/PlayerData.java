@@ -200,7 +200,7 @@ public class PlayerData {
             int ehp = getExtraHealth();
 
             if(getMasteryLevel() == 1) {
-                p.sendMessage(MaestriaExp.hp_plus);
+                p.sendMessage(MaestriaExp.getInstance().hp_plus);
                 setExtraHealth(ehp + 2);
             }else if(getMasteryLevel() == 2) {
                 p.sendMessage(MaestriaExp.hp_plus);

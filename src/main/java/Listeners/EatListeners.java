@@ -1,23 +1,19 @@
 package Listeners;
 
 import Utilities.Format;
-import Utilities.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import player.CustomPlayer;
 import player.PlayerData;
 import tlldos.tll2.TLL2;
 
-import java.util.List;
 import java.util.Random;
 
 import static Utilities.Format.PREFIX;
@@ -37,7 +33,7 @@ public class EatListeners implements Listener {
         PlayerData data = CustomPlayer.fromName(p.getName()).getData();
         var temperature = data.getTemperature();
 
-        if(p.getWorld().isThundering() && BlastStormListeners.IsActive()){
+        if(p.getWorld().isThundering() && BlastStormListeners.isEnabled()){
             applyRandomEffects(p);
         }
         if(e.getItem().getType() == Material.MILK_BUCKET){

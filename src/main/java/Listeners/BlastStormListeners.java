@@ -16,7 +16,6 @@ import org.bukkit.event.weather.ThunderChangeEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
 import java.util.Random;
-import java.util.logging.Level;
 
 import static Utilities.Format.format;
 
@@ -87,7 +86,7 @@ public class BlastStormListeners implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        if (BlastStormListeners.IsActive() && bossBar != null) {
+        if (BlastStormListeners.isEnabled() && bossBar != null) {
             bossBar.addPlayer(e.getPlayer());
         }
 
@@ -151,14 +150,14 @@ public class BlastStormListeners implements Listener {
 
         //Testear antes de poner @EventHandler
     public void onWeatherChange(WeatherChangeEvent e){
-        if(BlastStormListeners.IsActive() && e.toWeatherState()) {
+        if(BlastStormListeners.isEnabled() && e.toWeatherState()) {
             e.setCancelled(true);
             Bukkit.getLogger().info("Ha comenzado una tormenta natural cuando ya estaba una blast storm activa");
-        }else if(e.toWeatherState() && !BlastStormListeners.IsActive()) {
+        }else if(e.toWeatherState() && !BlastStormListeners.isEnabled()) {
             Bukkit.getScheduler().runTask(Utils.getPlugin(), () -> e.setCancelled(true));
         }
     }
-    public static boolean IsActive() {
+    public static boolean isEnabled() {
         return active;
     }
 }
