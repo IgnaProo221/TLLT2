@@ -16,6 +16,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
+import org.bukkit.entity.Blaze;
 import org.bukkit.entity.IronGolem;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
@@ -598,9 +599,12 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     return false;
                 }
 
-                if(args[1].equalsIgnoreCase("WARDEN")){
-                    IronGolem ironGolem = player.getLocation().getWorld().spawn(player.getLocation(),IronGolem.class);
+                if(args[1].equalsIgnoreCase("WARDEN")) {
+                    IronGolem ironGolem = player.getLocation().getWorld().spawn(player.getLocation(), IronGolem.class);
                     Mobs.Warden(ironGolem);
+                }else if(args[1].equalsIgnoreCase("INFERNO_LORD")){
+                    Blaze blaze = player.getLocation().getWorld().spawn(player.getLocation(),Blaze.class);
+                    Mobs.InfernoLord(blaze);
                 }else{
                     player.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Debes colocar un mob valido!");
                     return false;
@@ -793,7 +797,7 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                 case "maestria"->addToList(commands,"reset","resetattributes","resetbuffs", "addLevel", "setLevel", "setXP");
                 case "sacrificios" -> addToList(commands, "modify", "clear", "reset");
                 case "god_mode" -> addToList(commands, "on", "off");
-                case "spawn" -> addToList(commands,"WARDEN");
+                case "spawn" -> addToList(commands,"WARDEN","INFERNO_LORD");
                 case "teams" -> addToList(commands, "chat", "join", "all_teams", "info");
                 case "debug" -> addToList(commands, "blastStormStart", "blackStormEnd", "totemTest", "muerteFake", "dementeTest");
                 case "temperatura" -> addToList(commands, "clear", "hipotermia", "hipertermia");

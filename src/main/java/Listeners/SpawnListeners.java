@@ -184,7 +184,7 @@ public class SpawnListeners implements Listener {
                     var wither = skeleton.getWorld().spawn(skeleton.getLocation(), WitherSkeleton.class);
                     Mobs.abomination(wither);
                 } else {
-                    if(!(skeleton.getWorld().isDayTime())){
+                    if(!(skeleton.getWorld().isDayTime()) && skeleton.getWorld().getEnvironment() == World.Environment.NETHER){
                         skeleton.remove();
                         var nightmare = skeleton.getWorld().spawn(skeleton.getLocation(), Ghast.class);
                         Mobs.Nightmare(nightmare);

@@ -46,6 +46,7 @@ public class PlayerEventsListeners implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         Player p = event.getPlayer();
+        if(event.getItem() == null)return;
 
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if(event.getItem() == null)return;
@@ -215,18 +216,16 @@ public class PlayerEventsListeners implements Listener {
                     }
                 }
                 if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                    if (p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455) {
-                        if (p.hasCooldown(Material.PRISMARINE_CRYSTALS)) {
-                            event.setCancelled(true);
-                        } else {
-                            EventosItems.totemrestorerEvent(p, plugin);
+                    if (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455) {
+                        if (p.hasCooldown(Material.PRISMARINE_CRYSTALS)) return;
+                        PlayerData data = CustomPlayer.fromName(p.getName()).getData();
+                        data.setTotemspercentage(100);
                             p.setCooldown(Material.PRISMARINE_CRYSTALS, 400);
-                            p.getInventory().removeItem(new ItemStack(Material.PRISMARINE_CRYSTALS, 1));
-                        }
+                            p.playSound(p.getLocation(),Sound.ITEM_TOTEM_USE,SoundCategory.PLAYERS,5.0F,2.0F);
                     }
                 }
                 if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-                    if (p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455) {
+                    if (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455) {
                         PlayerData data = CustomPlayer.fromName(p.getName()).getData();
                         var totems = data.getTotemPercentage();
                         p.sendMessage(Format.PREFIX, format("&7&l¡Tienes &e&l" + totems + "% &7&lporcentaje de Totems!"));
@@ -313,57 +312,63 @@ public class PlayerEventsListeners implements Listener {
     @EventHandler
     public void fishingRodsCustoms(PlayerFishEvent event){
         Player p = event.getPlayer();
+
         if(p.getInventory().getItemInMainHand().hasItemMeta() || p.getInventory().getItemInOffHand().hasItemMeta()){
-            if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()){
-                if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 102038461 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 102038461){
+            if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()) {
+                if (p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 102038461 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 102038461) {
                     int entitychance = new Random().nextInt(100);
-                    if(event.getState() == PlayerFishEvent.State.CAUGHT_FISH){
-                        if(entitychance > 70){
-                            int reward = new Random().nextInt(7) +1;
-                            if(reward == 1){
+                    if (event.getState() == PlayerFishEvent.State.CAUGHT_FISH) {
+                        if (entitychance > 70) {
+                            int reward = new Random().nextInt(7) + 1;
+                            if (reward == 1) {
                                 p.sendMessage(format("&6&l¡ENTIDAD!: &7Tu Umbra Rod a atrapado un &8Lost Golem"));
-                                IronGolem ironGolem = event.getHook().getWorld().spawn(event.getHook().getLocation(),IronGolem.class);
+                                IronGolem ironGolem = event.getHook().getWorld().spawn(event.getHook().getLocation(), IronGolem.class);
                                 Mobs.lostGolem(ironGolem);
                                 Vector vector = ironGolem.getEyeLocation().getDirection().multiply(3);
                                 ironGolem.setVelocity(vector);
-                            }else if(reward == 2){
+                            } else if (reward == 2) {
                                 p.sendMessage(format("&6&l¡ENTIDAD!: &7Tu Umbra Rod a atrapado un &8Nightmare"));
-                                Ghast ghast = event.getHook().getWorld().spawn(event.getHook().getLocation(),Ghast.class);
+                                Ghast ghast = event.getHook().getWorld().spawn(event.getHook().getLocation(), Ghast.class);
                                 Mobs.Nightmare(ghast);
                                 Vector vector = ghast.getEyeLocation().getDirection().multiply(3);
                                 ghast.setVelocity(vector);
-                            }else if(reward == 3){
+                            } else if (reward == 3) {
                                 p.sendMessage(format("&6&l¡ENTIDAD!: &7Tu Umbra Rod a atrapado un &8OverScream"));
-                                Creeper creeper = event.getHook().getWorld().spawn(event.getHook().getLocation(),Creeper.class);
+                                Creeper creeper = event.getHook().getWorld().spawn(event.getHook().getLocation(), Creeper.class);
                                 Mobs.Overscream(creeper);
                                 Vector vector = creeper.getEyeLocation().getDirection().multiply(3);
                                 creeper.setVelocity(vector);
-                            }else if(reward == 4){
+                            } else if (reward == 4) {
                                 p.sendMessage(format("&6&l¡ITEM!: &7Tu Umbra Rod a atrapado &8Esencia Oscura"));
                                 event.getHook().getWorld().dropItemNaturally(event.getHook().getLocation(), MobDrops.darknessEssence(10));
-                            }else if(reward == 5){
+                            } else if (reward == 5) {
                                 p.sendMessage(format("&6&l¡ITEM!: &7Tu Umbra Rod a atrapado &8Dark Staff"));
                                 event.getHook().getWorld().dropItemNaturally(event.getHook().getLocation(), MobDrops.darkstaff());
-                            }else if(reward == 6){
+                            } else if (reward == 6) {
                                 p.sendMessage(format("&6&l¡ITEM!: &7Tu Umbra Rod a atrapado &8Crystal Apple"));
                                 event.getHook().getWorld().dropItemNaturally(event.getHook().getLocation(), Items.crystalApple(10));
-                            }else{
+                            } else {
                                 p.sendMessage(format("&6&l¡ITEM!: &7Tu Umbra Rod a atrapado &8Manzana Encantada Dorada"));
-                                event.getHook().getWorld().dropItemNaturally(event.getHook().getLocation(), new ItemStack(Material.ENCHANTED_GOLDEN_APPLE,16));
+                                event.getHook().getWorld().dropItemNaturally(event.getHook().getLocation(), new ItemStack(Material.ENCHANTED_GOLDEN_APPLE, 16));
                             }
                         }
                     }
-                }else if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 1200390837 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 1200390837){
-                    if(event.getState() == PlayerFishEvent.State.REEL_IN){
-                        if(p.hasCooldown(Material.FISHING_ROD))return;
-                        if(p.getLocation().getBlock().getType() == Material.LAVA) {
-                            Vector vector = p.getEyeLocation().getDirection().multiply(5);
-                            p.setVelocity(vector);
-                            p.setCooldown(Material.FISHING_ROD,400);
-                        }else {
-                            Vector vector = p.getEyeLocation().getDirection().multiply(3);
-                            p.setVelocity(vector);
-                            p.setCooldown(Material.FISHING_ROD, 200);
+                }
+                if (p.getInventory().getItemInMainHand().hasItemMeta() || p.getInventory().getItemInOffHand().hasItemMeta()) {
+                    if (p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()) {
+                        if (p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 1200390837  || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 1200390837 ) {
+                            if (event.getState() == PlayerFishEvent.State.REEL_IN) {
+                                if (p.hasCooldown(Material.FISHING_ROD)) return;
+                                if (p.getLocation().getBlock().getType() == Material.LAVA) {
+                                    Vector vector = p.getEyeLocation().getDirection().multiply(5);
+                                    p.setVelocity(vector);
+                                    p.setCooldown(Material.FISHING_ROD, 400);
+                                } else {
+                                    Vector vector = p.getEyeLocation().getDirection().multiply(3);
+                                    p.setVelocity(vector);
+                                    p.setCooldown(Material.FISHING_ROD, 200);
+                                }
+                            }
                         }
                     }
                 }

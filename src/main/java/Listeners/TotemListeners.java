@@ -236,9 +236,6 @@ public class TotemListeners implements Listener {
                     if (head == 5) {
                         SpawnListeners.spawnRandomMob(p.getLocation());
                     }
-                    if(head >= 6){
-                        data.setTemperature(data.getTotemPercentage() - 15);
-                    }
 
 
 
@@ -279,7 +276,8 @@ public class TotemListeners implements Listener {
                 Bukkit.getLogger().info("El dado ha caído en una cara mayor al limite (6).");
                 return;
             }
-
+            PlayerData data = CustomPlayer.fromName(p.getName()).getData();
+            data.setTemperature(data.getTemperature() - 15);
             players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Temperatura Alterada");
 
         }

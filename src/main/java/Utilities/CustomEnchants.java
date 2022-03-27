@@ -364,7 +364,7 @@ public class CustomEnchants implements Listener {
                 }
                 lorvez.add(format("&6Encantamiento Ancestral: &eAdaptative"));
 
-                pickax43.addUnsafeEnchantment(CustomEnchants.TACKLE, 1);
+                pickax43.addUnsafeEnchantment(CustomEnchants.ADAPTATIVE, 1);
                 pickax43.setLore(lorvez);
 
                 p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
@@ -385,7 +385,7 @@ public class CustomEnchants implements Listener {
                 }
                 lorvez.add(format("&6Encantamiento Ancestral: &eHeat Protection"));
 
-                pickax43.addUnsafeEnchantment(CustomEnchants.TACKLE, 1);
+                pickax43.addUnsafeEnchantment(CustomEnchants.HEAT_PROTECTION, 1);
                 pickax43.setLore(lorvez);
 
                 p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
@@ -406,7 +406,7 @@ public class CustomEnchants implements Listener {
                 }
                 lorvez.add(format("&6Encantamiento Ancestral: &eInferno Power"));
 
-                pickax43.addUnsafeEnchantment(CustomEnchants.TACKLE, 1);
+                pickax43.addUnsafeEnchantment(CustomEnchants.INFERNO_POWER, 1);
                 pickax43.setLore(lorvez);
 
                 p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));

@@ -270,6 +270,17 @@ public final class TLL2 extends JavaPlugin implements Listener{
                     player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, true, false, true));
                     health += 6;
                 }
+                if(hasUmbraArmor(player)){
+                    if(!(player.getWorld().isDayTime())){
+                        health += 16;
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 1, true, false, true));
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 1, true, false, true));
+                    }else{
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, true, false, true));
+                    health += 8;
+                    }
+                }
                 health += data.getExtraHealth();
                 health -= data.getNegativeHealth();
                 player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
@@ -312,10 +323,10 @@ public final class TLL2 extends JavaPlugin implements Listener{
                     if (player.getEquipment().getHelmet() != null && player.getEquipment().getHelmet().hasItemMeta() && player.getEquipment().getHelmet().getItemMeta().hasEnchant(CustomEnchants.ADAPTATIVE)) {
                         return;
                     } else {
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, 4, true, false, true));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 0, true, false, true));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 2, true, false, true));
-                    player.setFreezeTicks(20);
+                            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, 4, true, false, true));
+                          player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 0, true, false, true));
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 2, true, false, true));
+                      player.setFreezeTicks(20);
                 }
                 } else if (dataTemperatura <= -120 && dataTemperatura >= -180) {
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &b&l" + dataTemperatura + "° &7|| &b¡Hipotermia II!")));
@@ -412,7 +423,16 @@ public final class TLL2 extends JavaPlugin implements Listener{
             }
         }
         return false;
-
+    }
+    public static boolean hasUmbraArmor(Player p){
+        if(p.getInventory().getHelmet() != null && p.getInventory().getChestplate() != null && p.getInventory().getLeggings() != null && p.getInventory().getBoots() != null){
+            if(p.getInventory().getHelmet().hasItemMeta() && p.getInventory().getChestplate().hasItemMeta() && p.getInventory().getLeggings().hasItemMeta() && p.getInventory().getBoots().hasItemMeta()){
+                if(p.getInventory().getHelmet().getItemMeta().hasCustomModelData() && p.getInventory().getChestplate().getItemMeta().hasCustomModelData() && p.getInventory().getLeggings().getItemMeta().hasCustomModelData() && p.getInventory().getBoots().getItemMeta().hasCustomModelData()){
+                    return p.getInventory().getHelmet().getItemMeta().getCustomModelData() == 6761618 && p.getInventory().getChestplate().getItemMeta().getCustomModelData() == 6761618 && p.getInventory().getLeggings().getItemMeta().getCustomModelData() == 6761618 && p.getInventory().getBoots().getItemMeta().getCustomModelData() == 6761618;
+                }
+            }
+        }
+        return false;
     }
 
     public void spawnMobNaturally(Player player, Block block) {
