@@ -73,6 +73,73 @@ public class SpawnerListeners implements Listener {
                     Mobs.spiderJungla(lushz);
                 }
             }
+        }else if(en instanceof Endermite){
+            if(en.getCustomName().equalsIgnoreCase("a")){
+                event.setCancelled(true);
+                var moblol = en.getWorld().spawn(en.getLocation(),Vex.class);
+                Mobs.Banshee(moblol);
+            }
+            if(en.getCustomName().equalsIgnoreCase("b")){
+                event.setCancelled(true);
+                var moblol = en.getWorld().spawn(en.getLocation(),Ghast.class);
+                Mobs.Nightmare(moblol);
+            }
+            if(en.getCustomName().equalsIgnoreCase("c")){
+                event.setCancelled(true);
+                var moblol = en.getWorld().spawn(en.getLocation(),Vindicator.class);
+                Mobs.KillerScream(moblol);
+            }
+            if(en.getCustomName().equalsIgnoreCase("d")){
+                event.setCancelled(true);
+                var moblol = en.getWorld().spawn(en.getLocation(),Creeper.class);
+                Mobs.Overscream(moblol);
+            }
+            if(en.getCustomName().equalsIgnoreCase("e")){
+                event.setCancelled(true);
+                var moblol = en.getWorld().spawn(en.getLocation(),Blaze.class);
+                Mobs.hellfire(moblol);
+            }
+            if(en.getCustomName().equalsIgnoreCase("f")){
+                event.setCancelled(true);
+                var moblol = en.getWorld().spawn(en.getLocation(),Blaze.class);
+                Mobs.InfernoLord(moblol);
+            }
+        }else if(en instanceof Slime){
+            if(en.getCustomName().equalsIgnoreCase("a")){
+                event.setCancelled(true);
+                var mage = en.getWorld().spawn(en.getLocation(),Evoker.class);
+                Mobs.evokerhex(mage);
+            }
+            if(en.getCustomName().equalsIgnoreCase("b")){
+                event.setCancelled(true);
+                var mage = en.getWorld().spawn(en.getLocation(),Evoker.class);
+                Mobs.evokerFreeze(mage);
+            }
+            if(en.getCustomName().equalsIgnoreCase("c")){
+                event.setCancelled(true);
+                var mage = en.getWorld().spawn(en.getLocation(),Evoker.class);
+                Mobs.evokerFire(mage);
+            }
+            if(en.getCustomName().equalsIgnoreCase("d")){
+                event.setCancelled(true);
+                var mage = en.getWorld().spawn(en.getLocation(),Evoker.class);
+                Mobs.evokerWind(mage);
+            }
+            if(en.getCustomName().equalsIgnoreCase("e")){
+                event.setCancelled(true);
+                var mage = en.getWorld().spawn(en.getLocation(),Evoker.class);
+                Mobs.evokerExplosive(mage);
+            }
+            if(en.getCustomName().equalsIgnoreCase("f")){
+                event.setCancelled(true);
+                var mage = en.getWorld().spawn(en.getLocation(),Pillager.class);
+                Mobs.dynamLlager(mage);
+            }
+            if(en.getCustomName().equalsIgnoreCase("g")){
+                event.setCancelled(true);
+                var mage = en.getWorld().spawn(en.getLocation(),Evoker.class);
+                Mobs.maestryWizard(mage);
+            }
         }
     }
 }

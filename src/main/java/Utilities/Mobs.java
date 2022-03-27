@@ -539,6 +539,12 @@ public class Mobs implements Listener{
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"MOUNTLLAGER"), PersistentDataType.STRING, "MOUNTLLAGER");
     }
 
+    public static void maestryWizard(Evoker self){
+        self.setCustomName(format("&b&lMaestry Wizard"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(100);
+        self.setHealth(100);
+        self.getPersistentDataContainer().set(Utils.key("MAESTRY_WIZARD"),PersistentDataType.STRING,"MAESTRY_WIZARD");
+    }
 
 
 

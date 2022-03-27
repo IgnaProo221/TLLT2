@@ -339,7 +339,7 @@ public class Items {
     public static ItemStack umbraHoe(){
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("")));
-        lore.add(Component.text(format("&7Sacando plantaciones de Zanahorias y Papas")));
+        lore.add(Component.text(format("&7Sacando plantaciones de Zanahorias, Papas y Beetroots")));
         lore.add(Component.text(format("&7Podras sacar Manzanas Doradas Encantadas")));
         lore.add(Component.text(format("&c&lEvitara Maldiciones en Dias Futuros")));
         return new ItemBuilder(Material.NETHERITE_HOE).setName(format("&5&lUmbra Hoe")).setLore(lore).setUnbreakable(true).addEnchantment(Enchantment.KNOCKBACK,5).setCustomModelData(236).build();

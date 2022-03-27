@@ -231,10 +231,13 @@ public class TotemListeners implements Listener {
                         }
                     }
                     if(head == 4){
-                        data.setTemperature(data.getTotemPercentage() - 15);
+                        data.setTotemspercentage(totempercent - 15);
                     }
                     if (head == 5) {
                         SpawnListeners.spawnRandomMob(p.getLocation());
+                    }
+                    if(head >= 6){
+                        data.setTemperature(data.getTotemPercentage() - 15);
                     }
 
 
@@ -270,17 +273,14 @@ public class TotemListeners implements Listener {
         } else if (head == 4) {
             players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "20% menos de Totems");
         } else if (head == 5) {
-            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Usar 3 tótems");
+            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Mob Random");
         } else {
             if (head > 6) {
                 Bukkit.getLogger().info("El dado ha caído en una cara mayor al limite (6).");
                 return;
             }
 
-            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "CotM 3 por 1 minuto");
-            Bukkit.getScheduler().runTaskLater(plugin,()->{
-                p.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK,1200,2,true,false,true));
-            },5L);
+            players.sendMessage(ChatColor.DARK_GRAY + "Efecto: " + ChatColor.AQUA + "" + ChatColor.BOLD + "Temperatura Alterada");
 
         }
     }
@@ -297,7 +297,7 @@ public class TotemListeners implements Listener {
             eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
             eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
             eb.addField(":map: **Coordenadas:**", "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-            eb.addField(":game_die: **Número**", "1.- Varios Efectos Contrarios", true);
+            eb.addField(":game_die: **Número**", "1.- Paralizis", true);
             eb.setThumbnail("https://media.discordapp.net/attachments/906642578013843526/949674113314738236/dado1.png");
             eb.setColor(new Color(252, 186, 3));
             if (channel != null) {
@@ -314,7 +314,7 @@ public class TotemListeners implements Listener {
             eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
             eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
             eb.addField(":map: **Coordenadas:**", "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-            eb.addField(":game_die: **Número**", "2.- Bad Omen V infinito", true);
+            eb.addField(":game_die: **Número**", "2.- Weakness X", true);
             eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674197188214824/dado2.png");
             eb.setColor(new Color(252, 186, 3));
             if (channel != null) {
@@ -332,7 +332,7 @@ public class TotemListeners implements Listener {
             eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
             eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
             eb.addField(":map: **Coordenadas:**", "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-            eb.addField(":game_die: **Número**", "3.- Mob random en tu posicion", true);
+            eb.addField(":game_die: **Número**", "3.- Usar 4 totems en vez de 1", true);
 
             eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674264490045480/dado3.png");
 
@@ -354,7 +354,7 @@ public class TotemListeners implements Listener {
             eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
             eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
             eb.addField(":map: **Coordenadas:**", "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-            eb.addField(":game_die: **Número**", "4.- Cooldown Universal", true);
+            eb.addField(":game_die: **Número**", "4.- Pierdes 20% de tus Porcentaje de Tótems", true);
 
             eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674332517441586/dado4.png");
 
@@ -378,7 +378,7 @@ public class TotemListeners implements Listener {
             eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
             eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
             eb.addField(":map: **Coordenadas:**", "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-            eb.addField(":game_die: **Número**", "5.- Usas 3 totems en vez de 1", true);
+            eb.addField(":game_die: **Número**", "5.- Mob Random en tu Posicion", true);
 
             eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674389157326908/dado5.png");
 
@@ -405,7 +405,7 @@ public class TotemListeners implements Listener {
             eb.addField(":skull: **Causa: **", causadeDaño(Objects.requireNonNull(p.getLastDamageCause())), true);
             eb.addField(":beginner: **Día: **", "" + Utils.getDay(), true);
             eb.addField(":map: **Coordenadas:**", "X: " + p.getLocation().getBlockX() + " | Y: " + p.getLocation().getBlockY() + " | Z: " + p.getLocation().getBlockZ(), true);
-            eb.addField(":game_die: **Número**", "6.- CotM 3 por 1 minuto", true);
+            eb.addField(":game_die: **Número**", "6.- Temperatura Alterada", true);
 
             eb.setThumbnail("https://cdn.discordapp.com/attachments/906642578013843526/949674451472097310/dado6.png");
 

@@ -723,8 +723,22 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     player.getInventory().addItem(Items.unluckyIdol());
                 }else if(args[1].equalsIgnoreCase("UNDYING_SCEPTRE")){
                     player.getInventory().addItem(Items.undyingStaff());
-                }else if(args[1].equalsIgnoreCase("TEST_PICKAXE")){
-                    player.getInventory().addItem(Items.testEnchant());
+                }else if(args[1].equalsIgnoreCase("EMBER_SCEPTRE")){
+                    player.getInventory().addItem(Items.emberSceptre());
+                }else if(args[1].equalsIgnoreCase("FIREHOOK")){
+                    player.getInventory().addItem(Items.fireHook());
+                }else if(args[1].equalsIgnoreCase("UMBRA_TOOLS")){
+                    player.getInventory().addItem(Items.umbraHoe());
+                    player.getInventory().addItem(Items.umbraAxe());
+                    player.getInventory().addItem(Items.umbraDrill());
+                    player.getInventory().addItem(Items.umbraRod());
+                    player.getInventory().addItem(Items.umbraShovel());
+                    player.getInventory().addItem(Items.touchofdarkness());
+                }else if(args[1].equalsIgnoreCase("UMBRA_ARMOR")){
+                    player.getInventory().addItem(Items.umbraHelmet());
+                    player.getInventory().addItem(Items.umbraChestplate());
+                    player.getInventory().addItem(Items.umbraLeggings());
+                    player.getInventory().addItem(Items.umbraBoots());
                 }else if(args[1].equalsIgnoreCase("ANCIENT_TOME_1")){
                     player.getInventory().addItem(Items.teleTome());
                 }else if(args[1].equalsIgnoreCase("ANCIENT_TOME_2")){
@@ -745,6 +759,12 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     player.getInventory().addItem(Items.pyroTome());
                 }else if (args[1].equalsIgnoreCase("ANCIENT_TOME_10")){
                     player.getInventory().addItem(Items.tackleTome());
+                }else if (args[1].equalsIgnoreCase("ANCIENT_TOME_11")){
+                    player.getInventory().addItem(Items.heatproteTome());
+                }else if (args[1].equalsIgnoreCase("ANCIENT_TOME_12")){
+                    player.getInventory().addItem(Items.adaptativeTome());
+                }else if (args[1].equalsIgnoreCase("ANCIENT_TOME_13")){
+                    player.getInventory().addItem(Items.infernopowerTome());
                 }else if (args[1].equalsIgnoreCase("HYPERION")){
                     player.getInventory().addItem(Items.hyperion());
                 }
@@ -778,7 +798,8 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                 case "debug" -> addToList(commands, "blastStormStart", "blackStormEnd", "totemTest", "muerteFake", "dementeTest");
                 case "temperatura" -> addToList(commands, "clear", "hipotermia", "hipertermia");
                 case "give" -> addToList(commands, "FUNGAL_CLUMPS","WEIRD_DAGGER", "CATACLYSM_PEARL", "BLOOD_SABER", "BERSERKER_TOTEM", "CRYSTAL_HEART", "DISCORD", "CLOUDY_MARSH", "BLOOD_STONE", "BLOOD_SHARD", "TEMPERATURE_METER", "TOTEM_RESTORER", "FROSTBITE","CELULA_ENERGIA","METAL_DESC","EXO_SHIELD","ICESHOT","BLOOD_ARMOR","EXO_DRILL", "ANCIENT_TOME_6",
-                        "UNLUCKY_IDOL","UNDYING_SCEPTRE","NANOTECH","EXO_TOTEM","PYROCROSS","COOLER_FRUIT","HOT_FRUIT","EXO_SWORD","EXO_BOW","EXO_ARMOR","INMUNITY_SIGIL","ANCIENT_TOME_1","ANCIENT_TOME_2","ANCIENT_TOME_3","ANCIENT_TOME_4","ANCIENT_TOME_5","ANCIENT_TOME_7","MAGMA_PIE","ICE_PIE","HYPERION","ANCIENT_TOME_8","ANCIENT_TOME_9","ANCIENT_TOME_10");
+                        "UNLUCKY_IDOL","UNDYING_SCEPTRE","NANOTECH","EXO_TOTEM","PYROCROSS","COOLER_FRUIT","HOT_FRUIT","EXO_SWORD","EXO_BOW","EXO_ARMOR","INMUNITY_SIGIL","ANCIENT_TOME_1","ANCIENT_TOME_2","ANCIENT_TOME_3","ANCIENT_TOME_4","ANCIENT_TOME_5","ANCIENT_TOME_7","MAGMA_PIE","ICE_PIE","HYPERION","ANCIENT_TOME_8","ANCIENT_TOME_9","ANCIENT_TOME_10","ANCIENT_TOME_11","ANCIENT_TOME_12","ANCIENT_TOME_13"
+                ,"FIREHOOK","EMBER_SCEPTRE","UMBRA_TOOLS","UMBRA_ARMOR");
             }
 
             StringUtil.copyPartialMatches(args[1], commands, completions);

@@ -169,6 +169,7 @@ public class DamageListeners implements Listener {
                             e.setDamage(e.getDamage() * 5);
                         }
                     }
+                }
                 } else if (dataTemperatura <= -180) {
                     if (e.getCause() == EntityDamageEvent.DamageCause.FREEZE) {
                         e.setDamage(e.getDamage() * 10);
@@ -186,19 +187,31 @@ public class DamageListeners implements Listener {
                         e.setDamage(e.getDamage() * 6);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.STARVATION) {
                         e.setDamage(e.getDamage() * 6);
-                    } else if (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {
-                        e.setDamage(e.getDamage() * 7);
-                    } else if (e.getCause() == EntityDamageEvent.DamageCause.LAVA) {
-                        e.setDamage(e.getDamage() * 7);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.CONTACT) {
                         e.setDamage(e.getDamage() * 10);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.LIGHTNING) {
                         e.setDamage(e.getDamage() * 7);
-                    } else if (e.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR) {
-                        e.setDamage(e.getDamage() * 20);
+                    }
+                    if(player.getInventory().getLeggings() != null && player.getInventory().getLeggings().hasItemMeta() && player.getInventory().getLeggings().getItemMeta().hasEnchant(CustomEnchants.HEAT_PROTECTION)) {
+                        if (e.getCause() == EntityDamageEvent.DamageCause.LAVA) {
+                            e.setDamage(e.getDamage() * 4);
+                        } else if (e.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR) {
+                            e.setDamage(e.getDamage() * 10);
+                        } else if (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {
+                            e.setDamage(e.getDamage() * 3);
+                        }
+                        } else {
+                            if (e.getCause() == EntityDamageEvent.DamageCause.LAVA) {
+                                e.setDamage(e.getDamage() * 7);
+                            } else if (e.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR) {
+                                e.setDamage(e.getDamage() * 20);
+                            } else if (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {
+                                e.setDamage(e.getDamage() * 7);
+                            }
+                        }
                     }
                 }
             }
         }
-    }
-}
+
+

@@ -29,7 +29,7 @@ public class ChatListeners implements Listener{
             event.setCancelled(true);
         }
         if (player.hasPotionEffect(PotionEffectType.LUCK)) {
-        if(player.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 1){
+        if(player.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 1 || player.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 0){
             event.setCancelled(true);
             player.sendMessage(Format.PREFIX + format("&c¡Estas paniquiado!"));
         }else if (player.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 2){

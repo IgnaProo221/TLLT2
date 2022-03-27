@@ -279,10 +279,14 @@ public final class TLL2 extends JavaPlugin implements Listener{
                 //Hipertermia
                 if (dataTemperatura >= 120 && dataTemperatura <= 180) {
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &6&l" + dataTemperatura + "° &7|| &4¡Hipertermia I!")));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 0, true, false, true));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 4, true, false, true));
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 2, true, false, true));
-                    player.setFireTicks(20);
+                    if(player.getEquipment().getHelmet() != null && player.getEquipment().getHelmet().hasItemMeta() && player.getEquipment().getHelmet().getItemMeta().hasEnchant(CustomEnchants.ADAPTATIVE)){
+                        return;
+                    } else {
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 0, true, false, true));
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 100, 4, true, false, true));
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 2, true, false, true));
+                        player.setFireTicks(20);
+                    }
                 } else if (dataTemperatura >= 180 && dataTemperatura <= 220) {
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &6&l" + dataTemperatura + "° &7|| &4¡Hipertermia II!")));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 3, true, false, true));
@@ -305,10 +309,14 @@ public final class TLL2 extends JavaPlugin implements Listener{
                     //Hipotermia
                 } else if (dataTemperatura <= -70 && dataTemperatura >= -120) {
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &b&l" + dataTemperatura + "° &7|| &b¡Hipotermia I!")));
+                    if (player.getEquipment().getHelmet() != null && player.getEquipment().getHelmet().hasItemMeta() && player.getEquipment().getHelmet().getItemMeta().hasEnchant(CustomEnchants.ADAPTATIVE)) {
+                        return;
+                    } else {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, 4, true, false, true));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 0, true, false, true));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 100, 2, true, false, true));
                     player.setFreezeTicks(20);
+                }
                 } else if (dataTemperatura <= -120 && dataTemperatura >= -180) {
                     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Format.format("&4&l[&6&lTemperatura&4&l] &b&l" + dataTemperatura + "° &7|| &b¡Hipotermia II!")));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, 9, true, false, true));

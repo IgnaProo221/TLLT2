@@ -2,6 +2,7 @@ package Listeners;
 
 import Extras.EventosItems;
 import Extras.Items;
+import Extras.MobDrops;
 import Utilities.*;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
@@ -99,17 +100,36 @@ public class PlayerEventsListeners implements Listener {
                                 p.sendMessage(PREFIX,format("&c&lEsta habilidad esta en Cooldown!"));
                                 return;
                             }else{
-                                p.sendMessage(PREFIX,format("&6¡Has usado la Ember Sceptre"));
-                                var minifireball1 = (SmallFireball)p.launchProjectile(SmallFireball.class);
-                                minifireball1.setCustomName("ember_projectile");
-                                Bukkit.getScheduler().runTaskLater(plugin,()->{
-                                    var minifireball2 = (SmallFireball)p.launchProjectile(SmallFireball.class);
-                                    minifireball2.setCustomName("ember_projectile");
-                                },10L);
-                                Bukkit.getScheduler().runTaskLater(plugin,() ->{
-                                    var minifireball3 = (SmallFireball)p.launchProjectile(SmallFireball.class);
-                                    minifireball3.setCustomName("ember_projectile");
-                                },20L);
+                                if(event.getItem().getItemMeta().hasEnchant(CustomEnchants.INFERNO_POWER)){
+                                    p.setCooldown(Material.BLAZE_ROD,600);
+                                    p.sendMessage(PREFIX,format("&6¡Has usado la Ember Sceptre Mejorada"));
+                                    var fireball1 = (Fireball)p.launchProjectile(Fireball.class);
+                                    fireball1.setCustomName("ember_projectile_powerup");
+                                    fireball1.setYield(0);
+                                    Bukkit.getScheduler().runTaskLater(plugin,()->{
+                                        var fireball2 = (Fireball)p.launchProjectile(Fireball.class);
+                                        fireball2.setCustomName("ember_projectile");
+                                        fireball1.setYield(0);
+                                    },20L);
+                                    Bukkit.getScheduler().runTaskLater(plugin,() ->{
+                                        var fireball3 = (Fireball)p.launchProjectile(Fireball.class);
+                                        fireball3.setCustomName("ember_projectile");
+                                        fireball1.setYield(0);
+                                    },40L);
+                                }else{
+                                    p.setCooldown(Material.BLAZE_ROD,400);
+                                    p.sendMessage(PREFIX,format("&6¡Has usado la Ember Sceptre"));
+                                    var minifireball1 = (SmallFireball)p.launchProjectile(SmallFireball.class);
+                                    minifireball1.setCustomName("ember_projectile");
+                                    Bukkit.getScheduler().runTaskLater(plugin,()->{
+                                        var minifireball2 = (SmallFireball)p.launchProjectile(SmallFireball.class);
+                                        minifireball2.setCustomName("ember_projectile");
+                                    },10L);
+                                    Bukkit.getScheduler().runTaskLater(plugin,() ->{
+                                        var minifireball3 = (SmallFireball)p.launchProjectile(SmallFireball.class);
+                                        minifireball3.setCustomName("ember_projectile");
+                                    },20L);
+                                }
                             }
                         }
                     }
@@ -213,81 +233,6 @@ public class PlayerEventsListeners implements Listener {
                     }
                 }
 
-
-            /*if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
-                if((p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_PICKAXE) || p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_AXE)) && (p.getInventory().getItemInOffHand().getType().equals(Material.ENCHANTED_BOOK) && p.getInventory().getItemInOffHand().getItemMeta().hasEnchant(CustomEnchants.TELEPHATY))){
-                    ItemStack pickaxe = p.getInventory().getItemInMainHand();
-                    List<String> lore;
-                    if(pickaxe.getItemMeta().hasLore()){
-                        lore = pickaxe.getLore();
-                    }else{
-                        lore = new ArrayList<>();
-                    }
-                    lore.add(format("&6Encantamiento Ancestral: &eTelephaty"));
-                    pickaxe.addUnsafeEnchantment(CustomEnchants.TELEPHATY, 1);
-                    pickaxe.setLore(lore);
-                    p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
-                    p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
-                    p.getInventory().getItemInOffHand().setType(Material.AIR);
-                }else if(p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_PICKAXE)  && (p.getInventory().getItemInOffHand().getType().equals(Material.ENCHANTED_BOOK) && p.getInventory().getItemInOffHand().getItemMeta().hasEnchant(CustomEnchants.SMELTING_TOUCH))){
-                    ItemStack pickaxx = p.getInventory().getItemInMainHand();
-                    List<String> lorez;
-                    if(pickaxx.getItemMeta().hasLore()){
-                        lorez = pickaxx.getLore();
-                    }else{
-                        lorez = new ArrayList<>();
-                    }
-                    lorez.add(format("&6Encantamiento Ancestral: &eSmelting Touch"));
-                    pickaxx.addUnsafeEnchantment(CustomEnchants.SMELTING_TOUCH, 1);
-                    pickaxx.setLore(lorez);
-                    p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
-                    p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
-                    p.getInventory().getItemInOffHand().setType(Material.AIR);
-                }else if(p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_SWORD)  && (p.getInventory().getItemInOffHand().getType().equals(Material.ENCHANTED_BOOK) && p.getInventory().getItemInOffHand().getItemMeta().hasEnchant(CustomEnchants.REVENGE))){
-                    ItemStack pickaxe3 = p.getInventory().getItemInMainHand();
-                    List<String> lorve;
-                    if(pickaxe3.getItemMeta().hasLore()){
-                        lorve = pickaxe3.getLore();
-                    }else{
-                        lorve  = new ArrayList<>();
-                    }
-                    lorve.add(format("&6Encantamiento Ancestral: &eRevenge"));
-                    pickaxe3.addUnsafeEnchantment(CustomEnchants.REVENGE, 1);
-                    pickaxe3.setLore(lorve);
-                    p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
-                    p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
-                    p.getInventory().getItemInOffHand().setType(Material.AIR);
-                }else if(p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_SWORD)  && (p.getInventory().getItemInOffHand().getType().equals(Material.ENCHANTED_BOOK) && p.getInventory().getItemInOffHand().getItemMeta().hasEnchant(CustomEnchants.CRITICAL_HIT))) {
-                    ItemStack pickax43 = p.getInventory().getItemInMainHand();
-                    List<String> lorvez;
-                    if(pickax43.getItemMeta().hasLore()){
-                        lorvez = pickax43.getLore();
-                    }else{
-                        lorvez= new ArrayList<>();
-                    }
-                    lorvez.add(format("&6Encantamiento Ancestral: &eCritical Hit"));
-                    pickax43.addUnsafeEnchantment(CustomEnchants.CRITICAL_HIT, 1);
-                    pickax43.setLore(lorvez);
-                    p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
-                    p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
-                    p.getInventory().getItemInOffHand().setType(Material.AIR);
-                } else if (p.getInventory().getItemInMainHand().getType().equals(Material.BOW) && (p.getInventory().getItemInOffHand().getType().equals(Material.ENCHANTED_BOOK) && p.getInventory().getItemInOffHand().getItemMeta().hasEnchant(CustomEnchants.BULLSEYE))) {
-                    List<String> lorvez;
-                    ItemStack pickax43 = p.getInventory().getItemInMainHand();
-                    if(pickax43.getItemMeta().hasLore()){
-                        lorvez = pickax43.getLore();
-                    }else{
-                        lorvez= new ArrayList<>();
-                    }
-                    lorvez.add(format("&6Encantamiento Ancestral: &eBullsEye"));
-                    pickax43.addUnsafeEnchantment(CustomEnchants.BULLSEYE, 1);
-                    pickax43.setLore(lorvez);
-                    p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
-                    p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
-                    p.getInventory().getItemInOffHand().setType(Material.AIR);
-                }
-            }*/
-
     }
 
 
@@ -366,7 +311,7 @@ public class PlayerEventsListeners implements Listener {
     }
 
     @EventHandler
-    public void umbraRod(PlayerFishEvent event){
+    public void fishingRodsCustoms(PlayerFishEvent event){
         Player p = event.getPlayer();
         if(p.getInventory().getItemInMainHand().hasItemMeta() || p.getInventory().getItemInOffHand().hasItemMeta()){
             if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()){
@@ -393,7 +338,32 @@ public class PlayerEventsListeners implements Listener {
                                 Mobs.Overscream(creeper);
                                 Vector vector = creeper.getEyeLocation().getDirection().multiply(3);
                                 creeper.setVelocity(vector);
+                            }else if(reward == 4){
+                                p.sendMessage(format("&6&l¡ITEM!: &7Tu Umbra Rod a atrapado &8Esencia Oscura"));
+                                event.getHook().getWorld().dropItemNaturally(event.getHook().getLocation(), MobDrops.darknessEssence(10));
+                            }else if(reward == 5){
+                                p.sendMessage(format("&6&l¡ITEM!: &7Tu Umbra Rod a atrapado &8Dark Staff"));
+                                event.getHook().getWorld().dropItemNaturally(event.getHook().getLocation(), MobDrops.darkstaff());
+                            }else if(reward == 6){
+                                p.sendMessage(format("&6&l¡ITEM!: &7Tu Umbra Rod a atrapado &8Crystal Apple"));
+                                event.getHook().getWorld().dropItemNaturally(event.getHook().getLocation(), Items.crystalApple(10));
+                            }else{
+                                p.sendMessage(format("&6&l¡ITEM!: &7Tu Umbra Rod a atrapado &8Manzana Encantada Dorada"));
+                                event.getHook().getWorld().dropItemNaturally(event.getHook().getLocation(), new ItemStack(Material.ENCHANTED_GOLDEN_APPLE,16));
                             }
+                        }
+                    }
+                }else if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 1200390837 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 1200390837){
+                    if(event.getState() == PlayerFishEvent.State.REEL_IN){
+                        if(p.hasCooldown(Material.FISHING_ROD))return;
+                        if(p.getLocation().getBlock().getType() == Material.LAVA) {
+                            Vector vector = p.getEyeLocation().getDirection().multiply(5);
+                            p.setVelocity(vector);
+                            p.setCooldown(Material.FISHING_ROD,400);
+                        }else {
+                            Vector vector = p.getEyeLocation().getDirection().multiply(3);
+                            p.setVelocity(vector);
+                            p.setCooldown(Material.FISHING_ROD, 200);
                         }
                     }
                 }

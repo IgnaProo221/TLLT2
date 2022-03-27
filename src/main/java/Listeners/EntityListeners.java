@@ -3,6 +3,7 @@ package Listeners;
 import Extras.EventosItems;
 import Extras.Items;
 import Utilities.*;
+import com.ibm.icu.util.UniversalTimeScale;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.*;
@@ -238,6 +239,9 @@ public class EntityListeners implements Listener {
                     p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 600, 4, true, true, true));
                     p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 600, 4, true, true, true));
                 }
+                if (vex.getPersistentDataContainer().has(Utils.key("BANSHEE"), PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.LUCK,200,0,true,false,true));
+                }
             }
             if (damager instanceof WitherSkeleton) {
                 if (p.isBlocking()) return;
@@ -389,6 +393,9 @@ public class EntityListeners implements Listener {
                         player.getInventory().setItem(pos, null);
                         player.getWorld().dropItemNaturally(player.getLocation().add(0, 5, 0), drop);
                     }
+                }
+                if(vindicator.getPersistentDataContainer().has(Utils.key("KILLERSCREAM"),PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.LUCK,200,1,true,false,true));
                 }
             }
             if (damager instanceof Villager villager) {
@@ -627,7 +634,7 @@ public class EntityListeners implements Listener {
  */
             }
             if (creeper.getPersistentDataContainer().has(new NamespacedKey(Utils.getPlugin(), "ICE_CREEPER"), PersistentDataType.STRING)) {
-                entity.getLocation().getNearbyPlayers(5, 5, 5).forEach(player -> player.setFreezeTicks(1200));
+                entity.getLocation().getNearbyPlayers(7, 7, 7).forEach(player -> player.setFreezeTicks(1200));
             }
             if (creeper.getPersistentDataContainer().has(new NamespacedKey(plugin, "EXO_EXPLODE"), PersistentDataType.STRING)) {
                 for (Entity p : creeper.getNearbyEntities(5, 5, 5)) {
@@ -642,10 +649,13 @@ public class EntityListeners implements Listener {
                 }
             }
             if (creeper.getPersistentDataContainer().has(new NamespacedKey(Utils.getPlugin(), "MOSS_CREEPER"), PersistentDataType.STRING)) {
-                entity.getLocation().getNearbyPlayers(5, 5, 5).forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 200, 0)));
+                entity.getLocation().getNearbyPlayers(7, 7, 7).forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 400, 4)));
             }
             if (creeper.getPersistentDataContainer().has(new NamespacedKey(Utils.getPlugin(), "SANDSTONE_CREEPER"), PersistentDataType.STRING)) {
-                entity.getLocation().getNearbyPlayers(5, 5, 5).forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 400, 0)));
+                entity.getLocation().getNearbyPlayers(7, 7, 7).forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 600, 3)));
+            }
+            if(creeper.getPersistentDataContainer().has(Utils.key("OVERSCREAM"),PersistentDataType.STRING)){
+                entity.getLocation().getNearbyPlayers(7, 7, 7).forEach(player -> player.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, 400, 2)));
             }
             if (creeper.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HIVE_MIND"), PersistentDataType.STRING)) {
                 Bukkit.getScheduler().runTaskLater(plugin, () -> {
@@ -955,6 +965,8 @@ public class EntityListeners implements Listener {
             e.getProjectile().setCustomName("ice");
         } else if (bow.getCustomModelData() == 27289) {
             e.getProjectile().setCustomName("exo_proj");
+        } else if(bow.getCustomModelData() == 91817){
+            e.getProjectile().setCustomName("shade_proj");
         }
     }
 
@@ -984,6 +996,13 @@ public class EntityListeners implements Listener {
                             LivingEntity livingEntity = (LivingEntity) damaged;
                             livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 1, false, false, false));
                             livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 300, 1, false, true, false));
+                        }
+                    }else if(projectile.getCustomName().contains("shade_proj")){
+                        if(damaged != null){
+                            LivingEntity livingEntity = (LivingEntity) damaged;
+                            livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 600, 2, false, false, false));
+                            livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 600, 2, false, false, false));
+                            livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 600, 2, false, false, false));
                         }
                     }
                 }

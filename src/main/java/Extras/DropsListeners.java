@@ -1,5 +1,7 @@
 package Extras;
 
+import Utilities.Utils;
+import jdk.jshell.execution.Util;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -50,6 +52,9 @@ public class DropsListeners implements Listener{
             }else if(creeper.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXO_EXPLODE"),PersistentDataType.STRING)){
                 e.getDrops().clear();
                 e.getDrops().add(MobDrops.exoCore(quantity));
+            }else if(creeper.getPersistentDataContainer().has(Utils.key("OVERSCREAM"),PersistentDataType.STRING)){
+                e.getDrops().clear();
+                e.getDrops().add(MobDrops.darknessEssence(quantity));
             }
         }else if(entity instanceof Spider spider && killer instanceof Player){
             if(spider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_SPIDER"), PersistentDataType.STRING)){
@@ -80,6 +85,10 @@ public class DropsListeners implements Listener{
                 e.getDrops().clear();
                 e.getDrops().add(MobDrops.blighdrop7(quantity));
                 e.getDrops().add(MobDrops.terrorEssence(quantity));
+            }else if(ghast.getPersistentDataContainer().has(Utils.key("NIGHTMARE"),PersistentDataType.STRING)){
+                e.getDrops().clear();
+                e.getDrops().add(MobDrops.darknessEssence(quantity));
+                e.getDrops().add(MobDrops.darkstaff());
             }
         }else if(entity instanceof PiglinBrute brute && killer instanceof Player) {
             if (brute.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_BRUTE"), PersistentDataType.STRING)) {
@@ -110,10 +119,48 @@ public class DropsListeners implements Listener{
             if(wither.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"ADVANCED_WITHER"),PersistentDataType.STRING)){
                 e.getDrops().add(Items.whiterjusticeTome());
             }
-        }else if(entity instanceof Blaze blaze && killer instanceof Player){
-            if(blaze.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"HELLFIRE"),PersistentDataType.STRING)){
+        }else if(entity instanceof Blaze blaze && killer instanceof Player) {
+            if (blaze.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE"), PersistentDataType.STRING)) {
                 e.getDrops().clear();
                 e.getDrops().add(MobDrops.hellfireRod());
+            }else if(blaze.getPersistentDataContainer().has(Utils.key("INFERNO_LORD"),PersistentDataType.STRING)){
+                e.getDrops().clear();
+                e.getDrops().add(MobDrops.infernalbloom());
+                e.getDrops().add(MobDrops.hellfireRod());
+                e.getDrops().add(MobDrops.hellfireRod());
+                e.getDrops().add(MobDrops.hellfireRod());
+                e.getDrops().add(MobDrops.hellfireRod());
+                e.getDrops().add(MobDrops.hellfireRod());
+                //se que pude haber hecho un quantity pero me dio pereza XD perdon
+                int itemchance = new Random().nextInt(100);
+                if(itemchance > 90){
+                    int itemtype = new Random().nextInt(4);
+                    if(itemtype == 1){
+                        e.getDrops().add(Items.fireHook());
+                    }else if(itemtype == 2){
+                        e.getDrops().add(Items.emberSceptre());
+                    }else if(itemtype == 3){
+                        e.getDrops().add(Items.heatproteTome());
+                    }else{
+                        e.getDrops().add(Items.adaptativeTome());
+                    }
+                }
+            }
+        }else if(entity instanceof Vex vex && killer instanceof Player) {
+            if (vex.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BANSHEE"), PersistentDataType.STRING)) {
+                e.getDrops().clear();
+                e.getDrops().add(MobDrops.darknessEssence(quantity));
+            }
+        }else if(entity instanceof Evoker evoker){
+            if(evoker.getPersistentDataContainer().has(Utils.key("MAESTRY_WIZARD"),PersistentDataType.STRING)){
+                e.getDrops().clear();
+                e.getDrops().add(Items.unluckyIdol());
+                e.getDrops().add(Items.luminiteArtifact());
+            }
+        }else if(entity instanceof Vindicator vindicator && killer instanceof Player) {
+            if (vindicator.getPersistentDataContainer().has(Utils.key("KILLERSCREAM"), PersistentDataType.STRING)) {
+                e.getDrops().clear();
+                e.getDrops().add(MobDrops.darknessEssence(quantity));
             }
         }else if(entity instanceof IronGolem ironGolem && killer instanceof Player){
             if(ironGolem.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"EXPERIMENT_1"),PersistentDataType.STRING)){

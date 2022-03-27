@@ -10,6 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
@@ -18,6 +19,7 @@ import tlldos.tll2.TLL2;
 import java.util.Collection;
 import java.util.Random;
 
+import static Utilities.Format.PREFIX;
 import static Utilities.Format.format;
 
 public class BlocksListeners implements Listener{
@@ -34,7 +36,7 @@ public class BlocksListeners implements Listener{
         }
     }*/
 
-   /*@EventHandler
+   @EventHandler
     public void miedoXd(BlockPlaceEvent e){
         var p = e.getPlayer();
         if (p.hasPotionEffect(PotionEffectType.LUCK)) {
@@ -60,7 +62,8 @@ public class BlocksListeners implements Listener{
                 p.sendMessage(Format.PREFIX + format("&c¡Estas paniquiado!"));
             }
         }
-    }*/
+    }
+
 
     @EventHandler
     public void picoHabilidad(BlockBreakEvent e){
@@ -80,6 +83,20 @@ public class BlocksListeners implements Listener{
             }
         }
 
+        if(p.getInventory().getItemInMainHand().hasItemMeta()){
+            if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
+                if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 236){
+                    if(block.getType() == Material.CARROTS || block.getType() == Material.POTATOES || block.getType() == Material.BEETROOTS){
+                        int chancelol = new Random().nextInt(100);
+                        if(chancelol > 80){
+                            e.setDropItems(false);
+                            e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(),new ItemStack(Material.ENCHANTED_GOLDEN_APPLE));
+                        }
+                    }
+                }
+            }
+        }
+
         if(block.getType() == Material.DEEPSLATE_DIAMOND_ORE){
             if(p.getInventory().getItemInMainHand() != null){
                 if(p.getInventory().getItemInMainHand().hasItemMeta()){
@@ -95,6 +112,25 @@ public class BlocksListeners implements Listener{
                 }
             }
         }
+        if(p.getInventory().getItemInMainHand().hasItemMeta()){
+            if(p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.EXPERIENCE)){
+                e.setExpToDrop(e.getExpToDrop() * 2);
+            }
+        }
+
+        if(p.getInventory().getItemInMainHand().hasItemMeta()){
+            if(p.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.LUCKY_TREE)){
+                if(e.getBlock().getType().toString().contains("_log")){
+                    int chance = new Random().nextInt(100);
+                    if(chance > 80){
+                        p.sendMessage(PREFIX,format("&6Has encontrado Manzanas Doradas!"));
+                        p.getLocation().getWorld().dropItemNaturally(p.getLocation(),new ItemStack(Material.GOLDEN_APPLE, 5));
+                    }
+                }
+            }
+        }
+
+
 
         if(p.getInventory().getItemInMainHand() != null){
             if(p.getInventory().getItemInMainHand().hasItemMeta()){

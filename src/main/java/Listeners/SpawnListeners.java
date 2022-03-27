@@ -166,7 +166,7 @@ public class SpawnListeners implements Listener {
                 Mobs.roboSkele(skeleton);
                 skeleton.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
             } else {
-                int skeletontype = new Random().nextInt(6);
+                int skeletontype = new Random().nextInt(7);
                 if (skeletontype == 1) {
                     skeleton.remove();
                     var wither = skeleton.getWorld().spawn(skeleton.getLocation(), WitherSkeleton.class);
@@ -179,10 +179,16 @@ public class SpawnListeners implements Listener {
                     Mobs.ignitedSkeleton(skeleton);
                 } else if (skeletontype == 5) {
                     Mobs.blizzardSkeleton(skeleton);
-                } else {
+                } else if(skeletontype == 6){
                     skeleton.remove();
                     var wither = skeleton.getWorld().spawn(skeleton.getLocation(), WitherSkeleton.class);
                     Mobs.abomination(wither);
+                } else {
+                    if(!(skeleton.getWorld().isDayTime())){
+                        skeleton.remove();
+                        var nightmare = skeleton.getWorld().spawn(skeleton.getLocation(), Ghast.class);
+                        Mobs.Nightmare(nightmare);
+                    }
                 }
             }
         } else if (entity instanceof Spider spider && !(entity instanceof CaveSpider) && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL)) {
@@ -225,7 +231,7 @@ public class SpawnListeners implements Listener {
                     Mobs.Warden(zombie.getLocation().getWorld().spawn(zombie.getLocation(), IronGolem.class));
                 }
             } else {
-                int zombitype = new Random().nextInt(6) + 1;
+                int zombitype = new Random().nextInt(7);
                 if (zombitype == 1) {
                     Mobs.zombBox(zombie);
                 } else if (zombitype == 2) {
@@ -235,9 +241,10 @@ public class SpawnListeners implements Listener {
                 } else if (zombitype == 4) {
                     Mobs.zombiJinete(zombie);
                 } else if (zombitype == 5) {
+                    zombie.remove();
                     IronGolem ironGolem = zombie.getLocation().getWorld().spawn(zombie.getLocation(), IronGolem.class);
                     Mobs.zombObeso(ironGolem);
-                } else {
+                } else if(zombitype == 6){
                     zombie.setBaby(true);
                     zombie.getEquipment().setHelmet(new ItemBuilder(Material.DIAMOND_HELMET).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).build());
                     zombie.getEquipment().setChestplate(new ItemBuilder(Material.DIAMOND_CHESTPLATE).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).build());
@@ -249,6 +256,12 @@ public class SpawnListeners implements Listener {
                     zombie.getEquipment().setDropChance(EquipmentSlot.LEGS, 0);
                     zombie.getEquipment().setDropChance(EquipmentSlot.FEET, 0);
                     zombie.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+                }else{
+                    if(!(zombie.getWorld().isDayTime())) {
+                        zombie.remove();
+                        Vindicator vindicator = zombie.getWorld().spawn(zombie.getLocation(), Vindicator.class);
+                        Mobs.KillerScream(vindicator);
+                    }
                 }
             }
         } else if (entity instanceof Bat bat && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
@@ -303,8 +316,12 @@ public class SpawnListeners implements Listener {
             } else if (spawnmob > 50 && entitybiome == Biome.PLAINS) {
                 Mobs.roboCreeper(creeper);
             } else {
-                creeper.setPowered(true);
-                creeper.setCustomName(format("&6&lPowered Creeper"));
+                if (!(creeper.getWorld().isDayTime())) {
+                    Mobs.Overscream(creeper);
+                }else{
+                    creeper.setPowered(true);
+                    creeper.setCustomName(format("&6&lPowered Creeper"));
+                }
             }
         } else if (entity instanceof Salmon) {
             e.setCancelled(true);
@@ -412,6 +429,42 @@ public class SpawnListeners implements Listener {
             if (spawnmob > blightedProb) {
                 Mobs.blightedWitch(witch);
             }
+            if (spawnmob > 90) {
+                witch.remove();
+                Vex vex = witch.getWorld().spawn(witch.getLocation(), Vex.class);
+                Mobs.Banshee(vex);
+            }
+        }else if(entity instanceof Vex vex){
+            if(vex.getSummoner() instanceof Evoker evoker){
+                if(evoker.getPersistentDataContainer().has(Utils.key("MAESTRY_WIZARD"),PersistentDataType.STRING)){
+                    vex.remove();
+                    int typepillager = new Random().nextInt(3);
+                    if(typepillager == 1){
+                        var mob = vex.getWorld().spawn(vex.getLocation(),Pillager.class);
+                        Mobs.dynamLlager(mob);
+                    }else if(typepillager == 2){
+                        var mob = vex.getWorld().spawn(vex.getLocation(),Pillager.class);
+                        Mobs.mountllagers(mob);
+                    }else{
+                        var mob = vex.getWorld().spawn(vex.getLocation(),Vindicator.class);
+                        mob.setCustomName(format("&c&lButcher"));
+                        mob.getEquipment().setItemInMainHand(new ItemBuilder(Material.NETHERITE_AXE).addEnchantment(Enchantment.DAMAGE_ALL, 15).build());
+                        mob.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+                    }
+                }else{
+                    int elemental = new Random().nextInt(4);
+                    if(elemental == 1){
+                        Mobs.cinder(vex);
+                    }else if(elemental == 2){
+                        Mobs.jengu(vex);
+                    }else if(elemental == 3){
+                        Mobs.grue(vex);
+                    }else{
+                        Mobs.djiin(vex);
+                    }
+                }
+            }
+
         } else if (entity instanceof Ghast ghast && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             if (spawnmob > blightedProb) {
                 Mobs.blightedGhast(ghast);
