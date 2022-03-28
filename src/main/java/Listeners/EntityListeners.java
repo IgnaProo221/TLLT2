@@ -479,6 +479,24 @@ public class EntityListeners implements Listener {
                     livingEntity.damage(15);
                     livingEntity.setFireTicks(400);
                 }
+            }else if(smallFireball.getCustomName().contains("hellfire_proj")){
+                if(entity != null){
+                    entity.getLocation().createExplosion(smallFireball, 4, false, true);
+                }
+                if(hitblock != null){
+                    hitblock.getLocation().createExplosion(smallFireball, 4, false, true);
+                }
+            }
+        }
+        if(projectile instanceof Fireball fireball){
+            if(fireball.getCustomName().contains("ember_projectile_powerup")){
+                if (entity != null) {
+                    LivingEntity livingEntity = (LivingEntity) entity;
+                    if (livingEntity instanceof Player || livingEntity instanceof Villager || livingEntity instanceof ArmorStand)
+                        return;
+                    livingEntity.damage(35);
+                    livingEntity.setFireTicks(1200);
+                }
             }
         }
 
@@ -603,14 +621,11 @@ public class EntityListeners implements Listener {
             }
         }
         if (shooter instanceof Blaze) {
+            if(projectile instanceof SmallFireball smallFireball){
             var blaze = (Entity) shooter;
             if (blaze.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE"), PersistentDataType.STRING)) {
-                if (hitblock != null) {
-                    hitblock.getLocation().createExplosion(blaze, 3, false, true);
-                } else if (entity != null) {
-                    entity.getLocation().createExplosion(blaze, 3, false, true);
-                    entity.setFireTicks(2400);
-                }
+                smallFireball.setCustomName("hellfire_proj");
+            }
             }
         }
     }

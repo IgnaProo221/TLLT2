@@ -127,11 +127,6 @@ public class DropsListeners implements Listener{
                 e.getDrops().clear();
                 e.getDrops().add(MobDrops.infernalbloom());
                 e.getDrops().add(MobDrops.hellfireRod());
-                e.getDrops().add(MobDrops.hellfireRod());
-                e.getDrops().add(MobDrops.hellfireRod());
-                e.getDrops().add(MobDrops.hellfireRod());
-                e.getDrops().add(MobDrops.hellfireRod());
-                //se que pude haber hecho un quantity pero me dio pereza XD perdon
                 int itemchance = new Random().nextInt(100);
                 if(itemchance > 90){
                     int itemtype = new Random().nextInt(4);

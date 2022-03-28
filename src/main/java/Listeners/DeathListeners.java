@@ -392,7 +392,7 @@ public class DeathListeners extends ListenerAdapter implements Listener {
     }
     public void muerteMessage(Player player, Player players) {
         switch (player.getName()) {
-            case "Mutant17":
+            case "MutantFm":
                 players.sendMessage(format("&7" +player.getName() + ". But se suicida:"));
                 break;
             case "Itz_Antonio_PvP":
@@ -449,7 +449,7 @@ public class DeathListeners extends ListenerAdapter implements Listener {
             case "Tom_555":
                 players.sendMessage(format("&7" +player.getName() + ". Si no murio por internet gano el servidor"));
                 break;
-            case "1r_7an":
+            case "5r_i4n":
                 players.sendMessage(format("&7" +player.getName() + ". Tremendo oso polar"));
                 break;
             case "kennyelsuave":
@@ -459,7 +459,7 @@ public class DeathListeners extends ListenerAdapter implements Listener {
                 players.sendMessage(format("&7" +player.getName() + ". Desde hacer builds hasta morirse en TLL 2"));
                 break;
             case "SalvaGamerVZ":
-                players.sendMessage(format("&7" +player.getName() + ". Intenta tener buen Internet"));
+                players.sendMessage(format("&7" +player.getName() + ". Salva vidas pero no la suya"));
                 break;
             case "Gatin72":
                 players.sendMessage(format("&7" +player.getName() + ". Eres un pendej0 ramirez"));
@@ -476,7 +476,7 @@ public class DeathListeners extends ListenerAdapter implements Listener {
             case "Diegot_Manc":
                 players.sendMessage(format("&7" +player.getName() + ". Dios a muerto y se murio solo"));
                 break;
-            case "OmkSpar_":
+            case "OmkSpar":
                 players.sendMessage(format("&7" +player.getName() + ". Cambiarte de cuenta no servira de nada"));
                 break;
             case "FaboXVII":

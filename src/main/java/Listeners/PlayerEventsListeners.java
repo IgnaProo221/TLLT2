@@ -109,13 +109,13 @@ public class PlayerEventsListeners implements Listener {
                                     fireball1.setYield(0);
                                     Bukkit.getScheduler().runTaskLater(plugin,()->{
                                         var fireball2 = (Fireball)p.launchProjectile(Fireball.class);
-                                        fireball2.setCustomName("ember_projectile");
-                                        fireball1.setYield(0);
+                                        fireball2.setCustomName("ember_projectile_powerup");
+                                        fireball2.setYield(0);
                                     },20L);
                                     Bukkit.getScheduler().runTaskLater(plugin,() ->{
                                         var fireball3 = (Fireball)p.launchProjectile(Fireball.class);
-                                        fireball3.setCustomName("ember_projectile");
-                                        fireball1.setYield(0);
+                                        fireball3.setCustomName("ember_projectile_powerup");
+                                        fireball3.setYield(0);
                                     },40L);
                                 }else{
                                     p.setCooldown(Material.BLAZE_ROD,400);
@@ -215,20 +215,14 @@ public class PlayerEventsListeners implements Listener {
                         }
                     }
                 }
-                if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                    if (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455) {
-                        if (p.hasCooldown(Material.PRISMARINE_CRYSTALS)) return;
-                        PlayerData data = CustomPlayer.fromName(p.getName()).getData();
-                        data.setTotemspercentage(100);
-                            p.setCooldown(Material.PRISMARINE_CRYSTALS, 400);
-                            p.playSound(p.getLocation(),Sound.ITEM_TOTEM_USE,SoundCategory.PLAYERS,5.0F,2.0F);
-                    }
-                }
                 if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
                     if (p.getInventory().getItemInMainHand().hasItemMeta() && p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() && p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4455) {
+                        if(p.hasCooldown(Material.PRISMARINE_CRYSTALS))return;
                         PlayerData data = CustomPlayer.fromName(p.getName()).getData();
                         var totems = data.getTotemPercentage();
                         p.sendMessage(Format.PREFIX, format("&7&l¡Tienes &e&l" + totems + "% &7&lporcentaje de Totems!"));
+                        data.setTotemspercentage(100);
+                        p.setCooldown(Material.PRISMARINE_CRYSTALS,400);
                     }
                 }
 
@@ -283,7 +277,7 @@ public class PlayerEventsListeners implements Listener {
     @EventHandler
     public void tormentaDesgastar(PlayerItemDamageEvent e){
         if(e.getPlayer().getWorld().isThundering()){
-            e.setDamage(e.getDamage() * 2);
+            e.setDamage(e.getDamage() * 3);
         }
     }
 
@@ -312,12 +306,11 @@ public class PlayerEventsListeners implements Listener {
     @EventHandler
     public void fishingRodsCustoms(PlayerFishEvent event){
         Player p = event.getPlayer();
-
         if(p.getInventory().getItemInMainHand().hasItemMeta() || p.getInventory().getItemInOffHand().hasItemMeta()){
             if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()) {
                 if (p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 102038461 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 102038461) {
-                    int entitychance = new Random().nextInt(100);
                     if (event.getState() == PlayerFishEvent.State.CAUGHT_FISH) {
+                        int entitychance = new Random().nextInt(100);
                         if (entitychance > 70) {
                             int reward = new Random().nextInt(7) + 1;
                             if (reward == 1) {
@@ -354,33 +347,39 @@ public class PlayerEventsListeners implements Listener {
                         }
                     }
                 }
-                if (p.getInventory().getItemInMainHand().hasItemMeta() || p.getInventory().getItemInOffHand().hasItemMeta()) {
-                    if (p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()) {
-                        if (p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 1200390837  || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 1200390837 ) {
-                            if (event.getState() == PlayerFishEvent.State.REEL_IN) {
+            }
+        }
+        }
+
+        @EventHandler
+        public void basura(PlayerFishEvent e){
+        Player p = e.getPlayer();
+            if (p.getInventory().getItemInMainHand().hasItemMeta() || p.getInventory().getItemInOffHand().hasItemMeta()) {
+                if (p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()) {
+                    if (p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 1736 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 1736) {
+                        if (e.getState() == PlayerFishEvent.State.REEL_IN) {
+                            if (p.getLocation().getBlock().getType() == Material.LAVA) {
                                 if (p.hasCooldown(Material.FISHING_ROD)) return;
-                                if (p.getLocation().getBlock().getType() == Material.LAVA) {
-                                    Vector vector = p.getEyeLocation().getDirection().multiply(5);
-                                    p.setVelocity(vector);
-                                    p.setCooldown(Material.FISHING_ROD, 400);
-                                } else {
-                                    Vector vector = p.getEyeLocation().getDirection().multiply(3);
-                                    p.setVelocity(vector);
-                                    p.setCooldown(Material.FISHING_ROD, 200);
-                                }
+                                Vector vector = p.getEyeLocation().getDirection().multiply(5);
+                                p.setVelocity(vector);
+                                p.setCooldown(Material.FISHING_ROD, 100);
+                            }else{
+                                if (p.hasCooldown(Material.FISHING_ROD)) return;
+                                Vector vector = p.getEyeLocation().getDirection().multiply(3);
+                                p.setVelocity(vector);
+                                p.setCooldown(Material.FISHING_ROD, 100);
                             }
                         }
                     }
                 }
             }
         }
-    }
 
 
     @EventHandler
     public void hambreAgotar(EntityExhaustionEvent e) {
         if (BlastStormListeners.isEnabled())
-            e.setExhaustion(e.getExhaustion() * 2);
+            e.setExhaustion(e.getExhaustion() * 3);
     }
 
     @EventHandler

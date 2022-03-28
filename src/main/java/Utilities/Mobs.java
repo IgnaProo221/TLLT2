@@ -577,7 +577,7 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(400);
         self.setHealth(400);
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(50);
-        self.setRemoveWhenFarAway(false);
+        self.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).equals(100);
         self.getPersistentDataContainer().set(Utils.key("INFERNO_LORD"),PersistentDataType.STRING,"INFERNO_LORD");
     }
     public static void Warden(IronGolem self){

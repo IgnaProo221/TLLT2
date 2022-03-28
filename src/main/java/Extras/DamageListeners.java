@@ -99,7 +99,8 @@ public class DamageListeners implements Listener {
 
             if (player.getInventory().getChestplate() != null && player.getInventory().getChestplate().hasItemMeta() && player.getInventory().getChestplate().getItemMeta().hasEnchant(CustomEnchants.WITHER_JUSTICE)) {
                 if (e.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || e.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) {
-                    e.setDamage(e.getDamage() * 3 - 20);
+                    if(player.getWorld().isThundering())return;
+                    e.setDamage(e.getDamage() / 2);
                 }
             }
 

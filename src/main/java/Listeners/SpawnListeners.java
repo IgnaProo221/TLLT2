@@ -308,7 +308,7 @@ public class SpawnListeners implements Listener {
                 piglinBrute.setRemoveWhenFarAway(true);
             }
 
-        } else if (entity instanceof Blaze blaze) {
+        } else if (entity instanceof Blaze blaze && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL || e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER)) {
             Mobs.hellfire(blaze);
         } else if (entity instanceof Creeper creeper && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL || e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.CUSTOM)) {
             if (spawnmob > blightedProb) {

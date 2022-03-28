@@ -457,7 +457,7 @@ public class Items {
         lore.add(Component.text(format("&7Te impulsa hacia la direccion que estas mirando")));
         lore.add(Component.text(format("&6&l¡Te Implusa el doble si estas sobre Lava!")));
         lore.add(Component.text(format("")));
-        return new ItemBuilder(Material.FISHING_ROD).setLore(lore).setUnbreakable(true).setCustomModelData(1200390837).setName(format("&6&lFireHook")).build();
+        return new ItemBuilder(Material.FISHING_ROD).setLore(lore).setUnbreakable(true).setCustomModelData(1736).setName(format("&6&lFireHook")).build();
     }
 
     public static ItemStack emberSceptre(){

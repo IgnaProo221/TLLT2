@@ -20,6 +20,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import player.CustomPlayer;
 import player.PlayerData;
+import tasks.SpawnTask;
 import tasks.TemperatureBlocks;
 import tasks.TemperatureTask;
 import tasks.TemperatureY;
@@ -95,6 +96,8 @@ public final class TLL2 extends JavaPlugin implements Listener{
             new TemperatureTask(this).runTaskTimer(this, 0L, 2400L);
             new TemperatureBlocks(this).runTaskTimer(this,0L,200L);
             new TemperatureY(this).runTaskTimer(this,0L,1200);
+            //NO USEN ESTO FELIPE YA LO TIENE
+            //new SpawnTask(this).runTaskTimer(this,0L,200);
         } catch (Error e){
             getServer().getConsoleSender().sendMessage("######################################################");
             getServer().getConsoleSender().sendMessage("######################################################");
@@ -271,7 +274,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
                     health += 6;
                 }
                 if(hasUmbraArmor(player)){
-                    if(!(player.getWorld().isDayTime())){
+                    if(!(Utils.getWorld().isDayTime())){
                         health += 16;
                         player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 1, true, false, true));
                         player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 1, true, false, true));

@@ -79,8 +79,9 @@ public class EatListeners implements Listener {
             p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue() + 0.60);
         }
         if (e.getItem().hasItemMeta() && e.getItem().getItemMeta().hasDisplayName() && e.getItem().getItemMeta().getDisplayName().contains(format("&7Crystal Apple"))) {
-            p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 2, true, false, true));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 300, 0, true, false, true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 100, 5, true, false, true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 2, true, false, true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,200,1,true,false,true));
         }
     }
 
