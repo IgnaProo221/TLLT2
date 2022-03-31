@@ -80,9 +80,8 @@ public final class TLL2 extends JavaPlugin implements Listener{
             new DeathListeners(this);
 
             cargarEventos();
-            registrarCrafteos();
             tick();
-            //tickTormenta();
+            tickTormenta();
             dementetemperatura();
             maestriaLol();
             getCommand("thelastlife").setExecutor(new ComandosUsuarios(this));
@@ -133,10 +132,6 @@ public final class TLL2 extends JavaPlugin implements Listener{
         getServer().getConsoleSender().sendMessage(ChatColor.GOLD + "¡El Plugin se deshabilito correctamente!");
     }
 
-    public void registrarCrafteos(){
-        Crafteos.craftDaga();
-        Crafteos.craftBloodsaber();
-    }
 
     public static TLL2 getInstance() {
         return instance;
@@ -216,10 +211,10 @@ public final class TLL2 extends JavaPlugin implements Listener{
             Bukkit.getScheduler().runTaskTimer(this, ()->{
                 if(world.isThundering()) {
                     Bukkit.getOnlinePlayers().forEach(player -> {
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK, 100, 0, true, false, true));
+                        demente(player,player);
                     });
                 }
-            },0L, 20L);
+            },0L, 1200L);
 
         }
     }
@@ -244,6 +239,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
         }
         },0L,600L);
     }
+
     public void pichaXd() {
         Random r = new Random();
         if (Bukkit.getOnlinePlayers().size() < 1) return;

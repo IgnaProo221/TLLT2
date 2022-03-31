@@ -88,35 +88,35 @@ public class EatListeners implements Listener {
     public void applyRandomEffects(Player p){
         int effect = new Random().nextInt(15);
         if(effect == 1){
-            p.addPotionEffect(new PotionEffect(PotionEffectType.POISON,200,0,true,false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.POISON,400,2,true,false,true));
         }else if(effect == 2){
-            p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,200,0,true,false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,400,2,true,false,true));
         }else if(effect == 3){
-            p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE,200,0,true,false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE,400,2,true,false,true));
         }else if(effect == 4){
-            p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,200,0,true,false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,400,2,true,false,true));
         }else if(effect == 5){
-            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,200,0,true,false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,400,2,true,false,true));
         }else if(effect == 6){
-            p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,200,0,true,false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,400,2,true,false,true));
         }else if(effect == 7){
-            p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION,200,0,true,false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION,400,2,true,false,true));
         }else if(effect == 8){
-            p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,200,0,true,false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,400,2,true,false,true));
         }else if(effect == 9){
-            p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING,200,0,true,false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING,400,2,true,false,true));
         }else if(effect == 10){
-            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,200,0,true,false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,400,2,true,false,true));
         }else if(effect == 11){
-            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,200,0,true,false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,400,2,true,false,true));
         }else if(effect == 12){
-            p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,200,0,true,false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,400,2,true,false,true));
         }else if(effect == 13){
-            p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,200,0,true,false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,400,2,true,false,true));
         }else if(effect == 14){
-            p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP,200,0,true,false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP,400,2,true,false,true));
         }else {
-            p.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK,200,0,true,false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK,400,2,true,false,true));
         }
 
     }

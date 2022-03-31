@@ -162,13 +162,6 @@ public class DropsListeners implements Listener{
                 e.getDrops().clear();
                 e.getDrops().add(Items.metaldes());
                 e.getDrops().add(Items.celulaEnergia());
-            }else if(ironGolem.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"WARDEN"),PersistentDataType.STRING)){
-                e.getDrops().clear();
-                e.getDrops().add(MobDrops.phantomHeart());
-                int shriekchannce = new Random().nextInt(100);
-                if(shriekchannce > 80){
-                    e.getDrops().add(Items.shriekTome());
-                }
             } else if (ironGolem.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXPERIMENT_W"), PersistentDataType.STRING)){
                 e.getDrops().clear();
                 e.getDrops().add(MobDrops.blackRose());

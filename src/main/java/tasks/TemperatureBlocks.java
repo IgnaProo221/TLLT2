@@ -1,5 +1,6 @@
 package tasks;
 
+import Utilities.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -27,19 +28,39 @@ public class TemperatureBlocks extends BukkitRunnable {
                 var temperature = data.getTemperature();
 
                 if(downBlock == Material.ICE || downBlock == Material.BLUE_ICE || downBlock == Material.PACKED_ICE || downBlock == Material.FROSTED_ICE){
-                    data.setTemperature(temperature - 10);
+                    if(Utils.getWorld().isThundering()) {
+                        data.setTemperature(temperature - 20);
+                    } else{
+                        data.setTemperature(temperature - 10);
+                    }
                 }
                 if(downBlock == Material.MAGMA_BLOCK || block == Material.TORCH || block == Material.CAMPFIRE){
-                    data.setTemperature(temperature + 10);
+                    if(Utils.getWorld().isThundering()) {
+                        data.setTemperature(temperature + 20);
+                    } else{
+                        data.setTemperature(temperature + 10);
+                    }
                 }
                 if(block == Material.SOUL_CAMPFIRE || block == Material.SOUL_TORCH){
-                    data.setTemperature(temperature - 5);
+                    if(Utils.getWorld().isThundering()) {
+                        data.setTemperature(temperature - 10);
+                    } else{
+                        data.setTemperature(temperature - 5);
+                    }
                 }
                 if(block == Material.LAVA){
-                    data.setTemperature(temperature + 5);
+                    if(Utils.getWorld().isThundering()) {
+                        data.setTemperature(temperature + 15);
+                    } else{
+                        data.setTemperature(temperature + 5);
+                    }
                 }
                 if(block == Material.WATER){
-                    data.setTemperature(temperature - 5);
+                    if(Utils.getWorld().isThundering()) {
+                        data.setTemperature(temperature - 15);
+                    } else{
+                        data.setTemperature(temperature - 5);
+                    }
                 }
             }
         }

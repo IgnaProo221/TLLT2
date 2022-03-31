@@ -3,7 +3,6 @@ package Listeners;
 import Extras.EventosItems;
 import Extras.Items;
 import Utilities.*;
-import com.ibm.icu.util.UniversalTimeScale;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.*;
@@ -171,15 +170,7 @@ public class EntityListeners implements Listener {
                         if (pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4006) {
                             entity.setFreezeTicks(400);
                         } else if (pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 4010) {
-                            //pa.setHealth(0.5 / pa.getMaxHealth());
-
-                            //pa.setHealth(pa.getHealth() + (0.40 / pa.getMaxHealth()));
-
-                            int duration = new Random().nextInt(2) + 1 * 20;
-
-                            PotionEffect regeneration = new PotionEffect(PotionEffectType.REGENERATION, duration, 4);
-
-                            pa.addPotionEffect(regeneration);
+                            pa.sendMessage(format("&c&lel Lifesteal no funciona :)"));
 
                         } else if (pa.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 18129) {
                             Monster monster = (Monster) entity;
@@ -448,12 +439,12 @@ public class EntityListeners implements Listener {
                     event.setProjectile(fireball);
                 }
             } else if (witherskeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "POWERED_SKELETON"), PersistentDataType.STRING)) {
-                var skull = (WitherSkull) event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0, 1, 0), EntityType.WITHER_SKULL);
+                var skull = (WitherSkull) event.getEntity().launchProjectile(WitherSkull.class);
                 skull.setYield(10);
                 skull.setCustomName("CACA");
                 event.setProjectile(skull);
             } else if (witherskeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ABOMINATION"), PersistentDataType.STRING)) {
-                var skull = (WitherSkull) event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0, 1, 0), EntityType.WITHER_SKULL);
+                var skull = (WitherSkull) event.getEntity().launchProjectile(WitherSkull.class);
                 skull.setYield(10);
                 skull.setCustomName(format("abom_skull"));
                 skull.setCharged(true);
@@ -514,16 +505,16 @@ public class EntityListeners implements Listener {
             if (witherSkull.getCustomName().contains("abom_skull")) {
                 if (witherSkull.getCustomName().isEmpty()) return;
                 if (hitblock != null) {
-                    hitblock.getLocation().createExplosion(5, false, true);
+                    hitblock.getLocation().createExplosion(6, false, true);
                 } else if (entity != null) {
-                    entity.getLocation().createExplosion(5, false, true);
+                    entity.getLocation().createExplosion(6, false, true);
                 }
             } else if (witherSkull.getCustomName().contains("CACA")) {
                 if (witherSkull.getCustomName().isEmpty()) return;
                 if (hitblock != null) {
-                    hitblock.getLocation().createExplosion(3, false, true);
+                    hitblock.getLocation().createExplosion(4, false, true);
                 } else if (entity != null) {
-                    entity.getLocation().createExplosion(3, false, true);
+                    entity.getLocation().createExplosion(4, false, true);
                 }
             }
         }
@@ -538,7 +529,15 @@ public class EntityListeners implements Listener {
                 }
             }
         }
-
+        if(shooter instanceof Drowned drowned){
+            if(drowned.getPersistentDataContainer().has(Utils.key("PYRO_DEEP"),PersistentDataType.STRING)){
+                if (hitblock != null) {
+                    hitblock.getLocation().createExplosion(drowned, 5, false, true);
+                } else if (entity != null) {
+                    entity.getLocation().createExplosion(drowned, 5, false, true);
+                }
+            }
+        }
         if (shooter instanceof Skeleton) {
             var skeleton = (Entity) shooter;
             if (skeleton.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXO_DISTANCE"), PersistentDataType.STRING)) {
@@ -734,6 +733,22 @@ public class EntityListeners implements Listener {
             var bat = (Bat) e;
             if (bat.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "EXPLOSIVE_BAT"), PersistentDataType.STRING)) {
                 bat.getLocation().createExplosion(bat, 8, false, true);
+            }
+        }
+        if(e instanceof Phantom phantom){
+            int moblol = new Random().nextInt(4);
+            if(moblol == 1){
+                Creeper creeper = phantom.getWorld().spawn(phantom.getLocation(),Creeper.class);
+                Mobs.roboMine(creeper);
+            }else if(moblol == 2){
+                Creeper creeper = phantom.getWorld().spawn(phantom.getLocation(),Creeper.class);
+                Mobs.Overscream(creeper);
+            }else if(moblol == 3){
+                WitherSkeleton witherSkeleton = phantom.getWorld().spawn(phantom.getLocation(),WitherSkeleton.class);
+                Mobs.abomination(witherSkeleton);
+            }else{
+                Ghast ghast = phantom.getWorld().spawn(phantom.getLocation(),Ghast.class);
+                Mobs.blightedGhast(ghast);
             }
         }
     }
@@ -937,7 +952,21 @@ public class EntityListeners implements Listener {
                                     Vector vector = livingEntity.getEyeLocation().getDirection().multiply(-2);
                                     livingEntity.setVelocity(vector);
                                 }
+
+                            }else if (player.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.BRUTE_FORCE) || player.getInventory().getItemInOffHand().getItemMeta().hasEnchant(CustomEnchants.BRUTE_FORCE)){
+                                if (damager instanceof LivingEntity livingEntity) {
+                                    player.getWorld().spawnParticle(Particle.EXPLOSION_LARGE,player.getLocation(),1);
+                                    player.playSound(player.getLocation(),Sound.ENTITY_GENERIC_EXPLODE,SoundCategory.MASTER,5.0F,-1.0F);
+                                    Vector vector = livingEntity.getEyeLocation().getDirection().multiply(-4);
+                                    livingEntity.setVelocity(vector);
+                                    for(Entity entities : livingEntity.getWorld().getNearbyEntities(livingEntity.getLocation(),7,7,7)){
+                                        LivingEntity nearbyentities = (LivingEntity) entities;
+                                        if(nearbyentities instanceof Player || nearbyentities instanceof Villager || nearbyentities instanceof ArmorStand)return;
+                                        nearbyentities.damage(20,player);
+                                    }
+                                }
                             }
+
 
                             if (player.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || player.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()) {
                                 if (player.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 5015 || player.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 5015) {
@@ -959,6 +988,12 @@ public class EntityListeners implements Listener {
                                         player.getEquipment().setItemInOffHand(shield);
                                     }
                                     player.setCooldown(Material.SHIELD, 400);
+                                }else if (player.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 11282349 || player.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 11282349) {
+                                    if(damager instanceof LivingEntity livingEntity){
+                                        livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,400,1,false,false,false));
+                                        livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 400, 2, false, false, false));
+                                        livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 400, 0, false, false, false));
+                                    }
                                 }
                             }
                         }

@@ -41,6 +41,8 @@ public class CustomEnchants implements Listener {
     public static final Enchantment ADAPTATIVE = new EnchantmentWrapper("adaptative","adaptative",1);
     public static final Enchantment INFERNO_POWER = new EnchantmentWrapper("inferno_power","inferno_power",1);
     public static final Enchantment EXPERIENCE = new EnchantmentWrapper("experience","experience",1);
+    public static final Enchantment BRUTE_FORCE = new EnchantmentWrapper("brute_force","brute_force",1);
+    public static final Enchantment HEALTHY_STEP = new EnchantmentWrapper("healthy_step","healthy_step",1);
 
     public static void register() {
         for(Enchantment enchantment : allCustomEnchants()){
@@ -69,6 +71,8 @@ public class CustomEnchants implements Listener {
         list.add(CustomEnchants.HEAT_PROTECTION);
         list.add(CustomEnchants.INFERNO_POWER);
         list.add(CustomEnchants.EXPERIENCE);
+        list.add(CustomEnchants.BRUTE_FORCE);
+        list.add(CustomEnchants.HEALTHY_STEP);
 
 
 

@@ -90,64 +90,65 @@ public class SpawnListeners implements Listener {
                 entity.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 0, false, false, false));
             }
         }
-        if (entitybiome == Biome.SNOWY_TUNDRA || entitybiome == Biome.SNOWY_BEACH || entitybiome == Biome.SNOWY_TAIGA || entitybiome == Biome.SNOWY_MOUNTAINS || entitybiome == Biome.SNOWY_TAIGA_HILLS || entitybiome == Biome.SNOWY_TAIGA_MOUNTAINS
-                || entitybiome == Biome.ICE_SPIKES) {
-            if (entity instanceof Zombie zombie && !(entity instanceof Drowned) && !(entity instanceof Husk) && !(entity instanceof ZombieVillager) && !(entity instanceof PigZombie) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-                Mobs.zombiCongelado(zombie);
-            } else if (entity instanceof Skeleton skeleton && !(entity instanceof Stray) && !(entity instanceof WitherSkeleton) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-                Mobs.esqueletoNieve(skeleton);
-            } else if (entity instanceof Spider spider && !(entity instanceof CaveSpider) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-                Mobs.spiderNieve(spider);
-            } else if (entity instanceof Creeper creeper && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-                Mobs.creeperCongelado(creeper);
-            } else if (entity instanceof Husk husk && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-                husk.remove();
-                Slime slime = husk.getWorld().spawn(husk.getLocation(), Slime.class);
-                Mobs.freezeSlime(slime);
-            } else if (entity instanceof Enderman && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-                entity.remove();
-                IronGolem ironGolem = entity.getWorld().spawn(entity.getLocation(), IronGolem.class);
-                Mobs.yeti(ironGolem);
+        if(!(entity instanceof Animals)){
+            if(e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+                if (spawnmob > 95) {
+                    int type = new Random().nextInt(7);
+                    if (type == 1) {
+                        WitherSkeleton mob1 = entity.getWorld().spawn(entity.getLocation(), WitherSkeleton.class);
+                        Mobs.abomination(mob1);
+                    } else if (type == 2) {
+                        Ghast ghost = entity.getWorld().spawn(entity.getLocation(), Ghast.class);
+                        Mobs.blightedGhast(ghost);
+                    } else if (type == 3) {
+                        MagmaCube megm = entity.getWorld().spawn(entity.getLocation(), MagmaCube.class);
+                        megm.setCustomName(format("&6&lInferno Cube"));
+                        megm.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
+                        megm.setHealth(60);
+                        megm.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(26);
+                        megm.setSize(15);
+                    } else if (type == 4) {
+                        PiglinBrute peglol = entity.getWorld().spawn(entity.getLocation(),PiglinBrute.class);
+                        Mobs.blightedPiglin(peglol);
+                    } else if (type == 5) {
+                        PigZombie pegzoz = entity.getWorld().spawn(entity.getLocation(),PigZombie.class);
+                        pegzoz.setCustomName(format("&c&lEnraged Pigman"));
+                        pegzoz.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
+                        pegzoz.setHealth(60);
+                        pegzoz.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
+                        CraftPigZombie craft = ((CraftPigZombie) pegzoz);
+                        EntityPigZombie entityPigZombie = craft.getHandle();
+                        try {
+                            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+                            Field gf = cl.getDeclaredField("bP");
+                            gf.setAccessible(true);
+                            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityPigZombie);
+                            goal.a(0, new PathfinderGoalMeleeAttack(entityPigZombie, 1.0D, true));
+
+                            Field tf = cl.getDeclaredField("bQ");
+                            tf.setAccessible(true);
+
+                            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityPigZombie);
+                            target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityPigZombie, EntityHuman.class, 10, true, false, null));
+                        } catch (Exception ec) {
+                            ec.printStackTrace();
+                            Warn.Mutant(ec);
+                        }
+                    } else if (type == 6) {
+                        Blaze blazze = entity.getWorld().spawn(entity.getLocation(),Blaze.class);
+                        Mobs.hellfire(blazze);
+                    } else {
+                        Piglin faranco = entity.getWorld().spawn(entity.getLocation(),Piglin.class);
+                        faranco.setCustomName(format("&b&lFrancotirador"));
+                        faranco.getEquipment().setItemInMainHand(new ItemBuilder(Material.CROSSBOW).addEnchantment(Enchantment.PIERCING, 10).setUnbreakable(true).build());
+                        faranco.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+                        faranco.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "FRANCO"), PersistentDataType.STRING, "FRANCO");
+
+                    }
+                }
             }
-        } else if (entitybiome == Biome.JUNGLE || entitybiome == Biome.JUNGLE_EDGE || entitybiome == Biome.JUNGLE_HILLS || entitybiome == Biome.BAMBOO_JUNGLE_HILLS || entitybiome == Biome.BAMBOO_JUNGLE
-                || entitybiome == Biome.MODIFIED_JUNGLE || entitybiome == Biome.MODIFIED_JUNGLE_EDGE) {
-            if (entity instanceof Zombie zombie && !(entity instanceof Drowned) && !(entity instanceof Husk) && !(entity instanceof ZombieVillager) && !(entity instanceof PigZombie) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-                Mobs.mossZombie(zombie);
-            } else if (entity instanceof Skeleton skeleton && !(entity instanceof Stray) && !(entity instanceof WitherSkeleton) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-                Mobs.esqueletoMilitar(skeleton);
-            } else if (entity instanceof Spider spider && !(entity instanceof CaveSpider) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-                Mobs.spiderJungla(spider);
-            } else if (entity instanceof Creeper creeper && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-                Mobs.mossCreeper(creeper);
-            } else if (entity instanceof Enderman && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-                entity.remove();
-                WitherSkeleton witherSkeleton = entity.getWorld().spawn(entity.getLocation(), WitherSkeleton.class);
-                Mobs.venomousArcher(witherSkeleton);
-            } else if (entity instanceof Parrot && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-                entity.remove();
-                Vex vex = entity.getWorld().spawn(entity.getLocation(), Vex.class);
-                Mobs.infectedVex(vex);
-            }
-        } else if (entitybiome == Biome.DESERT || entitybiome == Biome.DESERT_HILLS || entitybiome == Biome.DESERT_LAKES || entitybiome == Biome.BADLANDS || entitybiome == Biome.BADLANDS_PLATEAU
-                || entitybiome == Biome.ERODED_BADLANDS || entitybiome == Biome.MODIFIED_BADLANDS_PLATEAU || entitybiome == Biome.MODIFIED_WOODED_BADLANDS_PLATEAU || entitybiome == Biome.WOODED_BADLANDS_PLATEAU) {
-            if (entity instanceof Zombie zombie && !(entity instanceof Drowned) && !(entity instanceof Husk) && !(entity instanceof ZombieVillager) && !(entity instanceof PigZombie) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-                Mobs.zombiMomia(zombie);
-            } else if (entity instanceof Skeleton skeleton && !(entity instanceof Stray) && !(entity instanceof WitherSkeleton) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-                Mobs.esqueletoMomia(skeleton);
-            } else if (entity instanceof Spider spider && !(entity instanceof CaveSpider) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-                Mobs.spiderArena(spider);
-            } else if (entity instanceof Creeper creeper && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-                Mobs.creeperSandstone(creeper);
-            } else if (entity instanceof Enderman && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-                entity.remove();
-                Ghast ghast = entity.getWorld().spawn(entity.getLocation(), Ghast.class);
-                Mobs.ghastDesert(ghast);
-            } else if (entity instanceof Husk && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-                entity.remove();
-                Spider spider = entity.getWorld().spawn(entity.getLocation(), Spider.class);
-                Mobs.desertScorpion(spider);
-            }
-        } else if (entity instanceof Enderman enderman && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+        }
+        if (entity instanceof Enderman enderman && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             int type = new Random().nextInt(4);
             if (type == 1) {
                 Mobs.enderAberration(enderman);
@@ -166,7 +167,7 @@ public class SpawnListeners implements Listener {
                 Mobs.roboSkele(skeleton);
                 skeleton.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
             } else {
-                int skeletontype = new Random().nextInt(7);
+                int skeletontype = new Random().nextInt(8);
                 if (skeletontype == 1) {
                     skeleton.remove();
                     var wither = skeleton.getWorld().spawn(skeleton.getLocation(), WitherSkeleton.class);
@@ -183,55 +184,58 @@ public class SpawnListeners implements Listener {
                     skeleton.remove();
                     var wither = skeleton.getWorld().spawn(skeleton.getLocation(), WitherSkeleton.class);
                     Mobs.abomination(wither);
-                } else {
+                } else if(skeletontype == 7){
                     if(!(skeleton.getWorld().isDayTime()) && skeleton.getWorld().getEnvironment() == World.Environment.NETHER){
                         skeleton.remove();
                         var nightmare = skeleton.getWorld().spawn(skeleton.getLocation(), Ghast.class);
                         Mobs.Nightmare(nightmare);
                     }
+                }else{
+                    skeleton.remove();
+                    var labmob1 = skeleton.getWorld().spawn(skeleton.getLocation(),Pillager.class);
+                    Mobs.madScientist(labmob1);
                 }
             }
         } else if (entity instanceof Spider spider && !(entity instanceof CaveSpider) && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL)) {
-            if (spawnmob > blightedProb) {
-                Mobs.blightedSpider(spider);
-            } else if (spawnmob > 50 && entitybiome == Biome.PLAINS) {
+             if (spawnmob > 50 && entitybiome == Biome.PLAINS) {
                 Mobs.roboSpider(spider);
             } else {
-                int spidertype = new Random().nextInt(3) + 1;
+                int spidertype = new Random().nextInt(4);
                 if (spidertype == 1) {
                     Mobs.agileTarantule(spider);
                 } else if (spidertype == 2) {
                     Mobs.interdimensionalVisitor(spider);
-                } else {
+                } else if(spidertype == 3){
                     Mobs.solarScorpion(spider);
+                } else{
+                    Mobs.blightedSpider(spider);
                 }
                 var skeletonpass = spider.getLocation().getWorld().spawn(spider.getLocation(), Skeleton.class);
                 spider.setPassenger(skeletonpass);
-                int bow = new Random().nextInt(4);
+                int bow = new Random().nextInt(5);
                 if (bow == 1) {
                     Mobs.ignitedSkeleton(skeletonpass);
                 } else if (bow == 2) {
                     Mobs.blizzardSkeleton(skeletonpass);
                 } else if (bow == 3) {
                     Mobs.copperSkeleton(skeletonpass);
-                } else {
+                } else if(bow == 4){
                     Mobs.bullseyeSkeleton(skeletonpass);
+                }else{
+                    Mobs.blightedSkeleton(skeletonpass);
                 }
 
             }
-        } else if (entity instanceof Zombie zombie && !(entity instanceof ZombieVillager) && !(entity instanceof Husk) && !(entity instanceof Drowned) && !(entity instanceof PigZombie) && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL)) {
+        } else if (entity instanceof Zombie zombie && !(entity instanceof ZombieVillager) && !(entity instanceof Husk) && !(entity instanceof Drowned) && !(entity instanceof PigZombie) && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL)){
             if (spawnmob > blightedProb) {
                 Mobs.blightedZombi(zombie);
             } else if (spawnmob > 50 && entitybiome == Biome.PLAINS) {
                 Mobs.roboZombi(zombie);
-            } else if (zombie.getLocation().getY() < 0) {
-                int wardenchance = new Random().nextInt(100);
-                if (wardenchance == 1) {
+            } else if (spawnmob == 1) {
                     zombie.remove();
                     Mobs.Warden(zombie.getLocation().getWorld().spawn(zombie.getLocation(), IronGolem.class));
-                }
             } else {
-                int zombitype = new Random().nextInt(7);
+                int zombitype = new Random().nextInt(9);
                 if (zombitype == 1) {
                     Mobs.zombBox(zombie);
                 } else if (zombitype == 2) {
@@ -256,12 +260,18 @@ public class SpawnListeners implements Listener {
                     zombie.getEquipment().setDropChance(EquipmentSlot.LEGS, 0);
                     zombie.getEquipment().setDropChance(EquipmentSlot.FEET, 0);
                     zombie.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
-                }else{
+                }else if(zombitype == 7){
                     if(!(zombie.getWorld().isDayTime())) {
                         zombie.remove();
                         Vindicator vindicator = zombie.getWorld().spawn(zombie.getLocation(), Vindicator.class);
                         Mobs.KillerScream(vindicator);
                     }
+                }else if(zombitype == 8){
+                    Mobs.lushZombie(zombie);
+                }else{
+                    zombie.remove();
+                    IronGolem ironGolem = zombie.getWorld().spawn(zombie.getLocation(),IronGolem.class);
+                    Mobs.experimentWOOD(ironGolem);
                 }
             }
         } else if (entity instanceof Bat bat && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
@@ -283,29 +293,41 @@ public class SpawnListeners implements Listener {
             caveSpider.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "MUTACION"), PersistentDataType.STRING, "MUTACION");
             //mutanteo exitoso
         } else if (entity instanceof PigZombie pigZombie && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-            CraftPigZombie craft = ((CraftPigZombie) pigZombie);
-            EntityPigZombie entityPigZombie = craft.getHandle();
-            try {
-                Class<? extends EntityInsentient> cl = EntityInsentient.class;
-                Field gf = cl.getDeclaredField("bP");
-                gf.setAccessible(true);
-                PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityPigZombie);
-                goal.a(0, new PathfinderGoalMeleeAttack(entityPigZombie, 1.0D, true));
+            int type = new Random().nextInt(3);
+            if(type == 1) {
+                pigZombie.setCustomName(format("&c&lEnraged Pigman"));
+                pigZombie.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
+                pigZombie.setHealth(60);
+                pigZombie.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
+                CraftPigZombie craft = ((CraftPigZombie) pigZombie);
+                EntityPigZombie entityPigZombie = craft.getHandle();
+                try {
+                    Class<? extends EntityInsentient> cl = EntityInsentient.class;
+                    Field gf = cl.getDeclaredField("bP");
+                    gf.setAccessible(true);
+                    PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityPigZombie);
+                    goal.a(0, new PathfinderGoalMeleeAttack(entityPigZombie, 1.0D, true));
 
-                Field tf = cl.getDeclaredField("bQ");
-                tf.setAccessible(true);
+                    Field tf = cl.getDeclaredField("bQ");
+                    tf.setAccessible(true);
 
-                PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityPigZombie);
-                target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityPigZombie, EntityHuman.class, 10, true, false, null));
-            } catch (Exception ec) {
-                ec.printStackTrace();
-                Warn.Mutant(ec);
-            }
-            int chancedebrute = new Random().nextInt(100);
-            if (chancedebrute >= 90) {
+                    PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityPigZombie);
+                    target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityPigZombie, EntityHuman.class, 10, true, false, null));
+                } catch (Exception ec) {
+                    ec.printStackTrace();
+                    Warn.Mutant(ec);
+                }
+            }else if(type == 2){
                 pigZombie.remove();
-                PiglinBrute piglinBrute = pigZombie.getWorld().spawn(pigZombie.getLocation(), PiglinBrute.class);
-                piglinBrute.setRemoveWhenFarAway(true);
+                PiglinBrute piglinBrute = pigZombie.getWorld().spawn(pigZombie.getLocation(),PiglinBrute.class);
+                piglinBrute.setCustomName(format("&c&lEnraged Piglin Brute"));
+                piglinBrute.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(80);
+                piglinBrute.setHealth(80);
+                piglinBrute.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
+            }else{
+                pigZombie.remove();
+                PiglinBrute piglinBrute = pigZombie.getWorld().spawn(pigZombie.getLocation(),PiglinBrute.class);
+                Mobs.blightedPiglin(piglinBrute);
             }
 
         } else if (entity instanceof Blaze blaze && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL || e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER)) {
@@ -319,8 +341,16 @@ public class SpawnListeners implements Listener {
                 if (!(creeper.getWorld().isDayTime())) {
                     Mobs.Overscream(creeper);
                 }else{
-                    creeper.setPowered(true);
-                    creeper.setCustomName(format("&6&lPowered Creeper"));
+                    int ssss = new Random().nextInt(3);
+                    if(ssss == 1) {
+                        creeper.setPowered(true);
+                        creeper.setCustomName(format("&6&lPowered Creeper"));
+                        creeper.setExplosionRadius(6);
+                    }else if(ssss == 2){
+                        Mobs.roboMine(creeper);
+                    }else{
+                        Mobs.riftedCreeper(creeper);
+                    }
                 }
             }
         } else if (entity instanceof Salmon) {
@@ -393,10 +423,13 @@ public class SpawnListeners implements Listener {
             }
         } else if (entity instanceof Hoglin hoglin && !(entity instanceof Zoglin) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             hoglin.setCustomName(format("&c&lHoglin"));
-            hoglin.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false, false, false));
-            hoglin.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(12);
+            hoglin.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, false, false, false));
+            hoglin.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(32);
             PiglinBrute piglinBrute = hoglin.getLocation().getWorld().spawn(hoglin.getLocation(), PiglinBrute.class);
             piglinBrute.setCustomName(format("&c&lZog-Rider"));
+            piglinBrute.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(80);
+            piglinBrute.setHealth(80);
+            piglinBrute.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
         } else if (entity instanceof Silverfish silverfish) {
             if (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SILVERFISH_BLOCK) {
                 if (spawnmob > 80) {
@@ -426,13 +459,12 @@ public class SpawnListeners implements Listener {
                 Mobs.blightedEndermam(enderman);
             }
         } else if (entity instanceof Witch witch && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-            if (spawnmob > blightedProb) {
-                Mobs.blightedWitch(witch);
-            }
             if (spawnmob > 90) {
                 witch.remove();
                 Vex vex = witch.getWorld().spawn(witch.getLocation(), Vex.class);
                 Mobs.Banshee(vex);
+            }else{
+                Mobs.blightedWitch(witch);
             }
         }else if(entity instanceof Vex vex){
             if(vex.getSummoner() instanceof Evoker evoker){
@@ -686,6 +718,31 @@ public class SpawnListeners implements Listener {
             pufferFish.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
             pufferFish.setHealth(30);
             pufferFish.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "RADIO_GLOBE"), PersistentDataType.STRING, "RADIO_GLOBE");
+        }else if(entity instanceof Cow cow){
+            cow.remove();
+            var ravager = cow.getWorld().spawn(cow.getLocation(),Ravager.class);
+            ravager.setCustomName(format("&6&lDestroyer"));
+            ravager.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(34);
+            ravager.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(100);
+            ravager.setHealth(100);
+        }else if(entity instanceof Pig pig) {
+            pig.remove();
+            var ravager = pig.getWorld().spawn(pig.getLocation(),Pig.class);
+            ravager.setCustomName(format("&6&lDestroyer"));
+            ravager.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(34);
+            ravager.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(100);
+            ravager.setHealth(100);
+        }else if(e.getEntity().getType() == EntityType.SQUID){
+            entity.remove();
+            var pufferfish = entity.getLocation().getWorld().spawn(entity.getLocation(),PufferFish.class);
+        }else if(e.getEntity().getType() == EntityType.GLOW_SQUID){
+            entity.remove();
+            var eldergur = entity.getWorld().spawn(entity.getLocation(),ElderGuardian.class);
+            Mobs.elderdestroyer(eldergur);
+        }else if(entity instanceof Drowned drowned && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
+            drowned.setCustomName(format("&6Pyromaniac of the Deeps"));
+            drowned.getEquipment().setItemInMainHand(new ItemBuilder(Material.TRIDENT).build());
+            drowned.getPersistentDataContainer().set(Utils.key("PYRO_DEEP"),PersistentDataType.STRING,"PYRO_DEEP");
         }
 
     }

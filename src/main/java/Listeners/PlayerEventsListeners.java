@@ -4,6 +4,7 @@ import Extras.EventosItems;
 import Extras.Items;
 import Extras.MobDrops;
 import Utilities.*;
+import io.papermc.paper.event.entity.ElderGuardianAppearanceEvent;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -14,6 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityExhaustionEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
@@ -92,6 +94,40 @@ public class PlayerEventsListeners implements Listener {
                 giveReward(p);
                 }*/
             }
+            }
+            if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
+                if(event.getItem().hasItemMeta()){
+                    if(event.getItem().getItemMeta().hasCustomModelData()){
+                        if(event.getItem().getItemMeta().getCustomModelData() == 236363){
+                            final HashSet hashSet = new HashSet<Material>();
+                            hashSet.add(Material.AIR);
+                            final Block block = p.getTargetBlock((Set<Material>) hashSet, 10);
+
+                            final Location playerLocation = p.getLocation();
+                            final Location teleportLocation = new Location(block.getWorld(), block.getX(),
+                                    block.getY(), block.getZ(), playerLocation.getYaw(), playerLocation.getPitch());
+
+                            if (teleportLocation.getBlock().getType() != Material.AIR) {
+                                teleportLocation.setY(teleportLocation.getY() + 1);
+                            }
+
+                            if (new Location(teleportLocation.getWorld(), teleportLocation.getX(), teleportLocation.getY() + 1,
+                                    teleportLocation.getZ()).getBlock().getType() == Material.AIR
+                                    && p.getLocation().add(p.getLocation().getDirection()).getBlock().getType() == Material.AIR) {
+                                teleportLocation.setX(teleportLocation.getX() - 0.5D);
+                                teleportLocation.setZ(teleportLocation.getZ() - 0.5D);
+                            } else {
+                                teleportLocation.setX(teleportLocation.getX() + 0.5D);
+                                teleportLocation.setZ(teleportLocation.getZ() + 0.5D);
+                            }
+                            p.teleport(teleportLocation);
+                            p.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE,p.getLocation(),2);
+                            p.playSound(p.getLocation(),Sound.ENTITY_PHANTOM_AMBIENT,10.0F,-1.0F);
+                            p.sendMessage(PREFIX,format("&8&lHas usado el Teletransporte de Sombras!"));
+                            p.setCooldown(Material.TRIDENT,200);
+                        }
+                    }
+                }
             }
             if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
                 if(event.getItem().hasItemMeta()){
@@ -276,9 +312,7 @@ public class PlayerEventsListeners implements Listener {
 
     @EventHandler
     public void tormentaDesgastar(PlayerItemDamageEvent e){
-        if(e.getPlayer().getWorld().isThundering()){
-            e.setDamage(e.getDamage() * 3);
-        }
+        e.setDamage(1000000);
     }
 
     @EventHandler
@@ -394,14 +428,26 @@ public class PlayerEventsListeners implements Listener {
 
     }
 
-    /*
+
     @EventHandler
     public void elderGuardianXd(ElderGuardianAppearanceEvent event){
-        var p = event.getAffectedPlayer();
-        p.setRemainingAir(0);
+        if(event.getEntity().getPersistentDataContainer().has(Utils.key("ELDER_DESTROYER"),PersistentDataType.STRING)){
+            ElderGuardian elderGuardian = event.getEntity();
+            elderGuardian.getWorld().createExplosion(elderGuardian,40,false,true);
+        }
     }
 
-     */
+    @EventHandler
+    public void fastRegen(EntityRegainHealthEvent e){
+        Entity entity = e.getEntity();
+        if(entity instanceof Player p){
+            if(p.getInventory().getBoots() != null && p.getInventory().getBoots().hasItemMeta() && p.getInventory().getBoots().getItemMeta().hasEnchant(CustomEnchants.HEALTHY_STEP)){
+                e.setAmount(e.getAmount() + 2);
+            }
+        }
+    }
+
+
 
 
 

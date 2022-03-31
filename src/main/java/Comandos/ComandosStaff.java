@@ -769,6 +769,16 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     player.getInventory().addItem(Items.adaptativeTome());
                 }else if (args[1].equalsIgnoreCase("ANCIENT_TOME_13")){
                     player.getInventory().addItem(Items.infernopowerTome());
+                }else if (args[1].equalsIgnoreCase("ANCIENT_TOME_14")){
+                    player.getInventory().addItem(Items.bruteforceTome());
+                }else if (args[1].equalsIgnoreCase("ANCIENT_TOME_15")){
+                    player.getInventory().addItem(Items.healthystepTome());
+                }else if (args[1].equalsIgnoreCase("UMBRA_TOOLS_V2")) {
+                    player.getInventory().addItem(Items.umbraShell());
+                    player.getInventory().addItem(Items.shadowRupture());
+                    player.getInventory().addItem(Items.shadowTotem());
+                }else if(args[1].equalsIgnoreCase("SUNSHINE_RELIC")){
+                    player.getInventory().addItem(Items.sunshineRelic());
                 }else if (args[1].equalsIgnoreCase("HYPERION")){
                     player.getInventory().addItem(Items.hyperion());
                 }
@@ -802,8 +812,8 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                 case "debug" -> addToList(commands, "blastStormStart", "blackStormEnd", "totemTest", "muerteFake", "dementeTest");
                 case "temperatura" -> addToList(commands, "clear", "hipotermia", "hipertermia");
                 case "give" -> addToList(commands, "FUNGAL_CLUMPS","WEIRD_DAGGER", "CATACLYSM_PEARL", "BLOOD_SABER", "BERSERKER_TOTEM", "CRYSTAL_HEART", "DISCORD", "CLOUDY_MARSH", "BLOOD_STONE", "BLOOD_SHARD", "TEMPERATURE_METER", "TOTEM_RESTORER", "FROSTBITE","CELULA_ENERGIA","METAL_DESC","EXO_SHIELD","ICESHOT","BLOOD_ARMOR","EXO_DRILL", "ANCIENT_TOME_6",
-                        "UNLUCKY_IDOL","UNDYING_SCEPTRE","NANOTECH","EXO_TOTEM","PYROCROSS","COOLER_FRUIT","HOT_FRUIT","EXO_SWORD","EXO_BOW","EXO_ARMOR","INMUNITY_SIGIL","ANCIENT_TOME_1","ANCIENT_TOME_2","ANCIENT_TOME_3","ANCIENT_TOME_4","ANCIENT_TOME_5","ANCIENT_TOME_7","MAGMA_PIE","ICE_PIE","HYPERION","ANCIENT_TOME_8","ANCIENT_TOME_9","ANCIENT_TOME_10","ANCIENT_TOME_11","ANCIENT_TOME_12","ANCIENT_TOME_13"
-                ,"FIREHOOK","EMBER_SCEPTRE","UMBRA_TOOLS","UMBRA_ARMOR");
+                        "UNLUCKY_IDOL","UNDYING_SCEPTRE","NANOTECH","EXO_TOTEM","PYROCROSS","COOLER_FRUIT","HOT_FRUIT","EXO_SWORD","EXO_BOW","EXO_ARMOR","INMUNITY_SIGIL","ANCIENT_TOME_1","ANCIENT_TOME_2","ANCIENT_TOME_3","ANCIENT_TOME_4","ANCIENT_TOME_5","ANCIENT_TOME_7","MAGMA_PIE","ICE_PIE","HYPERION","ANCIENT_TOME_8","ANCIENT_TOME_9","ANCIENT_TOME_10","ANCIENT_TOME_11","ANCIENT_TOME_12","ANCIENT_TOME_13","ANCIENT_TOME_14","ANCIENT_TOME_15"
+                ,"FIREHOOK","EMBER_SCEPTRE","UMBRA_TOOLS","UMBRA_ARMOR","UMBRA_TOOLS_V2","SUNSHINE_RELIC");
             }
 
             StringUtil.copyPartialMatches(args[1], commands, completions);

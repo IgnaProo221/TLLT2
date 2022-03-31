@@ -1,5 +1,6 @@
 package Extras;
 
+import Utilities.Utils;
 import io.papermc.paper.event.entity.EntityMoveEvent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -73,6 +74,20 @@ public class MobsTeleports implements Listener {
                         teleport(c, locX, locY, locZ, c.getWorld());
                     }
                 }
+            }else if(event.getEntity() instanceof Creeper creeper){
+                if(creeper.getPersistentDataContainer().has(Utils.key("DIMEN_DYNAM"),PersistentDataType.STRING)){
+                    int locX = creeper.getLocation().getBlockX();
+                    int locY = creeper.getLocation().getBlockY();
+                    int locZ = creeper.getLocation().getBlockZ();
+                    if (tp > 90) {
+
+                        creeper.playEffect(EntityEffect.TELEPORT_ENDER);
+
+                        creeper.getWorld().playSound(creeper.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 5.0F, 0.0F);
+
+                        teleport(creeper, locX, locY, locZ, creeper.getWorld());
+                    }
+                }
             }
             /*if (event.getEntity() instanceof Creeper c) {
 
@@ -126,6 +141,20 @@ public class MobsTeleports implements Listener {
 
                 teleport(c, locX, locY, locZ, c.getWorld());
                }
+            }
+        }else if(e.getEntity() instanceof Creeper creeper){
+            if(creeper.getPersistentDataContainer().has(Utils.key("DIMEN_DYNAM"),PersistentDataType.STRING)){
+                int locX = creeper.getLocation().getBlockX();
+                int locY = creeper.getLocation().getBlockY();
+                int locZ = creeper.getLocation().getBlockZ();
+                if (tp == 1) {
+
+                    creeper.playEffect(EntityEffect.TELEPORT_ENDER);
+
+                    creeper.getWorld().playSound(creeper.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 5.0F, 0.0F);
+
+                    teleport(creeper, locX, locY, locZ, creeper.getWorld());
+                }
             }
         }
     }

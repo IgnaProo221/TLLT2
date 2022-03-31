@@ -40,9 +40,25 @@ public class StartBlastStormEvent extends Event {
     }
 
     public void addPotionTiers(Player connected, int tier) throws NullPointerException {
-        if (tier == 3) {
-            connected.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100,0,false, false, false));
-            connected.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK,1200,0,true,false,true));
+        if (tier == 1) {
+            connected.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK,1200,1,true,false,true));
+            connected.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,600,1,true,false,true));
+            connected.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,400,9,true,false,true));
+        }
+        if(tier == 2){
+            connected.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK,1200,2,true,false,true));
+            connected.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,600,2,true,false,true));
+            connected.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,600,1,true,false,true));
+            connected.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,600,9,true,false,true));
+            connected.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,400,4,true,false,true));
+        }
+        if(tier == 3){
+            connected.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK,1200,4,true,false,true));
+            connected.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,600,3,true,false,true));
+            connected.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,600,2,true,false,true));
+            connected.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,1200,9,true,false,true));
+            connected.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,400,9,true,false,true));
+            connected.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,600,3,true,false,true));
         }
     }
 

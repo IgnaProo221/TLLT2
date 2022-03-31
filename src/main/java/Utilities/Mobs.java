@@ -368,7 +368,7 @@ public class Mobs implements Listener{
         self.setExplosionRadius(10);
         self.setMaxFuseTicks(20);
         self.setFuseTicks(20);
-
+        self.getPersistentDataContainer().set(Utils.key("DIMEN_DYNAM"),PersistentDataType.STRING,"DIMEN_DYNAM");
     }
     public static void riftedMage(Illusioner self){
         self.setCustomName(format("&b&lDimensional Mage"));
@@ -501,6 +501,12 @@ public class Mobs implements Listener{
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20.0);
         self.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 3, false, false, false));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class),"COSMIC_SILVERFISH"), PersistentDataType.STRING, "COSMIC_SILVERFISH");
+    }
+    public static void elderdestroyer(ElderGuardian self){
+        self.setCustomName(format("&4&lElder Destroyer"));
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(120);
+        self.setHealth(120);
+        self.getPersistentDataContainer().set(Utils.key("ELDER_DESTROYER"),PersistentDataType.STRING,"ELDER_DESTROYER");
     }
 
     public static void tyranyWither(Wither self){

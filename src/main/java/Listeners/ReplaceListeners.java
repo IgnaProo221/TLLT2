@@ -11,6 +11,7 @@ import net.minecraft.world.entity.animal.EntityFox;
 import net.minecraft.world.entity.animal.EntityGolem;
 import net.minecraft.world.entity.animal.EntityWolf;
 import net.minecraft.world.entity.player.EntityHuman;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_17_R1.entity.*;
 import org.bukkit.entity.*;
@@ -24,6 +25,8 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import static Utilities.Format.format;
+
 public class ReplaceListeners implements Listener{
     private TLL2 plugin;
     public ReplaceListeners(TLL2 plugin){
@@ -34,8 +37,9 @@ public class ReplaceListeners implements Listener{
     @EventHandler
     public void onEntityLoad(ChunkLoadEvent event){
         for(Entity entity : event.getChunk().getEntities()) {
-            if (entity != null) {
+            if (entity != null) return;
                 if (entity instanceof Wolf wolf) {
+                    wolf.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(60);
                     CraftWolf craft = ((CraftWolf) wolf);
                     EntityWolf entityWolf = craft.getHandle();
                     try {
@@ -55,6 +59,7 @@ public class ReplaceListeners implements Listener{
                         Warn.Mutant(exception);
                     }
                 } else if (entity instanceof Cat wolf) {
+                    wolf.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(60);
                     CraftCat craft = ((CraftCat) wolf);
                     EntityCat entityWolf = craft.getHandle();
                     try {
@@ -74,6 +79,7 @@ public class ReplaceListeners implements Listener{
                         Warn.Mutant(exception);
                     }
                 } else if (entity instanceof Fox wolf) {
+                    wolf.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(60);
                     CraftFox craft = ((CraftFox) wolf);
                     EntityFox entityWolf = craft.getHandle();
                     try {
@@ -93,6 +99,7 @@ public class ReplaceListeners implements Listener{
                         Warn.Mutant(exception);
                     }
                 } else if (entity instanceof Goat wolf) {
+                    wolf.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(60);
                     CraftGoat craft = ((CraftGoat) wolf);
                     net.minecraft.world.entity.animal.goat.Goat entityWolf = craft.getHandle();
                     try {
@@ -112,6 +119,7 @@ public class ReplaceListeners implements Listener{
                         Warn.Mutant(exception);
                     }
                 } else if (entity instanceof Axolotl wolf) {
+                    wolf.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(60);
                     CraftAxolotl craft = ((CraftAxolotl) wolf);
                     net.minecraft.world.entity.animal.axolotl.Axolotl entityWolf = craft.getHandle();
                     try {
@@ -130,8 +138,26 @@ public class ReplaceListeners implements Listener{
                         exception.printStackTrace();
                         Warn.Mutant(exception);
                     }
+                }else if(entity instanceof Cow cow){
+                    cow.remove();
+                    Ravager ravager = cow.getWorld().spawn(cow.getLocation(),Ravager.class);
+                    ravager.setCustomName(format("&6&lDestroyer"));
+                    ravager.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(34);
+                    ravager.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(100);
+                    ravager.setHealth(100);
+                }else if(entity instanceof Pig pig){
+                    pig.remove();
+                    Ravager ravager = pig.getWorld().spawn(pig.getLocation(),Ravager.class);
+                    ravager.setCustomName(format("&6&lDestroyer"));
+                    ravager.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(34);
+                    ravager.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(100);
+                    ravager.setHealth(100);
+                }else if(entity instanceof Squid squid){
+                    squid.remove();
+                    PufferFish pufferFish = squid.getWorld().spawn(squid.getLocation(),PufferFish.class);
+
                 }
-            }
+
         }
     }
 

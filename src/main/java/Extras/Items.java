@@ -354,6 +354,37 @@ public class Items {
     }
 
 
+    public static ItemStack umbraShell(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&8&lSe parte de la Oscuridad, vuélvete uno con las Sombras")));
+        lore.add(Component.text(format("&7Evita el Daño de Caída y Rayos, al bloquear un ataque el Mob")));
+        lore.add(Component.text(format("&7es Debilitado y Ralentizado")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.SHIELD).setName(format("&8&lUmbra Shield")).setLore(lore).setUnbreakable(true).setCustomModelData(11282349).build();
+    }
+    public static ItemStack shadowRupture(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&8&lSe parte de la Oscuridad, vuélvete uno con las Sombras")));
+        lore.add(Component.text(format("&7Este Tridente puede ser usado de 2 maneras distintas")));
+        lore.add(Component.text(format("&8Teletransportate en las Sombras con &cClick Izquierdo")));
+        lore.add(Component.text(format("&7o Impulsarte en el agua &cManteniendo Click Derecho")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.TRIDENT).setName(format("&8&lShadow Rupture")).setLore(lore).setUnbreakable(true).setCustomModelData(236363).addEnchantment(Enchantment.RIPTIDE,5).setItemFlags(ItemFlag.HIDE_ENCHANTS).build();
+    }
+    public static ItemStack shadowTotem(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&8&lSe parte de la Oscuridad, vuélvete uno con las Sombras")));
+        lore.add(Component.text(format("&7Este Totem te hara Inmortal por unos segundos")));
+        lore.add(Component.text(format("&8&lEvita el Efecto de Dados")));
+        lore.add(Component.text(format("&c&lPero tu Porcentaje de Totems es completamente Modificado")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.TOTEM_OF_UNDYING).setName(format("&8&lDarkness Idol")).setLore(lore).setUnbreakable(true).setCustomModelData(387309111).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL,1).setItemFlags(ItemFlag.HIDE_ENCHANTS).build();
+    }
+
+
 
 
 
@@ -440,6 +471,18 @@ public class Items {
         lore.add(Component.text(format("&7Mejora tu Ember Sceptre, haciendo que lance Fireballs que hacen mas daño!")));
         return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.INFERNO_POWER, 1).setLore(lore).build();
     }
+    public static ItemStack bruteforceTome(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lBrute Force")));
+        lore.add(Component.text(format("&7")));
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.INFERNO_POWER, 1).setLore(lore).build();
+    }
+    public static ItemStack healthystepTome(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lInferno Power")));
+        lore.add(Component.text(format("&7Mejora tu Ember Sceptre, haciendo que lance Fireballs que hacen mas daño!")));
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.INFERNO_POWER, 1).setLore(lore).build();
+    }
 
 
 
@@ -468,6 +511,19 @@ public class Items {
         lore.add(Component.text(format("")));
         return new ItemBuilder(Material.BLAZE_ROD).setLore(lore).setUnbreakable(true).setCustomModelData(938745122).setName(format("&c&lEmber Sceptre")).build();
     }
+
+
+    public static ItemStack sunshineRelic(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&6&o¿Can you feel the sunshine?")));
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7Irradia energía que te purifica de Maldiciones Futuras")));
+        lore.add(Component.text(format("&5&k||| &5&lTu Futuro Brilla Intensamente &5&k|||")));
+        return new ItemBuilder(Material.ORANGE_DYE).setLore(lore).setUnbreakable(true).setCustomModelData(777).setName(format("&6&lSunshine Relic")).build();
+    }
+
+
 
 
     //NO DEJEN QUE FEL TOQUE ESTO PORFAVOR
