@@ -37,7 +37,7 @@ public class ReplaceListeners implements Listener{
     @EventHandler
     public void onEntityLoad(ChunkLoadEvent event){
         for(Entity entity : event.getChunk().getEntities()) {
-            if (entity != null) return;
+            if (entity != null) {
                 if (entity instanceof Wolf wolf) {
                     wolf.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(60);
                     CraftWolf craft = ((CraftWolf) wolf);
@@ -138,26 +138,26 @@ public class ReplaceListeners implements Listener{
                         exception.printStackTrace();
                         Warn.Mutant(exception);
                     }
-                }else if(entity instanceof Cow cow){
+                } else if (entity instanceof Cow cow) {
                     cow.remove();
-                    Ravager ravager = cow.getWorld().spawn(cow.getLocation(),Ravager.class);
+                    Ravager ravager = cow.getWorld().spawn(cow.getLocation(), Ravager.class);
                     ravager.setCustomName(format("&6&lDestroyer"));
                     ravager.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(34);
                     ravager.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(100);
                     ravager.setHealth(100);
-                }else if(entity instanceof Pig pig){
+                } else if (entity instanceof Pig pig) {
                     pig.remove();
-                    Ravager ravager = pig.getWorld().spawn(pig.getLocation(),Ravager.class);
+                    Ravager ravager = pig.getWorld().spawn(pig.getLocation(), Ravager.class);
                     ravager.setCustomName(format("&6&lDestroyer"));
                     ravager.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(34);
                     ravager.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(100);
                     ravager.setHealth(100);
-                }else if(entity instanceof Squid squid){
+                } else if (entity instanceof Squid squid) {
                     squid.remove();
-                    PufferFish pufferFish = squid.getWorld().spawn(squid.getLocation(),PufferFish.class);
+                    PufferFish pufferFish = squid.getWorld().spawn(squid.getLocation(), PufferFish.class);
 
                 }
-
+            }
         }
     }
 
