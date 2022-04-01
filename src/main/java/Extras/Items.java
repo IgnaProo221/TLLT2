@@ -474,14 +474,14 @@ public class Items {
     public static ItemStack bruteforceTome(){
         List<Component> lore = new ArrayList<>();
         lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lBrute Force")));
-        lore.add(Component.text(format("&7")));
-        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.INFERNO_POWER, 1).setLore(lore).build();
+        lore.add(Component.text(format("&7Combinacion de Pyromaniac y Tackle")));
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.BRUTE_FORCE, 1).setLore(lore).build();
     }
     public static ItemStack healthystepTome(){
         List<Component> lore = new ArrayList<>();
-        lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lInferno Power")));
-        lore.add(Component.text(format("&7Mejora tu Ember Sceptre, haciendo que lance Fireballs que hacen mas daño!")));
-        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.INFERNO_POWER, 1).setLore(lore).build();
+        lore.add(Component.text(format("&6&lEncantamiento Ancestral: &e&lHealthy Step")));
+        lore.add(Component.text(format("&7Aumenta tu Regeneracion de Vida")));
+        return new ItemBuilder(Material.ENCHANTED_BOOK).setName("&e&lAncient Tome").setUnbreakable(true).addCustomEnchant(CustomEnchants.HEALTHY_STEP, 1).setLore(lore).build();
     }
 
 

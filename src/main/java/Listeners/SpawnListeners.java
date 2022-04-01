@@ -92,58 +92,111 @@ public class SpawnListeners implements Listener {
         }
         if(!(entity instanceof Animals)){
             if(e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-                if (spawnmob > 95) {
-                    int type = new Random().nextInt(7);
-                    if (type == 1) {
-                        WitherSkeleton mob1 = entity.getWorld().spawn(entity.getLocation(), WitherSkeleton.class);
-                        Mobs.abomination(mob1);
-                    } else if (type == 2) {
-                        Ghast ghost = entity.getWorld().spawn(entity.getLocation(), Ghast.class);
-                        Mobs.blightedGhast(ghost);
-                    } else if (type == 3) {
-                        MagmaCube megm = entity.getWorld().spawn(entity.getLocation(), MagmaCube.class);
-                        megm.setCustomName(format("&6&lInferno Cube"));
-                        megm.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
-                        megm.setHealth(60);
-                        megm.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(26);
-                        megm.setSize(15);
-                    } else if (type == 4) {
-                        PiglinBrute peglol = entity.getWorld().spawn(entity.getLocation(),PiglinBrute.class);
-                        Mobs.blightedPiglin(peglol);
-                    } else if (type == 5) {
-                        PigZombie pegzoz = entity.getWorld().spawn(entity.getLocation(),PigZombie.class);
-                        pegzoz.setCustomName(format("&c&lEnraged Pigman"));
-                        pegzoz.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
-                        pegzoz.setHealth(60);
-                        pegzoz.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
-                        CraftPigZombie craft = ((CraftPigZombie) pegzoz);
-                        EntityPigZombie entityPigZombie = craft.getHandle();
-                        try {
-                            Class<? extends EntityInsentient> cl = EntityInsentient.class;
-                            Field gf = cl.getDeclaredField("bP");
-                            gf.setAccessible(true);
-                            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityPigZombie);
-                            goal.a(0, new PathfinderGoalMeleeAttack(entityPigZombie, 1.0D, true));
+                if (entity.getWorld().getEnvironment() == World.Environment.NORMAL) {
+                    if (spawnmob > 95) {
+                        int type = new Random().nextInt(7);
+                        if (type == 1) {
+                            WitherSkeleton mob1 = entity.getWorld().spawn(entity.getLocation(), WitherSkeleton.class);
+                            Mobs.abomination(mob1);
+                        } else if (type == 2) {
+                            Ghast ghost = entity.getWorld().spawn(entity.getLocation(), Ghast.class);
+                            Mobs.blightedGhast(ghost);
+                        } else if (type == 3) {
+                            MagmaCube megm = entity.getWorld().spawn(entity.getLocation(), MagmaCube.class);
+                            megm.setCustomName(format("&6&lInferno Cube"));
+                            megm.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
+                            megm.setHealth(60);
+                            megm.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(26);
+                            megm.setSize(15);
+                        } else if (type == 4) {
+                            PiglinBrute peglol = entity.getWorld().spawn(entity.getLocation(), PiglinBrute.class);
+                            Mobs.blightedPiglin(peglol);
+                        } else if (type == 5) {
+                            PigZombie pegzoz = entity.getWorld().spawn(entity.getLocation(), PigZombie.class);
+                            pegzoz.setCustomName(format("&c&lEnraged Pigman"));
+                            pegzoz.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
+                            pegzoz.setHealth(60);
+                            pegzoz.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
+                            CraftPigZombie craft = ((CraftPigZombie) pegzoz);
+                            EntityPigZombie entityPigZombie = craft.getHandle();
+                            try {
+                                Class<? extends EntityInsentient> cl = EntityInsentient.class;
+                                Field gf = cl.getDeclaredField("bP");
+                                gf.setAccessible(true);
+                                PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityPigZombie);
+                                goal.a(0, new PathfinderGoalMeleeAttack(entityPigZombie, 1.0D, true));
 
-                            Field tf = cl.getDeclaredField("bQ");
-                            tf.setAccessible(true);
+                                Field tf = cl.getDeclaredField("bQ");
+                                tf.setAccessible(true);
 
-                            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityPigZombie);
-                            target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityPigZombie, EntityHuman.class, 10, true, false, null));
-                        } catch (Exception ec) {
-                            ec.printStackTrace();
-                            Warn.Mutant(ec);
+                                PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityPigZombie);
+                                target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityPigZombie, EntityHuman.class, 10, true, false, null));
+                            } catch (Exception ec) {
+                                ec.printStackTrace();
+                                Warn.Mutant(ec);
+                            }
+                        } else if (type == 6) {
+                            Blaze blazze = entity.getWorld().spawn(entity.getLocation(), Blaze.class);
+                            Mobs.hellfire(blazze);
+                        } else {
+                            Piglin faranco = entity.getWorld().spawn(entity.getLocation(), Piglin.class);
+                            faranco.setCustomName(format("&b&lFrancotirador"));
+                            faranco.getEquipment().setItemInMainHand(new ItemBuilder(Material.CROSSBOW).addEnchantment(Enchantment.PIERCING, 10).setUnbreakable(true).build());
+                            faranco.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+                            faranco.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "FRANCO"), PersistentDataType.STRING, "FRANCO");
+
                         }
-                    } else if (type == 6) {
-                        Blaze blazze = entity.getWorld().spawn(entity.getLocation(),Blaze.class);
-                        Mobs.hellfire(blazze);
-                    } else {
-                        Piglin faranco = entity.getWorld().spawn(entity.getLocation(),Piglin.class);
-                        faranco.setCustomName(format("&b&lFrancotirador"));
-                        faranco.getEquipment().setItemInMainHand(new ItemBuilder(Material.CROSSBOW).addEnchantment(Enchantment.PIERCING, 10).setUnbreakable(true).build());
-                        faranco.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
-                        faranco.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "FRANCO"), PersistentDataType.STRING, "FRANCO");
+                    }
+                }else if (entity.getWorld().getEnvironment() == World.Environment.NETHER) {
+                    if(spawnmob > 95){
+                        int type = new Random().nextInt(9);
+                        if(type == 1){
+                            IronGolem ironGolem = entity.getWorld().spawn(entity.getLocation(),IronGolem.class);
+                            Mobs.zombObeso(ironGolem);
+                        }else if(type == 2){
+                            Skeleton skeleton = entity.getWorld().spawn(entity.getLocation(),Skeleton.class);
+                            Mobs.blightedSkeleton(skeleton);
+                        }else if(type == 3){
+                            Spider spider = entity.getWorld().spawn(entity.getLocation(),Spider.class);
+                            Mobs.blightedSpider(spider);
+                        }else if(type == 4){
+                            Creeper creeper = entity.getWorld().spawn(entity.getLocation(),Creeper.class);
+                            Mobs.blightedCreeper(creeper);
+                        }else if(type == 5){
+                            Creeper creeper = entity.getWorld().spawn(entity.getLocation(),Creeper.class);
+                            Mobs.riftedCreeper(creeper);
+                        }else if(type == 6){
+                            Pillager pillager = entity.getWorld().spawn(entity.getLocation(),Pillager.class);
+                            Mobs.dynamLlager(pillager);
+                        }else if(type == 7){
+                            Vindicator vindicator = entity.getWorld().spawn(entity.getLocation(),Vindicator.class);
+                            vindicator.setCustomName(format("&6&lButcher"));
+                            vindicator.getEquipment().setItemInMainHand(new ItemBuilder(Material.NETHERITE_AXE).addEnchantment(Enchantment.DAMAGE_ALL, 15).build());
+                            vindicator.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+                        }else if(type == 8){
+                            Witch witch = entity.getWorld().spawn(entity.getLocation(),Witch.class);
+                        }else{
+                            Goat goat = entity.getWorld().spawn(entity.getLocation(),Goat.class);
+                            goat.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(60);
+                            CraftGoat craft = ((CraftGoat) goat);
+                            net.minecraft.world.entity.animal.goat.Goat entityWolf = craft.getHandle();
+                            try {
+                                Class<? extends EntityInsentient> cl = EntityInsentient.class;
+                                Field gf = cl.getDeclaredField("bP");
+                                gf.setAccessible(true);
+                                PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityWolf);
+                                goal.a(0, new PathfinderGoalMeleeAttack(entityWolf, 1.0D, true));
 
+                                Field tf = cl.getDeclaredField("bQ");
+                                tf.setAccessible(true);
+
+                                PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityWolf);
+                                target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityWolf, EntityHuman.class, 10, true, false, null));
+                            } catch (Exception exception) {
+                                exception.printStackTrace();
+                                Warn.Mutant(exception);
+                            }
+                        }
                     }
                 }
             }
@@ -619,6 +672,7 @@ public class SpawnListeners implements Listener {
             ravager.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(100);
             ravager.setHealth(100);
         } else if (entity instanceof Wolf wolf) {
+            wolf.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(60);
             CraftWolf craft = ((CraftWolf) wolf);
             EntityWolf entityWolf = craft.getHandle();
             try {
@@ -638,6 +692,7 @@ public class SpawnListeners implements Listener {
                 Warn.Mutant(exception);
             }
         } else if (entity instanceof Cat wolf) {
+            wolf.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(60);
             CraftCat craft = ((CraftCat) wolf);
             EntityCat entityWolf = craft.getHandle();
             try {
@@ -657,6 +712,7 @@ public class SpawnListeners implements Listener {
                 Warn.Mutant(exception);
             }
         } else if (entity instanceof Goat wolf) {
+            wolf.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(60);
             CraftGoat craft = ((CraftGoat) wolf);
             net.minecraft.world.entity.animal.goat.Goat entityWolf = craft.getHandle();
             try {
@@ -676,6 +732,7 @@ public class SpawnListeners implements Listener {
                 Warn.Mutant(exception);
             }
         } else if (entity instanceof Axolotl wolf) {
+            wolf.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(60);
             CraftAxolotl craft = ((CraftAxolotl) wolf);
             net.minecraft.world.entity.animal.axolotl.Axolotl entityWolf = craft.getHandle();
             try {
@@ -695,6 +752,7 @@ public class SpawnListeners implements Listener {
                 Warn.Mutant(exception);
             }
         } else if (entity instanceof Fox wolf) {
+            wolf.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(60);
             CraftFox craft = ((CraftFox) wolf);
             EntityFox entityWolf = craft.getHandle();
             try {

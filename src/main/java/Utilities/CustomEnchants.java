@@ -417,6 +417,48 @@ public class CustomEnchants implements Listener {
 
                 p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
                 p.getInventory().getItemInOffHand().setType(Material.AIR);
+            }else if (p.getInventory().getItemInMainHand().getType().equals(Material.NETHERITE_BOOTS) && (p.getInventory().getItemInOffHand().getType().equals(Material.ENCHANTED_BOOK) && p.getInventory().getItemInOffHand().getItemMeta().hasEnchant(CustomEnchants.HEALTHY_STEP))) {
+                List<String> lorvez;
+
+                ItemStack pickax43 = p.getInventory().getItemInMainHand();
+
+                if (hasCustomEnchants(pickax43)) return;
+
+                if(pickax43.getItemMeta().hasLore()){
+                    lorvez = pickax43.getLore();
+                }else{
+                    lorvez= new ArrayList<>();
+                }
+                lorvez.add(format("&6Encantamiento Ancestral: &eHealthy Step"));
+
+                pickax43.addUnsafeEnchantment(CustomEnchants.HEALTHY_STEP, 1);
+                pickax43.setLore(lorvez);
+
+                p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
+
+                p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
+                p.getInventory().getItemInOffHand().setType(Material.AIR);
+            }else if (p.getInventory().getItemInMainHand().getType().equals(Material.SHIELD) && (p.getInventory().getItemInOffHand().getType().equals(Material.ENCHANTED_BOOK) && p.getInventory().getItemInOffHand().getItemMeta().hasEnchant(CustomEnchants.BRUTE_FORCE))) {
+                List<String> lorvez;
+
+                ItemStack pickax43 = p.getInventory().getItemInMainHand();
+
+                if (hasCustomEnchants(pickax43)) return;
+
+                if(pickax43.getItemMeta().hasLore()){
+                    lorvez = pickax43.getLore();
+                }else{
+                    lorvez= new ArrayList<>();
+                }
+                lorvez.add(format("&6Encantamiento Ancestral: &eBrute Force"));
+
+                pickax43.addUnsafeEnchantment(CustomEnchants.BRUTE_FORCE, 1);
+                pickax43.setLore(lorvez);
+
+                p.sendMessage(PREFIX,format("&7Has usado una Toma Ancestral"));
+
+                p.playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS,10.0F,-1.0F);
+                p.getInventory().getItemInOffHand().setType(Material.AIR);
             }
         }
     }
