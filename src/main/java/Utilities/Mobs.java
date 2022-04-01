@@ -506,6 +506,7 @@ public class Mobs implements Listener{
         self.setCustomName(format("&4&lElder Destroyer"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(120);
         self.setHealth(120);
+        self.setRemoveWhenFarAway(true);
         self.getPersistentDataContainer().set(Utils.key("ELDER_DESTROYER"),PersistentDataType.STRING,"ELDER_DESTROYER");
     }
 

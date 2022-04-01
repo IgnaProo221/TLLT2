@@ -90,10 +90,11 @@ public class SpawnListeners implements Listener {
                 entity.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 0, false, false, false));
             }
         }
-        if(!(entity instanceof Animals)){
+        if(!(entity instanceof Animals) && !(entity instanceof WaterMob)){
             if(e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
                 if (entity.getWorld().getEnvironment() == World.Environment.NORMAL) {
-                    if (spawnmob > 95) {
+                    int spawnchance = new Random().nextInt(1000);
+                    if (spawnmob > 995) {
                         int type = new Random().nextInt(7);
                         if (type == 1) {
                             WitherSkeleton mob1 = entity.getWorld().spawn(entity.getLocation(), WitherSkeleton.class);
@@ -775,6 +776,7 @@ public class SpawnListeners implements Listener {
             pufferFish.setCustomName(format("&4&lRadiactive Globe"));
             pufferFish.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
             pufferFish.setHealth(30);
+            pufferFish.setRemoveWhenFarAway(true);
             pufferFish.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "RADIO_GLOBE"), PersistentDataType.STRING, "RADIO_GLOBE");
         }else if(entity instanceof Cow cow){
             cow.remove();
@@ -785,7 +787,7 @@ public class SpawnListeners implements Listener {
             ravager.setHealth(100);
         }else if(entity instanceof Pig pig) {
             pig.remove();
-            var ravager = pig.getWorld().spawn(pig.getLocation(),Pig.class);
+            var ravager = pig.getWorld().spawn(pig.getLocation(),Ravager.class);
             ravager.setCustomName(format("&6&lDestroyer"));
             ravager.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(34);
             ravager.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(100);

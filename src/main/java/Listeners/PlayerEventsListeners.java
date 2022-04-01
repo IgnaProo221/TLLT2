@@ -99,9 +99,10 @@ public class PlayerEventsListeners implements Listener {
                 if(event.getItem().hasItemMeta()){
                     if(event.getItem().getItemMeta().hasCustomModelData()){
                         if(event.getItem().getItemMeta().getCustomModelData() == 236363){
+                            if(p.hasCooldown(Material.TRIDENT))return;
                             final HashSet hashSet = new HashSet<Material>();
                             hashSet.add(Material.AIR);
-                            final Block block = p.getTargetBlock((Set<Material>) hashSet, 10);
+                            final Block block = p.getTargetBlock((Set<Material>) hashSet, 20);
 
                             final Location playerLocation = p.getLocation();
                             final Location teleportLocation = new Location(block.getWorld(), block.getX(),

@@ -956,7 +956,7 @@ public class EntityListeners implements Listener {
                             }else if (player.getInventory().getItemInMainHand().getItemMeta().hasEnchant(CustomEnchants.BRUTE_FORCE) || player.getInventory().getItemInOffHand().getItemMeta().hasEnchant(CustomEnchants.BRUTE_FORCE)){
                                 if (damager instanceof LivingEntity livingEntity) {
                                     player.getWorld().spawnParticle(Particle.EXPLOSION_LARGE,player.getLocation(),1);
-                                    player.playSound(player.getLocation(),Sound.ENTITY_GENERIC_EXPLODE,SoundCategory.MASTER,5.0F,-1.0F);
+                                    player.playSound(player.getLocation(),Sound.ENTITY_GENERIC_EXPLODE,SoundCategory.MASTER,10.0F,-1.0F);
                                     Vector vector = livingEntity.getEyeLocation().getDirection().multiply(-4);
                                     livingEntity.setVelocity(vector);
                                     for(Entity entities : livingEntity.getWorld().getNearbyEntities(livingEntity.getLocation(),7,7,7)){
@@ -974,9 +974,7 @@ public class EntityListeners implements Listener {
                                         monster.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 99, false, false, false));
                                         monster.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 200, 0, false, false, false));
                                     }
-                                    if (e.getCause() == EntityDamageEvent.DamageCause.LIGHTNING) {
-                                        e.setDamage(0);
-                                    }
+
                                     if (player.getEquipment().getItemInMainHand().getType().equals(Material.SHIELD)) {
                                         ItemStack shield = player.getEquipment().getItemInMainHand().clone();
                                         player.getEquipment().getItemInMainHand().setAmount(0);
@@ -989,6 +987,31 @@ public class EntityListeners implements Listener {
                                     }
                                     player.setCooldown(Material.SHIELD, 400);
                                 }else if (player.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 11282349 || player.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 11282349) {
+                                    if(damager instanceof LivingEntity livingEntity){
+                                        livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,400,1,false,false,false));
+                                        livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 400, 2, false, false, false));
+                                        livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 400, 0, false, false, false));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void escudoajhajasjadj(EntityDamageByEntityEvent e){
+        var entity = e.getEntity();
+        var damager = e.getDamager();
+        if (entity instanceof Player player) {
+            if (player.isBlocking()) {
+                if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+                    if (player.getInventory().getItemInMainHand() != null || player.getInventory().getItemInOffHand() != null) {
+                        if (player.getInventory().getItemInMainHand().hasItemMeta() || player.getInventory().getItemInOffHand().hasItemMeta()) {
+                            if (player.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || player.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()) {
+                                if (player.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 11282349 || player.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 11282349) {
                                     if(damager instanceof LivingEntity livingEntity){
                                         livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,400,1,false,false,false));
                                         livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 400, 2, false, false, false));
