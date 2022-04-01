@@ -93,17 +93,20 @@ public class SpawnListeners implements Listener {
         if(!(entity instanceof Animals) && !(entity instanceof WaterMob)){
             if(e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
                 if (entity.getWorld().getEnvironment() == World.Environment.NORMAL) {
-                    int spawnchance = new Random().nextInt(1000);
-                    if (spawnmob > 995) {
+                    int spawnchance = new Random().nextInt(100);
+                    if (spawnmob > 95) {
                         int type = new Random().nextInt(7);
                         if (type == 1) {
                             WitherSkeleton mob1 = entity.getWorld().spawn(entity.getLocation(), WitherSkeleton.class);
+                            setCustomMobcap(mob1, 3, 1.10, 24, 20, true);
                             Mobs.abomination(mob1);
                         } else if (type == 2) {
                             Ghast ghost = entity.getWorld().spawn(entity.getLocation(), Ghast.class);
+                            setCustomMobcap(ghost, 3, 1.10, 24, 20, true);
                             Mobs.blightedGhast(ghost);
                         } else if (type == 3) {
                             MagmaCube megm = entity.getWorld().spawn(entity.getLocation(), MagmaCube.class);
+                            setCustomMobcap(megm, 3, 1.10, 24, 20, true);
                             megm.setCustomName(format("&6&lInferno Cube"));
                             megm.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
                             megm.setHealth(60);
@@ -111,9 +114,11 @@ public class SpawnListeners implements Listener {
                             megm.setSize(15);
                         } else if (type == 4) {
                             PiglinBrute peglol = entity.getWorld().spawn(entity.getLocation(), PiglinBrute.class);
+                            setCustomMobcap(peglol, 3, 1.10, 24, 20, true);
                             Mobs.blightedPiglin(peglol);
                         } else if (type == 5) {
                             PigZombie pegzoz = entity.getWorld().spawn(entity.getLocation(), PigZombie.class);
+                            setCustomMobcap(pegzoz, 3, 1.10, 24, 20, true);
                             pegzoz.setCustomName(format("&c&lEnraged Pigman"));
                             pegzoz.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
                             pegzoz.setHealth(60);
@@ -138,9 +143,11 @@ public class SpawnListeners implements Listener {
                             }
                         } else if (type == 6) {
                             Blaze blazze = entity.getWorld().spawn(entity.getLocation(), Blaze.class);
+                            setCustomMobcap(blazze, 3, 1.10, 24, 20, true);
                             Mobs.hellfire(blazze);
                         } else {
                             Piglin faranco = entity.getWorld().spawn(entity.getLocation(), Piglin.class);
+                            setCustomMobcap(faranco, 3, 1.10, 24, 20, true);
                             faranco.setCustomName(format("&b&lFrancotirador"));
                             faranco.getEquipment().setItemInMainHand(new ItemBuilder(Material.CROSSBOW).addEnchantment(Enchantment.PIERCING, 10).setUnbreakable(true).build());
                             faranco.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
@@ -393,7 +400,12 @@ public class SpawnListeners implements Listener {
                 Mobs.roboCreeper(creeper);
             } else {
                 if (!(creeper.getWorld().isDayTime())) {
-                    Mobs.Overscream(creeper);
+                    int aaa = new Random().nextInt(2);
+                    if(aaa == 1) {
+                        Mobs.Overscream(creeper);
+                    }else{
+                        Mobs.riftedCreeper(creeper);
+                    }
                 }else{
                     int ssss = new Random().nextInt(3);
                     if(ssss == 1) {

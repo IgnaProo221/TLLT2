@@ -146,7 +146,7 @@ public class DeathListeners extends ListenerAdapter implements Listener {
     }
 
     @EventHandler
-    public void muerteEvento(PlayerDeathEvent e){
+    public void muerteEvento(PlayerDeathEvent e) {
         Player p = e.getEntity();
         p.setHealth(20);
         p.setGameMode(GameMode.SPECTATOR);
@@ -155,14 +155,39 @@ public class DeathListeners extends ListenerAdapter implements Listener {
         World world = Bukkit.getWorld("world");
         Location loc = p.getLocation();
         PersistentDataContainer data = Data.get(p);
-        data.set(Utils.key("X") , PersistentDataType.DOUBLE, loc.getX());
-        data.set(Utils.key("Y") , PersistentDataType.DOUBLE, loc.getY());
+        data.set(Utils.key("X"), PersistentDataType.DOUBLE, loc.getX());
+        data.set(Utils.key("Y"), PersistentDataType.DOUBLE, loc.getY());
         data.set(Utils.key("Z"), PersistentDataType.DOUBLE, loc.getZ());
         data.set(Utils.key("WORLD"), PersistentDataType.STRING, loc.getWorld().getName());
-
-        Bukkit.getScheduler().runTaskLater(plugin, ()->{
-            if(p.getWorld().getEnvironment() == World.Environment.NORMAL){
-                Utils.pasteSchematic("overworld", p.getLocation());
+        if (p.getWorld().getEnvironment() == World.Environment.NORMAL) {
+            Utils.pasteSchematic("overworld", p.getLocation());
+            Block skullBlock = location.clone().add(0, 4, 0).getBlock();
+            skullBlock.setType(Material.PLAYER_HEAD);
+            BlockState state = skullBlock.getState();
+            Skull skull = (Skull) state;
+            UUID uuid = p.getUniqueId();
+            skull.setOwningPlayer(Bukkit.getServer().getOfflinePlayer(uuid));
+            skull.update();
+        } else if (p.getWorld().getEnvironment() == World.Environment.NETHER) {
+            Utils.pasteSchematic("nether", p.getLocation());
+            Block skullBlock = location.clone().add(0, 4, 0).getBlock();
+            skullBlock.setType(Material.PLAYER_HEAD);
+            BlockState state = skullBlock.getState();
+            Skull skull = (Skull) state;
+            UUID uuid = p.getUniqueId();
+            skull.setOwningPlayer(Bukkit.getServer().getOfflinePlayer(uuid));
+            skull.update();
+        } else if (p.getWorld().getEnvironment() == World.Environment.THE_END) {
+            Utils.pasteSchematic("end", p.getLocation());
+            if (loc.getY() < 0) {
+                Block skullBlock = location.set(location.getX(), 0, location.getZ()).add(0, 4, 0).getBlock();
+                skullBlock.setType(Material.PLAYER_HEAD);
+                BlockState state = skullBlock.getState();
+                Skull skull = (Skull) state;
+                UUID uuid = p.getUniqueId();
+                skull.setOwningPlayer(Bukkit.getServer().getOfflinePlayer(uuid));
+                skull.update();
+            } else {
                 Block skullBlock = location.clone().add(0, 4, 0).getBlock();
                 skullBlock.setType(Material.PLAYER_HEAD);
                 BlockState state = skullBlock.getState();
@@ -170,38 +195,10 @@ public class DeathListeners extends ListenerAdapter implements Listener {
                 UUID uuid = p.getUniqueId();
                 skull.setOwningPlayer(Bukkit.getServer().getOfflinePlayer(uuid));
                 skull.update();
-            }else if(p.getWorld().getEnvironment() == World.Environment.NETHER){
-                Utils.pasteSchematic("nether", p.getLocation());
-                Block skullBlock = location.clone().add(0, 4, 0).getBlock();
-                skullBlock.setType(Material.PLAYER_HEAD);
-                BlockState state = skullBlock.getState();
-                Skull skull = (Skull) state;
-                UUID uuid = p.getUniqueId();
-                skull.setOwningPlayer(Bukkit.getServer().getOfflinePlayer(uuid));
-                skull.update();
-            }else if(p.getWorld().getEnvironment() == World.Environment.THE_END){
-                Utils.pasteSchematic("end", p.getLocation());
-                if(loc.getY() < 0) {
-                    Block skullBlock = location.set(location.getX(), 0, location.getZ()).add(0, 4, 0).getBlock();
-                    skullBlock.setType(Material.PLAYER_HEAD);
-                    BlockState state = skullBlock.getState();
-                    Skull skull = (Skull) state;
-                    UUID uuid = p.getUniqueId();
-                    skull.setOwningPlayer(Bukkit.getServer().getOfflinePlayer(uuid));
-                    skull.update();
-                }else{
-                    Block skullBlock = location.clone().add(0, 4, 0).getBlock();
-                    skullBlock.setType(Material.PLAYER_HEAD);
-                    BlockState state = skullBlock.getState();
-                    Skull skull = (Skull) state;
-                    UUID uuid = p.getUniqueId();
-                    skull.setOwningPlayer(Bukkit.getServer().getOfflinePlayer(uuid));
-                    skull.update();
-                }
-            }else{
-                p.sendMessage(format("&6no se detecto el mundo y la estructura no se genero, rip bozo XD #packwatch"));
             }
-        },6L);
+        } else {
+            p.sendMessage(format("&6no se detecto el mundo y la estructura no se genero, rip bozo XD #packwatch"));
+        }
         for (Player players : Bukkit.getOnlinePlayers()){
 
             players.sendTitle(format("&c&l&k|||  &6&l&kThe Last Life  &c&l&k|||"), format("&7¡El jugador " + p.getName() + " ha muerto!"), 0,80,0);

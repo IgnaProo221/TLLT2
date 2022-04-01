@@ -533,8 +533,10 @@ public class EntityListeners implements Listener {
             if(drowned.getPersistentDataContainer().has(Utils.key("PYRO_DEEP"),PersistentDataType.STRING)){
                 if (hitblock != null) {
                     hitblock.getLocation().createExplosion(drowned, 5, false, true);
+                    projectile.remove();
                 } else if (entity != null) {
                     entity.getLocation().createExplosion(drowned, 5, false, true);
+                    projectile.remove();
                 }
             }
         }

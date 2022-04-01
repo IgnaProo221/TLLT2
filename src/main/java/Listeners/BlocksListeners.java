@@ -40,10 +40,7 @@ public class BlocksListeners implements Listener{
     public void miedoXd(BlockPlaceEvent e){
         var p = e.getPlayer();
         if (p.hasPotionEffect(PotionEffectType.LUCK)) {
-            if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 3) {
-                e.setCancelled(true);
-                p.sendMessage(Format.PREFIX + format("&c¡Estas paniquiado!"));
-            }else if(p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 4){
+            if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() >= 2) {
                 e.setCancelled(true);
                 p.sendMessage(Format.PREFIX + format("&c¡Estas paniquiado!"));
             }
@@ -54,10 +51,7 @@ public class BlocksListeners implements Listener{
     public void miedodeMierdaLol(BlockBreakEvent e) {
         var p = e.getPlayer();
         if (p.hasPotionEffect(PotionEffectType.LUCK)) {
-            if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 3) {
-                e.setCancelled(true);
-                p.sendMessage(Format.PREFIX + format("&c¡Estas paniquiado!"));
-            }else if(p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() == 4){
+            if (p.getPotionEffect(PotionEffectType.LUCK).getAmplifier() >= 2) {
                 e.setCancelled(true);
                 p.sendMessage(Format.PREFIX + format("&c¡Estas paniquiado!"));
             }

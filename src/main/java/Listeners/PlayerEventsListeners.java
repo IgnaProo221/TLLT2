@@ -122,7 +122,7 @@ public class PlayerEventsListeners implements Listener {
                                 teleportLocation.setZ(teleportLocation.getZ() + 0.5D);
                             }
                             p.teleport(teleportLocation);
-                            p.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE,p.getLocation(),2);
+                            p.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE,p.getLocation(),1);
                             p.playSound(p.getLocation(),Sound.ENTITY_PHANTOM_AMBIENT,10.0F,-1.0F);
                             p.sendMessage(PREFIX,format("&8&lHas usado el Teletransporte de Sombras!"));
                             p.setCooldown(Material.TRIDENT,200);

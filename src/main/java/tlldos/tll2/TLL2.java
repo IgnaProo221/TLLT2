@@ -155,7 +155,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
                 new DropsListeners(this),
                 new BossesListeners(this),
                 new ChatListeners(this),
-                new NMSSpawn(this),
+                //new NMSSpawn(this),
                 new ReplaceListeners(this),
                 //new WorldEventsListeners(this),
                 new JoinListeners(this),
