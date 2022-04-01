@@ -777,6 +777,7 @@ public class SpawnListeners implements Listener {
             pufferFish.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
             pufferFish.setHealth(30);
             pufferFish.setRemoveWhenFarAway(true);
+            setCustomMobcap(pufferFish, 3, 1.10, 24, 20, true);
             pufferFish.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "RADIO_GLOBE"), PersistentDataType.STRING, "RADIO_GLOBE");
         }else if(entity instanceof Cow cow){
             cow.remove();
