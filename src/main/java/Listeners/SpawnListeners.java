@@ -523,12 +523,6 @@ public class SpawnListeners implements Listener {
             stray.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, false, false, false));
             stray.getEquipment().setItemInMainHand(new ItemBuilder(Material.GOLDEN_AXE).setUnbreakable(true).addEnchantment(Enchantment.DAMAGE_ALL, 50).setUnbreakable(true).build());
             stray.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
-        } else if (entity instanceof Wither wither) {
-            wither.setCustomName(format("&6&lAdvanced Wither"));
-            wither.setInvulnerableTicks(500);
-            wither.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(500);
-            wither.setHealth(500);
-            wither.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ADVANCED_WITHER"), PersistentDataType.STRING, "ADVANCED_WITHER");
         } else if (entity instanceof Dolphin dolphin) {
             dolphin.setCustomName(format("&c&lYelmo de las Profundidades"));
             dolphin.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(40);

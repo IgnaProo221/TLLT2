@@ -440,7 +440,7 @@ public class Mobs implements Listener {
     }
 
     public static void evokerWind(Evoker self) {
-        self.setCustomName(format("&f&lWindyloge"));
+        self.setCustomName(format("&f&lWindyloger"));
         self.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "WIND_EVOKER"), PersistentDataType.STRING, "HEX_EVOKER");
     }
 
@@ -973,6 +973,14 @@ public class Mobs implements Listener {
     public static void gorgomite(Endermite self) {
         self.setCustomName(format("&6&lGorgomite"));
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(18);
+    }
+
+    public static void advancedwither(Wither wither){
+        wither.setCustomName(format("&6&lAdvanced Wither"));
+        wither.setInvulnerableTicks(500);
+        wither.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(500);
+        wither.setHealth(500);
+        wither.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ADVANCED_WITHER"), PersistentDataType.STRING, "ADVANCED_WITHER");
     }
 
 
