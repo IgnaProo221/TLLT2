@@ -132,7 +132,7 @@ public class DamageListeners implements Listener {
                     e.setDamage(e.getDamage() * 3);
                 }
                 if (e.getCause() == EntityDamageEvent.DamageCause.DROWNING) {
-                    e.setDamage(e.getDamage() * 8);
+                    e.setDamage(e.getDamage() * 16);
                 }
                 if(e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK){
                     e.setDamage(e.getDamage() * 2);
@@ -143,7 +143,7 @@ public class DamageListeners implements Listener {
                     if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
                         e.setDamage(e.getDamage() * 3);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.FREEZE) {
-                        e.setDamage(e.getDamage() * 3);
+                        e.setDamage(e.getDamage() * 23);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.DROWNING) {
                         e.setDamage(e.getDamage() * 7);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {
@@ -167,13 +167,13 @@ public class DamageListeners implements Listener {
                         if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
                             e.setDamage(e.getDamage() * 4);
                         } else if (e.getCause() == EntityDamageEvent.DamageCause.FREEZE) {
-                            e.setDamage(e.getDamage() * 4);
+                            e.setDamage(e.getDamage() * 24);
                         } else if (e.getCause() == EntityDamageEvent.DamageCause.DROWNING) {
                             e.setDamage(e.getDamage() * 8);
                         } else if (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {
-                            e.setDamage(e.getDamage() * 9);
+                            e.setDamage(e.getDamage() * 25);
                         } else if (e.getCause() == EntityDamageEvent.DamageCause.LAVA) {
-                            e.setDamage(e.getDamage() * 9);
+                            e.setDamage(e.getDamage() * 25);
                         } else if (e.getCause() == EntityDamageEvent.DamageCause.STARVATION) {
                             e.setDamage(1000000);
                         }else if(e.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION){
@@ -191,13 +191,13 @@ public class DamageListeners implements Listener {
                     if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
                         e.setDamage(e.getDamage() * 5);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.FREEZE) {
-                        e.setDamage(e.getDamage() * 5);
+                        e.setDamage(e.getDamage() * 25);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.DROWNING) {
                         e.setDamage(e.getDamage() * 9);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {
-                        e.setDamage(e.getDamage() * 10);
+                        e.setDamage(e.getDamage() * 25);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.LAVA) {
-                        e.setDamage(e.getDamage() * 10);
+                        e.setDamage(e.getDamage() * 25);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.STARVATION) {
                         e.setDamage(1000000);
                     }else if(e.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION){
@@ -215,13 +215,13 @@ public class DamageListeners implements Listener {
                     if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
                         e.setDamage(e.getDamage() * 6);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.FREEZE) {
-                        e.setDamage(e.getDamage() * 6);
+                        e.setDamage(e.getDamage() * 26);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.DROWNING) {
                         e.setDamage(e.getDamage() * 10);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {
-                        e.setDamage(e.getDamage() * 11);
+                        e.setDamage(e.getDamage() * 25);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.LAVA) {
-                        e.setDamage(e.getDamage() * 11);
+                        e.setDamage(e.getDamage() * 25);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.STARVATION) {
                         e.setDamage(1000000);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION) {
@@ -239,13 +239,13 @@ public class DamageListeners implements Listener {
                     if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
                         e.setDamage(e.getDamage() * 7);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.FREEZE) {
-                        e.setDamage(e.getDamage() * 7);
+                        e.setDamage(e.getDamage() * 27);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.DROWNING) {
                         e.setDamage(e.getDamage() * 11);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {
-                        e.setDamage(e.getDamage() * 12);
+                        e.setDamage(e.getDamage() * 25);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.LAVA) {
-                        e.setDamage(e.getDamage() * 13);
+                        e.setDamage(e.getDamage() * 25);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.STARVATION) {
                         e.setDamage(1000000);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION) {
@@ -267,7 +267,7 @@ public class DamageListeners implements Listener {
                     if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
                         e.setDamage(e.getDamage() * 2);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.FREEZE) {
-                        e.setDamage(e.getDamage() * 2);
+                        e.setDamage(e.getDamage() * 20);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.DROWNING) {
                         e.setDamage(e.getDamage() * 6);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.STARVATION) {
@@ -278,25 +278,15 @@ public class DamageListeners implements Listener {
                         e.setDamage(1000000);
                     } else if (e.getCause() == EntityDamageEvent.DamageCause.LIGHTNING) {
                         e.setDamage(e.getDamage() * 7);
-                    }
-                    if(player.getInventory().getLeggings() != null && player.getInventory().getLeggings().hasItemMeta() && player.getInventory().getLeggings().getItemMeta().hasEnchant(CustomEnchants.HEAT_PROTECTION)) {
-                        if (e.getCause() == EntityDamageEvent.DamageCause.LAVA) {
-                            e.setDamage(e.getDamage() * 4);
-                        } else if (e.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR) {
-                            e.setDamage(e.getDamage() * 10);
-                        } else if (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {
-                            e.setDamage(e.getDamage() * 3);
-                        }
-                        } else {
-                            if (e.getCause() == EntityDamageEvent.DamageCause.LAVA) {
-                                e.setDamage(e.getDamage() * 7);
+                    }else if (e.getCause() == EntityDamageEvent.DamageCause.LAVA) {
+                                e.setDamage(e.getDamage() * 20);
                             } else if (e.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR) {
                                 e.setDamage(e.getDamage() * 20);
                             } else if (e.getCause() == EntityDamageEvent.DamageCause.FIRE || e.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) {
-                                e.setDamage(e.getDamage() * 7);
+                                e.setDamage(e.getDamage() * 20);
                             }
                         }
-                    }
+
             if (dataTemperatura <= -180) {
                 if (e.getCause() == EntityDamageEvent.DamageCause.FREEZE) {
                     e.setDamage(e.getDamage() * 10);

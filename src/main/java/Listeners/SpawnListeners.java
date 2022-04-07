@@ -85,8 +85,8 @@ public class SpawnListeners implements Listener {
         var entitybiome = entity.getLocation().getBlock().getBiome();
         int chanceeffect = new Random().nextInt(100);
         if (Utils.getWorld().isThundering()) {
-            if (chanceeffect > 80) {
-                entity.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1, false, false, false));
+            if (chanceeffect > 70) {
+                entity.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 4, false, false, false));
                 entity.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 0, false, false, false));
             }
         }
@@ -95,7 +95,7 @@ public class SpawnListeners implements Listener {
                 if (entity.getWorld().getEnvironment() == World.Environment.NORMAL) {
                     int spawnchance = new Random().nextInt(100);
                     if (spawnmob > 95) {
-                        int type = new Random().nextInt(7);
+                        int type = new Random().nextInt(11);
                         if (type == 1) {
                             WitherSkeleton mob1 = entity.getWorld().spawn(entity.getLocation(), WitherSkeleton.class);
                             setCustomMobcap(mob1, 3, 1.10, 24, 20, true);
@@ -145,7 +145,7 @@ public class SpawnListeners implements Listener {
                             Blaze blazze = entity.getWorld().spawn(entity.getLocation(), Blaze.class);
                             setCustomMobcap(blazze, 3, 1.10, 24, 20, true);
                             Mobs.hellfire(blazze);
-                        } else {
+                        } else if(type == 7){
                             Piglin faranco = entity.getWorld().spawn(entity.getLocation(), Piglin.class);
                             setCustomMobcap(faranco, 3, 1.10, 24, 20, true);
                             faranco.setCustomName(format("&b&lFrancotirador"));
@@ -153,6 +153,23 @@ public class SpawnListeners implements Listener {
                             faranco.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
                             faranco.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "FRANCO"), PersistentDataType.STRING, "FRANCO");
 
+                        }else if(type == 8){
+                            Pillager pillager = entity.getWorld().spawn(entity.getLocation(),Pillager.class);
+                            Mobs.dynamLlager(pillager);
+                        }else if(type == 9){
+                            Vindicator vindicator = entity.getWorld().spawn(entity.getLocation(),Vindicator.class);
+                            vindicator.setCustomName(format("&c&lButcher"));
+                            vindicator.getEquipment().setItemInMainHand(new ItemBuilder(Material.NETHERITE_AXE).addEnchantment(Enchantment.DAMAGE_ALL, 55).build());
+                            vindicator.getEquipment().setDropChance(EquipmentSlot.HAND, 0);
+                        }else if(type == 10){
+                            Evoker evoker = entity.getWorld().spawn(entity.getLocation(),Evoker.class);
+                            Mobs.evokerExplosive(evoker);
+                        }else{
+                            Ravager ravager = entity.getWorld().spawn(entity.getLocation(),Ravager.class);
+                            ravager.setCustomName(format("&6&lDestroyer"));
+                            ravager.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(34);
+                            ravager.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(100);
+                            ravager.setHealth(100);
                         }
                     }
                 }else if (entity.getWorld().getEnvironment() == World.Environment.NETHER) {
@@ -210,15 +227,50 @@ public class SpawnListeners implements Listener {
             }
         }
         if (entity instanceof Enderman enderman && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-            int type = new Random().nextInt(4);
-            if (type == 1) {
-                Mobs.enderAberration(enderman);
-            } else if (type == 2) {
-                Mobs.enderFlame(enderman);
-            } else if (type == 3) {
-                Mobs.enderInfected(enderman);
-            } else {
-                Mobs.enderWatcher(enderman);
+            int type = new Random().nextInt(5);
+            if (spawnmob > blightedProb - 10) {
+                Mobs.blightedEndermam(enderman);
+            }else {
+                if(enderman.getWorld().getEnvironment() == World.Environment.THE_END) {
+                    int typeend = new Random().nextInt(9);
+                    if (type == 1) {
+                        Mobs.enderAberration(enderman);
+                    } else if (typeend == 2) {
+                        Mobs.enderFlame(enderman);
+                    } else if (typeend == 3) {
+                        Mobs.enderInfected(enderman);
+                    } else if (typeend == 4) {
+                        Mobs.enderWatcher(enderman);
+                    } else if(typeend == 5){
+                        enderman.remove();
+                        Mobs.riftedGhast(enderman.getWorld().spawn(enderman.getLocation(),Ghast.class));
+                    }else if(typeend == 6){
+                        enderman.remove();
+                        Mobs.riftedCreeper(enderman.getWorld().spawn(enderman.getLocation(),Creeper.class));
+                    }else if(typeend == 7){
+                        enderman.remove();
+                        Mobs.riftedMage(enderman.getWorld().spawn(enderman.getLocation(),Illusioner.class));
+                    }else if(typeend == 8){
+                        enderman.remove();
+                        Mobs.riftedWither(enderman.getWorld().spawn(enderman.getLocation(),WitherSkeleton.class));
+                    }else{
+                        enderman.remove();
+                        Mobs.riftedShulker(enderman.getWorld().spawn(enderman.getLocation(),Shulker.class));
+                    }
+                }else if (type == 1) {
+                    Mobs.enderAberration(enderman);
+                } else if (type == 2) {
+                    Mobs.enderFlame(enderman);
+                } else if (type == 3) {
+                    Mobs.enderInfected(enderman);
+                } else if(type == 4){
+                    Mobs.enderWatcher(enderman);
+                } else {
+                    enderman.remove();
+                    Ghast ghast = enderman.getWorld().spawn(enderman.getLocation(),Ghast.class);
+                    setCustomMobcap(ghast, 3, 1.10, 24, 20, true);
+                    Mobs.stardust(ghast);
+                }
             }
         } else if (entity instanceof Skeleton skeleton && !(entity instanceof Stray) && !(entity instanceof WitherSkeleton) && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL)) {
             if (spawnmob > blightedProb) {
@@ -292,11 +344,8 @@ public class SpawnListeners implements Listener {
                 Mobs.blightedZombi(zombie);
             } else if (spawnmob > 50 && entitybiome == Biome.PLAINS) {
                 Mobs.roboZombi(zombie);
-            } else if (spawnmob == 1) {
-                    zombie.remove();
-                    Mobs.Warden(zombie.getLocation().getWorld().spawn(zombie.getLocation(), IronGolem.class));
             } else {
-                int zombitype = new Random().nextInt(9);
+                int zombitype = new Random().nextInt(13);
                 if (zombitype == 1) {
                     Mobs.zombBox(zombie);
                 } else if (zombitype == 2) {
@@ -329,10 +378,33 @@ public class SpawnListeners implements Listener {
                     }
                 }else if(zombitype == 8){
                     Mobs.lushZombie(zombie);
-                }else{
+                }else if(zombitype == 9){
                     zombie.remove();
                     IronGolem ironGolem = zombie.getWorld().spawn(zombie.getLocation(),IronGolem.class);
                     Mobs.experimentWOOD(ironGolem);
+                }else if(zombitype == 10){
+                    zombie.remove();
+                    Endermite endermite = zombie.getWorld().spawn(zombie.getLocation(),Endermite.class);
+                    endermite.setCustomName(format("&5&lVoid Fiend"));
+                    endermite.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
+                    endermite.setHealth(50);
+                    endermite.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(50);
+                }else if(zombitype == 11){
+                    zombie.remove();
+                    Phantom phantom = zombie.getWorld().spawn(zombie.getLocation(),Phantom.class);
+                    setCustomMobcap(phantom, 3, 1.10, 24, 20, true);
+                    Mobs.solaris(phantom);
+                }else if(zombitype == 12){
+                    zombie.remove();
+                    Mobs.Warden(zombie.getLocation().getWorld().spawn(zombie.getLocation(), IronGolem.class));
+                }else if(zombitype == 13) {
+                    if (Utils.getWorld().isThundering()) {
+                        int witherachance = new Random().nextInt(300);
+                        if (witherachance == 1) {
+                            zombie.remove();
+                            Mobs.tyranyWither(zombie.getLocation().getWorld().spawn(zombie.getLocation(), Wither.class));
+                        }
+                    }
                 }
             }
         } else if (entity instanceof Bat bat && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
@@ -399,24 +471,17 @@ public class SpawnListeners implements Listener {
             } else if (spawnmob > 50 && entitybiome == Biome.PLAINS) {
                 Mobs.roboCreeper(creeper);
             } else {
-                if (!(creeper.getWorld().isDayTime())) {
-                    int aaa = new Random().nextInt(2);
-                    if(aaa == 1) {
-                        Mobs.Overscream(creeper);
-                    }else{
-                        Mobs.riftedCreeper(creeper);
-                    }
+                int ssssssss = new Random().nextInt(5);
+                if(ssssssss == 1){
+                    Mobs.Overscream(creeper);
+                }else if(ssssssss == 2){
+                    Mobs.roboMine(creeper);
+                }else if(ssssssss == 3){
+                    Mobs.mossCreeper(creeper);
+                }else if(ssssssss == 4){
+                    Mobs.vortice(creeper);
                 }else{
-                    int ssss = new Random().nextInt(3);
-                    if(ssss == 1) {
-                        creeper.setPowered(true);
-                        creeper.setCustomName(format("&6&lPowered Creeper"));
-                        creeper.setExplosionRadius(6);
-                    }else if(ssss == 2){
-                        Mobs.roboMine(creeper);
-                    }else{
-                        Mobs.riftedCreeper(creeper);
-                    }
+                    Mobs.riftedCreeper(creeper);
                 }
             }
         } else if (entity instanceof Salmon) {
@@ -490,7 +555,8 @@ public class SpawnListeners implements Listener {
         } else if (entity instanceof Hoglin hoglin && !(entity instanceof Zoglin) && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             hoglin.setCustomName(format("&c&lHoglin"));
             hoglin.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, false, false, false));
-            hoglin.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(32);
+            hoglin.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 99, false, false, false));
+            hoglin.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(999);
             PiglinBrute piglinBrute = hoglin.getLocation().getWorld().spawn(hoglin.getLocation(), PiglinBrute.class);
             piglinBrute.setCustomName(format("&c&lZog-Rider"));
             piglinBrute.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(80);
@@ -498,14 +564,7 @@ public class SpawnListeners implements Listener {
             piglinBrute.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
         } else if (entity instanceof Silverfish silverfish) {
             if (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SILVERFISH_BLOCK) {
-                if (spawnmob > 80) {
-                    silverfish.remove();
-                    spawnRandomMob(silverfish.getLocation());
-                } else {
-                    silverfish.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(30);
-                    silverfish.setHealth(30);
-                    silverfish.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10);
-                }
+                Mobs.cosmicSilver(silverfish);
             }
 
         } else if (entity instanceof Endermite endermite) {
@@ -519,10 +578,6 @@ public class SpawnListeners implements Listener {
                     endermite.setHealth(50);
                     endermite.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(30);
                 }
-            }
-        } else if (entity instanceof Enderman enderman && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
-            if (spawnmob > blightedProb - 10) {
-                Mobs.blightedEndermam(enderman);
             }
         } else if (entity instanceof Witch witch && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
             if (spawnmob > 90) {
@@ -812,16 +867,25 @@ public class SpawnListeners implements Listener {
             entity.remove();
             var eldergur = entity.getWorld().spawn(entity.getLocation(),ElderGuardian.class);
             Mobs.elderdestroyer(eldergur);
-        }else if(entity instanceof Drowned drowned && e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
+        }else if(entity instanceof Drowned drowned && (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL || e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.DROWNED)){
             drowned.setCustomName(format("&6Pyromaniac of the Deeps"));
             drowned.getEquipment().setItemInMainHand(new ItemBuilder(Material.TRIDENT).build());
             drowned.getPersistentDataContainer().set(Utils.key("PYRO_DEEP"),PersistentDataType.STRING,"PYRO_DEEP");
+        }else if(entity instanceof Cod cod){
+            if(Utils.getWorld().isThundering()){
+                int eldercahnce = new Random().nextInt(300);
+                if(eldercahnce == 1){
+                    cod.remove();
+                    var eldergur = cod.getWorld().spawn(cod.getLocation(),ElderGuardian.class);
+                    Mobs.elderdestroyer(eldergur);
+                }
+            }
         }
 
     }
 
     public static void spawnRandomMob(Location location) {
-        int whatmob = new Random().nextInt(10) + 1;
+        int whatmob = new Random().nextInt(11);
         if (whatmob == 1) {
             var entity = location.getWorld().spawn(location, Zombie.class);
             Mobs.zombCarni(entity);
@@ -852,9 +916,12 @@ public class SpawnListeners implements Listener {
         } else if (whatmob == 9) {
             var entity = location.getWorld().spawn(location, PiglinBrute.class);
             Mobs.blightedPiglin(entity);
-        } else {
+        } else if(whatmob == 10){
             var entity = location.getWorld().spawn(location, WitherSkeleton.class);
             Mobs.abomination(entity);
+        }else{
+            var entity = location.getWorld().spawn(location,Wither.class);
+            Mobs.tyranyWither(entity);
         }
     }
 }

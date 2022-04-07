@@ -678,6 +678,67 @@ public class Items {
         return new ItemBuilder(Material.NETHERITE_BOOTS).setLore(lore).setName(format("&5&lUmbra Boots")).setUnbreakable(true).setCustomModelData(6761618).build();
     }
 
+    //BURNLIGHT ARMOR
+    public static ItemStack burnHelmet(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7La Luz a limpiado la oscuridad interna")));
+        lore.add(Component.text(format("&7y se ha fortalecido")));
+        lore.add(Component.text(format("&7Tener el set completo te dara buffs variados,")));
+        lore.add(Component.text(format("&7otorgara inmunidad a la &eParalización &7, 8 corazones")));
+        lore.add(Component.text(format("&7extras y &cEvita el Fallo de los Items Especiales&7.")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.NETHERITE_HELMET).setLore(lore).setName(format("&e&lBurnlight Helmet")).setUnbreakable(true).setCustomModelData(3537921).build();
+    }
+    public static ItemStack burnChestplate(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7La Luz a limpiado la oscuridad interna")));
+        lore.add(Component.text(format("&7y se ha fortalecido")));
+        lore.add(Component.text(format("&7Tener el set completo te dara buffs variados,")));
+        lore.add(Component.text(format("&7otorgara inmunidad a la &eParalización &7, 8 corazones")));
+        lore.add(Component.text(format("&7extras y &cEvita el Fallo de los Items Especiales&7.")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.NETHERITE_CHESTPLATE).setLore(lore).setName(format("&e&lBurnlight Chestplate")).setUnbreakable(true).setCustomModelData(3537921).build();
+    }
+    public static ItemStack burnLeggings(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7La Luz a limpiado la oscuridad interna")));
+        lore.add(Component.text(format("&7y se ha fortalecido")));
+        lore.add(Component.text(format("&7Tener el set completo te dara buffs variados,")));
+        lore.add(Component.text(format("&7otorgara inmunidad a la &eParalización &7, 8 corazones")));
+        lore.add(Component.text(format("&7extras y &cEvita el Fallo de los Items Especiales&7.")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.NETHERITE_LEGGINGS).setLore(lore).setName(format("&e&lBurnlight Leggings")).setUnbreakable(true).setCustomModelData(3537921).build();
+    }
+    public static ItemStack burnBoots(){
+        List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(format("")));
+        lore.add(Component.text(format("&7La Luz a limpiado la oscuridad interna")));
+        lore.add(Component.text(format("&7y se ha fortalecido")));
+        lore.add(Component.text(format("&7Tener el set completo te dara buffs variados,")));
+        lore.add(Component.text(format("&7otorgara inmunidad a la &eParalización &7, 8 corazones")));
+        lore.add(Component.text(format("&7extras y &cEvita el Fallo de los Items Especiales&7.")));
+        lore.add(Component.text(format("")));
+        return new ItemBuilder(Material.NETHERITE_BOOTS).setLore(lore).setName(format("&e&lBurnlight Boots")).setUnbreakable(true).setCustomModelData(3537921).build();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public static ItemStack rareGem(){

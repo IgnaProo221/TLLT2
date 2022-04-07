@@ -55,11 +55,10 @@ public class EntityListeners implements Listener {
             var evokerxdlol = entity.getLocation().getWorld().spawn(entity.getLocation(), Evoker.class);
             Mobs.evokerExplosive(evokerxdlol);
         } else if (cosmoschance == 3) {
-            var withertroll = entity.getLocation().getWorld().spawn(entity.getLocation(), Wither.class);
-            Mobs.tyranyWither(withertroll);
+            entity.getWorld().spawn(entity.getLocation(),Axolotl.class);
         } else if (cosmoschance == 4) {
             var esqueletomamado = entity.getLocation().getWorld().spawn(entity.getLocation(), WitherSkeleton.class);
-            Mobs.blightedWitherSkeleton(esqueletomamado);
+            Mobs.abomination(esqueletomamado);
         } else if (cosmoschance == 5) {
             var jodidoghast = entity.getLocation().getWorld().spawn(entity.getLocation(), Ghast.class);
             Mobs.riftedGhast(jodidoghast);
@@ -76,13 +75,8 @@ public class EntityListeners implements Listener {
             blaze.setHealth(40);
             blaze.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE"), PersistentDataType.STRING, "HELLFIRE");
         } else if (cosmoschance == 9) {
-            var slime = entity.getLocation().getWorld().spawn(entity.getLocation(), Slime.class);
-            slime.setCustomName(format("Freezing Slime"));
-            slime.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(60);
-            slime.setHealth(60);
-            slime.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(12);
-            slime.setSize(12);
-            slime.getPersistentDataContainer().set(new NamespacedKey(TLL2.getPlugin(TLL2.class), "FREEZING_SLIME"), PersistentDataType.STRING, "FREEZING_SLIME");
+            var elderpene = entity.getLocation().getWorld().spawn(entity.getLocation(),ElderGuardian.class);
+            Mobs.elderdestroyer(elderpene);
         } else if (cosmoschance == 10) {
             var magopendejo = entity.getLocation().getWorld().spawn(entity.getLocation(), Illusioner.class);
             Mobs.riftedMage(magopendejo);
@@ -123,8 +117,11 @@ public class EntityListeners implements Listener {
 
     @EventHandler
     public void witherTest(ExplosionPrimeEvent e) {
+        if(e.getEntity() instanceof EnderCrystal){
+            e.setRadius(20);
+        }
         if (e.getEntity() instanceof Wither wither) {
-            if (wither.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ADVANCED_WITHER"), PersistentDataType.STRING)) {
+            if (wither.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "UNDYING_TITAN"), PersistentDataType.STRING)) {
                 e.setRadius(10);
             }
         }
@@ -209,6 +206,9 @@ public class EntityListeners implements Listener {
                 if (caveSpider.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "MUTACION"), PersistentDataType.STRING)) {
                     entity.getWorld().createExplosion(caveSpider, 6, false, true);
                 }
+            }
+            if(damager instanceof Axolotl axolotl){
+                axolotl.getWorld().createExplosion(axolotl.getLocation(),7,false,true);
             }
             if (damager instanceof Vex vex) {
                 if (p.isBlocking()) return;
@@ -312,13 +312,11 @@ public class EntityListeners implements Listener {
                     int parachance = new Random().nextInt(100);
                     if (data.getParalizis() >= 1) return;
                     if (TLL2.hasExoArmor(p)) return;
-                    if (parachance > 90) {
                         EventosItems.paralizison(p, data);
                         Bukkit.getScheduler().runTaskLater(plugin, () -> {
                             EventosItems.paralizisoff(p, data);
                         }, 40);
                     }
-                }
                 if (zombie.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "SAND_MOB"), PersistentDataType.STRING)) {
                     p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER, 400, 0));
                 }
@@ -452,6 +450,19 @@ public class EntityListeners implements Listener {
         }
     }
 
+    @EventHandler
+    public void hellfireFix(ProjectileLaunchEvent e){
+        var shooter = e.getEntity().getShooter();
+        var projectile = e.getEntity();
+        if (shooter instanceof Blaze) {
+            if(projectile instanceof SmallFireball smallFireball){
+                var blaze = (Entity) shooter;
+                if (blaze.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE"), PersistentDataType.STRING)) {
+                    smallFireball.setCustomName("hellfire_proj");
+                }
+            }
+        }
+    }
 
     @EventHandler
     public void onShotthit(ProjectileHitEvent event) {
@@ -489,16 +500,30 @@ public class EntityListeners implements Listener {
                     livingEntity.setFireTicks(1200);
                 }
             }
+
+            if(shooter instanceof Ghast ghast){
+                if(ghast.getPersistentDataContainer().has(Utils.key("STARDUST"),PersistentDataType.STRING)){
+                    projectile.remove();
+                    SpawnListeners.spawnRandomMob(projectile.getLocation());
+                }
+            }
         }
 
         if (shooter instanceof Wither wither) {
             if (projectile instanceof WitherSkull) {
-                if (wither.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ADVANCED_WITHER"), PersistentDataType.STRING))
+                if (wither.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "ADVANCED_WITHER"), PersistentDataType.STRING)) {
                     if (hitblock != null) {
-                        hitblock.getLocation().createExplosion(wither, 4, false, true);
+                        hitblock.getLocation().createExplosion(wither, 6, false, true);
                     } else if (entity != null) {
-                        entity.getLocation().createExplosion(wither, 4, false, true);
+                        entity.getLocation().createExplosion(wither, 6, false, true);
                     }
+                }else if(wither.getPersistentDataContainer().has(Utils.key("UNDYING_TITAN"),PersistentDataType.STRING)){
+                    if (hitblock != null) {
+                        hitblock.getLocation().createExplosion(wither, 8, false, true);
+                    } else if (entity != null) {
+                        entity.getLocation().createExplosion(wither, 8, false, true);
+                    }
+                }
             }
         }
         if (projectile instanceof WitherSkull witherSkull) {
@@ -619,14 +644,6 @@ public class EntityListeners implements Listener {
                     LivingEntity livingEntity = (LivingEntity) entity;
                     livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 200, 3, false, false, false));
                 }
-            }
-        }
-        if (shooter instanceof Blaze) {
-            if(projectile instanceof SmallFireball smallFireball){
-            var blaze = (Entity) shooter;
-            if (blaze.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "HELLFIRE"), PersistentDataType.STRING)) {
-                smallFireball.setCustomName("hellfire_proj");
-            }
             }
         }
     }

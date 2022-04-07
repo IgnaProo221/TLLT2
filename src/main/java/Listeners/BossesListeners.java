@@ -8,16 +8,22 @@ import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import tlldos.tll2.TLL2;
 
 import java.util.Random;
+
+import static Utilities.Format.format;
 
 public class BossesListeners implements Listener{
     TLL2 instance;
@@ -207,6 +213,129 @@ public class BossesListeners implements Listener{
             }
         }
     }
+
+
+
+    @EventHandler
+    public void erebusSpawn(CreatureSpawnEvent e){
+        if(e.getEntity() instanceof Wither wither){
+            if(wither.getPersistentDataContainer().has(Utils.key("EREBUS"),PersistentDataType.STRING)) {
+                if (wither.isValid() && !wither.isDead()) {
+                    new EndBoss(instance, wither).runTaskTimer(instance,0L,400L);
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void erebusskulls(ProjectileHitEvent e){
+        var shooter = e.getEntity().getShooter();
+        var projectile = e.getEntity();
+        var hitentity = e.getHitEntity();
+        var hitblock = e.getHitBlock();
+        if(shooter instanceof Wither wither){
+            if(projectile instanceof WitherSkull witherSkull){
+                if(wither.getPersistentDataContainer().has(Utils.key("EREBUS"),PersistentDataType.STRING)){
+                    int attacklol = new Random().nextInt(3);
+                    if(attacklol == 1){
+                        if(hitentity != null){
+                            hitentity.getWorld().createExplosion(hitentity.getLocation(),8,false,true);
+                        }else if(hitblock != null){
+                            hitblock.getWorld().createExplosion(hitblock.getLocation(),8,false,true);
+                        }
+                    }else if(attacklol == 2){
+                        witherSkull.setCharged(true);
+                        if(hitentity != null){
+                            SpawnListeners.spawnRandomMob(hitentity.getLocation());
+                        }else if(hitblock != null){
+                            SpawnListeners.spawnRandomMob(hitblock.getLocation());
+                        }
+                    }else{
+                        witherSkull.setCharged(true);
+                        if(hitentity != null){
+                            AreaEffectCloud toxic = hitentity.getWorld().spawn(hitentity.getLocation(),AreaEffectCloud.class);
+                            toxic.setParticle(Particle.CAMPFIRE_SIGNAL_SMOKE);
+                            toxic.setRadius(5);
+                            toxic.setBasePotionData(new PotionData(PotionType.POISON));
+                            toxic.addCustomEffect(new PotionEffect(PotionEffectType.WITHER, 200, 3), true);
+                            toxic.addCustomEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200, 3), true);
+                            toxic.addCustomEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 200, 3), true);
+                        }else if(hitblock != null){
+                            AreaEffectCloud toxic = hitblock.getWorld().spawn(hitblock.getLocation(),AreaEffectCloud.class);
+                            toxic.setParticle(Particle.CAMPFIRE_SIGNAL_SMOKE);
+                            toxic.setRadius(5);
+                            toxic.setBasePotionData(new PotionData(PotionType.POISON));
+                            toxic.addCustomEffect(new PotionEffect(PotionEffectType.WITHER, 200, 3), true);
+                            toxic.addCustomEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200, 3), true);
+                            toxic.addCustomEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 200, 3), true);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void erebusProtection(EntityDamageByEntityEvent e){
+        var damaged = e.getEntity();
+        var damager = e.getDamager();
+        if(damager instanceof Player p){
+            if(damaged instanceof Wither wither){
+                if(wither.getPersistentDataContainer().has(Utils.key("EREBUS"),PersistentDataType.STRING)){
+                    if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().getType() == Material.POPPY){
+                        p.sendMessage(format("&7&l[&8&lEREBUS&7&l] &4&l> &c&l¿Intentas Oneshotearme? ¡PIENSALO OTRA VEZ!"));
+                        p.damage(9999,wither);
+                    }else{
+                        int randomlol = new Random().nextInt(100);
+                        if(randomlol > 90){
+                            p.sendMessage(format("&7&l[&8&lEREBUS&7&l] &4&l> &c&l¿Me Intentas Atacar " + p.getName() + "? ¡Haber si Sobrevivies a esto!"));
+                            wither.getWorld().createExplosion(wither.getLocation(),6,true,false);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void erebusDeath(EntityDeathEvent e){
+        var entity = e.getEntity();
+        if(entity instanceof Wither wither){
+            if(wither.getPersistentDataContainer().has(Utils.key("EREBUS"),PersistentDataType.STRING)){
+                EndBoss.isDead = true;
+                for(Player player : Bukkit.getOnlinePlayers()){
+                    player.sendMessage(format("&7&l[&8&lEREBUS&7&l] &4&l> &7..."));
+                    Bukkit.getScheduler().runTaskLater(instance,()->{
+                        player.sendMessage(format("&7&l[&8&lEREBUS&7&l] &4&l> &7Al parecer..."));
+                    },80L);
+                    Bukkit.getScheduler().runTaskLater(instance,()->{
+                        player.sendMessage(format("&7&l[&8&lEREBUS&7&l] &4&l> &7No soy lo suficientemente fuerte para ustedes..."));
+                    },160L);
+                    Bukkit.getScheduler().runTaskLater(instance,()->{
+                        player.sendMessage(format("&7&l[&8&lEREBUS&7&l] &4&l> &7Supongo que es mi final..."));
+                    },240L);
+                    Bukkit.getScheduler().runTaskLater(instance,()->{
+                        player.sendMessage(format("&7&l[&8&lEREBUS&7&l] &4&l> &7Pero antes..."));
+                    },320L);
+                    Bukkit.getScheduler().runTaskLater(instance,()->{
+                        player.sendMessage(format("&7&l[&8&lEREBUS&7&l] &4&l> &7Su regreso a casa sera imposible"));
+                    },400L);
+                    Bukkit.getScheduler().runTaskLater(instance,()->{
+                        player.sendMessage(format("&7&l[&8&lEREBUS&7&l] &4&l> &7Estan atrapados conmigo aqui, en un vacio infinito del que jamas podran escapar"));
+                    },480L);
+                    Bukkit.getScheduler().runTaskLater(instance,()->{
+                        player.sendMessage(format("&7&l[&8&lEREBUS&7&l] &4&l> &7..."));
+                    },560L);
+                    Bukkit.getScheduler().runTaskLater(instance,()->{
+                        player.sendMessage(format("&7&l[&8&lEREBUS&7&l] &4&l> &7Hasta Nunca."));
+                    },640L);
+                }
+            }
+        }
+    }
+
+
+
 
 
 }

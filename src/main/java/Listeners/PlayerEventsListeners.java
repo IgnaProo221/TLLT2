@@ -98,34 +98,40 @@ public class PlayerEventsListeners implements Listener {
             if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK){
                 if(event.getItem().hasItemMeta()){
                     if(event.getItem().getItemMeta().hasCustomModelData()){
-                        if(event.getItem().getItemMeta().getCustomModelData() == 236363){
-                            if(p.hasCooldown(Material.TRIDENT))return;
-                            final HashSet hashSet = new HashSet<Material>();
-                            hashSet.add(Material.AIR);
-                            final Block block = p.getTargetBlock((Set<Material>) hashSet, 20);
-
-                            final Location playerLocation = p.getLocation();
-                            final Location teleportLocation = new Location(block.getWorld(), block.getX(),
-                                    block.getY(), block.getZ(), playerLocation.getYaw(), playerLocation.getPitch());
-
-                            if (teleportLocation.getBlock().getType() != Material.AIR) {
-                                teleportLocation.setY(teleportLocation.getY() + 1);
-                            }
-
-                            if (new Location(teleportLocation.getWorld(), teleportLocation.getX(), teleportLocation.getY() + 1,
-                                    teleportLocation.getZ()).getBlock().getType() == Material.AIR
-                                    && p.getLocation().add(p.getLocation().getDirection()).getBlock().getType() == Material.AIR) {
-                                teleportLocation.setX(teleportLocation.getX() - 0.5D);
-                                teleportLocation.setZ(teleportLocation.getZ() - 0.5D);
+                        if(event.getItem().getItemMeta().getCustomModelData() == 236363) {
+                            int failchance = new Random().nextInt(100);
+                            if (failchance > 80) {
+                                p.sendMessage(PREFIX,format("&c&lTu Shadow Rupture ha fallado!"));
+                                p.setCooldown(Material.TRIDENT, 200);
                             } else {
-                                teleportLocation.setX(teleportLocation.getX() + 0.5D);
-                                teleportLocation.setZ(teleportLocation.getZ() + 0.5D);
+                                if (p.hasCooldown(Material.TRIDENT)) return;
+                                final HashSet hashSet = new HashSet<Material>();
+                                hashSet.add(Material.AIR);
+                                final Block block = p.getTargetBlock((Set<Material>) hashSet, 20);
+
+                                final Location playerLocation = p.getLocation();
+                                final Location teleportLocation = new Location(block.getWorld(), block.getX(),
+                                        block.getY(), block.getZ(), playerLocation.getYaw(), playerLocation.getPitch());
+
+                                if (teleportLocation.getBlock().getType() != Material.AIR) {
+                                    teleportLocation.setY(teleportLocation.getY() + 1);
+                                }
+
+                                if (new Location(teleportLocation.getWorld(), teleportLocation.getX(), teleportLocation.getY() + 1,
+                                        teleportLocation.getZ()).getBlock().getType() == Material.AIR
+                                        && p.getLocation().add(p.getLocation().getDirection()).getBlock().getType() == Material.AIR) {
+                                    teleportLocation.setX(teleportLocation.getX() - 0.5D);
+                                    teleportLocation.setZ(teleportLocation.getZ() - 0.5D);
+                                } else {
+                                    teleportLocation.setX(teleportLocation.getX() + 0.5D);
+                                    teleportLocation.setZ(teleportLocation.getZ() + 0.5D);
+                                }
+                                p.teleport(teleportLocation);
+                                p.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE, p.getLocation(), 1);
+                                p.playSound(p.getLocation(), Sound.ENTITY_PHANTOM_AMBIENT, 10.0F, -1.0F);
+                                p.sendMessage(PREFIX, format("&8&lHas usado el Teletransporte de Sombras!"));
+                                p.setCooldown(Material.TRIDENT, 200);
                             }
-                            p.teleport(teleportLocation);
-                            p.getWorld().spawnParticle(Particle.CAMPFIRE_COSY_SMOKE,p.getLocation(),1);
-                            p.playSound(p.getLocation(),Sound.ENTITY_PHANTOM_AMBIENT,10.0F,-1.0F);
-                            p.sendMessage(PREFIX,format("&8&lHas usado el Teletransporte de Sombras!"));
-                            p.setCooldown(Material.TRIDENT,200);
                         }
                     }
                 }
@@ -235,18 +241,24 @@ public class PlayerEventsListeners implements Listener {
                 if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK){
                     if(p.getInventory().getItemInMainHand().hasItemMeta() || p.getInventory().getItemInOffHand().hasItemMeta()){
                         if(p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()){
-                            if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 8736689 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 8736689){
+                            if(p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 8736689 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 8736689) {
+                                int failchance = new Random().nextInt(100);
                                 PlayerData data = CustomPlayer.fromName(p.getName()).getData();
-                                if(p.hasCooldown(Material.BLAZE_ROD)){
-                                    p.sendMessage(PREFIX,format("&c&lEsta habilidad esta en Cooldown!"));
+                                if (p.hasCooldown(Material.BLAZE_ROD)) {
+                                    p.sendMessage(PREFIX, format("&c&lEsta habilidad esta en Cooldown!"));
                                     return;
-                                }else{
-                                    data.setImmunity(1);
-                                    p.sendMessage(PREFIX, format("&6Has usado la &e&lUndying Sceptre"));
-                                    p.setCooldown(Material.BLAZE_ROD,6000);
-                                    Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                                        data.setImmunity(0);
-                                    }, 300L);
+                                } else {
+                                    if (failchance > 80 && !plugin.hasBurnlightArmor(p)){
+                                        event.setCancelled(true);
+                                        p.sendMessage(PREFIX,format("&c&lTu Undying Sceptre ha fallado!"));
+                                    } else {
+                                        data.setImmunity(1);
+                                        p.sendMessage(PREFIX, format("&6Has usado la &e&lUndying Sceptre"));
+                                        p.setCooldown(Material.BLAZE_ROD, 6000);
+                                        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                                            data.setImmunity(0);
+                                        }, 300L);
+                                    }
                                 }
                             }
                         }
@@ -393,16 +405,23 @@ public class PlayerEventsListeners implements Listener {
                 if (p.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData() || p.getInventory().getItemInOffHand().getItemMeta().hasCustomModelData()) {
                     if (p.getInventory().getItemInMainHand().getItemMeta().getCustomModelData() == 1736 || p.getInventory().getItemInOffHand().getItemMeta().getCustomModelData() == 1736) {
                         if (e.getState() == PlayerFishEvent.State.REEL_IN) {
-                            if (p.getLocation().getBlock().getType() == Material.LAVA) {
-                                if (p.hasCooldown(Material.FISHING_ROD)) return;
-                                Vector vector = p.getEyeLocation().getDirection().multiply(5);
-                                p.setVelocity(vector);
+                            int failchance = new Random().nextInt(100);
+                            if (failchance > 80 && !plugin.hasBurnlightArmor(p)) {
+                                p.sendMessage(PREFIX, format("&c&lTu Firehook ha fallado!"));
                                 p.setCooldown(Material.FISHING_ROD, 100);
-                            }else{
-                                if (p.hasCooldown(Material.FISHING_ROD)) return;
-                                Vector vector = p.getEyeLocation().getDirection().multiply(3);
-                                p.setVelocity(vector);
-                                p.setCooldown(Material.FISHING_ROD, 100);
+                                e.setCancelled(true);
+                            } else {
+                                if (p.getLocation().getBlock().getType() == Material.LAVA) {
+                                    if (p.hasCooldown(Material.FISHING_ROD)) return;
+                                    Vector vector = p.getEyeLocation().getDirection().multiply(5);
+                                    p.setVelocity(vector);
+                                    p.setCooldown(Material.FISHING_ROD, 100);
+                                } else {
+                                    if (p.hasCooldown(Material.FISHING_ROD)) return;
+                                    Vector vector = p.getEyeLocation().getDirection().multiply(3);
+                                    p.setVelocity(vector);
+                                    p.setCooldown(Material.FISHING_ROD, 100);
+                                }
                             }
                         }
                     }
@@ -414,7 +433,7 @@ public class PlayerEventsListeners implements Listener {
     @EventHandler
     public void hambreAgotar(EntityExhaustionEvent e) {
         if (BlastStormListeners.isEnabled())
-            e.setExhaustion(e.getExhaustion() * 3);
+            e.setExhaustion(e.getExhaustion() * 4);
     }
 
     @EventHandler

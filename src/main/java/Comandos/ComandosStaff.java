@@ -16,10 +16,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.craftbukkit.v1_17_R1.CraftWorld;
-import org.bukkit.entity.Blaze;
-import org.bukkit.entity.IronGolem;
-import org.bukkit.entity.Monster;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -32,10 +29,7 @@ import player.PlayerData;
 import tlldos.tll2.TLL2;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static Utilities.Format.PREFIX;
 import static Utilities.Format.format;
@@ -581,9 +575,11 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     player.playSound(player.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
                     player.playEffect(EntityEffect.TOTEM_RESURRECT);
                 } else if (args[1].equalsIgnoreCase("muerteFake")) {
-                    EventosItems.animacion(player, player);
+                    Player randomplayer = (Player) Bukkit.getOnlinePlayers().toArray()[new Random().nextInt(Bukkit.getOnlinePlayers().size())];
+                    EventosItems.animacion(randomplayer,player);
                 } else if (args[1].equalsIgnoreCase("dementeTest")) {
-                    plugin.demente(player, player);
+                    Player randomplayer = (Player) Bukkit.getOnlinePlayers().toArray()[new Random().nextInt(Bukkit.getOnlinePlayers().size())];
+                    plugin.demente(randomplayer,player);
                 }else if(args[1].equalsIgnoreCase("impactTest")){
                     player.getWorld().getNearbyEntities(player.getLocation(), 10, 10, 10, entity -> entity instanceof Monster).forEach(entity -> {
                         Monster monster = (Monster) entity;
@@ -605,6 +601,36 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                 }else if(args[1].equalsIgnoreCase("INFERNO_LORD")){
                     Blaze blaze = player.getLocation().getWorld().spawn(player.getLocation(),Blaze.class);
                     Mobs.InfernoLord(blaze);
+                }else if(args[1].equalsIgnoreCase("EREBUS")){
+                    Mobs.Erebus(player.getWorld().spawn(player.getLocation(), Wither.class));
+                }else if(args[1].equalsIgnoreCase("BLIGHTED_SKELETON")){
+                    Mobs.blightedSkeleton(player.getWorld().spawn(player.getLocation(),Skeleton.class));
+                }else if(args[1].equalsIgnoreCase("BLIGHTED_ZOMBIE")){
+                    Mobs.blightedZombi(player.getWorld().spawn(player.getLocation(),Zombie.class));
+                }else if(args[1].equalsIgnoreCase("BLIGHTED_SPIDER")){
+                    Mobs.blightedSpider(player.getWorld().spawn(player.getLocation(),Spider.class));
+                }else if(args[1].equalsIgnoreCase("BLIGHTED_CREEPER")){
+                    Mobs.blightedCreeper(player.getWorld().spawn(player.getLocation(),Creeper.class));
+                }else if(args[1].equalsIgnoreCase("BLIGHTED_GHAST")){
+                    Mobs.blightedGhast(player.getWorld().spawn(player.getLocation(),Ghast.class));
+                }else if(args[1].equalsIgnoreCase("WOODEN_EXPERIMENT")){
+                    Mobs.experimentWOOD(player.getWorld().spawn(player.getLocation(),IronGolem.class));
+                }else if(args[1].equalsIgnoreCase("VORTICE")){
+                    Mobs.vortice(player.getWorld().spawn(player.getLocation(),Creeper.class));
+                }else if(args[1].equalsIgnoreCase("STARDUST")){
+                    Mobs.stardust(player.getWorld().spawn(player.getLocation(),Ghast.class));
+                }else if(args[1].equalsIgnoreCase("SOLARIS")){
+                    Mobs.solaris(player.getWorld().spawn(player.getLocation(),Phantom.class));
+                }else if(args[1].equalsIgnoreCase("EXPLOSIVE_EVOKER")){
+                    Mobs.evokerExplosive(player.getWorld().spawn(player.getLocation(),Evoker.class));
+                }else if(args[1].equalsIgnoreCase("DYNAMLLAGER")){
+                    Mobs.dynamLlager(player.getWorld().spawn(player.getLocation(),Pillager.class));
+                }else if(args[1].equalsIgnoreCase("DIMENSIONAL_DYNAMITE")){
+                    Mobs.riftedCreeper(player.getWorld().spawn(player.getLocation(),Creeper.class));
+                }else if(args[1].equalsIgnoreCase("DIMENSIONAL_GHOST")){
+                    Mobs.riftedGhast(player.getWorld().spawn(player.getLocation(),Ghast.class));
+                }else if(args[1].equalsIgnoreCase("HELLFIRE")){
+                    Mobs.hellfire(player.getWorld().spawn(player.getLocation(),Blaze.class));
                 }else{
                     player.sendMessage(Format.PREFIX + ChatColor.YELLOW + "¡Debes colocar un mob valido!");
                     return false;
@@ -781,6 +807,11 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     player.getInventory().addItem(Items.sunshineRelic());
                 }else if (args[1].equalsIgnoreCase("HYPERION")){
                     player.getInventory().addItem(Items.hyperion());
+                }else if (args[1].equalsIgnoreCase("BURNLIGHT_ARMOR")){
+                    player.getInventory().addItem(Items.burnHelmet());
+                    player.getInventory().addItem(Items.burnChestplate());
+                    player.getInventory().addItem(Items.burnLeggings());
+                    player.getInventory().addItem(Items.burnBoots());
                 }
             }
 
@@ -807,7 +838,8 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                 case "maestria"->addToList(commands,"reset","resetattributes","resetbuffs", "addLevel", "setLevel", "setXP");
                 case "sacrificios" -> addToList(commands, "modify", "clear", "reset");
                 case "god_mode" -> addToList(commands, "on", "off");
-                case "spawn" -> addToList(commands,"WARDEN","INFERNO_LORD");
+                case "spawn" -> addToList(commands,"WARDEN","INFERNO_LORD","EREBUS","BLIGHTED_SKELETON","BLIGHTED_CREEPER","BLIGHTED_ZOMBIE","BLIGHTED_SPIDER","BLIGHTED_GHAST",
+                        "WOODEN_EXPERIMENT","VORTICE","STARDUST","SOLARIS","EXPLOSIVE_EVOKER","DYNAMLLAGER","DIMENSIONAL_DYNAMITE","DIMENSIONAL_GHOST","HELLFIRE");
                 case "teams" -> addToList(commands, "chat", "join", "all_teams", "info");
                 case "debug" -> addToList(commands, "blastStormStart", "blackStormEnd", "totemTest", "muerteFake", "dementeTest");
                 case "temperatura" -> addToList(commands, "clear", "hipotermia", "hipertermia");

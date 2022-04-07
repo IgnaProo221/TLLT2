@@ -75,7 +75,6 @@ public class MobsTeleports implements Listener {
                     }
                 }
             }else if(event.getEntity() instanceof Creeper creeper){
-                if(creeper.getPersistentDataContainer().has(Utils.key("DIMEN_DYNAM"),PersistentDataType.STRING)){
                     int locX = creeper.getLocation().getBlockX();
                     int locY = creeper.getLocation().getBlockY();
                     int locZ = creeper.getLocation().getBlockZ();
@@ -87,7 +86,6 @@ public class MobsTeleports implements Listener {
 
                         teleport(creeper, locX, locY, locZ, creeper.getWorld());
                     }
-                }
             }
             /*if (event.getEntity() instanceof Creeper c) {
 
@@ -143,7 +141,6 @@ public class MobsTeleports implements Listener {
                }
             }
         }else if(e.getEntity() instanceof Creeper creeper){
-            if(creeper.getPersistentDataContainer().has(Utils.key("DIMEN_DYNAM"),PersistentDataType.STRING)){
                 int locX = creeper.getLocation().getBlockX();
                 int locY = creeper.getLocation().getBlockY();
                 int locZ = creeper.getLocation().getBlockZ();
@@ -155,7 +152,6 @@ public class MobsTeleports implements Listener {
 
                     teleport(creeper, locX, locY, locZ, creeper.getWorld());
                 }
-            }
         }
     }
 

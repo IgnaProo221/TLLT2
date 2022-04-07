@@ -59,6 +59,13 @@ public class EventosItems {
         }
     }
 
+    public static void deathmessagefake(Player p,Player players){
+        players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&8¡El Alma de &6&l" + p.getName() + " &8ha desaparecido entre la oscuridad eterna del &8&lvacío!, &8&lsu energía se liberara para iniciar &6la &6&lBLAST STORM."));
+        players.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Fatum tuum non potes effugere, &c&lsuperesse vel perit"));
+        players.sendMessage(ChatColor.GRAY + "Coordenadas: X: " + p.getLocation().getBlockX() + ", Y: " + p.getLocation().getBlockY() + ", Z: " + p.getLocation().getBlockZ());
+        players.sendMessage(ChatColor.GRAY + "Dimensión: Overworld"); //perdon
+    }
+
     public static void animacion(Player p, Player players){
             players.sendTitle(format("&c&l&k|||  &6&l&kThe Last Life  &c&l&k|||"), format("&7¡El jugador " + p.getName() + " ha muerto!"), 0,80,0);
             players.playSound(players.getLocation(),"tllt2.deathsound", SoundCategory.RECORDS, 10.0F, 1.0F);

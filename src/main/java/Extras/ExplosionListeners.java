@@ -1,5 +1,6 @@
 package Extras;
 
+import Utilities.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.data.type.Fire;
@@ -27,16 +28,18 @@ public class ExplosionListeners implements Listener{
             Fireball fireball = (Fireball) e.getEntity();
             if(ghast.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "DESERT_GHAST"), PersistentDataType.STRING)){
                 if(e.getEntity() instanceof Fireball){
-                    fireball.setYield(5);
+                    fireball.setYield(8);
                 }
             }else if(ghast.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class), "BLIGHTED_GHAST"), PersistentDataType.STRING)) {
-                fireball.setYield(7);
+                fireball.setYield(12);
             }else if(ghast.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"DIMEN_GHOST"), PersistentDataType.STRING)){
-                fireball.setYield(9);
-            }else if(ghast.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"NIGHTMARE"), PersistentDataType.STRING)){
-                fireball.setYield(8);
+                fireball.setYield(13);
+            }else if(ghast.getPersistentDataContainer().has(new NamespacedKey(TLL2.getPlugin(TLL2.class),"NIGHTMARE"), PersistentDataType.STRING)) {
+                fireball.setYield(12);
+            }else if(ghast.getPersistentDataContainer().has(Utils.key("STARDUST"),PersistentDataType.STRING)){
+                fireball.setYield(0);
             }else{
-                fireball.setYield(5);
+                fireball.setYield(8);
             }
         }
     }

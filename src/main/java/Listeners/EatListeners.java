@@ -80,7 +80,7 @@ public class EatListeners implements Listener {
     }
 
     public void applyRandomEffects(Player p){
-        int effect = new Random().nextInt(15);
+        int effect = new Random().nextInt(18);
         if(effect == 1){
             p.addPotionEffect(new PotionEffect(PotionEffectType.POISON,400,2,true,false,true));
         }else if(effect == 2){
@@ -109,8 +109,14 @@ public class EatListeners implements Listener {
             p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,400,2,true,false,true));
         }else if(effect == 14){
             p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP,400,2,true,false,true));
-        }else {
+        }else if(effect == 15){
             p.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK,400,2,true,false,true));
+        }else if(effect == 16){
+            p.addPotionEffect(new PotionEffect(PotionEffectType.UNLUCK,1200,4,true,false,true));
+        }else if(effect == 17){
+            p.addPotionEffect(new PotionEffect(PotionEffectType.BAD_OMEN,Integer.MAX_VALUE,4,true,false,true));
+        }else{
+            p.addPotionEffect(new PotionEffect(PotionEffectType.LUCK,400,2,true,false,true));
         }
 
     }

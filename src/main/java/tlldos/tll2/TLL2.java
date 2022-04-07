@@ -161,7 +161,7 @@ public final class TLL2 extends JavaPlugin implements Listener{
                 new JoinListeners(this),
                 new RPListeners(this),
                 new MaestriaExp(this),
-                new BowListeners(this),
+                new BowListeners(this), 
                 new CustomEnchants()
         );
     }
@@ -210,8 +210,9 @@ public final class TLL2 extends JavaPlugin implements Listener{
         if(world.getWeatherDuration() != 0){
             Bukkit.getScheduler().runTaskTimer(this, ()->{
                 if(world.isThundering()) {
+                    Player randomplayer = (Player) Bukkit.getOnlinePlayers().toArray()[new Random().nextInt(Bukkit.getOnlinePlayers().size())];
                     Bukkit.getOnlinePlayers().forEach(player -> {
-                        demente(player,player);
+                        demente(randomplayer,player);
                     });
                 }
             },0L, 1200L);
@@ -229,11 +230,11 @@ public final class TLL2 extends JavaPlugin implements Listener{
         for(Player player : Bukkit.getOnlinePlayers()){
             if(player.getGameMode() == GameMode.SURVIVAL) {
                 var data = CustomPlayer.fromName(player.getName()).getData();
-
                 var dataTemperatura = data.getTemperature();
+                Player randomplayer = (Player) Bukkit.getOnlinePlayers().toArray()[new Random().nextInt(Bukkit.getOnlinePlayers().size())];
                 ////var dataTemperatura = data.get(new NamespacedKey(this, "temperatura"), PersistentDataType.INTEGER);
                 if (dataTemperatura >= 220 || dataTemperatura <= -180) {
-                    demente(player, player);
+                    demente(randomplayer,player);
                 }
             }
         }
@@ -261,14 +262,18 @@ public final class TLL2 extends JavaPlugin implements Listener{
                         spawnMobNaturally(player, block);
                     }
                 }*/
-                if (hasBloodstainedArmor(player)) {
-                    health += 12;
+                if(player.hasPotionEffect(PotionEffectType.FIRE_RESISTANCE)){
+                    player.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
                 }
-                if (hasExoArmor(player)) {
+
+                /*if (hasBloodstainedArmor(player)) {
+                    health += 12;
+                }*/
+                /*if (hasExoArmor(player)) {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 0, true, false, true));
                     player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 0, true, false, true));
                     health += 6;
-                }
+                }*/
                 if(hasUmbraArmor(player)){
                     if(!(Utils.getWorld().isDayTime())){
                         health += 16;
@@ -280,6 +285,14 @@ public final class TLL2 extends JavaPlugin implements Listener{
                     health += 8;
                     }
                 }
+
+                if(hasBurnlightArmor(player)){
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 100, 1, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 1, true, false, true));
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 0, true, false, true));
+                    health += 16;
+                }
+
                 health += data.getExtraHealth();
                 health -= data.getNegativeHealth();
                 player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
@@ -352,16 +365,16 @@ public final class TLL2 extends JavaPlugin implements Listener{
 
 
 
-    public void demente(Player p, Player players){
-        int clase = new Random().nextInt(18);
+    public void demente(Player random,Player p){
+        int clase = new Random().nextInt(22);
         if(clase == 1){
-            EventosItems.animacion(p,players);
+            EventosItems.animacion(random,p);
         }else if(clase == 2){
             p.playEffect(EntityEffect.TOTEM_RESURRECT);
         }else if(clase == 3){
             p.sendMessage(Format.format("&7&o??? te susurra: ¿Hola?"));
         }else if(clase == 4){
-            p.playEffect(EntityEffect.HURT_EXPLOSION );
+            p.playEffect(EntityEffect.HURT);
         }else if(clase == 5){
             p.playSound(p.getLocation(),Sound.ENTITY_CREEPER_PRIMED,SoundCategory.MASTER,10.0F,1.0F);
         }else if(clase == 6){
@@ -389,8 +402,16 @@ public final class TLL2 extends JavaPlugin implements Listener{
             p.playSound(p.getLocation(),Sound.ENTITY_ENDER_DRAGON_GROWL,SoundCategory.MASTER,10.0F,1.0F);
         }else if(clase == 17){
             p.playSound(p.getLocation(),Sound.ENTITY_SPIDER_AMBIENT,SoundCategory.MASTER,10.0F,1.0F);
-        }else{
+        }else if(clase == 18){
             p.playSound(p.getLocation(),Sound.ENTITY_EVOKER_PREPARE_SUMMON,SoundCategory.MASTER,10.0F,1.0F);
+        }else if(clase == 19){
+            p.playSound(p.getLocation(),Sound.ENTITY_GENERIC_EXPLODE,SoundCategory.MASTER,10.0F,1.0F);
+        }else if(clase == 20){
+            p.playSound(p.getLocation(),Sound.ENTITY_WITHER_AMBIENT,SoundCategory.MASTER,10.0F,1.0F);
+        }else if(clase == 21){
+            p.sendMessage(Format.format("&7&o??? te susurra: Como estas " + p.getName() + " :)?"));
+        }else{
+            EventosItems.deathmessagefake(random,p);
         }
 
         }
@@ -428,6 +449,16 @@ public final class TLL2 extends JavaPlugin implements Listener{
             if(p.getInventory().getHelmet().hasItemMeta() && p.getInventory().getChestplate().hasItemMeta() && p.getInventory().getLeggings().hasItemMeta() && p.getInventory().getBoots().hasItemMeta()){
                 if(p.getInventory().getHelmet().getItemMeta().hasCustomModelData() && p.getInventory().getChestplate().getItemMeta().hasCustomModelData() && p.getInventory().getLeggings().getItemMeta().hasCustomModelData() && p.getInventory().getBoots().getItemMeta().hasCustomModelData()){
                     return p.getInventory().getHelmet().getItemMeta().getCustomModelData() == 6761618 && p.getInventory().getChestplate().getItemMeta().getCustomModelData() == 6761618 && p.getInventory().getLeggings().getItemMeta().getCustomModelData() == 6761618 && p.getInventory().getBoots().getItemMeta().getCustomModelData() == 6761618;
+                }
+            }
+        }
+        return false;
+    }
+    public boolean hasBurnlightArmor(Player p){
+        if(p.getInventory().getHelmet() != null && p.getInventory().getChestplate() != null && p.getInventory().getLeggings() != null && p.getInventory().getBoots() != null){
+            if(p.getInventory().getHelmet().hasItemMeta() && p.getInventory().getChestplate().hasItemMeta() && p.getInventory().getLeggings().hasItemMeta() && p.getInventory().getBoots().hasItemMeta()){
+                if(p.getInventory().getHelmet().getItemMeta().hasCustomModelData() && p.getInventory().getChestplate().getItemMeta().hasCustomModelData() && p.getInventory().getLeggings().getItemMeta().hasCustomModelData() && p.getInventory().getBoots().getItemMeta().hasCustomModelData()){
+                    return p.getInventory().getHelmet().getItemMeta().getCustomModelData() == 3537921 && p.getInventory().getChestplate().getItemMeta().getCustomModelData() == 3537921 && p.getInventory().getLeggings().getItemMeta().getCustomModelData() == 3537921 && p.getInventory().getBoots().getItemMeta().getCustomModelData() == 3537921;
                 }
             }
         }

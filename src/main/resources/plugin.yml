@@ -4,6 +4,8 @@ main: tlldos.tll2.TLL2
 api-version: 1.17
 prefix: THELASTLIFE
 authors: [ Mutant, Wicked, LepePos, felipse]
+softdepend: [LibsDisguises]
+loadbefore: [LibsDisguises]
 description: caca123
 commands:
   thelastlife:
