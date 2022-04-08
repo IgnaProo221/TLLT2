@@ -215,13 +215,22 @@ public class BossesListeners implements Listener{
     }
 
 
+    public static EndBoss boss;
+
+    public static EndBoss getBoss(){
+        return boss;
+    }
+    public static void setBoss(EndBoss boss) {
+        BossesListeners.boss = boss;
+    }
 
     @EventHandler
     public void erebusSpawn(CreatureSpawnEvent e){
         if(e.getEntity() instanceof Wither wither){
             if(wither.getPersistentDataContainer().has(Utils.key("EREBUS"),PersistentDataType.STRING)) {
                 if (wither.isValid() && !wither.isDead()) {
-                    new EndBoss(instance, wither).runTaskTimer(instance,0L,400L);
+                    BossesListeners.setBoss(new EndBoss(TLL2.getInstance(), wither));
+                    BossesListeners.getBoss().runTaskTimer(TLL2.getInstance(), 0, 400);
                 }
             }
         }
