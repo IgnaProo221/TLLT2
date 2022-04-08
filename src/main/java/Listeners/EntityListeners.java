@@ -491,19 +491,9 @@ public class EntityListeners implements Listener {
             }
         }
         if(projectile instanceof Fireball fireball){
-            if(fireball.getCustomName().contains("ember_projectile_powerup")){
-                if (entity != null) {
-                    LivingEntity livingEntity = (LivingEntity) entity;
-                    if (livingEntity instanceof Player || livingEntity instanceof Villager || livingEntity instanceof ArmorStand)
-                        return;
-                    livingEntity.damage(35);
-                    livingEntity.setFireTicks(1200);
-                }
-            }
-
             if(shooter instanceof Ghast ghast){
                 if(ghast.getPersistentDataContainer().has(Utils.key("STARDUST"),PersistentDataType.STRING)){
-                    projectile.remove();
+                    fireball.remove();
                     SpawnListeners.spawnRandomMob(projectile.getLocation());
                 }
             }

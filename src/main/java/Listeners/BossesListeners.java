@@ -229,6 +229,7 @@ public class BossesListeners implements Listener{
         if(e.getEntity() instanceof Wither wither){
             if(wither.getPersistentDataContainer().has(Utils.key("EREBUS"),PersistentDataType.STRING)) {
                 if (wither.isValid() && !wither.isDead()) {
+                    Bukkit.getConsoleSender().sendMessage("EL MOB SE LE METE EL TASK BIEN");
                     BossesListeners.setBoss(new EndBoss(TLL2.getInstance(), wither));
                     BossesListeners.getBoss().runTaskTimer(TLL2.getInstance(), 0, 400);
                 }
@@ -292,6 +293,7 @@ public class BossesListeners implements Listener{
             if(damaged instanceof Wither wither){
                 if(wither.getPersistentDataContainer().has(Utils.key("EREBUS"),PersistentDataType.STRING)){
                     if(p.getInventory().getItemInMainHand() != null && p.getInventory().getItemInMainHand().getType() == Material.POPPY){
+                        e.setCancelled(true);
                         p.sendMessage(format("&7&l[&8&lEREBUS&7&l] &4&l> &c&l¿Intentas Oneshotearme? ¡PIENSALO OTRA VEZ!"));
                         p.damage(9999,wither);
                     }else{
@@ -330,7 +332,7 @@ public class BossesListeners implements Listener{
                         player.sendMessage(format("&7&l[&8&lEREBUS&7&l] &4&l> &7Su regreso a casa sera imposible"));
                     },400L);
                     Bukkit.getScheduler().runTaskLater(instance,()->{
-                        player.sendMessage(format("&7&l[&8&lEREBUS&7&l] &4&l> &7Estan atrapados conmigo aqui, en un vacio infinito del que jamas podran escapar"));
+                        player.sendMessage(format("&7&l[&8&lEREBUS&7&l] &4&l> &7Estan atrapados conmigo aquí, en un vacio infinito del que jamas podrán escapar"));
                     },480L);
                     Bukkit.getScheduler().runTaskLater(instance,()->{
                         player.sendMessage(format("&7&l[&8&lEREBUS&7&l] &4&l> &7..."));

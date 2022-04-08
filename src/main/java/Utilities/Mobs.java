@@ -26,6 +26,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
@@ -515,7 +516,7 @@ public class Mobs implements Listener {
     }
 
     public static void stardust(Ghast self) {
-        self.setCustomName(format("&2&lStardust"));
+        self.setCustomName(format("&1&lStardust"));
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(90);
         self.setHealth(90);
         self.getPersistentDataContainer().set(Utils.key("STARDUST"), PersistentDataType.STRING, "STARDUST");
@@ -986,8 +987,12 @@ public class Mobs implements Listener {
 
     //Almas
     public static void arphz(Skeleton self) {
-        PlayerDisguise playerDisguise = new PlayerDisguise("TheArphz");
-        DisguiseAPI.disguiseEntity(self,playerDisguise);
+        ItemStack cabeza = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta skullMeta = (SkullMeta)cabeza.getItemMeta();
+        skullMeta.setOwner("TheArphz");
+        cabeza.setItemMeta(skullMeta);
+        self.getEquipment().setHelmet(cabeza);
+        self.setInvisible(true);
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(200);
         self.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(200);
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(40);
@@ -997,12 +1002,61 @@ public class Mobs implements Listener {
         self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
     }
     public static void salva(Skeleton self){
-        PlayerDisguise playerDisguise = new PlayerDisguise("SalvaGamerVZ");
-        DisguiseAPI.disguiseEntity(self,playerDisguise);
+        ItemStack cabeza = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta skullMeta = (SkullMeta)cabeza.getItemMeta();
+        skullMeta.setOwner("SalvaGamerVZ");
+        cabeza.setItemMeta(skullMeta);
+        self.getEquipment().setHelmet(cabeza);
+        self.setInvisible(true);
         self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(200);
         self.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(200);
         self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(40);
         self.setCustomName(format("&8&lS??lv??Gam???VZ"));
+        self.setHealth(200);
+        self.getEquipment().setItemInMainHand(new ItemBuilder(Material.NETHERITE_AXE).addEnchantment(Enchantment.DAMAGE_ALL,50).build());
+        self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+    }
+    public static void diego(Skeleton self){
+        ItemStack cabeza = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta skullMeta = (SkullMeta)cabeza.getItemMeta();
+        skullMeta.setOwner("Diegot_Manc");
+        cabeza.setItemMeta(skullMeta);
+        self.getEquipment().setHelmet(cabeza);
+        self.setInvisible(true);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(200);
+        self.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(200);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(40);
+        self.setCustomName(format("&8&lDi???_?an?"));
+        self.setHealth(200);
+        self.getEquipment().setItemInMainHand(new ItemBuilder(Material.NETHERITE_AXE).addEnchantment(Enchantment.DAMAGE_ALL,50).build());
+        self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+    }
+    public static void gatin(Skeleton self){
+        ItemStack cabeza = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta skullMeta = (SkullMeta)cabeza.getItemMeta();
+        skullMeta.setOwner("Gatin72");
+        cabeza.setItemMeta(skullMeta);
+        self.getEquipment().setHelmet(cabeza);
+        self.setInvisible(true);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(200);
+        self.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(200);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(40);
+        self.setCustomName(format("&8&lG??in7?"));
+        self.setHealth(200);
+        self.getEquipment().setItemInMainHand(new ItemBuilder(Material.NETHERITE_AXE).addEnchantment(Enchantment.DAMAGE_ALL,50).build());
+        self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+    }
+    public static void johan(Skeleton self){
+        ItemStack cabeza = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta skullMeta = (SkullMeta)cabeza.getItemMeta();
+        skullMeta.setOwner("JohanBigCum");
+        cabeza.setItemMeta(skullMeta);
+        self.getEquipment().setHelmet(cabeza);
+        self.setInvisible(true);
+        self.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(200);
+        self.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE).setBaseValue(200);
+        self.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(40);
+        self.setCustomName(format("&8&lJ???nC???"));
         self.setHealth(200);
         self.getEquipment().setItemInMainHand(new ItemBuilder(Material.NETHERITE_AXE).addEnchantment(Enchantment.DAMAGE_ALL,50).build());
         self.getEquipment().setDropChance(EquipmentSlot.HAND,0);

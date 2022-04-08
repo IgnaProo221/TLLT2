@@ -29,10 +29,13 @@ public class EndBoss extends BukkitRunnable{
 
     @Override
     public void run() {
+        Bukkit.getConsoleSender().sendMessage("DEBUG DE ENDBOSS");
         if(isDead|| wither.isDead()){
+            Bukkit.getConsoleSender().sendMessage("EL BOSS SE MURIO XD");
             cancel();
             return;
         }else{
+            Bukkit.getConsoleSender().sendMessage("DEBUG DE ENDBOSS (EL BOSS ESTA VIVO Y HACE ATAQUES)");
             int attacktype = new Random().nextInt(7);
             for(Player player : Bukkit.getOnlinePlayers()){
                 if(!(player.getGameMode() == GameMode.SURVIVAL))return;

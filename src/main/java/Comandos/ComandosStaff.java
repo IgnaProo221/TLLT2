@@ -1,9 +1,7 @@
 package Comandos;
 
 import CustomMobs.HostileTest;
-import Listeners.MaestriaExp;
-import Listeners.StartBlastStormEvent;
-import Listeners.StopBlastStormEvent;
+import Listeners.*;
 import Extras.EventosItems;
 import Extras.Items;
 import Extras.Teams;
@@ -602,7 +600,11 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
                     Blaze blaze = player.getLocation().getWorld().spawn(player.getLocation(),Blaze.class);
                     Mobs.InfernoLord(blaze);
                 }else if(args[1].equalsIgnoreCase("EREBUS")){
-                    Mobs.Erebus(player.getWorld().spawn(player.getLocation(), Wither.class));
+                    Wither wither = player.getWorld().spawn(player.getLocation(), Wither.class);
+                    Mobs.Erebus(wither);
+                    Bukkit.getConsoleSender().sendMessage("SE METIO EL TASK BIEN");
+                    BossesListeners.setBoss(new EndBoss(TLL2.getInstance(), wither));
+                    BossesListeners.getBoss().runTaskTimer(TLL2.getInstance(), 0, 400);
                 }else if(args[1].equalsIgnoreCase("BLIGHTED_SKELETON")){
                     Mobs.blightedSkeleton(player.getWorld().spawn(player.getLocation(),Skeleton.class));
                 }else if(args[1].equalsIgnoreCase("BLIGHTED_ZOMBIE")){

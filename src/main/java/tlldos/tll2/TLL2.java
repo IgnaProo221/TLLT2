@@ -94,7 +94,8 @@ public final class TLL2 extends JavaPlugin implements Listener{
 
             new TemperatureTask(this).runTaskTimer(this, 0L, 2400L);
             new TemperatureBlocks(this).runTaskTimer(this,0L,200L);
-            new TemperatureY(this).runTaskTimer(this,0L,1200);
+            //QUITE ESTO A PETICION DE LECHUGA POR EL ULTIMO DIA
+            //new TemperatureY(this).runTaskTimer(this,0L,1200);
             //NO USEN ESTO FELIPE YA LO TIENE
             //new SpawnTask(this).runTaskTimer(this,0L,200);
         } catch (Error e){
