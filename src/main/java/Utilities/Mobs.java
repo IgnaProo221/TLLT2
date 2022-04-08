@@ -1000,6 +1000,7 @@ public class Mobs implements Listener {
         self.setHealth(200);
         self.getEquipment().setItemInMainHand(new ItemBuilder(Material.NETHERITE_AXE).addEnchantment(Enchantment.DAMAGE_ALL,50).build());
         self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+        self.getPersistentDataContainer().set(Utils.key("ARPHZ"),PersistentDataType.STRING,"ARPHZ");
     }
     public static void salva(Skeleton self){
         ItemStack cabeza = new ItemStack(Material.PLAYER_HEAD);
@@ -1015,6 +1016,7 @@ public class Mobs implements Listener {
         self.setHealth(200);
         self.getEquipment().setItemInMainHand(new ItemBuilder(Material.NETHERITE_AXE).addEnchantment(Enchantment.DAMAGE_ALL,50).build());
         self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+        self.getPersistentDataContainer().set(Utils.key("SALVA"),PersistentDataType.STRING,"SALVA");
     }
     public static void diego(Skeleton self){
         ItemStack cabeza = new ItemStack(Material.PLAYER_HEAD);
@@ -1030,6 +1032,7 @@ public class Mobs implements Listener {
         self.setHealth(200);
         self.getEquipment().setItemInMainHand(new ItemBuilder(Material.NETHERITE_AXE).addEnchantment(Enchantment.DAMAGE_ALL,50).build());
         self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+        self.getPersistentDataContainer().set(Utils.key("DIEGO"),PersistentDataType.STRING,"DIEGO");
     }
     public static void gatin(Skeleton self){
         ItemStack cabeza = new ItemStack(Material.PLAYER_HEAD);
@@ -1045,6 +1048,7 @@ public class Mobs implements Listener {
         self.setHealth(200);
         self.getEquipment().setItemInMainHand(new ItemBuilder(Material.NETHERITE_AXE).addEnchantment(Enchantment.DAMAGE_ALL,50).build());
         self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+        self.getPersistentDataContainer().set(Utils.key("GATIN"),PersistentDataType.STRING,"GATIN");
     }
     public static void johan(Skeleton self){
         ItemStack cabeza = new ItemStack(Material.PLAYER_HEAD);
@@ -1060,6 +1064,7 @@ public class Mobs implements Listener {
         self.setHealth(200);
         self.getEquipment().setItemInMainHand(new ItemBuilder(Material.NETHERITE_AXE).addEnchantment(Enchantment.DAMAGE_ALL,50).build());
         self.getEquipment().setDropChance(EquipmentSlot.HAND,0);
+        self.getPersistentDataContainer().set(Utils.key("JOHAN"),PersistentDataType.STRING,"JOHAN");
     }
 
 

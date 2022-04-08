@@ -350,7 +350,7 @@ public class Items {
         lore.add(Component.text(format("&8&lSe parte de la Oscuridad, vuélvete uno con las Sombras")));
         lore.add(Component.text(format("&7Tus flechas Infligen Wither, Slowness y Weakness")));
         lore.add(Component.text(format("")));
-        return new ItemBuilder(Material.BOW).setName(format("&8&lTouch of Darkness")).setLore(lore).setUnbreakable(true).addEnchantment(Enchantment.ARROW_DAMAGE,10).setCustomModelData(91817).build();
+        return new ItemBuilder(Material.BOW).setName(format("&8&lTouch of Darkness")).setLore(lore).setUnbreakable(true).addEnchantment(Enchantment.ARROW_DAMAGE,10).addEnchantment(Enchantment.ARROW_INFINITE,1).setCustomModelData(91817).build();
     }
 
 
@@ -688,7 +688,7 @@ public class Items {
         lore.add(Component.text(format("&7otorgara inmunidad a la &eParalización &7, 8 corazones")));
         lore.add(Component.text(format("&7extras y &cEvita el Fallo de los Items Especiales&7.")));
         lore.add(Component.text(format("")));
-        return new ItemBuilder(Material.NETHERITE_HELMET).setLore(lore).setName(format("&e&lBurnlight Helmet")).setUnbreakable(true).setCustomModelData(3537921).build();
+        return new ItemBuilder(Material.NETHERITE_HELMET).setLore(lore).setName(format("&e&lBurnlight Helmet")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL,4).setUnbreakable(true).setCustomModelData(3537921).build();
     }
     public static ItemStack burnChestplate(){
         List<Component> lore = new ArrayList<>();
@@ -699,7 +699,7 @@ public class Items {
         lore.add(Component.text(format("&7otorgara inmunidad a la &eParalización &7, 8 corazones")));
         lore.add(Component.text(format("&7extras y &cEvita el Fallo de los Items Especiales&7.")));
         lore.add(Component.text(format("")));
-        return new ItemBuilder(Material.NETHERITE_CHESTPLATE).setLore(lore).setName(format("&e&lBurnlight Chestplate")).setUnbreakable(true).setCustomModelData(3537921).build();
+        return new ItemBuilder(Material.NETHERITE_CHESTPLATE).setLore(lore).setName(format("&e&lBurnlight Chestplate")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL,4).setUnbreakable(true).setCustomModelData(3537921).build();
     }
     public static ItemStack burnLeggings(){
         List<Component> lore = new ArrayList<>();
@@ -710,7 +710,7 @@ public class Items {
         lore.add(Component.text(format("&7otorgara inmunidad a la &eParalización &7, 8 corazones")));
         lore.add(Component.text(format("&7extras y &cEvita el Fallo de los Items Especiales&7.")));
         lore.add(Component.text(format("")));
-        return new ItemBuilder(Material.NETHERITE_LEGGINGS).setLore(lore).setName(format("&e&lBurnlight Leggings")).setUnbreakable(true).setCustomModelData(3537921).build();
+        return new ItemBuilder(Material.NETHERITE_LEGGINGS).setLore(lore).setName(format("&e&lBurnlight Leggings")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL,4).setUnbreakable(true).setCustomModelData(3537921).build();
     }
     public static ItemStack burnBoots(){
         List<Component> lore = new ArrayList<>();
@@ -721,7 +721,7 @@ public class Items {
         lore.add(Component.text(format("&7otorgara inmunidad a la &eParalización &7, 8 corazones")));
         lore.add(Component.text(format("&7extras y &cEvita el Fallo de los Items Especiales&7.")));
         lore.add(Component.text(format("")));
-        return new ItemBuilder(Material.NETHERITE_BOOTS).setLore(lore).setName(format("&e&lBurnlight Boots")).setUnbreakable(true).setCustomModelData(3537921).build();
+        return new ItemBuilder(Material.NETHERITE_BOOTS).setLore(lore).setName(format("&e&lBurnlight Boots")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL,4).setUnbreakable(true).setCustomModelData(3537921).build();
     }
 
 
@@ -754,7 +754,7 @@ public class Items {
         lore.add(Component.text(format("&7Debilita, Realentiza y Infecta al Mob afectado")));
         lore.add(Component.text(format("&7por su Filo")));
         lore.add(Component.text(format("")));
-        return new ItemBuilder(Material.NETHERITE_SWORD).setName(format("&8&lNano-Tech")).setLore(lore).setCustomModelData(382388).setUnbreakable(true).build();
+        return new ItemBuilder(Material.NETHERITE_SWORD).setName(format("&8&lNano-Tech")).setLore(lore).addEnchantment(Enchantment.DAMAGE_ALL,5).setCustomModelData(382388).setUnbreakable(true).build();
     }
     public static ItemStack undyingStaff(){
         List<Component> lore = new ArrayList<>();

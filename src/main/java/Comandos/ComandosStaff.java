@@ -9,6 +9,7 @@ import Utilities.*;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -557,6 +558,45 @@ public class ComandosStaff  implements CommandExecutor, TabCompleter {
 
 
             }
+            case "end_things" ->{
+                if (args.length < 2) {
+                    player.sendMessage(Format.PREFIX + "Debes colocar un subcomando valido!");
+                    return true;
+                }
+                if (args[1].equalsIgnoreCase("spawnSouls")) {
+                    Mobs.salva(player.getWorld().spawn(player.getLocation(),Skeleton.class));
+                    Mobs.diego(player.getWorld().spawn(player.getLocation(),Skeleton.class));
+                    Mobs.johan(player.getWorld().spawn(player.getLocation(),Skeleton.class));
+                    Mobs.gatin(player.getWorld().spawn(player.getLocation(),Skeleton.class));
+                    Mobs.arphz(player.getWorld().spawn(player.getLocation(),Skeleton.class));
+                }else if (args[1].equalsIgnoreCase("openPortal")) {
+                    Block frame1 = Utils.getWorld().getBlockAt(-20200,191,20201);
+                    Block frame2 = Utils.getWorld().getBlockAt(-20200,191,20200);
+                    Block frame3 = Utils.getWorld().getBlockAt(-20200,191,20199);
+                    Block frame4 = Utils.getWorld().getBlockAt(-20199,191,20201);
+                    Block frame5 = Utils.getWorld().getBlockAt(-20199,191,20200);
+                    Block frame6 = Utils.getWorld().getBlockAt(-20199,191,20199);
+                    Block frame7 = Utils.getWorld().getBlockAt(-20198,191,20201);
+                    Block frame8 = Utils.getWorld().getBlockAt(-20198,191,20200);
+                    Block frame9 = Utils.getWorld().getBlockAt(-20198,191,20199);
+
+                    frame1.setType(Material.END_PORTAL);
+                    frame2.setType(Material.END_PORTAL);
+                    frame3.setType(Material.END_PORTAL);
+                    frame4.setType(Material.END_PORTAL);
+                    frame5.setType(Material.END_PORTAL);
+                    frame6.setType(Material.END_PORTAL);
+                    frame7.setType(Material.END_PORTAL);
+                    frame8.setType(Material.END_PORTAL);
+                    frame9.setType(Material.END_PORTAL);
+                    for(Player coneccted : Bukkit.getOnlinePlayers()){
+                        coneccted.sendMessage(PREFIX,format("&c&lSE HA ABIERTO EL PORTAL DEL END"));
+                        coneccted.playSound(coneccted.getLocation(),Sound.BLOCK_END_PORTAL_SPAWN,10.0F,-1.0F);
+                    }
+
+
+                }
+                }
             case "debug" -> {
                 if (args.length < 2) {
                     player.sendMessage(Format.PREFIX + "Debes colocar un debug valido (blastStormStart, blackStormEnd, totemTest, muerteFake).");

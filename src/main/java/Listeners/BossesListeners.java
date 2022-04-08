@@ -1,10 +1,12 @@
 package Listeners;
 
+import Extras.Items;
 import Utilities.Format;
 import Utilities.Mobs;
 import Utilities.Utils;
 import io.papermc.paper.event.entity.EntityMoveEvent;
 import org.bukkit.*;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,6 +14,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
@@ -343,6 +346,105 @@ public class BossesListeners implements Listener{
                 }
             }
         }
+    }
+
+    @EventHandler
+    public void soulsDeath(EntityDeathEvent e){
+        if(e.getEntity() instanceof Skeleton skeleton){
+            Player arphz = Bukkit.getPlayer("TheArphz");
+            Player salva = Bukkit.getPlayer("SalvaGamerVZ");
+            Player johan = Bukkit.getPlayer("JohanBigCum");
+            Player diego = Bukkit.getPlayer("Diegot_Manc");
+            Player gatin = Bukkit.getPlayer("Gatin72");
+            if(skeleton.getPersistentDataContainer().has(Utils.key("ARPHZ"),PersistentDataType.STRING)){
+                if(arphz == null){
+                    Bukkit.getConsoleSender().sendMessage("ARPHZ A MUERTO PERO NO ESTABA EN EL SERVER");
+                }else{
+                    arphz.teleport(skeleton.getLocation());
+                    soulRespawnLol(arphz);
+                }
+            }
+            if(skeleton.getPersistentDataContainer().has(Utils.key("SALVA"),PersistentDataType.STRING)){
+                if(salva == null){
+                    Bukkit.getConsoleSender().sendMessage("SALVA A MUERTO PERO NO ESTABA EN EL SERVER");
+                }else{
+                    salva.teleport(skeleton.getLocation());
+                    soulRespawnLol(salva);
+                }
+            }
+            if(skeleton.getPersistentDataContainer().has(Utils.key("DIEGO"),PersistentDataType.STRING)){
+                if(diego == null){
+                    Bukkit.getConsoleSender().sendMessage("DIEGOT A MUERTO PERO NO ESTABA EN EL SERVER");
+                }else{
+                    diego.teleport(skeleton.getLocation());
+                    soulRespawnLol(diego);
+                }
+            }
+            if(skeleton.getPersistentDataContainer().has(Utils.key("GATIN"),PersistentDataType.STRING)){
+                if(gatin == null){
+                    Bukkit.getConsoleSender().sendMessage("GATIN A MUERTO PERO NO ESTABA EN EL SERVER");
+                }else{
+                    gatin.teleport(skeleton.getLocation());
+                    soulRespawnLol(gatin);
+                }
+            }
+            if(skeleton.getPersistentDataContainer().has(Utils.key("JOHAN"),PersistentDataType.STRING)){
+                if(johan == null){
+                    Bukkit.getConsoleSender().sendMessage("JOHAN A MUERTO PERO NO ESTABA EN EL SERVER");
+                }else{
+                    johan.teleport(skeleton.getLocation());
+                    soulRespawnLol(johan);
+                }
+            }
+        }
+    }
+
+    public void soulRespawnLol(Player player){
+        player.setGameMode(GameMode.SURVIVAL);
+        player.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(20);
+        player.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(13);
+        player.getInventory().setItem(0, Items.nanoTech());
+        player.getInventory().setItem(1, Items.umbraDrill());
+        player.getInventory().setItem(2, Items.touchofdarkness());
+        player.getInventory().setItem(3, new ItemStack(Material.ENCHANTED_GOLDEN_APPLE,64));
+        player.getInventory().setItem(4,Items.shadowRupture());
+        player.getInventory().setItem(5, Items.unluckyIdol());
+        player.getInventory().setItem(6, Items.shadowTotem());
+        player.getInventory().setItem(7, Items.undyingStaff());
+        player.getInventory().setItem(8, Items.totemRestorer());
+        player.getInventory().setItem(9, Items.unluckyIdol());
+        player.getInventory().setItem(10, Items.shadowTotem());
+        player.getInventory().setItem(11, new ItemStack(Material.TOTEM_OF_UNDYING));
+        player.getInventory().setItem(12, new ItemStack(Material.TOTEM_OF_UNDYING));
+        player.getInventory().setItem(13, new ItemStack(Material.TOTEM_OF_UNDYING));
+        player.getInventory().setItem(14, new ItemStack(Material.TOTEM_OF_UNDYING));
+        player.getInventory().setItem(15, new ItemStack(Material.TOTEM_OF_UNDYING));
+        player.getInventory().setItem(16, new ItemStack(Material.TOTEM_OF_UNDYING));
+        player.getInventory().setItem(17, new ItemStack(Material.ARROW,64));
+        player.getInventory().setItem(18, Items.unluckyIdol());
+        player.getInventory().setItem(19, Items.shadowTotem());
+        player.getInventory().setItem(20, new ItemStack(Material.TOTEM_OF_UNDYING));
+        player.getInventory().setItem(21, new ItemStack(Material.TOTEM_OF_UNDYING));
+        player.getInventory().setItem(22, new ItemStack(Material.TOTEM_OF_UNDYING));
+        player.getInventory().setItem(23, new ItemStack(Material.TOTEM_OF_UNDYING));
+        player.getInventory().setItem(24, new ItemStack(Material.TOTEM_OF_UNDYING));
+        player.getInventory().setItem(25, new ItemStack(Material.TOTEM_OF_UNDYING));
+        player.getInventory().setItem(26, new ItemStack(Material.COBBLESTONE,64));
+        player.getInventory().setItem(27, Items.unluckyIdol());
+        player.getInventory().setItem(28, Items.shadowTotem());
+        player.getInventory().setItem(29, new ItemStack(Material.ENDER_PEARL,16));
+        player.getInventory().setItem(30, Items.crystalApple(64));
+        player.getInventory().setItem(31, Items.fireHook());
+        player.getInventory().setItem(32, Items.umbraShell());
+        player.getInventory().setItem(33, new ItemStack(Material.TOTEM_OF_UNDYING));
+        player.getInventory().setItem(34, new ItemStack(Material.TOTEM_OF_UNDYING));
+        player.getInventory().setItem(35, new ItemStack(Material.TOTEM_OF_UNDYING));
+        player.getInventory().setItem(103, Items.burnHelmet());
+        player.getInventory().setItem(102, Items.burnChestplate());
+        player.getInventory().setItem(101, Items.burnLeggings());
+        player.getInventory().setItem(100, Items.burnBoots());
+        player.getInventory().setItem(-106, new ItemStack(Material.TOTEM_OF_UNDYING));
+        player.sendTitle(format("&c&l¡HAS REVIVIDO!"),format("&4&l¡AYUDA A LOS DEMAS A SOBREVIVIR!"));
     }
 
 
