@@ -295,7 +295,7 @@ public class TotemListeners implements Listener {
 
 
                     String totemMsg = globalMessage;
-                    diceBot(head, p);
+                    //diceBot(head, p);
                     for(Player players : Bukkit.getOnlinePlayers()){
                         players.sendMessage(totemMsg);
                         players.sendMessage(format("&7El dado ha caído en la cara&5&l número " + head));

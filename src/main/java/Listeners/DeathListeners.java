@@ -271,7 +271,7 @@ public class DeathListeners extends ListenerAdapter implements Listener {
             }, 65);
         }
 
-        EmbedBuilder eb = new EmbedBuilder();
+        /*EmbedBuilder eb = new EmbedBuilder();
         TextChannel channel = jda.getTextChannelById("949668384394604605");
 
         LocalDate Fecha = LocalDate.now();
@@ -294,7 +294,7 @@ public class DeathListeners extends ListenerAdapter implements Listener {
 
         if (channel != null) {
             channel.sendMessage(eb.build()).queue();
-        }
+        }*/
     }
     @EventHandler
     public void onRespawn(PlayerRespawnEvent e){
