@@ -152,7 +152,7 @@ public class TotemListeners implements Listener {
                             for (Player player : Bukkit.getOnlinePlayers()){
                                 player.sendMessage(format("&8El Jugador &c&l" + p.getName() + " &8uso un &e&lTótem Especial &7(Totem: &c&lUnlucky Idol&7) &7(Causa: "  + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + "&7)"));
                             }
-                            EmbedBuilder eb = new EmbedBuilder();
+                            /*EmbedBuilder eb = new EmbedBuilder();
                             TextChannel channel = DeathListeners.getJda().getTextChannelById("949669572179533854");
 
                             eb.setFooter("TheLastLifeT2.jar", "https://cdn.discordapp.com/attachments/906642578013843526/943284426442436679/hardcorehearth-export.png");
@@ -171,6 +171,7 @@ public class TotemListeners implements Listener {
                             if (channel != null) {
                                 channel.sendMessage(eb.build()).queue();
                             }
+                            */
                         }
                         return;
                     }
@@ -184,7 +185,7 @@ public class TotemListeners implements Listener {
                         for (Player player : Bukkit.getOnlinePlayers()){
                             player.sendMessage(format("&8El Jugador &c&l" + p.getName() + " &8uso un &e&lTótem Especial &7(Totem: &8&lDarkness Idol&7) &7(Causa: "  + causadeDaño(Objects.requireNonNull(p.getLastDamageCause())) + "&7)"));
                         }
-                        EmbedBuilder eb = new EmbedBuilder();
+                        /*EmbedBuilder eb = new EmbedBuilder();
                         TextChannel channel = DeathListeners.getJda().getTextChannelById("949669572179533854");
 
                         eb.setFooter("TheLastLifeT2.jar", "https://cdn.discordapp.com/attachments/906642578013843526/943284426442436679/hardcorehearth-export.png");
@@ -203,6 +204,7 @@ public class TotemListeners implements Listener {
                         if (channel != null) {
                             channel.sendMessage(eb.build()).queue();
                         }
+                        */
                         return;
 
                     }else{
